@@ -1,0 +1,8 @@
+bin/
+obj/
+\[Jean_Meeus\]_Astronomical_algorithms.pdf
+Documents/
+OriginalCSCode/
+*.suo
+*~
+.*/
