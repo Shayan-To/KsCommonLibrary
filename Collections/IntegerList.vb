@@ -74,10 +74,12 @@ Public Class IntegerList
         Return -1
     End Function
 
-#If VBC_VER >= 12.0 Then
+#If VBC_VER >= 11.0 Then
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-#End If
     Public Function Contains(ByVal Item As Integer) As Boolean Implements ICollection(Of Integer).Contains
+#Else
+    Public Function Contains(ByVal Item As Integer) As Boolean Implements ICollection(Of Integer).Contains
+#End If
         Return Item >= Me._Start AndAlso
                Item < Me._End AndAlso
                (Item - Me._Start) Mod Me._Step = 0

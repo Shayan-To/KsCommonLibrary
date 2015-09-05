@@ -14,6 +14,9 @@ Public Class NotifyCollectionChangedEventArgs(Of T)
         InitializeAdd(action, Nothing, -1)
     End Sub
 
+    ''' <summary>
+    ''' For Add, Remove, or Reset.
+    ''' </summary>
     Public Sub New(action As NotifyCollectionChangedAction, changedItem As T)
         MyBase.New(action, changedItem)
 
@@ -24,6 +27,9 @@ Public Class NotifyCollectionChangedEventArgs(Of T)
         End If
     End Sub
 
+    ''' <summary>
+    ''' For Add, Remove, or Reset.
+    ''' </summary>
     Public Sub New(action As NotifyCollectionChangedAction, changedItem As T, index As Integer)
         MyBase.New(action, changedItem, index)
 
@@ -34,6 +40,9 @@ Public Class NotifyCollectionChangedEventArgs(Of T)
         End If
     End Sub
 
+    ''' <summary>
+    ''' For Add, Remove, or Reset.
+    ''' </summary>
     Public Sub New(action As NotifyCollectionChangedAction, changedItems As IList(Of T))
         MyBase.New(action, DirectCast(changedItems, IList))
 
@@ -44,6 +53,9 @@ Public Class NotifyCollectionChangedEventArgs(Of T)
         End If
     End Sub
 
+    ''' <summary>
+    ''' For Add, Remove, or Reset.
+    ''' </summary>
     Public Sub New(action As NotifyCollectionChangedAction, changedItems As IList(Of T), startingIndex As Integer)
         MyBase.New(action, DirectCast(changedItems, IList), startingIndex)
 
@@ -54,12 +66,18 @@ Public Class NotifyCollectionChangedEventArgs(Of T)
         End If
     End Sub
 
+    ''' <summary>
+    ''' For Move or Replace.
+    ''' </summary>
     Public Sub New(action As NotifyCollectionChangedAction, newItem As T, oldItem As T)
         MyBase.New(action, newItem, oldItem)
 
         InitializeMoveOrReplace(action, New T() {newItem}, New T() {oldItem}, -1, -1)
     End Sub
 
+    ''' <summary>
+    ''' For Move or Replace.
+    ''' </summary>
     Public Sub New(action As NotifyCollectionChangedAction, newItem As T, oldItem As T, index As Integer)
         MyBase.New(action, newItem, oldItem, index)
 
@@ -68,18 +86,27 @@ Public Class NotifyCollectionChangedEventArgs(Of T)
         InitializeMoveOrReplace(action, New T() {newItem}, New T() {oldItem}, index, oldStartingIndex)
     End Sub
 
+    ''' <summary>
+    ''' For Move or Replace.
+    ''' </summary>
     Public Sub New(action As NotifyCollectionChangedAction, newItems As IList(Of T), oldItems As IList(Of T))
         MyBase.New(action, DirectCast(newItems, IList), DirectCast(oldItems, IList))
 
         InitializeMoveOrReplace(action, newItems, oldItems, -1, -1)
     End Sub
 
+    ''' <summary>
+    ''' For Move or Replace.
+    ''' </summary>
     Public Sub New(action As NotifyCollectionChangedAction, newItems As IList(Of T), oldItems As IList(Of T), startingIndex As Integer)
         MyBase.New(action, DirectCast(newItems, IList), DirectCast(oldItems, IList), startingIndex)
 
         InitializeMoveOrReplace(action, newItems, oldItems, startingIndex, startingIndex)
     End Sub
 
+    ''' <summary>
+    ''' For Move or Replace.
+    ''' </summary>
     Public Sub New(action As NotifyCollectionChangedAction, changedItem As T, index As Integer, oldIndex As Integer)
         MyBase.New(action, changedItem, index, oldIndex)
 
@@ -87,6 +114,9 @@ Public Class NotifyCollectionChangedEventArgs(Of T)
         InitializeMoveOrReplace(action, changedItems, changedItems, index, oldIndex)
     End Sub
 
+    ''' <summary>
+    ''' For Move or Replace.
+    ''' </summary>
     Public Sub New(action As NotifyCollectionChangedAction, changedItems As IList(Of T), index As Integer, oldIndex As Integer)
         MyBase.New(action, DirectCast(changedItems, IList), index, oldIndex)
 
@@ -97,23 +127,23 @@ Public Class NotifyCollectionChangedEventArgs(Of T)
         Select Case E.Action
             Case NotifyCollectionChangedAction.Move
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.ToGeneric().Select(Function(A) DirectCast(A, T)).ToList(),
+                                                                  E.NewItems.Cast(Of T)().ToList(),
                                                                   E.NewStartingIndex,
                                                                   E.OldStartingIndex)
             Case NotifyCollectionChangedAction.Replace
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.ToGeneric().Select(Function(A) DirectCast(A, T)).ToList(),
-                                                                  E.OldItems.ToGeneric().Select(Function(A) DirectCast(A, T)).ToList(),
+                                                                  E.NewItems.Cast(Of T)().ToList(),
+                                                                  E.OldItems.Cast(Of T)().ToList(),
                                                                   E.NewStartingIndex)
             Case NotifyCollectionChangedAction.Reset
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action)
             Case NotifyCollectionChangedAction.Add
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.ToGeneric().Select(Function(A) DirectCast(A, T)).ToList(),
+                                                                  E.NewItems.Cast(Of T)().ToList(),
                                                                   E.NewStartingIndex)
             Case NotifyCollectionChangedAction.Remove
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.OldItems.ToGeneric().Select(Function(A) DirectCast(A, T)).ToList(),
+                                                                  E.OldItems.Cast(Of T)().ToList(),
                                                                   E.OldStartingIndex)
         End Select
         Debug.Assert(False)
@@ -124,19 +154,19 @@ Public Class NotifyCollectionChangedEventArgs(Of T)
         Select Case E.Action
             Case NotifyCollectionChangedAction.Move
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.ToGeneric().Select(Function(A) DirectCast(A, T)).ToList())
+                                                                  E.NewItems.Cast(Of T)().ToList())
             Case NotifyCollectionChangedAction.Replace
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.ToGeneric().Select(Function(A) DirectCast(A, T)).ToList(),
-                                                                  E.OldItems.ToGeneric().Select(Function(A) DirectCast(A, T)).ToList())
+                                                                  E.NewItems.Cast(Of T)().ToList(),
+                                                                  E.OldItems.Cast(Of T)().ToList())
             Case NotifyCollectionChangedAction.Reset
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action)
             Case NotifyCollectionChangedAction.Add
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.ToGeneric().Select(Function(A) DirectCast(A, T)).ToList())
+                                                                  E.NewItems.Cast(Of T)().ToList())
             Case NotifyCollectionChangedAction.Remove
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.OldItems.ToGeneric().Select(Function(A) DirectCast(A, T)).ToList())
+                                                                  E.OldItems.Cast(Of T)().ToList())
         End Select
 
         Debug.Assert(False)
@@ -209,7 +239,6 @@ Public Class NotifyingCollection(Of T)
         Dim E2 As NotifyCollectionChangedEventArgs(Of T)
         E2 = NotifyCollectionChangedEventArgs(Of T).FromNotifyCollectionChangedEventArgs(E)
         RaiseEvent CollectionChanged(Me, E2)
-        ' ToDo Correct this E to E2.
         MyBase.OnCollectionChanged(E2)
     End Sub
 

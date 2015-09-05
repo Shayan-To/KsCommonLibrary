@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -7,10 +7,10 @@
     <ProjectGuid>{48F61CC2-1C20-4211-8E15-3E3A9257C562}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Ks.Common</RootNamespace>
-    <AssemblyName>KsCommon</AssemblyName>
+    <AssemblyName>KsCommonLibrary</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -19,9 +19,10 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>KsCommon.xml</DocumentationFile>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DefineConstants>VB_VERSION=11.0</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,8 +30,9 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>KsCommon.xml</DocumentationFile>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -75,20 +77,24 @@
     <Compile Include="Common\AccentColors.vb" />
     <Compile Include="Common\ChangeReporter.vb" />
     <Compile Include="Common\CommonExtensions.vb" />
-    <Compile Include="Common\ComplementCollection.vb" />
-    <Compile Include="Common\CreateInstanceDictionary.vb" />
-    <Compile Include="Common\HelperMethodAttribute.vb" />
-    <Compile Include="Common\INotifyingCollection.vb" />
-    <Compile Include="Common\IntegerList.vb" />
-    <Compile Include="Common\ListCollectionRA.vb" />
+    <Compile Include="Collections\ComparableCollection.vb" />
+    <Compile Include="Collections\ComplementCollection.vb" />
+    <Compile Include="Common\ConsoleTestMethodAttribute.vb" />
+    <Compile Include="Collections\CreateInstanceDictionary.vb" />
+    <Compile Include="Collections\INotifyingCollection.vb" />
+    <Compile Include="Collections\IntegerList.vb" />
+    <Compile Include="Collections\ListCollectionRA.vb" />
+    <Compile Include="Common\DefaultCacher.vb" />
     <Compile Include="Common\ListShifter.vb" />
     <Compile Include="Common\MergeSorter.vb" />
-    <Compile Include="Common\ObservableSet.vb" />
+    <Compile Include="Collections\NotifyingDictionary.vb" />
+    <Compile Include="Collections\ObservableSet.vb" />
     <Compile Include="Common\Utilities.vb" />
-    <Compile Include="Common\ValueBag.vb" />
+    <Compile Include="Collections\ValueBag.vb" />
     <Compile Include="Common\VTuple.vb" />
     <Compile Include="Controls\ResizableCanvas.vb" />
     <Compile Include="Controls\Squaring.vb" />
+    <Compile Include="InteractiveConsole.vb" />
     <Compile Include="MVVM\BindableBase.vb" />
     <Compile Include="MVVM\Converters\BooleanToVisibilityConverter.vb" />
     <Compile Include="MVVM\Converters\BrightnessConverter.vb" />
@@ -140,10 +146,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Geometry\Line.vb" />
-    <Compile Include="Geometry\Rectangle.vb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,7 +7,7 @@ Namespace MVVM
 
         Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 
-#If VBC_VER >= 12.0 Then
+#If VBC_VER >= 11.0 Then
         Protected Function SetProperty(Of T)(ByRef Source As T, ByVal Value As T, <Runtime.CompilerServices.CallerMemberName()> Optional ByVal PropertyName As String = Nothing) As Boolean
 #Else
         Protected Function SetProperty(Of T)(ByRef Source As T, ByVal Value As T, ByVal PropertyName As String) As Boolean
@@ -25,7 +25,7 @@ Namespace MVVM
             RaiseEvent PropertyChanged(Me, E)
         End Sub
 
-#If VBC_VER >= 12.0 Then
+#If VBC_VER >= 11.0 Then
         Protected Sub NotifyPropertyChanged(<Runtime.CompilerServices.CallerMemberName()> Optional ByVal PropertyName As String = Nothing)
 #Else
         Protected Sub NotifyPropertyChanged(ByVal PropertyName As String)

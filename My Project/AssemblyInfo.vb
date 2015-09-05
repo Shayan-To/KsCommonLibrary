@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("KsCommon")> 
+<Assembly: AssemblyTitle("KsCommonLibrary")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("KsCommon")> 
-<Assembly: AssemblyCopyright("Copyright Â©  2014")> 
+<Assembly: AssemblyProduct("KsCommonLibrary")> 
+<Assembly: AssemblyCopyright("Copyright ©  2014")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
