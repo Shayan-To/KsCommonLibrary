@@ -417,7 +417,7 @@ Public NotInheritable Class Utilities
         End Get
     End Property
 
-    <ConsoleTestMethodAttribute()>
+    <ConsoleTestMethod()>
     Friend Shared Sub TypeInterfaceFinder()
         Dim Type = GetType(Tuple(Of Integer))
         For Each T In Type.GetInterfaces()
@@ -566,30 +566,30 @@ Public NotInheritable Class Utilities
         Return R.ToString()
     End Function
 
-    Public Shared Function CombineHasCodes(ByVal H1 As Integer,
-                                           ByVal H2 As Integer) As Integer
+    Public Shared Function CombineHashCodes(ByVal H1 As Integer,
+                                            ByVal H2 As Integer) As Integer
         Return ((H1 << 5) + H1) Xor H2
     End Function
 
-    Public Shared Function CombineHasCodes(ByVal H1 As Integer,
-                                           ByVal H2 As Integer,
-                                           ByVal H3 As Integer) As Integer
-        Return CombineHasCodes(CombineHasCodes(H1, H2), H3)
+    Public Shared Function CombineHashCodes(ByVal H1 As Integer,
+                                            ByVal H2 As Integer,
+                                            ByVal H3 As Integer) As Integer
+        Return CombineHashCodes(CombineHashCodes(H1, H2), H3)
     End Function
 
-    Public Shared Function CombineHasCodes(ByVal H1 As Integer,
-                                           ByVal H2 As Integer,
-                                           ByVal H3 As Integer,
-                                           ByVal H4 As Integer) As Integer
-        Return CombineHasCodes(CombineHasCodes(H1, H2), CombineHasCodes(H3, H4))
+    Public Shared Function CombineHashCodes(ByVal H1 As Integer,
+                                            ByVal H2 As Integer,
+                                            ByVal H3 As Integer,
+                                            ByVal H4 As Integer) As Integer
+        Return CombineHashCodes(CombineHashCodes(H1, H2), CombineHashCodes(H3, H4))
     End Function
 
-    Public Shared Function CombineHasCodes(ByVal H1 As Integer,
-                                           ByVal H2 As Integer,
-                                           ByVal H3 As Integer,
-                                           ByVal H4 As Integer,
-                                           ByVal H5 As Integer) As Integer
-        Return CombineHasCodes(CombineHasCodes(H1, H2), CombineHasCodes(H3, H4, H5))
+    Public Shared Function CombineHashCodes(ByVal H1 As Integer,
+                                            ByVal H2 As Integer,
+                                            ByVal H3 As Integer,
+                                            ByVal H4 As Integer,
+                                            ByVal H5 As Integer) As Integer
+        Return CombineHashCodes(CombineHashCodes(H1, H2), CombineHashCodes(H3, H4, H5))
     End Function
 
     Public Shared EmptyObject As Object = New Object()

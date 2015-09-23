@@ -152,7 +152,7 @@ Public Structure VTuple(Of T1, T2)
     End Function
 
     Public Overloads Function GetHashCode(ByVal Comparer As System.Collections.IEqualityComparer) As Integer Implements System.Collections.IStructuralEquatable.GetHashCode
-        Return Utilities.CombineHasCodes(Comparer.GetHashCode(Me._Item1),
+        Return Utilities.CombineHashCodes(Comparer.GetHashCode(Me._Item1),
                                          Comparer.GetHashCode(Me._Item2))
     End Function
 
@@ -256,7 +256,7 @@ Public Structure VTuple(Of T1, T2, T3)
     End Function
 
     Public Overloads Function GetHashCode(ByVal Comparer As System.Collections.IEqualityComparer) As Integer Implements System.Collections.IStructuralEquatable.GetHashCode
-        Return Utilities.CombineHasCodes(Comparer.GetHashCode(Me._Item1),
+        Return Utilities.CombineHashCodes(Comparer.GetHashCode(Me._Item1),
                                          Comparer.GetHashCode(Me._Item2),
                                          Comparer.GetHashCode(Me._Item3))
     End Function
@@ -378,7 +378,7 @@ Public Structure VTuple(Of T1, T2, T3, T4)
     End Function
 
     Public Overloads Function GetHashCode(ByVal Comparer As System.Collections.IEqualityComparer) As Integer Implements System.Collections.IStructuralEquatable.GetHashCode
-        Return Utilities.CombineHasCodes(Comparer.GetHashCode(Me._Item1),
+        Return Utilities.CombineHashCodes(Comparer.GetHashCode(Me._Item1),
                                          Comparer.GetHashCode(Me._Item2),
                                          Comparer.GetHashCode(Me._Item3),
                                          Comparer.GetHashCode(Me._Item4))
@@ -518,7 +518,7 @@ Public Structure VTuple(Of T1, T2, T3, T4, T5)
     End Function
 
     Public Overloads Function GetHashCode(ByVal Comparer As System.Collections.IEqualityComparer) As Integer Implements System.Collections.IStructuralEquatable.GetHashCode
-        Return Utilities.CombineHasCodes(Comparer.GetHashCode(Me._Item1),
+        Return Utilities.CombineHashCodes(Comparer.GetHashCode(Me._Item1),
                                          Comparer.GetHashCode(Me._Item2),
                                          Comparer.GetHashCode(Me._Item3),
                                          Comparer.GetHashCode(Me._Item4),

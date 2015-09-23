@@ -68,7 +68,7 @@ Public Class ComparableCollection(Of T)
                 R = Comparer.GetHashCode(I)
                 Bl = False
             Else
-                R = Utilities.CombineHasCodes(R, Comparer.GetHashCode(I))
+                R = Utilities.CombineHashCodes(R, Comparer.GetHashCode(I))
             End If
         Next
         Return R

@@ -74,6 +74,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\HeapOperations.vb" />
+    <Compile Include="Collections\InserstionSorter.vb" />
     <Compile Include="Common\AccentColors.vb" />
     <Compile Include="Common\ChangeReporter.vb" />
     <Compile Include="Common\CommonExtensions.vb" />
