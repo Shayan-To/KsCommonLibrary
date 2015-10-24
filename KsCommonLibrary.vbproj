@@ -87,10 +87,12 @@
     <Compile Include="Collections\IntegerList.vb" />
     <Compile Include="Collections\ListCollectionRA.vb" />
     <Compile Include="Common\DefaultCacher.vb" />
+    <Compile Include="Common\Lazy.vb" />
     <Compile Include="Common\ListShifter.vb" />
     <Compile Include="Common\MergeSorter.vb" />
     <Compile Include="Collections\NotifyingDictionary.vb" />
     <Compile Include="Collections\ObservableSet.vb" />
+    <Compile Include="Common\StringSplitEnumerator.vb" />
     <Compile Include="Common\Utilities.vb" />
     <Compile Include="Collections\ValueBag.vb" />
     <Compile Include="Common\VTuple.vb" />
@@ -98,6 +100,7 @@
     <Compile Include="Controls\Squaring.vb" />
     <Compile Include="InteractiveConsole.vb" />
     <Compile Include="MVVM\BindableBase.vb" />
+    <Compile Include="MVVM\CollectionObserver.vb" />
     <Compile Include="MVVM\Converters\BooleanToVisibilityConverter.vb" />
     <Compile Include="MVVM\Converters\BrightnessConverter.vb" />
     <Compile Include="MVVM\Converters\AlphaConverter.vb" />
@@ -107,6 +110,7 @@
     <Compile Include="MVVM\Converters\NumberPaddingConverter.vb" />
     <Compile Include="MVVM\Converters\ScaleConverter.vb" />
     <Compile Include="MVVM\Converters\ThicknessConverter.vb" />
+    <Compile Include="MVVM\DelegateCommand.vb" />
     <Compile Include="MVVM\NavigablePageViewModel.vb" />
     <Compile Include="MVVM\NavigablePageViewModelBase.vb" />
     <Compile Include="MVVM\WindowViewModel.vb" />

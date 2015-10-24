@@ -2,6 +2,34 @@ Imports System.Runtime.CompilerServices
 
 Public Module CommonExtensions
 
+#Region "CollectionsUtils Logic"
+    <Extension()>
+    Public Function EnumerateSplit(ByVal Str As String, ByVal Options As StringSplitOptions, ParamArray ByVal Chars As Char()) As StringSplitEnumerator
+        Return New StringSplitEnumerator(Str, Options, Chars)
+    End Function
+
+    <Extension()>
+    Public Function DistinctNeighbours(Of T)(ByVal Self As IEnumerable(Of T)) As IEnumerable(Of T)
+        Return DistinctNeighbours(Self, EqualityComparer(Of T).Default)
+    End Function
+
+    <Extension()>
+    Public Iterator Function DistinctNeighbours(Of T)(ByVal Self As IEnumerable(Of T), ByVal Comparer As IEqualityComparer(Of T)) As IEnumerable(Of T)
+        Dim Bl = True
+        Dim P As T = Nothing
+
+        For Each I In Self
+            If Bl Then
+                Yield I
+                P = I
+                Bl = False
+            ElseIf Not Comparer.Equals(P, I) Then
+                Yield I
+                P = I
+            End If
+        Next
+    End Function
+
     <Extension>
     Public Function RandomElement(Of T)(ByVal Self As IEnumerable(Of T)) As T
         Dim List1 As IList(Of T),
@@ -38,11 +66,6 @@ Public Module CommonExtensions
         Next
     End Sub
 
-    <Extension()>
-    Public Function ToGeneric(ByVal Self As IEnumerable) As IEnumerable(Of Object)
-        Return Self.Cast(Of Object)()
-    End Function
-
     <Extension>
     Public Sub Sort(Of T)(ByVal Self As IList(Of T))
         Dim Sorter As MergeSorter(Of T)
@@ -61,6 +84,29 @@ Public Module CommonExtensions
         Sorter.Sort(Self, Comparer)
     End Sub
 
+    <Extension()>
+    Public Function AllToString(Of T)(ByVal Collection As IEnumerable(Of T)) As String
+        Dim Res As Text.StringBuilder,
+            Enumerator As IEnumerator(Of T)
+
+        Res = New Text.StringBuilder("{")
+
+        Enumerator = Collection.GetEnumerator()
+
+        If Enumerator.MoveNext() Then
+            Res.Append(Enumerator.Current)
+        End If
+
+        Do While Enumerator.MoveNext()
+            Res.Append(", ").Append(Enumerator.Current)
+        Loop
+
+        Return Res.Append("}").ToString()
+    End Function
+#End Region
+
+#Region "Geometry Logic"
+#Region "Elementary"
     <Extension>
     Public Function ToVector(ByVal Self As Size) As Vector
         Return New Vector(Self.Width, Self.Height)
@@ -91,7 +137,9 @@ Public Module CommonExtensions
     Public Function ToPoint(ByVal Self As Vector) As Point
         Return New Point(Self.X, Self.Y)
     End Function
+#End Region
 
+#Region "RectangleFitting"
     <Extension>
     Public Function GetLargestFitOf(ByVal Self As Rect, ByVal Size As Size) As VTuple(Of Rect, Boolean?)
         Dim Bl As Boolean?
@@ -189,7 +237,9 @@ Public Module CommonExtensions
     Public Function GetOuterBoundingSquare(ByVal Self As Rect) As Rect
         Throw New NotImplementedException()
     End Function
+#End Region
 
+#Region "ChangeCoordinateSystem Logic"
     <Extension>
     Public Function FromLocal(ByVal Self As Rect, ByVal Point As Point) As Point
         Return Point + Self.Location.ToVector()
@@ -213,6 +263,7 @@ Public Module CommonExtensions
         Point = New Point(Point.X / Self.Width, Point.Y / Self.Height)
         Return Point
     End Function
+#End Region
 
     <Extension>
     Public Function GetCenter(ByVal Self As Rect) As Point
@@ -223,5 +274,6 @@ Public Module CommonExtensions
     Public Sub MoveCenter(ByVal Self As Rect, ByVal Center As Point)
         Self.Location = Center - Self.Size.ToVector() / 2
     End Sub
+#End Region
 
 End Module

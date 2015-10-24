@@ -7,94 +7,109 @@ Namespace Controls
     Public Class ResizableCanvas
         Inherits Panel
 
-        Protected Overrides Function MeasureOverride(availableSize As Size) As Size
-            Dim Size = New Size(Double.PositiveInfinity, Double.PositiveInfinity)
+        Private Function GetViewingArea(ByVal Size As Size) As Rect?
+            Dim ViewingRectangle = Me.ViewingRectangle
+            'ViewingRectangle.Intersect(ShapeRectangle)
+
+            If Me.KeepAspectRatio Then
+                Dim RB = ViewingRectangle.GetSmallestBoundOf(Me.GetClientArea(Size).Size)
+                If Not RB.Item2.HasValue Then
+                    Console.WriteLine("Error. " & Utilities.CompactStackTrace(5))
+                    Return Nothing
+                End If
+                ViewingRectangle = RB.Item1
+                'If Not ShapeRectangle.Contains(ViewingRectangle) Then
+                '    If RB.Item2.Value Then
+                '        Dim B1 = ViewingRectangle.Top < ShapeRectangle.Top
+                '        Dim B2 = ViewingRectangle.Bottom > ShapeRectangle.Bottom
+                '        If B1 Xor B2 Then
+                '            If B1 Then
+                '                ViewingRectangle.Y = ShapeRectangle.Y
+                '            Else
+                '                ViewingRectangle.Y = ShapeRectangle.Y + ShapeRectangle.Height - ViewingRectangle.Height
+                '            End If
+                '        End If
+                '    Else
+                '        Dim B1 = ViewingRectangle.Left < ShapeRectangle.Left
+                '        Dim B2 = ViewingRectangle.Right > ShapeRectangle.Right
+                '        If B1 Xor B2 Then
+                '            If B1 Then
+                '                ViewingRectangle.X = ShapeRectangle.X
+                '            Else
+                '                ViewingRectangle.X = ShapeRectangle.X + ShapeRectangle.Width - ViewingRectangle.Width
+                '            End If
+                '        End If
+                '    End If
+                'End If
+                ''If Not ShapeRectangle.Contains(ViewingRectangle) Then
+                ''    RB = ShapeRectangle.GetLargestFitOf(Client.Size)
+                ''    ViewingRectangle = RB.Item1
+                ''End If
+            End If
+
+            Return ViewingRectangle
+        End Function
+
+        Private Function GetClientArea(ByVal Size As Size) As Rect
+            Dim Padding = Me.Padding
+            Dim Padding1 = New Point(Padding.Left, Padding.Top)
+            Dim Padding2 = New Point(Padding.Right, Padding.Bottom)
+
+            Return New Rect(Padding1,
+                            (-Padding2.ToVector() + Size.ToVector()).ToPoint())
+        End Function
+
+        Protected Overrides Function MeasureOverride(ByVal AvailableSize As Size) As Size
+            Dim InfSize = New Size(Double.PositiveInfinity, Double.PositiveInfinity)
+
+            Dim Client = Me.GetClientArea(AvailableSize)
+
+            Dim ViewingRectangleQ = Me.GetViewingArea(AvailableSize)
+            If Not ViewingRectangleQ.HasValue Then
+                Return AvailableSize
+            End If
+            Dim ViewingRectangle = ViewingRectangleQ.Value
+
+            Dim Sz0 = New Point()
+
+            Sz0 = ViewingRectangle.ToLocal01(Sz0)
+            Sz0 = Client.FromLocal01(Sz0)
 
             For Each C As UIElement In Me.Children
-                C.Measure(Size)
+                Dim Sz = New Vector(GetW(C), GetH(C))
+
+                If Sz = New Vector() Then
+                    C.Measure(InfSize)
+                Else
+                    Dim Szz = Sz.ToPoint()
+
+                    Szz = ViewingRectangle.ToLocal01(Szz)
+                    Szz = Client.FromLocal01(Szz)
+
+                    Dim Size = (Szz - Sz0).ToSize()
+                    If Double.IsNaN(Size.Width) Or Double.IsNaN(Size.Height) Then
+                        Size = New Size()
+                    End If
+
+                    C.Measure(Size)
+                End If
             Next
 
             Return New Size()
         End Function
 
         Protected Overrides Function ArrangeOverride(FinalSize As Size) As Size
-            Dim Padding = Me.Padding
-            Dim Padding1 = New Point(Padding.Left, Padding.Top)
-            Dim Padding2 = New Point(Padding.Right, Padding.Bottom)
+            Dim Client = Me.GetClientArea(FinalSize)
 
-            Dim Client = New Rect(Padding1,
-                                  (-Padding2.ToVector() + FinalSize.ToVector()).ToPoint())
-
-            Dim TRect = New Rect(FinalSize)
-            Dim Padding1InShape = TRect.ToLocal01(Padding1)
-            Dim Padding2InShape = TRect.ToLocal01(Padding2)
-            TRect = New Rect(Client.Size)
-            Padding1InShape = TRect.FromLocal01(Padding1InShape)
-            Padding2InShape = TRect.FromLocal01(Padding2InShape)
-
-            Dim ShapeRectangle = Me.ShapeRectangle
-            ShapeRectangle.Location += Padding1InShape.ToVector()
-            ShapeRectangle.Size = (ShapeRectangle.Size.ToVector() - Padding1InShape.ToVector() - Padding2InShape.ToVector()).ToSizeSafe()
-
-            Dim ViewingRectangle = Me.ViewingRectangle
-            ViewingRectangle.Intersect(ShapeRectangle)
-
-            If Me.KeepAspectRatio Then
-                Dim RB = ViewingRectangle.GetSmallestBoundOf(Client.Size)
-                If Not RB.Item2.HasValue Then
-                    Console.WriteLine("Error. " & Utilities.CompactStackTrace(5))
-                    Return FinalSize
-                End If
-                ViewingRectangle = RB.Item1
-                If Not ShapeRectangle.Contains(ViewingRectangle) Then
-                    If RB.Item2.Value Then
-                        Dim B1 = ViewingRectangle.Top < ShapeRectangle.Top
-                        Dim B2 = ViewingRectangle.Bottom > ShapeRectangle.Bottom
-                        If B1 Xor B2 Then
-                            If B1 Then
-                                ViewingRectangle.Y = ShapeRectangle.Y
-                            Else
-                                ViewingRectangle.Y = ShapeRectangle.Y + ShapeRectangle.Height - ViewingRectangle.Height
-                            End If
-                        End If
-                    Else
-                        Dim B1 = ViewingRectangle.Left < ShapeRectangle.Left
-                        Dim B2 = ViewingRectangle.Right > ShapeRectangle.Right
-                        If B1 Xor B2 Then
-                            If B1 Then
-                                ViewingRectangle.X = ShapeRectangle.X
-                            Else
-                                ViewingRectangle.X = ShapeRectangle.X + ShapeRectangle.Width - ViewingRectangle.Width
-                            End If
-                        End If
-                    End If
-                End If
-                'If Not ShapeRectangle.Contains(ViewingRectangle) Then
-                '    RB = ShapeRectangle.GetLargestFitOf(Client.Size)
-                '    ViewingRectangle = RB.Item1
-                'End If
+            Dim ViewingRectangleQ = Me.GetViewingArea(FinalSize)
+            If Not ViewingRectangleQ.HasValue Then
+                Return FinalSize
             End If
+            Dim ViewingRectangle = ViewingRectangleQ.Value
 
             For Each C As UIElement In Me.Children
-                'If Double.IsNaN(Left) Then
-                '    Left = 0
-                'End If
-                'If Double.IsNaN(Top) Then
-                '    Top = 0
-                'End If
-
-                'If TypeOf C Is Control Then
-                '    If DirectCast(C, Control).Tag Is "Back" Then
-                '        'Stop
-                '    End If
-                'End If
-
                 Dim Pt = New Point(GetX(C), GetY(C))
                 Dim Sz = New Vector(GetW(C), GetH(C))
-
-                'If Not ViewingRectangle.IntersectsWith(New Rect(Pt, Sz)) Then
-                '    Continue For
-                'End If
 
                 Dim Pt1 = Pt
                 Pt1 = ViewingRectangle.ToLocal01(Pt1)
@@ -113,23 +128,7 @@ Namespace Controls
             Return FinalSize
         End Function
 
-#Region "ShapeRectangle Property"
-        Public Shared ReadOnly ShapeRectangleProperty As DependencyProperty = DependencyProperty.Register("ShapeRectangle", GetType(Rect), GetType(ResizableCanvas), New PropertyMetadata(New Rect(0, 0, 1, 1), AddressOf ShapeRectangle_Changed))
-
-        Private Shared Sub ShapeRectangle_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
-            Dim Self = DirectCast(D, ResizableCanvas)
-            Self.InvalidateArrange()
-        End Sub
-
-        Public Property ShapeRectangle As Rect
-            Get
-                Return DirectCast(Me.GetValue(ShapeRectangleProperty), Rect)
-            End Get
-            Set(value As Rect)
-                Me.SetValue(ShapeRectangleProperty, value)
-            End Set
-        End Property
-#End Region
+        ' ToDo Support Padding and MaxViewingRectangle.
 
 #Region "ViewingRectangle Property"
         Public Shared ReadOnly ViewingRectangleProperty As DependencyProperty = DependencyProperty.Register("ViewingRectangle", GetType(Rect), GetType(ResizableCanvas), New PropertyMetadata(New Rect(0, 0, 1, 1), AddressOf ViewingRectangle_Changed))
@@ -148,6 +147,26 @@ Namespace Controls
             End Set
         End Property
 #End Region
+
+        '#Region "MaxViewingRectangle Property"
+        '        Public Shared ReadOnly MaxViewingRectangleProperty As DependencyProperty = DependencyProperty.Register("MaxViewingRectangle", GetType(Rect?), GetType(ResizableCanvas), New PropertyMetadata(New Rect?(), AddressOf MaxViewingRectangle_Changed))
+
+        '        Private Shared Sub MaxViewingRectangle_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+        '            Dim Self = DirectCast(D, ResizableCanvas)
+
+        '            Dim OldValue = DirectCast(E.OldValue, Rect?)
+        '            Dim NewValue = DirectCast(E.NewValue, Rect?)
+        '        End Sub
+
+        '        Public Property MaxViewingRectangle As Rect?
+        '            Get
+        '                Return DirectCast(Me.GetValue(MaxViewingRectangleProperty), Rect?)
+        '            End Get
+        '            Set(ByVal value As Rect?)
+        '                Me.SetValue(MaxViewingRectangleProperty, value)
+        '            End Set
+        '        End Property
+        '#End Region
 
 #Region "KeepAspectRatio Property"
         Public Shared ReadOnly KeepAspectRatioProperty As DependencyProperty = DependencyProperty.Register("KeepAspectRatio", GetType(Boolean), GetType(ResizableCanvas), New PropertyMetadata(True, AddressOf KeepAspectRatio_Changed))

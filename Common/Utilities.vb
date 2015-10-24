@@ -25,6 +25,7 @@ Public NotInheritable Class Utilities
         Throw New NotSupportedException()
     End Sub
 
+#Region "Escape Support Logic"
     Public Shared Function IsBinaryDigit(ByVal C As Char) As Boolean
         Return C = "0"c OrElse C = "1"c
     End Function
@@ -303,7 +304,9 @@ Public NotInheritable Class Utilities
 
         Return Res.ToString()
     End Function
+#End Region
 
+#Region "ModAdditions Logic"
     ''' <summary>
     ''' Calculates the non-negative reminder of the two numbers specified.
     ''' </summary>
@@ -353,29 +356,11 @@ Public NotInheritable Class Utilities
         End If
         Return A - B
     End Function
+#End Region
 
     Public Shared Function GetStaticRandom() As Random
         Static Random As Random = New Random()
         Return Random
-    End Function
-
-    Public Shared Function CollectionToString(Of T)(ByVal Collection As IEnumerable(Of T)) As String
-        Dim Res As Text.StringBuilder,
-            Enumerator As IEnumerator(Of T)
-
-        Res = New Text.StringBuilder("{")
-
-        Enumerator = Collection.GetEnumerator()
-
-        If Enumerator.MoveNext() Then
-            Res.Append(Enumerator.Current)
-        End If
-
-        Do While Enumerator.MoveNext()
-            Res.Append(", ").Append(Enumerator.Current)
-        Loop
-
-        Return Res.Append("}").ToString()
     End Function
 
     Public Shared Function HexToColor(ByVal Hex As String) As Media.Color
