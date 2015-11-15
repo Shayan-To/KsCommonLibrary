@@ -2,7 +2,7 @@
 
 'Imports System.Collections.Specialized
 
-'Public Class ObservableSet(Of T)
+'Public Class ObservableDictionary(Of T)
 '    Implements ISet(Of T),
 '               INotifyCollectionChanged
 

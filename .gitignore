@@ -6,3 +6,4 @@ OriginalCSCode/
 *.suo
 *~
 .*/
+*.pdb

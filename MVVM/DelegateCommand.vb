@@ -5,6 +5,11 @@ Namespace MVVM
     Public Class DelegateCommand
         Implements ICommand
 
+        Public Sub New(ByVal ExecuteFunc As Action)
+            Me._ExecuteFunc = Sub(O) ExecuteFunc.Invoke()
+            Me._CanExecuteFunc = Nothing
+        End Sub
+
         Public Sub New(ByVal ExecuteFunc As Action(Of Object))
             Me._ExecuteFunc = ExecuteFunc
             Me._CanExecuteFunc = Nothing

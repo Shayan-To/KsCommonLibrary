@@ -2,7 +2,7 @@ Imports System.Runtime.CompilerServices
 
 Public Module CommonExtensions
 
-#Region "CollectionsUtils Logic"
+#Region "CollectionsUtils Group"
     <Extension()>
     Public Function EnumerateSplit(ByVal Str As String, ByVal Options As StringSplitOptions, ParamArray ByVal Chars As Char()) As StringSplitEnumerator
         Return New StringSplitEnumerator(Str, Options, Chars)
@@ -37,14 +37,14 @@ Public Module CommonExtensions
 
         If TypeOf Self Is IList(Of T) Then
             List1 = DirectCast(Self, IList(Of T))
-            Return List1.Item(Utilities.GetStaticRandom().Next(List1.Count))
+            Return List1.Item(Utilities.Math.GetStaticRandom().Next(List1.Count))
         End If
         If TypeOf Self Is IList Then
             List = DirectCast(Self, IList)
-            Return DirectCast(List.Item(Utilities.GetStaticRandom().Next(List.Count)), T)
+            Return DirectCast(List.Item(Utilities.Math.GetStaticRandom().Next(List.Count)), T)
         End If
 
-        Return Self.ElementAt(Utilities.GetStaticRandom().Next(Self.Count()))
+        Return Self.ElementAt(Utilities.Math.GetStaticRandom().Next(Self.Count()))
     End Function
 
     <Extension>
@@ -105,7 +105,7 @@ Public Module CommonExtensions
     End Function
 #End Region
 
-#Region "Geometry Logic"
+#Region "Geometry Group"
 #Region "Elementary"
     <Extension>
     Public Function ToVector(ByVal Self As Size) As Vector
@@ -273,6 +273,91 @@ Public Module CommonExtensions
     <Extension>
     Public Sub MoveCenter(ByVal Self As Rect, ByVal Center As Point)
         Self.Location = Center - Self.Size.ToVector() / 2
+    End Sub
+#End Region
+
+#Region "Reflection Group"
+    <Extension()>
+    Public Function GetRecursiveReferencedAssemblies(ByVal Assembly As Reflection.Assembly) As IEnumerable(Of Reflection.Assembly)
+        Dim Helper = CecilHelper.Instance
+        Return Helper.GetRawRecursiveReferencedAssemblies(Helper.Convert(Assembly)).Select(Function(A) Helper.Convert(A))
+    End Function
+
+    <Extension()>
+    Public Function GetAllReferencedAssemblies(ByVal Assembly As Reflection.Assembly) As IEnumerable(Of Reflection.Assembly)
+        Dim Helper = CecilHelper.Instance
+        Return Helper.GetRawReferencedAssemblyNames(Helper.Convert(Assembly)).Select(Function(A) Helper.Convert(A))
+    End Function
+
+    <Extension()>
+    Public Function GetCustomAttribute(Of TAttribute As Attribute)(ByVal Self As Reflection.MemberInfo) As TAttribute
+        Return DirectCast(Self.GetCustomAttributes(GetType(TAttribute), True).FirstOrDefault(), TAttribute)
+    End Function
+
+    <Extension()>
+    Public Iterator Function WithCustomAttribute(Of TAttribute As Attribute)(ByVal Types As IEnumerable(Of Type)) As IEnumerable(Of VTuple(Of Type, TAttribute))
+        Dim Type = GetType(TAttribute)
+
+        Dim Usage = Type.GetCustomAttribute(Of AttributeUsageAttribute)()
+        If Usage IsNot Nothing Then
+            If Usage.AllowMultiple Then
+                Throw New ArgumentException("The attribute should not allow multiple.")
+            End If
+            If (Usage.ValidOn And (AttributeTargets.Class Or AttributeTargets.Delegate Or AttributeTargets.Enum Or AttributeTargets.GenericParameter Or AttributeTargets.Interface Or AttributeTargets.Module Or AttributeTargets.Struct)) = 0 Then
+                Throw New ArgumentException("The attribute is not valid on types.")
+            End If
+        End If
+
+        For Each T In Types
+            Dim Attribute = T.GetCustomAttribute(Of TAttribute)()
+            If Attribute IsNot Nothing Then
+                Yield VTuple.Create(T, Attribute)
+            End If
+        Next
+    End Function
+
+    <Extension()>
+    Public Iterator Function WithCustomAttribute(Of TAttribute As Attribute)(ByVal Methods As IEnumerable(Of Reflection.MethodInfo)) As IEnumerable(Of VTuple(Of Reflection.MethodInfo, TAttribute))
+        Dim Type = GetType(TAttribute)
+
+        Dim Usage = Type.GetCustomAttribute(Of AttributeUsageAttribute)()
+        If Usage IsNot Nothing Then
+            If Usage.AllowMultiple Then
+                Throw New ArgumentException("The attribute should not allow multiple.")
+            End If
+            If (Usage.ValidOn And AttributeTargets.Method) <> AttributeTargets.Method Then
+                Throw New ArgumentException("The attribute is not valid on methods.")
+            End If
+        End If
+
+        For Each M In Methods
+            Dim Attribute = M.GetCustomAttribute(Of TAttribute)()
+            If Attribute IsNot Nothing Then
+                Yield VTuple.Create(M, Attribute)
+            End If
+        Next
+    End Function
+#End Region
+
+#Region "IO Group"
+    <Extension()>
+    Public Function ReadAll(ByVal Self As IO.Stream, ByVal Buffer As Byte(), ByVal Offset As Integer, ByVal Length As Integer) As Integer
+        Return Utilities.IO.ReadAll(Function(B, O, L) Self.Read(B, O, L), Buffer, Offset, Length)
+    End Function
+
+    <Extension()>
+    Public Sub Write(ByVal Self As IO.Stream, ByVal Stream As IO.Stream)
+        Dim Buffer As Byte()
+
+        Buffer = New Byte(65535) {}
+
+        Do
+            Dim N = Stream.Read(Buffer, 0, Buffer.Length)
+            If N = 0 Then
+                Exit Do
+            End If
+            Self.Write(Buffer, 0, N)
+        Loop
     End Sub
 #End Region
 

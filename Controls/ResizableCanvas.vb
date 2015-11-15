@@ -1,4 +1,3 @@
-Imports System.Windows.Markup
 Imports System.Windows.Media
 Imports Ks.Common
 
@@ -14,7 +13,7 @@ Namespace Controls
             If Me.KeepAspectRatio Then
                 Dim RB = ViewingRectangle.GetSmallestBoundOf(Me.GetClientArea(Size).Size)
                 If Not RB.Item2.HasValue Then
-                    Console.WriteLine("Error. " & Utilities.CompactStackTrace(5))
+                    Console.WriteLine("Error. " & Utilities.Debug.CompactStackTrace(5))
                     Return Nothing
                 End If
                 ViewingRectangle = RB.Item1
@@ -135,7 +134,7 @@ Namespace Controls
 
         Private Shared Sub ViewingRectangle_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
             Dim Self = DirectCast(D, ResizableCanvas)
-            Self.InvalidateArrange()
+            Self.InvalidateMeasure()
         End Sub
 
         Public Property ViewingRectangle As Rect
@@ -173,7 +172,7 @@ Namespace Controls
 
         Private Shared Sub KeepAspectRatio_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
             Dim Self = DirectCast(D, ResizableCanvas)
-            Self.InvalidateArrange()
+            Self.InvalidateMeasure()
         End Sub
 
         Public Property KeepAspectRatio As Boolean
@@ -191,7 +190,7 @@ Namespace Controls
 
         Private Shared Sub Padding_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
             Dim Self = DirectCast(D, ResizableCanvas)
-            Self.InvalidateArrange()
+            Self.InvalidateMeasure()
         End Sub
 
         Public Property Padding As Thickness
@@ -210,7 +209,7 @@ Namespace Controls
         Private Shared Sub Y_Changed(ByVal D As System.Windows.DependencyObject, ByVal E As System.Windows.DependencyPropertyChangedEventArgs)
             Dim C = TryCast(VisualTreeHelper.GetParent(D), ResizableCanvas)
             If C IsNot Nothing Then
-                C.InvalidateArrange()
+                C.InvalidateMeasure()
             End If
         End Sub
 
@@ -226,10 +225,10 @@ Namespace Controls
 #Region "X Property"
         Public Shared ReadOnly XProperty As DependencyProperty = DependencyProperty.RegisterAttached("X", GetType(Double), GetType(ResizableCanvas), New PropertyMetadata(0.0, AddressOf X_Changed))
 
-        Private Shared Sub X_Changed(ByVal D As System.Windows.DependencyObject, ByVal E As System.Windows.DependencyPropertyChangedEventArgs)
+        Private Shared Sub X_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
             Dim C = TryCast(VisualTreeHelper.GetParent(D), ResizableCanvas)
             If C IsNot Nothing Then
-                C.InvalidateArrange()
+                C.InvalidateMeasure()
             End If
         End Sub
 
@@ -248,7 +247,7 @@ Namespace Controls
         Private Shared Sub H_Changed(ByVal D As System.Windows.DependencyObject, ByVal E As System.Windows.DependencyPropertyChangedEventArgs)
             Dim C = TryCast(VisualTreeHelper.GetParent(D), ResizableCanvas)
             If C IsNot Nothing Then
-                C.InvalidateArrange()
+                C.InvalidateMeasure()
             End If
         End Sub
 
@@ -267,7 +266,7 @@ Namespace Controls
         Private Shared Sub W_Changed(ByVal D As System.Windows.DependencyObject, ByVal E As System.Windows.DependencyPropertyChangedEventArgs)
             Dim C = TryCast(VisualTreeHelper.GetParent(D), ResizableCanvas)
             If C IsNot Nothing Then
-                C.InvalidateArrange()
+                C.InvalidateMeasure()
             End If
         End Sub
 

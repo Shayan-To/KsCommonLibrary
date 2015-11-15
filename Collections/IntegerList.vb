@@ -9,7 +9,7 @@ Public Class IntegerList
     Public Sub New(ByVal Start As Integer, ByVal [End] As Integer, Optional ByVal [Step] As Integer = 1)
         Me._Start = Start
         Me._Step = [Step]
-        Me._End = [End] - Utilities.PosMod([End] - Start, [Step]) + [Step]
+        Me._End = [End] - Utilities.Math.PosMod([End] - Start, [Step]) + [Step]
     End Sub
 
 #Region "Start Property"

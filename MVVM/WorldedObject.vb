@@ -1,16 +1,16 @@
 Namespace MVVM
 
-    Public Class WorldedObject(Of T)
+    Public Class WorldedObject(Of TWorld)
         Inherits BindableBase
 
-        Public Sub New(ByVal World As T)
+        Public Sub New(ByVal World As TWorld)
             Me._World = World
         End Sub
 
 #Region "World Property"
-        Private ReadOnly _World As T
+        Private ReadOnly _World As TWorld
 
-        Public ReadOnly Property World As T
+        Public ReadOnly Property World As TWorld
             Get
                 Return Me._World
             End Get

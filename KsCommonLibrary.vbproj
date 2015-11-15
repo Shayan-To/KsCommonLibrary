@@ -47,6 +47,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Cecil">
+      <HintPath>References\Mono.Cecil.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -62,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
+    <Import Include="Mono" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
@@ -74,10 +78,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\AutoStoreDictionary.vb" />
+    <Compile Include="Collections\CreateInstanceList.vb" />
     <Compile Include="Collections\HeapOperations.vb" />
     <Compile Include="Collections\InserstionSorter.vb" />
+    <Compile Include="Collections\PushPopList.vb" />
+    <Compile Include="Collections\NullExpandingDic.vb" />
+    <Compile Include="Collections\NullExpandingList.vb" />
     <Compile Include="Common\AccentColors.vb" />
+    <Compile Include="Common\CecilHelper.vb" />
     <Compile Include="Common\ChangeReporter.vb" />
+    <Compile Include="Common\ClosableBoolean.vb" />
+    <Compile Include="Common\CNullable.vb" />
     <Compile Include="Common\CommonExtensions.vb" />
     <Compile Include="Collections\ComparableCollection.vb" />
     <Compile Include="Collections\ComplementCollection.vb" />
@@ -86,19 +98,34 @@
     <Compile Include="Collections\INotifyingCollection.vb" />
     <Compile Include="Collections\IntegerList.vb" />
     <Compile Include="Collections\ListCollectionRA.vb" />
+    <Compile Include="Common\ConsoleUtilities.vb" />
     <Compile Include="Common\DefaultCacher.vb" />
     <Compile Include="Common\Lazy.vb" />
     <Compile Include="Common\ListShifter.vb" />
     <Compile Include="Common\MergeSorter.vb" />
     <Compile Include="Collections\NotifyingDictionary.vb" />
-    <Compile Include="Collections\ObservableSet.vb" />
+    <Compile Include="Collections\NotifyingSet.vb" />
+    <Compile Include="Common\SampleAttribute.vb" />
     <Compile Include="Common\StringSplitEnumerator.vb" />
+    <Compile Include="Common\Utf8Encoding.vb" />
     <Compile Include="Common\Utilities.vb" />
     <Compile Include="Collections\ValueBag.vb" />
     <Compile Include="Common\VTuple.vb" />
+    <Compile Include="Controls\ContentPage.vb" />
+    <Compile Include="Controls\ContentControl.vb" />
+    <Compile Include="Controls\INavigationView.vb" />
+    <Compile Include="Controls\Page.vb" />
+    <Compile Include="Controls\Popup.vb" />
+    <Compile Include="Controls\PopupPanel.vb" />
+    <Compile Include="Controls\PopupShelter.vb" />
     <Compile Include="Controls\ResizableCanvas.vb" />
+    <Compile Include="Controls\SimplePanel.vb" />
     <Compile Include="Controls\Squaring.vb" />
+    <Compile Include="Controls\Window.vb" />
+    <Compile Include="Controls\WindowBase.vb" />
     <Compile Include="InteractiveConsole.vb" />
+    <Compile Include="MVVM\AddChildList.vb" />
+    <Compile Include="MVVM\KsApplication.vb" />
     <Compile Include="MVVM\BindableBase.vb" />
     <Compile Include="MVVM\CollectionObserver.vb" />
     <Compile Include="MVVM\Converters\BooleanToVisibilityConverter.vb" />
@@ -111,10 +138,13 @@
     <Compile Include="MVVM\Converters\ScaleConverter.vb" />
     <Compile Include="MVVM\Converters\ThicknessConverter.vb" />
     <Compile Include="MVVM\DelegateCommand.vb" />
-    <Compile Include="MVVM\NavigablePageViewModel.vb" />
-    <Compile Include="MVVM\NavigablePageViewModelBase.vb" />
+    <Compile Include="Controls\PopupHolder.vb" />
+    <Compile Include="MVVM\NavigationCommand.vb" />
+    <Compile Include="MVVM\NavigationFrame.vb" />
+    <Compile Include="MVVM\NavigationViewModel.vb" />
+    <Compile Include="MVVM\ViewModel.vb" />
+    <Compile Include="MVVM\ViewModelMetadataAttribute.vb" />
     <Compile Include="MVVM\WindowViewModel.vb" />
-    <Compile Include="MVVM\NavigationWindowViewModel.vb" />
     <Compile Include="MVVM\WorldedObject.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -131,8 +161,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="MVVM\PageViewModel.vb" />
-    <Compile Include="MVVM\ViewModelBase.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
