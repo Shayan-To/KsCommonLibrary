@@ -2,7 +2,7 @@
 
 Namespace MVVM
 
-    Public Class KsApplication
+    Public MustInherit Class KsApplication
         Inherits BindableBase
 
         Public Sub New(ByVal Name As String, ByVal Application As Application)
@@ -12,27 +12,88 @@ Namespace MVVM
             Me.State = KsApplicationState.NotStarted
         End Sub
 
-        Protected Overridable Function CanNavigateToEmpty(ByVal ViewModel As ViewModel) As Boolean
-            Return False
-        End Function
+        Public Sub New()
+            If Not IsInDesignMode Then
+                Throw New InvalidOperationException("Should not call the test constructor from runtime.")
+            End If
 
-        Protected Overridable Sub OnNavigateToEmpty()
-
+            Dim TestData = Me.OnTestConstruct()
+            Me._Name = TestData.Name
+            Me._Settings = TestData.Settings
         End Sub
 
         Protected Overridable Sub OnInitialize()
             Me._Settings = New AutoStoreDictionary(IO.Path.Combine(".", "Settings.dat"))
         End Sub
 
+        Protected Overridable Function OnTestConstruct() As KsApplicationTestData
+            Return New KsApplicationTestData() With {.Name = "", .Settings = New Dictionary(Of String, String)()}
+        End Function
+
         Protected Overridable Sub OnStart()
 
         End Sub
 
+        Protected Overridable Sub OnNavigated(ByVal Parent As NavigationViewModel, ByVal ViewModel As ViewModel)
+
+        End Sub
+
         Protected Overridable Sub OnShuttingDown()
-            Me.Settings.Dispose()
+            TryCast(Me.Settings, IDisposable)?.Dispose()
         End Sub
 
         Protected Overridable Sub OnShutDown()
+
+        End Sub
+
+        Public Sub Run()
+            If Me.State <> KsApplicationState.NotStarted Then
+                Throw New InvalidOperationException("Cannot run an already run KsApplication.")
+            End If
+
+            _Current = Me
+
+            Me.State = KsApplicationState.Initializing
+            Me.OnInitialize()
+
+            Me.Application.ShutdownMode = ShutdownMode.OnMainWindowClose
+            Me.Application.MainWindow = Nothing
+            'Me.Application.StartupUri = Nothing
+
+            Dim Window = DirectCast(Me.Window.View, Window)
+            Window.Resources.MergedDictionaries.Add(Application.Resources)
+
+            Me.Application.Dispatcher.BeginInvoke(Sub()
+                                                      Me.OnStart()
+                                                      Me.State = KsApplicationState.Started
+                                                  End Sub)
+
+            Me.Application.Run(Window)
+
+            Me.State = KsApplicationState.ShutDown
+        End Sub
+
+        Public Sub ShutDown(Optional ByVal ExitCode As Integer = 0)
+            If Me.State <> KsApplicationState.Started Then
+                Throw New InvalidOperationException("The KsApplication has to be started to be able to be shut down.")
+            End If
+
+            If _Current Is Me Then
+                _Current = Nothing
+            End If
+
+            Me.State = KsApplicationState.ShuttingDown
+            Me.OnShuttingDown()
+
+            Me.Application.Shutdown(ExitCode)
+        End Sub
+
+#Region "Navigation Logic"
+        Protected Overridable Function CanNavigateToEmpty(ByVal ViewModel As ViewModel) As Boolean
+            Return False
+        End Function
+
+        Protected Overridable Sub OnNavigateToEmpty()
 
         End Sub
 
@@ -77,48 +138,12 @@ Namespace MVVM
             Return R
         End Function
 
-        Public Sub Run()
-            If Me.State <> KsApplicationState.NotStarted Then
-                Throw New InvalidOperationException("Cannot run an already run KsApplication.")
-            End If
-
-            _Current = Me
-
-            Me.State = KsApplicationState.Initializing
-            Me.OnInitialize()
-
-            Me.Application.ShutdownMode = ShutdownMode.OnMainWindowClose
-            Me.Application.MainWindow = Nothing
-            Me.Application.StartupUri = Nothing
-
-            Me.Application.Dispatcher.BeginInvoke(Sub()
-                                                      Me.OnStart()
-                                                      Me.State = KsApplicationState.Started
-                                                  End Sub)
-
-            Me.Application.Run(DirectCast(Me.Window.View, Windows.Window))
-
-            Me.State = KsApplicationState.ShutDown
-        End Sub
-
-        Public Sub ShutDown(Optional ByVal ExitCode As Integer = 0)
-            If Me.State <> KsApplicationState.Started Then
-                Throw New InvalidOperationException("The KsApplication has to be started to be able to be shut down.")
-            End If
-
-            If _Current Is Me Then
-                _Current = Nothing
-            End If
-
-            Me.State = KsApplicationState.ShuttingDown
-            Me.OnShuttingDown()
-
-            Me.Application.Shutdown(ExitCode)
-        End Sub
-
-#Region "Navigation Logic"
         Private Shared Sub SetViewOnContent(ByVal NavigationView As INavigationView, ByVal View As Page)
             Dim Prev = NavigationView.Content
+            If Prev Is View Then
+                Exit Sub
+            End If
+
             If Prev IsNot Nothing Then
                 Prev.ParentView = Nothing
             End If
@@ -152,20 +177,22 @@ Namespace MVVM
             Return New NavigationFrame(Frame)
         End Function
 
-        Friend Sub NavigateTo(ByVal Navigation As NavigationViewModel, ByVal Navigated As ViewModel, ByVal AddToStack As Boolean)
+        Friend Sub NavigateTo(ByVal Navigation As NavigationViewModel, ByVal Navigated As ViewModel, ByVal AddToStack As Boolean, ByVal ForceToStack As Boolean)
             If Navigated.NavigationFrame IsNot Nothing Then
                 Me.NavigationFrames.Remove(Navigated.NavigationFrame)
             End If
 
             Navigated.NavigationFrame = CreateFrame(Navigation, Navigated)
 
-            If AddToStack And Not GetType(NavigationViewModel).IsAssignableFrom(Navigated.GetType()) Then
+            If ForceToStack Or (AddToStack And Not GetType(NavigationViewModel).IsAssignableFrom(Navigated.GetType())) Then
                 Me.NavigationFrames.Push(Navigated.NavigationFrame)
             End If
 
             Me.CurrentNavigationFrame = Navigated.NavigationFrame
             Me.DoNavigation()
             Me.UpdateCanNavigateBack()
+
+            Me.OnNavigated(Navigation, Navigated)
         End Sub
 
 #Region "NavigateBack Command"
@@ -192,6 +219,9 @@ Namespace MVVM
             Me.CurrentNavigationFrame = Me.NavigationFrames.Peek()
             Me.DoNavigation()
             Me.UpdateCanNavigateBack()
+
+            Me.OnNavigated(DirectCast(Me.CurrentNavigationFrame.Item(1), NavigationViewModel),
+                            Me.CurrentNavigationFrame.Item(0))
         End Sub
 
         Public ReadOnly Property NavigateBackCommand As DelegateCommand
@@ -221,6 +251,11 @@ Namespace MVVM
                 Cur = Frame.Item(I)
                 SetViewOnContent(Prev.NavigationView, DirectCast(Cur.View, Page))
             Next
+
+            Dim CurN = TryCast(Cur, NavigationViewModel)
+            If CurN IsNot Nothing Then
+                SetViewOnContent(CurN.NavigationView, Nothing)
+            End If
         End Sub
 
 #Region "CanNavigateBack Property"
@@ -235,7 +270,26 @@ Namespace MVVM
             End Set
         End Property
 #End Region
+
+#Region "DefaultNavigationViewModel Property"
+        Public Overridable ReadOnly Property DefaultNavigationView As NavigationViewModel
+            Get
+                Return Me._Window
+            End Get
+        End Property
 #End Region
+#End Region
+
+        Public Shared ReadOnly Property IsInDesignMode As Boolean
+            Get
+#If SimulateDesign Then
+                Return True
+#Else
+                Static DepObj As DependencyObject = New DependencyObject()
+                Return ComponentModel.DesignerProperties.GetIsInDesignMode(DepObj)
+#End If
+            End Get
+        End Property
 
 #Region "Name Property"
         Private ReadOnly _Name As String
@@ -281,9 +335,9 @@ Namespace MVVM
 #End Region
 
 #Region "Settings Property"
-        Private _Settings As AutoStoreDictionary
+        Private _Settings As IDictionary(Of String, String)
 
-        Public ReadOnly Property Settings As AutoStoreDictionary
+        Public ReadOnly Property Settings As IDictionary(Of String, String)
             Get
                 Return Me._Settings
             End Get
@@ -325,5 +379,35 @@ Namespace MVVM
         ShutDown
 
     End Enum
+
+    Public Structure KsApplicationTestData
+
+#Region "Name Property"
+        Private _Name As String
+
+        Public Property Name As String
+            Get
+                Return Me._Name
+            End Get
+            Set(ByVal Value As String)
+                Me._Name = Value
+            End Set
+        End Property
+#End Region
+
+#Region "Settings Property"
+        Private _Settings As IDictionary(Of String, String)
+
+        Public Property Settings As IDictionary(Of String, String)
+            Get
+                Return Me._Settings
+            End Get
+            Set(ByVal Value As IDictionary(Of String, String))
+                Me._Settings = Value
+            End Set
+        End Property
+#End Region
+
+    End Structure
 
 End Namespace

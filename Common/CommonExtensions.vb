@@ -2,7 +2,7 @@ Imports System.Runtime.CompilerServices
 
 Public Module CommonExtensions
 
-#Region "CollectionsUtils Group"
+#Region "CollectionUtils Group"
     <Extension()>
     Public Function EnumerateSplit(ByVal Str As String, ByVal Options As StringSplitOptions, ParamArray ByVal Chars As Char()) As StringSplitEnumerator
         Return New StringSplitEnumerator(Str, Options, Chars)
@@ -290,15 +290,41 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
-    Public Function GetCustomAttribute(Of TAttribute As Attribute)(ByVal Self As Reflection.MemberInfo) As TAttribute
-        Return DirectCast(Self.GetCustomAttributes(GetType(TAttribute), True).FirstOrDefault(), TAttribute)
+    Private Function GetCustomAttributeInternal(Of TAttribute As Attribute)(ByVal Self As Reflection.MemberInfo, Optional ByVal Inherit As Boolean = True) As TAttribute
+        Return DirectCast(Self.GetCustomAttributeInternal(GetType(TAttribute), Inherit), TAttribute)
+    End Function
+
+    <Extension()>
+    Private Function GetCustomAttributeInternal(ByVal Self As Reflection.MemberInfo, ByVal AttributeType As Type, Optional ByVal Inherit As Boolean = True) As Attribute
+        Return DirectCast(Self.GetCustomAttributes(AttributeType, Inherit).FirstOrDefault(), Attribute)
+    End Function
+
+    <Extension()>
+    Public Function GetCustomAttribute(Of TAttribute As Attribute)(ByVal Self As Reflection.MemberInfo, Optional ByVal Inherit As Boolean = True) As TAttribute
+        Dim AttributeType = GetType(TAttribute)
+        Dim Usage = AttributeType.GetCustomAttributeInternal(Of AttributeUsageAttribute)()
+        If Usage IsNot Nothing AndAlso Usage.AllowMultiple Then
+            Throw New ArgumentException("The attribute should not allow multiple.")
+        End If
+
+        Return Self.GetCustomAttributeInternal(Of TAttribute)(Inherit)
+    End Function
+
+    <Extension()>
+    Public Function GetCustomAttribute(ByVal Self As Reflection.MemberInfo, ByVal AttributeType As Type, Optional ByVal Inherit As Boolean = True) As Attribute
+        Dim Usage = AttributeType.GetCustomAttributeInternal(Of AttributeUsageAttribute)()
+        If Usage IsNot Nothing AndAlso Usage.AllowMultiple Then
+            Throw New ArgumentException("The attribute should not allow multiple.")
+        End If
+
+        Return Self.GetCustomAttributeInternal(AttributeType, Inherit)
     End Function
 
     <Extension()>
     Public Iterator Function WithCustomAttribute(Of TAttribute As Attribute)(ByVal Types As IEnumerable(Of Type)) As IEnumerable(Of VTuple(Of Type, TAttribute))
         Dim Type = GetType(TAttribute)
 
-        Dim Usage = Type.GetCustomAttribute(Of AttributeUsageAttribute)()
+        Dim Usage = Type.GetCustomAttributeInternal(Of AttributeUsageAttribute)()
         If Usage IsNot Nothing Then
             If Usage.AllowMultiple Then
                 Throw New ArgumentException("The attribute should not allow multiple.")
@@ -309,7 +335,7 @@ Public Module CommonExtensions
         End If
 
         For Each T In Types
-            Dim Attribute = T.GetCustomAttribute(Of TAttribute)()
+            Dim Attribute = T.GetCustomAttributeInternal(Of TAttribute)()
             If Attribute IsNot Nothing Then
                 Yield VTuple.Create(T, Attribute)
             End If
@@ -320,7 +346,7 @@ Public Module CommonExtensions
     Public Iterator Function WithCustomAttribute(Of TAttribute As Attribute)(ByVal Methods As IEnumerable(Of Reflection.MethodInfo)) As IEnumerable(Of VTuple(Of Reflection.MethodInfo, TAttribute))
         Dim Type = GetType(TAttribute)
 
-        Dim Usage = Type.GetCustomAttribute(Of AttributeUsageAttribute)()
+        Dim Usage = Type.GetCustomAttributeInternal(Of AttributeUsageAttribute)()
         If Usage IsNot Nothing Then
             If Usage.AllowMultiple Then
                 Throw New ArgumentException("The attribute should not allow multiple.")
@@ -331,7 +357,7 @@ Public Module CommonExtensions
         End If
 
         For Each M In Methods
-            Dim Attribute = M.GetCustomAttribute(Of TAttribute)()
+            Dim Attribute = M.GetCustomAttributeInternal(Of TAttribute)()
             If Attribute IsNot Nothing Then
                 Yield VTuple.Create(M, Attribute)
             End If

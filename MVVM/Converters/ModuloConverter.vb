@@ -1,21 +1,22 @@
 Imports System.Globalization
 Imports System.Windows.Data
+Imports System.Windows.Media
 
 Namespace MVVM.Converters
 
-    Public Class LinearConverter
+    Public Class ModuloConverter
         Implements IValueConverter
 
         Public Function Convert(ByVal Value As Object, ByVal TargetType As Type, ByVal Parameter As Object, ByVal Culture As CultureInfo) As Object Implements IValueConverter.Convert
-            Return Me.A * CType(Value, Double) + Me.B
+            Dim A = CType(Value, Integer)
+            Dim B = CType(Parameter, Integer)
+
+            Return A Mod B
         End Function
 
         Public Function ConvertBack(ByVal Value As Object, ByVal TargetType As Type, ByVal Parameter As Object, ByVal Culture As CultureInfo) As Object Implements IValueConverter.ConvertBack
-            Return (CType(Value, Double) - Me.B) / Me.A
+            Return Value
         End Function
-
-        Public Property A As Double = 1
-        Public Property B As Double = 0
 
     End Class
 

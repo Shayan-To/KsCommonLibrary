@@ -39,7 +39,7 @@ Namespace Controls
             Dim Shelter As PopupShelter = Nothing
 
             If Popup.HasShelter Then
-                Shelter = New PopupShelter() With {.DataContext = Popup, .Template = Me.ShelterTemplate}
+                Shelter = New PopupShelter() With {.DataContext = Popup, .Style = Me.ShelterStyle}
                 Me.PopupShelterDic.Add(Popup, Shelter)
                 PanelChildren.Insert(LastIndex, Shelter)
                 LastIndex += 1
@@ -108,10 +108,10 @@ Namespace Controls
             Next
         End Sub
 
-        Private Sub UpdateShelterTemplate()
-            Dim ShelterTemplate = Me.ShelterTemplate
+        Private Sub UpdateShelterStyle()
+            Dim ShelterStyle = Me.ShelterStyle
             For Each KV In Me.PopupShelterDic
-                KV.Value.Template = ShelterTemplate
+                KV.Value.Style = ShelterStyle
             Next
         End Sub
 
@@ -124,25 +124,24 @@ Namespace Controls
             End Set
         End Property
 
-#Region "ShelterTemplate Property"
-        Public Shared ReadOnly ShelterTemplateProperty As DependencyProperty = DependencyProperty.Register("ShelterTemplate", GetType(ControlTemplate), GetType(Window), New PropertyMetadata(Nothing, AddressOf ShelterTemplate_Changed))
+#Region "ShelterStyle Property"
+        Public Shared ReadOnly ShelterStyleProperty As DependencyProperty = DependencyProperty.Register("ShelterStyle", GetType(Style), GetType(Window), New PropertyMetadata(Nothing, AddressOf ShelterStyle_Changed))
 
-        Private Shared Sub ShelterTemplate_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+        Private Shared Sub ShelterStyle_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
             Dim Self = DirectCast(D, Window)
 
-            'Dim OldValue = DirectCast(E.OldValue, ControlTemplate)
-            'Dim NewValue = DirectCast(E.NewValue, ControlTemplate)
+            'Dim OldValue = DirectCast(E.OldValue, Style)
+            'Dim NewValue = DirectCast(E.NewValue, Style)
 
-            Self.UpdateShelterTemplate()
+            Self.UpdateShelterStyle()
         End Sub
 
-        Public Property ShelterTemplate As ControlTemplate
+        Public Property ShelterStyle As Style
             Get
-                Return DirectCast(Me.GetValue(ShelterTemplateProperty), ControlTemplate)
+                Return DirectCast(Me.GetValue(ShelterStyleProperty), Style)
             End Get
-            Set(ByVal value As ControlTemplate)
-                Me.SetValue(ShelterTemplateProperty, value)
-                Dim a = New SortedSet(Of Integer)()
+            Set(ByVal value As Style)
+                Me.SetValue(ShelterStyleProperty, value)
             End Set
         End Property
 #End Region

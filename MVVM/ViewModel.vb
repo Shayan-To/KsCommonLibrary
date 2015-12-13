@@ -6,41 +6,59 @@ Namespace MVVM
         Inherits BindableBase
 
         Public Sub New(ByVal KsApplication As KsApplication)
-            Me._KsApplication = KsApplication
-
-            Me._Metadata = Me.GetType().GetCustomAttribute(Of ViewModelMetadataAttribute)()
-            If Me.Metadata Is Nothing Then
-                Throw New InvalidOperationException()
-            End If
-
-            Me._View = CreateView(Me.Metadata.ViewType)
-            Me._View.DataContext = Me
+            Me._KsApplicationBase = KsApplication
+            Me._Metadata = Me.GetMetadata()
         End Sub
 
-        Private Shared Function CreateView(ByVal Type As Type) As Control
-            If Not GetType(INavigationView).IsAssignableFrom(Type) Then
-                Throw New ArgumentException("ViewType must be a Window or a Page.")
+        Public Sub New()
+            If Not KsApplication.IsInDesignMode Then
+                Throw New InvalidOperationException("Should not call the test constructor from runtime.")
             End If
 
-            Return DirectCast(Type.GetConstructor(Utilities.Typed(Of Type).EmptyArray).Invoke(Utilities.Typed(Of Object).EmptyArray), Control)
+            Me._Metadata = Me.GetMetadata()
+            If Me._Metadata.KsApplicationType IsNot Nothing Then
+                Me._KsApplicationBase = DirectCast(Me.Metadata.KsApplicationType.GetConstructor(Utilities.Typed(Of Type).EmptyArray).Invoke(Utilities.Typed(Of Object).EmptyArray), KsApplication)
+            End If
+        End Sub
+
+        Private Function GetMetadata() As ViewModelMetadataAttribute
+            Dim R = Me.GetType().GetCustomAttribute(Of ViewModelMetadataAttribute)()
+            If R Is Nothing Then
+                Throw New InvalidOperationException("Every viewmodel that can be instantiated should have a ViewModelMetadata attribute set to it.")
+            End If
+            If Not (GetType(Window).IsAssignableFrom(R.ViewType) Or GetType(Page).IsAssignableFrom(R.ViewType)) Then
+                Throw New ArgumentException("ViewType must be a Window or a Page.")
+            End If
+            Return R
         End Function
 
 #Region "View Property"
-        Private ReadOnly _View As Control
+        Private _View As Control = Nothing
 
-        Public ReadOnly Property View As Control
+        Public Property View As Control
             Get
+                If Me._View Is Nothing Then
+                    Me._View = DirectCast(Me.Metadata.ViewType.GetConstructor(Utilities.Typed(Of Type).EmptyArray).Invoke(Utilities.Typed(Of Object).EmptyArray), Control)
+                    Me._View.DataContext = Me
+                    Utils.SetViewModel(Me._View, Me)
+                End If
                 Return Me._View
             End Get
+            Friend Set(ByVal Value As Control)
+                If Me._View IsNot Nothing Then
+                    Throw New InvalidOperationException()
+                End If
+                Me._View = Value
+            End Set
         End Property
 #End Region
 
-#Region "KsApplication Property"
-        Private ReadOnly _KsApplication As KsApplication
+#Region "KsApplicationBase Property"
+        Private ReadOnly _KsApplicationBase As KsApplication
 
-        Public ReadOnly Property KsApplication As KsApplication
+        Public ReadOnly Property KsApplicationBase As KsApplication
             Get
-                Return Me._KsApplication
+                Return Me._KsApplicationBase
             End Get
         End Property
 #End Region

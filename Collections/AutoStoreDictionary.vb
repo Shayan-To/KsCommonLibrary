@@ -1,6 +1,4 @@
-﻿Imports System.Windows.Threading
-
-Public Class AutoStoreDictionary
+﻿Public Class AutoStoreDictionary
     Implements IDictionary(Of String, String),
                IFormattable,
                IDisposable
@@ -9,9 +7,13 @@ Public Class AutoStoreDictionary
         Me.New(IO.File.Open(Path, IO.FileMode.OpenOrCreate, IO.FileAccess.ReadWrite, IO.FileShare.Read))
     End Sub
 
-    Public Sub New(ByVal Stream As IO.Stream)
+    Public Sub New(ByVal Stream As IO.Stream, Optional ByVal LeaveOpen As Boolean = False)
         'Me.Dispatcher = Dispatcher.CurrentDispatcher
         Me.Stream = Stream
+        Me.LeaveOpen = LeaveOpen
+
+        Me.StoreThread = New Threading.Thread(AddressOf Me.StoreThreadProcedure) With {.IsBackground = True}
+        Me.StoreThread.Start()
 
         If Stream.Length = 0 Then
             Me.Dic = New Dictionary(Of String, String)()
@@ -33,33 +35,39 @@ Public Class AutoStoreDictionary
         'SyncLock Me.LockObject
         Me.IsWritePending = True
         'End SyncLock
-
-        Dim Thread = New Threading.Thread(AddressOf Me.Store)
-        Thread.IsBackground = True
-        Thread.Start()
+        Me.StoreWaitHandle.Set()
     End Sub
 
-    Private Sub Store()
-        Threading.Thread.Sleep(StoreDelay)
+    Private Sub StoreThreadProcedure()
+        Do
+            Me.StoreWaitHandle.WaitOne()
 
-        SyncLock Me.SerializationLockObject
-            'SyncLock Me.LockObject
-            Me.IsWritePending = False
-            'End SyncLock
-            'Me.Dispatcher.BeginInvoke()
+            If Not Me.IsWritePending Then
+                Assert.True(Me._IsDisposed)
+                Exit Do
+            End If
 
-            Dim SerializedData As String
+            Me.DelayWaitHandle.WaitOne(StoreDelay)
 
-            SyncLock Me.DicLockObject
-                SerializedData = Utilities.Serialization.DicToStirng(Me.Dic)
+            SyncLock Me.SerializationLockObject
+                'SyncLock Me.LockObject
+                Me.IsWritePending = False
+                'End SyncLock
+                'Me.Dispatcher.BeginInvoke()
+
+                Dim SerializedData As String
+
+                SyncLock Me.DicLockObject
+                    SerializedData = Utilities.Serialization.DicToStirng(Me.Dic)
+                End SyncLock
+
+                Dim SerializedBinaryData = Text.Encoding.UTF8.GetBytes(SerializedData)
+                Me.Stream.Seek(0, IO.SeekOrigin.Begin)
+                Me.Stream.Write(SerializedBinaryData, 0, SerializedBinaryData.Length)
+                Me.Stream.SetLength(SerializedBinaryData.Length)
+                Me.Stream.Flush()
             End SyncLock
-
-            Dim SerializedBinaryData = Text.Encoding.UTF8.GetBytes(SerializedData)
-            Me.Stream.Seek(0, IO.SeekOrigin.Begin)
-            Me.Stream.Write(SerializedBinaryData, 0, SerializedBinaryData.Length)
-            Me.Stream.SetLength(SerializedBinaryData.Length)
-            Me.Stream.Flush()
-        End SyncLock
+        Loop
     End Sub
 
 #Region "Dictionary Implementation"
@@ -199,20 +207,37 @@ Public Class AutoStoreDictionary
     End Function
 #End Region
 
-#Region "IDisposable Support"
-    Protected Overridable Sub Dispose(disposing As Boolean)
+#Region "IDisposable Implementation"
+    Protected Overridable Sub Dispose(ByVal Disposing As Boolean)
         If Not Me._IsDisposed Then
-            If disposing Then
+            Me._IsDisposed = True
+
+            If Disposing Then
                 Me.Stream.Dispose()
             End If
 
+            If Me.IsWritePending Then
+                Me.DelayWaitHandle.Set()
+            End If
+
+            Me.StoreWaitHandle.Set()
+            Me.StoreThread.Join()
+
+            Me.StoreWaitHandle.Dispose()
+            Me.DelayWaitHandle.Dispose()
+
             Me.Dic = Nothing
         End If
-        Me._IsDisposed = True
+    End Sub
+
+    Protected Overrides Sub Finalize()
+        Dispose(False)
+        MyBase.Finalize()
     End Sub
 
     Public Sub Dispose() Implements IDisposable.Dispose
         Dispose(True)
+        GC.SuppressFinalize(Me)
     End Sub
 
 #Region "IsDisposed Property"
@@ -234,5 +259,9 @@ Public Class AutoStoreDictionary
     Private IsWritePending As Boolean = False
     'Private ReadOnly Dispatcher As Dispatcher
     Private ReadOnly Stream As IO.Stream
+    Private ReadOnly LeaveOpen As Boolean
+    Private ReadOnly StoreWaitHandle As Threading.EventWaitHandle = New Threading.EventWaitHandle(False, Threading.EventResetMode.AutoReset)
+    Private ReadOnly DelayWaitHandle As Threading.EventWaitHandle = New Threading.EventWaitHandle(False, Threading.EventResetMode.AutoReset)
+    Private ReadOnly StoreThread As Threading.Thread
 
 End Class

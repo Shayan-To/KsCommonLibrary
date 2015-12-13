@@ -8,6 +8,11 @@ Namespace MVVM
 
         Public Sub New(ByVal KsApplication As KsApplication)
             MyBase.New(KsApplication)
+            Me.NavigationFrame = New NavigationFrame({Me})
+        End Sub
+
+        Public Sub New()
+            MyBase.New()
         End Sub
 
     End Class

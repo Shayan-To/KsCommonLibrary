@@ -703,7 +703,7 @@ Public NotInheritable Class Utilities
                 End If
             Next
 
-            Return Res.ToString()
+            Return Res.ToString().Trim()
         End Function
 
         Public Shared Function ReadAll(ByVal Reader As ReadCall, ByVal Buffer As Byte(), ByVal Offset As Integer, ByVal Length As Integer) As Integer
@@ -945,36 +945,31 @@ Public NotInheritable Class Utilities
 #Region "CombineHashCodes Logic"
     Public Shared Function CombineHashCodes(ByVal H1 As Integer,
                                             ByVal H2 As Integer) As Integer
-        Return ((H1 << 5) + H1) Xor H2
+        ' ToDo Return ((H1 << 5) + H1) Xor H2
+        Return ((H1 << 5) Or (H1 >> 27)) Xor H2
     End Function
 
     Public Shared Function CombineHashCodes(ByVal H1 As Integer,
-                                        ByVal H2 As Integer,
-                                        ByVal H3 As Integer) As Integer
+                                            ByVal H2 As Integer,
+                                            ByVal H3 As Integer) As Integer
         Return CombineHashCodes(CombineHashCodes(H1, H2), H3)
     End Function
 
     Public Shared Function CombineHashCodes(ByVal H1 As Integer,
-                                        ByVal H2 As Integer,
-                                        ByVal H3 As Integer,
-                                        ByVal H4 As Integer) As Integer
+                                            ByVal H2 As Integer,
+                                            ByVal H3 As Integer,
+                                            ByVal H4 As Integer) As Integer
         Return CombineHashCodes(CombineHashCodes(H1, H2), CombineHashCodes(H3, H4))
     End Function
 
     Public Shared Function CombineHashCodes(ByVal H1 As Integer,
-                                        ByVal H2 As Integer,
-                                        ByVal H3 As Integer,
-                                        ByVal H4 As Integer,
-                                        ByVal H5 As Integer) As Integer
+                                            ByVal H2 As Integer,
+                                            ByVal H3 As Integer,
+                                            ByVal H4 As Integer,
+                                            ByVal H5 As Integer) As Integer
         Return CombineHashCodes(CombineHashCodes(H1, H2), CombineHashCodes(H3, H4, H5))
     End Function
 #End Region
-
-    Public Shared ReadOnly Property IsInDesignMode As Boolean
-        Get
-            Return ComponentModel.DesignerProperties.GetIsInDesignMode(New DependencyObject())
-        End Get
-    End Property
 
 #Region "Empties Group"
     Public Shared EmptyObject As Object = New Object()
@@ -989,5 +984,9 @@ Public NotInheritable Class Utilities
 
     End Class
 #End Region
+
+    Public Shared Sub DoNothing()
+
+    End Sub
 
 End Class

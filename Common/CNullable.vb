@@ -19,7 +19,7 @@
     Public ReadOnly Property Value As T
         Get
             If Not Me.HasValue Then
-                Throw New InvalidOperationException("There is no value to get.")
+                Throw New NullReferenceException()
             End If
             Return Me._Value
         End Get

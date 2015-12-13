@@ -1,10 +1,11 @@
 Imports System.ComponentModel
 Imports Ks.Common.MVVM
 
-<TypeDescriptionProvider(GetType(ValueBag(Of)))>
+<TypeDescriptionProvider(GetType(ValueBagTypeDescriptionProvider))>
 Public Class ValueBag(Of T)
     Inherits BindableBase
     Implements IDictionary(Of String, T),
+               IDictionary,
                IFormattable
 
     Public ReadOnly Property Count As Integer Implements ICollection(Of KeyValuePair(Of String, T)).Count
@@ -29,7 +30,7 @@ Public Class ValueBag(Of T)
         End Set
     End Property
 
-    Private ReadOnly Property Int_Keys As ICollection(Of String) Implements IDictionary(Of String, T).Keys
+    Private ReadOnly Property IDictionary_2_Keys As ICollection(Of String) Implements IDictionary(Of String, T).Keys
         Get
             Return Me.Dic.Keys
         End Get
@@ -41,7 +42,7 @@ Public Class ValueBag(Of T)
         End Get
     End Property
 
-    Private ReadOnly Property Int_Values As ICollection(Of T) Implements IDictionary(Of String, T).Values
+    Private ReadOnly Property IDictionary_2_Values As ICollection(Of T) Implements IDictionary(Of String, T).Values
         Get
             Return Me.Dic.Values
         End Get
@@ -53,7 +54,58 @@ Public Class ValueBag(Of T)
         End Get
     End Property
 
-    Public Sub Add(ByVal Item As KeyValuePair(Of String, T)) Implements ICollection(Of KeyValuePair(Of String, T)).Add
+    Private Property NonGeneric_Item(key As Object) As Object Implements IDictionary.Item
+        Get
+            Return Me.Item(DirectCast(key, String))
+        End Get
+        Set(value As Object)
+            Me.Item(DirectCast(key, String)) = DirectCast(value, T)
+        End Set
+    End Property
+
+    Private ReadOnly Property IDictionary_Keys As ICollection Implements IDictionary.Keys
+        Get
+            Return Me.Keys
+        End Get
+    End Property
+
+    Private ReadOnly Property IDictionary_Values As ICollection Implements IDictionary.Values
+        Get
+            Return Me.Values
+        End Get
+    End Property
+
+    Private ReadOnly Property IDictionary_IsReadOnly As Boolean Implements IDictionary.IsReadOnly
+        Get
+            Return Me.IsReadOnly
+        End Get
+    End Property
+
+    Private ReadOnly Property IsFixedSize As Boolean Implements IDictionary.IsFixedSize
+        Get
+            Return False
+        End Get
+    End Property
+
+    Private ReadOnly Property ICollection_Count As Integer Implements ICollection.Count
+        Get
+            Return Me.Count
+        End Get
+    End Property
+
+    Private ReadOnly Property SyncRoot As Object Implements ICollection.SyncRoot
+        Get
+            Return Nothing
+        End Get
+    End Property
+
+    Private ReadOnly Property IsSynchronized As Boolean Implements ICollection.IsSynchronized
+        Get
+            Return False
+        End Get
+    End Property
+
+    Private Sub Add(ByVal Item As KeyValuePair(Of String, T)) Implements ICollection(Of KeyValuePair(Of String, T)).Add
         Me.Dic.Add(Item.Key, Item.Value)
         Me.NotifyPropertyChanged(Item.Key)
     End Sub
@@ -67,11 +119,11 @@ Public Class ValueBag(Of T)
         Me.Dic.Clear()
     End Sub
 
-    Public Sub CopyTo(array() As KeyValuePair(Of String, T), arrayIndex As Integer) Implements ICollection(Of KeyValuePair(Of String, T)).CopyTo
+    Private Sub CopyTo(array() As KeyValuePair(Of String, T), arrayIndex As Integer) Implements ICollection(Of KeyValuePair(Of String, T)).CopyTo
         DirectCast(Me.Dic, ICollection(Of KeyValuePair(Of String, T))).CopyTo(array, arrayIndex)
     End Sub
 
-    Public Function Contains(item As KeyValuePair(Of String, T)) As Boolean Implements ICollection(Of KeyValuePair(Of String, T)).Contains
+    Private Function Contains(item As KeyValuePair(Of String, T)) As Boolean Implements ICollection(Of KeyValuePair(Of String, T)).Contains
         Return DirectCast(Me.Dic, ICollection(Of KeyValuePair(Of String, T))).Contains(item)
     End Function
 
@@ -83,7 +135,7 @@ Public Class ValueBag(Of T)
         Return Me.Dic.GetEnumerator()
     End Function
 
-    Private Function Int_GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, T)) Implements IEnumerable(Of KeyValuePair(Of String, T)).GetEnumerator
+    Private Function IEnumerable_1_GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, T)) Implements IEnumerable(Of KeyValuePair(Of String, T)).GetEnumerator
         Return Me.Dic.GetEnumerator()
     End Function
 
@@ -91,7 +143,7 @@ Public Class ValueBag(Of T)
         Return Me.Dic.GetEnumerator()
     End Function
 
-    Public Function Remove(item As KeyValuePair(Of String, T)) As Boolean Implements ICollection(Of KeyValuePair(Of String, T)).Remove
+    Private Function Remove(item As KeyValuePair(Of String, T)) As Boolean Implements ICollection(Of KeyValuePair(Of String, T)).Remove
         Return DirectCast(Me.Dic, ICollection(Of KeyValuePair(Of String, T))).Remove(item)
     End Function
 
@@ -122,6 +174,30 @@ Public Class ValueBag(Of T)
 
         Return R.Append("}"c).ToString()
     End Function
+
+    Private Function Contains(key As Object) As Boolean Implements IDictionary.Contains
+        Return Me.Contains(DirectCast(key, String))
+    End Function
+
+    Private Sub Add(key As Object, value As Object) Implements IDictionary.Add
+        Me.Add(DirectCast(key, String), DirectCast(value, T))
+    End Sub
+
+    Private Sub IDictionary_Clear() Implements IDictionary.Clear
+        Me.Clear()
+    End Sub
+
+    Private Function IDictionary_GetEnumerator() As IDictionaryEnumerator Implements IDictionary.GetEnumerator
+        Return Me.GetEnumerator()
+    End Function
+
+    Private Sub Remove(key As Object) Implements IDictionary.Remove
+        Me.Remove(DirectCast(key, String))
+    End Sub
+
+    Private Sub CopyTo(array As Array, index As Integer) Implements ICollection.CopyTo
+        DirectCast(Me.Dic, IDictionary).CopyTo(array, index)
+    End Sub
 
     Private ReadOnly Dic As Dictionary(Of String, T) = New Dictionary(Of String, T)()
 
@@ -154,21 +230,32 @@ Friend Class ValueBagTypeDescriptor
     Public Sub New(ByVal Descriptor As ICustomTypeDescriptor, ByVal Bag As IDictionary)
         MyBase.New(Descriptor)
         Me.Bag = Bag
-        Dim BagType = Bag?.GetType()
-        If Me.Bag Is Nothing Or BagType.GetGenericTypeDefinition() <> GetType(ValueBag(Of)) Then
-            Throw New ArgumentException()
+        If Me.Bag Is Nothing Then
+            Me.Type = GetType(Object)
+            Exit Sub
+        End If
+        If KsApplication.IsInDesignMode Then
+            Me.Type = GetType(Object)
+            Exit Sub
+        End If
+        Dim BagType = Bag.GetType()
+        If BagType.GetGenericTypeDefinition() <> GetType(ValueBag(Of)) Then
+            ' ToDo Throw New ArgumentException(BagType.GetGenericTypeDefinition().ToString(), "Bag.Type")
         End If
         Me.Type = BagType.GetGenericArguments()(0)
     End Sub
 
     Public Overrides Function GetProperties() As PropertyDescriptorCollection
         Dim BaseProps = MyBase.GetProperties()
-        Dim R = New PropertyDescriptor(BaseProps.Count + Me.Bag.Count - 1) {}
+        Dim R = New PropertyDescriptor(BaseProps.Count + If(Me.Bag?.Count, 1) - 1) {}
         Dim I = 0
         For Each P As PropertyDescriptor In BaseProps
             R(I) = P
             I += 1
         Next
+        If Me.Bag Is Nothing Then
+            Return New PropertyDescriptorCollection(R)
+        End If
         For Each K In Me.Bag.Keys
             R(I) = New ValueBagPropertyDescriptor(DirectCast(K, String), Me.Type)
             I += 1

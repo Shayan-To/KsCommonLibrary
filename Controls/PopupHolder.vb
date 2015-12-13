@@ -5,10 +5,13 @@ Namespace Controls
 
     <ContentProperty("Content")>
     Public Class PopupHolder
-        Inherits Control
+        Inherits UIElement
 
-        Shared Sub New()
-            DefaultStyleKeyProperty.OverrideMetadata(GetType(PopupHolder), New FrameworkPropertyMetadata(GetType(PopupHolder)))
+        Protected Overrides Function MeasureCore(availableSize As Size) As Size
+            Return Nothing
+        End Function
+
+        Protected Overrides Sub ArrangeCore(finalRect As Rect)
         End Sub
 
         Protected Overridable Function ArrangePopup(ByVal Panel As PopupPanel, ByVal PanelSize As Size, ByVal PopupSize As Size) As Rect?

@@ -3,13 +3,14 @@
 Namespace MVVM
 
     Public Class NavigationCommand
+        Inherits DependencyObject
         Implements ICommand
 
         Public Event CanExecuteChanged As EventHandler Implements ICommand.CanExecuteChanged
 
         Public Sub Execute(parameter As Object) Implements ICommand.Execute
             Dim KsApplication = Me.GetKsApplication()
-            KsApplication.NavigateTo(Me.GetParent(), KsApplication.GetViewModel(Me.ViewType), Me.AddToStack)
+            KsApplication.NavigateTo(Me.GetParent(), KsApplication.GetViewModel(Me.ViewType), Me.AddToStack, Me.ForceToStack)
         End Sub
 
         Public Function CanExecute(parameter As Object) As Boolean Implements ICommand.CanExecute
@@ -17,91 +18,136 @@ Namespace MVVM
         End Function
 
         Private Function GetParent() As NavigationViewModel
-            If Me._Parent IsNot Nothing Then
-                Return Me._Parent
+            Dim T = Me.Parent
+            If T IsNot Nothing Then
+                Return T
             End If
-            If Me._ParentType IsNot Nothing Then
-                Return DirectCast(Me.GetKsApplication().GetViewModel(Me._ParentType), NavigationViewModel)
+            Dim T2 = Me.ParentType
+            If T2 IsNot Nothing Then
+                Return DirectCast(Me.GetKsApplication().GetViewModel(T2), NavigationViewModel)
             End If
-            Return Me.GetKsApplication().Window
+            Return Me.GetKsApplication().DefaultNavigationView
+        End Function
+
+        Private Function GetKsApplication() As KsApplication
+            Dim T = Me.KsApplication
+            If T IsNot Nothing Then
+                Return T
+            End If
+            Return KsApplication.Current
         End Function
 
 #Region "AddToStack Property"
-        Private _AddToStack As Boolean = True
+        Public Shared ReadOnly AddToStackProperty As DependencyProperty = DependencyProperty.Register("AddToStack", GetType(Boolean), GetType(NavigationCommand), New PropertyMetadata(True))
 
         Public Property AddToStack As Boolean
             Get
-                Return Me._AddToStack
+                Return DirectCast(Me.GetValue(AddToStackProperty), Boolean)
             End Get
-            Set(ByVal Value As Boolean)
-                Me._AddToStack = Value
+            Set(ByVal value As Boolean)
+                Me.SetValue(AddToStackProperty, value)
+            End Set
+        End Property
+#End Region
+
+#Region "ForceToStack Property"
+        Public Shared ReadOnly ForceToStackProperty As DependencyProperty = DependencyProperty.Register("ForceToStack", GetType(Boolean), GetType(NavigationCommand), New PropertyMetadata(False))
+
+        Public Property ForceToStack As Boolean
+            Get
+                Return DirectCast(Me.GetValue(ForceToStackProperty), Boolean)
+            End Get
+            Set(ByVal value As Boolean)
+                Me.SetValue(ForceToStackProperty, value)
             End Set
         End Property
 #End Region
 
 #Region "ViewType Property"
-        Private _ViewType As Type
+        Public Shared ReadOnly ViewTypeProperty As DependencyProperty = DependencyProperty.Register("ViewType", GetType(Type), GetType(NavigationCommand), New PropertyMetadata(Nothing, Nothing, AddressOf ViewType_Coerce))
+
+        Private Shared Function ViewType_Coerce(ByVal D As DependencyObject, ByVal BaseValue As Object) As Object
+            Dim Value = TryCast(BaseValue, Type)
+
+            If Value Is Nothing OrElse Not GetType(ViewModel).IsAssignableFrom(Value) Then
+                Return Nothing
+            End If
+
+            Return BaseValue
+        End Function
 
         Public Property ViewType As Type
             Get
-                Return Me._ViewType
+                Return DirectCast(Me.GetValue(ViewTypeProperty), Type)
             End Get
-            Set(ByVal Value As Type)
-                Me._ViewType = Value
+            Set(ByVal value As Type)
+                Me.SetValue(ViewTypeProperty, value)
             End Set
         End Property
 #End Region
 
 #Region "ParentType Property"
-        Private _ParentType As Type
+        Public Shared ReadOnly ParentTypeProperty As DependencyProperty = DependencyProperty.Register("ParentType", GetType(Type), GetType(NavigationCommand), New PropertyMetadata(Nothing, Nothing, AddressOf ParentType_Coerce))
+
+        Private Shared Function ParentType_Coerce(ByVal D As DependencyObject, ByVal BaseValue As Object) As Object
+            Dim Self = DirectCast(D, NavigationCommand)
+
+            If Self.Parent IsNot Nothing Then
+                Return Nothing
+            End If
+
+            Dim Value = TryCast(BaseValue, Type)
+            If Value Is Nothing OrElse Not GetType(NavigationViewModel).IsAssignableFrom(Value) Then
+                Return Nothing
+            End If
+
+            Return BaseValue
+        End Function
 
         Public Property ParentType As Type
             Get
-                Return Me._ParentType
+                Return DirectCast(Me.GetValue(ParentTypeProperty), Type)
             End Get
-            Set(ByVal Value As Type)
-                If Me._Parent IsNot Nothing And Value IsNot Nothing Then
-                    Throw New InvalidOperationException("Cannot set both Parent and ParentType.")
-                End If
-                Me._ParentType = Value
+            Set(ByVal value As Type)
+                Me.SetValue(ParentTypeProperty, value)
             End Set
         End Property
 #End Region
 
 #Region "Parent Property"
-        Private _Parent As NavigationViewModel
+        Public Shared ReadOnly ParentProperty As DependencyProperty = DependencyProperty.Register("Parent", GetType(NavigationViewModel), GetType(NavigationCommand), New PropertyMetadata(Nothing, Nothing, AddressOf Parent_Coerce))
+
+        Private Shared Function Parent_Coerce(ByVal D As DependencyObject, ByVal BaseValue As Object) As Object
+            Dim Self = DirectCast(D, NavigationCommand)
+
+            If Self.ParentType IsNot Nothing Then
+                Return Nothing
+            End If
+
+            Return BaseValue
+        End Function
 
         Public Property Parent As NavigationViewModel
             Get
-                Return Me._Parent
+                Return DirectCast(Me.GetValue(ParentProperty), NavigationViewModel)
             End Get
-            Set(ByVal Value As NavigationViewModel)
-                If Me._ParentType IsNot Nothing And Value IsNot Nothing Then
-                    Throw New InvalidOperationException("Cannot set both Parent and ParentType.")
-                End If
-                Me._Parent = Value
+            Set(ByVal value As NavigationViewModel)
+                Me.SetValue(ParentProperty, value)
             End Set
         End Property
 #End Region
 
 #Region "KsApplication Property"
-        Private _KsApplication As KsApplication
+        Public Shared ReadOnly KsApplicationProperty As DependencyProperty = DependencyProperty.Register("KsApplication", GetType(KsApplication), GetType(NavigationCommand), New PropertyMetadata(Nothing))
 
         Public Property KsApplication As KsApplication
             Get
-                Return Me._KsApplication
+                Return DirectCast(Me.GetValue(KsApplicationProperty), KsApplication)
             End Get
-            Set(ByVal Value As KsApplication)
-                Me._KsApplication = Value
+            Set(ByVal value As KsApplication)
+                Me.SetValue(KsApplicationProperty, value)
             End Set
         End Property
-
-        Private Function GetKsApplication() As KsApplication
-            If Me._KsApplication Is Nothing Then
-                Return Me._KsApplication
-            End If
-            Return KsApplication.Current
-        End Function
 #End Region
 
     End Class

@@ -1,4 +1,5 @@
-﻿Public Structure ClosableBoolean
+﻿<Obsolete("Cannot be used due to stupidity of the compiler.")>
+Public Structure ClosableBoolean
     Implements IDisposable
 
     Public Shared Widening Operator CType(ByVal O As ClosableBoolean) As Boolean

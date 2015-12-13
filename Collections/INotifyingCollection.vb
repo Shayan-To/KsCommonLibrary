@@ -229,7 +229,7 @@ Public Interface INotifyingCollection(Of T)
 
 End Interface
 
-Public Class NotifyingCollection(Of T)
+Public Class NotifyingList(Of T)
     Inherits ObservableCollection(Of T)
     Implements INotifyingCollection(Of T)
 

@@ -46,6 +46,18 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DesignSimulate|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\DesignSimulate\</OutputPath>
+    <DefineConstants>VB_VERSION=11.0,SimulateDesign=True</DefineConstants>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil">
       <HintPath>References\Mono.Cecil.dll</HintPath>
@@ -82,10 +94,16 @@
     <Compile Include="Collections\CreateInstanceList.vb" />
     <Compile Include="Collections\HeapOperations.vb" />
     <Compile Include="Collections\InserstionSorter.vb" />
+    <Compile Include="Collections\MergedCollection.vb" />
+    <Compile Include="Collections\NullAcceptingDic.vb" />
+    <Compile Include="Collections\MergedList.vb" />
     <Compile Include="Collections\PushPopList.vb" />
     <Compile Include="Collections\NullExpandingDic.vb" />
     <Compile Include="Collections\NullExpandingList.vb" />
     <Compile Include="Common\AccentColors.vb" />
+    <Compile Include="Common\Assert.vb" />
+    <Compile Include="Common\InvalidImplementationException.vb" />
+    <Compile Include="Common\AssertionException.vb" />
     <Compile Include="Common\CecilHelper.vb" />
     <Compile Include="Common\ChangeReporter.vb" />
     <Compile Include="Common\ClosableBoolean.vb" />
@@ -100,6 +118,7 @@
     <Compile Include="Collections\ListCollectionRA.vb" />
     <Compile Include="Common\ConsoleUtilities.vb" />
     <Compile Include="Common\DefaultCacher.vb" />
+    <Compile Include="Common\Freezable.vb" />
     <Compile Include="Common\Lazy.vb" />
     <Compile Include="Common\ListShifter.vb" />
     <Compile Include="Common\MergeSorter.vb" />
@@ -110,10 +129,13 @@
     <Compile Include="Common\Utf8Encoding.vb" />
     <Compile Include="Common\Utilities.vb" />
     <Compile Include="Collections\ValueBag.vb" />
+    <Compile Include="Common\Verify.vb" />
     <Compile Include="Common\VTuple.vb" />
-    <Compile Include="Controls\ContentPage.vb" />
+    <Compile Include="Controls\NavigationPage.vb" />
     <Compile Include="Controls\ContentControl.vb" />
-    <Compile Include="Controls\INavigationView.vb" />
+    <Compile Include="MVVM\Converters\ModuloConverter.vb" />
+    <Compile Include="MVVM\INavigationView.vb" />
+    <Compile Include="Controls\NoChromeWindow.vb" />
     <Compile Include="Controls\Page.vb" />
     <Compile Include="Controls\Popup.vb" />
     <Compile Include="Controls\PopupPanel.vb" />
@@ -139,9 +161,11 @@
     <Compile Include="MVVM\Converters\ThicknessConverter.vb" />
     <Compile Include="MVVM\DelegateCommand.vb" />
     <Compile Include="Controls\PopupHolder.vb" />
+    <Compile Include="MVVM\Navigation.vb" />
     <Compile Include="MVVM\NavigationCommand.vb" />
     <Compile Include="MVVM\NavigationFrame.vb" />
     <Compile Include="MVVM\NavigationViewModel.vb" />
+    <Compile Include="MVVM\Utils.vb" />
     <Compile Include="MVVM\ViewModel.vb" />
     <Compile Include="MVVM\ViewModelMetadataAttribute.vb" />
     <Compile Include="MVVM\WindowViewModel.vb" />

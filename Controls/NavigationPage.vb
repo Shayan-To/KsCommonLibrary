@@ -2,12 +2,12 @@
 
 Namespace Controls
 
-    Public Class ContentPage
+    Public Class NavigationPage
         Inherits Page
         Implements INavigationView
 
         Shared Sub New()
-            DefaultStyleKeyProperty.OverrideMetadata(GetType(ContentPage), New FrameworkPropertyMetadata(GetType(ContentPage)))
+            DefaultStyleKeyProperty.OverrideMetadata(GetType(NavigationPage), New FrameworkPropertyMetadata(GetType(NavigationPage)))
         End Sub
 
         Private Property INavigationView_Content As Page Implements INavigationView.Content

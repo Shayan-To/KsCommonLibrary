@@ -83,4 +83,14 @@ Public Class MergeSorter(Of T)
         Me.Sort(List, Generic.Comparer(Of T).Default)
     End Sub
 
+#Region "Instance Property"
+    Private Shared ReadOnly _Instance As MergeSorter(Of T) = New MergeSorter(Of T)()
+
+    Public Shared ReadOnly Property Instance As MergeSorter(Of T)
+        Get
+            Return _Instance
+        End Get
+    End Property
+#End Region
+
 End Class

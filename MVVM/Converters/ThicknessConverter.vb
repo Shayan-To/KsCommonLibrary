@@ -28,19 +28,19 @@ Namespace MVVM.Converters
                 V = Th.Left / Me.Coefficients.Left
             End If
             If Me.Coefficients.Top <> 0 Then
-                If V.HasValue And V.Value = Th.Top / Me.Coefficients.Top Then
+                If V.HasValue And V.Value <> Th.Top / Me.Coefficients.Top Then
                     Return 0
                 End If
                 V = Th.Top / Me.Coefficients.Top
             End If
             If Me.Coefficients.Right <> 0 Then
-                If V.HasValue And V.Value = Th.Right / Me.Coefficients.Right Then
+                If V.HasValue And V.Value <> Th.Right / Me.Coefficients.Right Then
                     Return 0
                 End If
                 V = Th.Right / Me.Coefficients.Right
             End If
             If Me.Coefficients.Bottom <> 0 Then
-                If V.HasValue And V.Value = Th.Bottom / Me.Coefficients.Bottom Then
+                If V.HasValue And V.Value <> Th.Bottom / Me.Coefficients.Bottom Then
                     Return 0
                 End If
                 V = Th.Bottom / Me.Coefficients.Bottom

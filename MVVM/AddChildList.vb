@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Markup
 
 Public Class AddChildList(Of T)
-    Inherits List(Of T)
+    Inherits NotifyingList(Of T)
     Implements IAddChild
 
     Public Sub AddChild(value As Object) Implements IAddChild.AddChild

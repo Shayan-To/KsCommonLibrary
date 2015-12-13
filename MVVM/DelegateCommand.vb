@@ -10,6 +10,11 @@ Namespace MVVM
             Me._CanExecuteFunc = Nothing
         End Sub
 
+        Public Sub New(ByVal ExecuteFunc As Action, ByVal CanExecuteFunc As Func(Of Boolean))
+            Me._ExecuteFunc = Sub(O) ExecuteFunc.Invoke()
+            Me._CanExecuteFunc = Function(O) CanExecuteFunc.Invoke()
+        End Sub
+
         Public Sub New(ByVal ExecuteFunc As Action(Of Object))
             Me._ExecuteFunc = ExecuteFunc
             Me._CanExecuteFunc = Nothing
