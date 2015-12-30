@@ -1,4 +1,6 @@
-﻿Namespace MVVM
+﻿Imports System.Windows.Controls.Primitives
+
+Namespace MVVM
 
     Public Class Utils
         Inherits DependencyObject
@@ -188,6 +190,202 @@
         'Private Shared ReadOnly InCheckParents As HashSet(Of DependencyObject) = New HashSet(Of DependencyObject)()
         Private Shared ReadOnly CheckedParents As HashSet(Of DependencyObject) = New HashSet(Of DependencyObject)()
 #End Region
+
+#Region "UpTPProp1 Property"
+        Public Shared ReadOnly UpTPProp1Property As DependencyProperty = DependencyProperty.RegisterAttached("UpTPProp1", GetType(Object), GetType(Utils), New PropertyMetadata(Nothing, AddressOf UpTPProp1_Changed))
+
+        Private Shared Sub UpTPProp1_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+            Dim Self = DirectCast(D, FrameworkElement)
+
+            'Dim OldValue = DirectCast(E.OldValue, Object)
+            Dim NewValue = DirectCast(E.NewValue, Object)
+
+            If Self.TemplatedParent IsNot Nothing Then
+                SetUpTPProp1(Self.TemplatedParent, NewValue)
+            End If
+        End Sub
+
+        Public Shared Function GetUpTPProp1(ByVal Element As DependencyObject) As Object
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Return DirectCast(Element.GetValue(UpTPProp1Property), Object)
+        End Function
+
+        Public Shared Sub SetUpTPProp1(ByVal Element As DependencyObject, ByVal Value As Object)
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Element.SetValue(UpTPProp1Property, Value)
+        End Sub
+#End Region
+
+#Region "UpTPProp2 Property"
+        Public Shared ReadOnly UpTPProp2Property As DependencyProperty = DependencyProperty.RegisterAttached("UpTPProp2", GetType(Object), GetType(Utils), New PropertyMetadata(Nothing, AddressOf UpTPProp2_Changed))
+
+        Private Shared Sub UpTPProp2_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+            Dim Self = DirectCast(D, FrameworkElement)
+
+            'Dim OldValue = DirectCast(E.OldValue, Object)
+            Dim NewValue = DirectCast(E.NewValue, Object)
+
+            If Self.TemplatedParent IsNot Nothing Then
+                SetUpTPProp2(Self.TemplatedParent, NewValue)
+            End If
+        End Sub
+
+        Public Shared Function GetUpTPProp2(ByVal Element As DependencyObject) As Object
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Return DirectCast(Element.GetValue(UpTPProp2Property), Object)
+        End Function
+
+        Public Shared Sub SetUpTPProp2(ByVal Element As DependencyObject, ByVal Value As Object)
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Element.SetValue(UpTPProp2Property, Value)
+        End Sub
+#End Region
+
+#Region "UpTPProp3 Property"
+        Public Shared ReadOnly UpTPProp3Property As DependencyProperty = DependencyProperty.RegisterAttached("UpTPProp3", GetType(Object), GetType(Utils), New PropertyMetadata(Nothing, AddressOf UpTPProp3_Changed))
+
+        Private Shared Sub UpTPProp3_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+            Dim Self = DirectCast(D, FrameworkElement)
+
+            'Dim OldValue = DirectCast(E.OldValue, Object)
+            Dim NewValue = DirectCast(E.NewValue, Object)
+
+            If Self.TemplatedParent IsNot Nothing Then
+                SetUpTPProp3(Self.TemplatedParent, NewValue)
+            End If
+        End Sub
+
+        Public Shared Function GetUpTPProp3(ByVal Element As DependencyObject) As Object
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Return DirectCast(Element.GetValue(UpTPProp3Property), Object)
+        End Function
+
+        Public Shared Sub SetUpTPProp3(ByVal Element As DependencyObject, ByVal Value As Object)
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Element.SetValue(UpTPProp3Property, Value)
+        End Sub
+#End Region
+
+#Region "Prop1 Property"
+        Public Shared ReadOnly Prop1Property As DependencyProperty = DependencyProperty.RegisterAttached("Prop1", GetType(Object), GetType(Utils), New PropertyMetadata(Nothing))
+
+        Public Shared Function GetProp1(ByVal Element As DependencyObject) As Object
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Return DirectCast(Element.GetValue(Prop1Property), Object)
+        End Function
+
+        Public Shared Sub SetProp1(ByVal Element As DependencyObject, ByVal Value As Object)
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Element.SetValue(Prop1Property, Value)
+        End Sub
+#End Region
+
+#Region "Prop2 Property"
+        Public Shared ReadOnly Prop2Property As DependencyProperty = DependencyProperty.RegisterAttached("Prop2", GetType(Object), GetType(Utils), New PropertyMetadata(Nothing))
+
+        Public Shared Function GetProp2(ByVal Element As DependencyObject) As Object
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Return DirectCast(Element.GetValue(Prop2Property), Object)
+        End Function
+
+        Public Shared Sub SetProp2(ByVal Element As DependencyObject, ByVal Value As Object)
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Element.SetValue(Prop2Property, Value)
+        End Sub
+#End Region
+
+#Region "Prop3 Property"
+        Public Shared ReadOnly Prop3Property As DependencyProperty = DependencyProperty.RegisterAttached("Prop3", GetType(Object), GetType(Utils), New PropertyMetadata(Nothing))
+
+        Public Shared Function GetProp3(ByVal Element As DependencyObject) As Object
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Return DirectCast(Element.GetValue(Prop3Property), Object)
+        End Function
+
+        Public Shared Sub SetProp3(ByVal Element As DependencyObject, ByVal Value As Object)
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Element.SetValue(Prop3Property, Value)
+        End Sub
+#End Region
+
+#Region "Prop4 Property"
+        Public Shared ReadOnly Prop4Property As DependencyProperty = DependencyProperty.RegisterAttached("Prop4", GetType(Object), GetType(Utils), New PropertyMetadata(Nothing))
+
+        Public Shared Function GetProp4(ByVal Element As DependencyObject) As Object
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Return DirectCast(Element.GetValue(Prop4Property), Object)
+        End Function
+
+        Public Shared Sub SetProp4(ByVal Element As DependencyObject, ByVal Value As Object)
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Element.SetValue(Prop4Property, Value)
+        End Sub
+#End Region
+
+#Region "Prop5 Property"
+        Public Shared ReadOnly Prop5Property As DependencyProperty = DependencyProperty.RegisterAttached("Prop5", GetType(Object), GetType(Utils), New PropertyMetadata(Nothing))
+
+        Public Shared Function GetProp5(ByVal Element As DependencyObject) As Object
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Return DirectCast(Element.GetValue(Prop5Property), Object)
+        End Function
+
+        Public Shared Sub SetProp5(ByVal Element As DependencyObject, ByVal Value As Object)
+            If Element Is Nothing Then
+                Throw New ArgumentNullException("Element")
+            End If
+
+            Element.SetValue(Prop5Property, Value)
+        End Sub
+#End Region
+
+        Public Const [True] As Boolean = True
+        Public Const [False] As Boolean = False
 
     End Class
 

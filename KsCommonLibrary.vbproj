@@ -58,6 +58,40 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>VB_VERSION=11.0</DefineConstants>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DesignSimulate|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\DesignSimulate\</OutputPath>
+    <DefineConstants>VB_VERSION=11.0,SimulateDesign=True</DefineConstants>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil">
       <HintPath>References\Mono.Cecil.dll</HintPath>
@@ -95,13 +129,22 @@
     <Compile Include="Collections\HeapOperations.vb" />
     <Compile Include="Collections\InserstionSorter.vb" />
     <Compile Include="Collections\MergedCollection.vb" />
+    <Compile Include="Collections\MultiDictionary.vb" />
+    <Compile Include="Collections\MultiDictionaryList.vb" />
     <Compile Include="Collections\NullAcceptingDic.vb" />
     <Compile Include="Collections\MergedList.vb" />
     <Compile Include="Collections\PushPopList.vb" />
     <Compile Include="Collections\NullExpandingDic.vb" />
     <Compile Include="Collections\NullExpandingList.vb" />
+    <Compile Include="Collections\ReadOnlyCollection.vb" />
     <Compile Include="Common\AccentColors.vb" />
     <Compile Include="Common\Assert.vb" />
+    <Compile Include="Common\CsvData.vb" />
+    <Compile Include="Common\CsvEntry.vb" />
+    <Compile Include="Common\CsvEntryList.vb" />
+    <Compile Include="Common\CsvColumn.vb" />
+    <Compile Include="Common\CsvColumnList.vb" />
+    <Compile Include="Common\CsvParser.vb" />
     <Compile Include="Common\InvalidImplementationException.vb" />
     <Compile Include="Common\AssertionException.vb" />
     <Compile Include="Common\CecilHelper.vb" />
@@ -133,7 +176,9 @@
     <Compile Include="Common\VTuple.vb" />
     <Compile Include="Controls\NavigationPage.vb" />
     <Compile Include="Controls\ContentControl.vb" />
+    <Compile Include="Controls\ListBox.vb" />
     <Compile Include="MVVM\Converters\ModuloConverter.vb" />
+    <Compile Include="MVVM\Converters\AdderConverter.vb" />
     <Compile Include="MVVM\INavigationView.vb" />
     <Compile Include="Controls\NoChromeWindow.vb" />
     <Compile Include="Controls\Page.vb" />

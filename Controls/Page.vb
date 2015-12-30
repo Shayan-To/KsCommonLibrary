@@ -2,6 +2,7 @@
 
 Namespace Controls
 
+    <ComponentModel.DesignTimeVisible(False)>
     Public Class Page
         Inherits Windows.Controls.ContentControl
 

@@ -1,5 +1,6 @@
 ﻿Public Class MergedCollection(Of T)
-    Implements ICollection(Of T)
+    Implements ICollection(Of T),
+               ICollection
 
     Public Sub New(ByVal Collections As IEnumerable(Of ICollection(Of T)))
         Me.Collections = Collections.ToArray()
@@ -21,6 +22,24 @@
         End Get
     End Property
 
+    Private ReadOnly Property ICollection_Count As Integer Implements ICollection.Count
+        Get
+            Return Me.Count
+        End Get
+    End Property
+
+    Public ReadOnly Property SyncRoot As Object Implements ICollection.SyncRoot
+        Get
+            Throw New NotSupportedException()
+        End Get
+    End Property
+
+    Public ReadOnly Property IsSynchronized As Boolean Implements ICollection.IsSynchronized
+        Get
+            Return False
+        End Get
+    End Property
+
     Public Sub Add(item As T) Implements ICollection(Of T).Add
         Throw New NotSupportedException()
     End Sub
@@ -37,7 +56,12 @@
     End Sub
 
     Public Function Contains(item As T) As Boolean Implements ICollection(Of T).Contains
-        Throw New NotSupportedException()
+        For Each L In Me.Collections
+            If L.Contains(item) Then
+                Return True
+            End If
+        Next
+        Return False
     End Function
 
     Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
@@ -55,6 +79,15 @@
     Private Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
         Return Me.GetEnumerator()
     End Function
+
+    Public Sub CopyTo(array As Array, index As Integer) Implements ICollection.CopyTo
+        For Each L In Me.Collections
+            For Each I In L
+                array.SetValue(I, index)
+                index += 1
+            Next
+        Next
+    End Sub
 
     Private ReadOnly Collections As ICollection(Of T)()
 

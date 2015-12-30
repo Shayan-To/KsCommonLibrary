@@ -985,6 +985,17 @@ Public NotInheritable Class Utilities
     End Class
 #End Region
 
+    Public Shared Iterator Function Range(ByVal Start As Integer, ByVal [End] As Integer, Optional ByVal [Step] As Integer = 1) As IEnumerable(Of Integer)
+        Verify.TrueArg([Step] > 0, "Step")
+        For Start = Start To [End] - 1 Step [Step]
+            Yield Start
+        Next
+    End Function
+
+    Public Shared Function Range(ByVal [End] As Integer) As IEnumerable(Of Integer)
+        Return Range(0, [End])
+    End Function
+
     Public Shared Sub DoNothing()
 
     End Sub

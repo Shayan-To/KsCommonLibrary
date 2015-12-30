@@ -1,4 +1,5 @@
 ﻿Public Class Freezable
+    Inherits MVVM.BindableBase
 
     Public Sub Freeze()
         If Me.FreezeCalled Then

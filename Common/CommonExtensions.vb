@@ -103,6 +103,16 @@ Public Module CommonExtensions
 
         Return Res.Append("}").ToString()
     End Function
+
+    <Extension()>
+    Public Function AsReadOnly(Of T)(ByVal Self As IList(Of T)) As ObjectModel.ReadOnlyCollection(Of T)
+        Return New ObjectModel.ReadOnlyCollection(Of T)(Self)
+    End Function
+
+    <Extension()>
+    Public Function AsReadOnly(Of T)(ByVal Self As ICollection(Of T)) As ReadOnlyCollection(Of T)
+        Return New ReadOnlyCollection(Of T)(Self)
+    End Function
 #End Region
 
 #Region "Geometry Group"
@@ -290,6 +300,81 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
+    Public Function CreateInstance(ByVal Self As Type) As Object
+        Return Self.GetConstructor(Utilities.Typed(Of Type).EmptyArray).Invoke(Utilities.Typed(Of Object).EmptyArray)
+    End Function
+
+    <Extension()>
+    Public Function CreateInstance(Of T1)(ByVal Self As Type, ByVal Arg1 As T1) As Object
+        Return Self.GetConstructor({GetType(T1)}).Invoke({Arg1})
+    End Function
+
+    <Extension()>
+    Public Function CreateInstance(Of T1, T2)(ByVal Self As Type, ByVal Arg1 As T1, ByVal Arg2 As T2) As Object
+        Return Self.GetConstructor({GetType(T1), GetType(T2)}).Invoke({Arg1, Arg2})
+    End Function
+
+    <Extension()>
+    Public Function CreateInstance(Of T1, T2, T3)(ByVal Self As Type, ByVal Arg1 As T1, ByVal Arg2 As T2, ByVal Arg3 As T3) As Object
+        Return Self.GetConstructor({GetType(T1), GetType(T2), GetType(T3)}).Invoke({Arg1, Arg2, Arg3})
+    End Function
+
+    <Extension()>
+    Public Function CreateInstance(Of T1, T2, T3, T4)(ByVal Self As Type, ByVal Arg1 As T1, ByVal Arg2 As T2, ByVal Arg3 As T3, ByVal Arg4 As T4) As Object
+        Return Self.GetConstructor({GetType(T1), GetType(T2), GetType(T3), GetType(T4)}).Invoke({Arg1, Arg2, Arg3, Arg4})
+    End Function
+
+    <Extension()>
+    Public Function RunSharedMethod(ByVal Self As Type, ByVal Name As String) As Object
+        Return Self.GetMethod(Name, Utilities.Typed(Of Type).EmptyArray).Invoke(Nothing, Utilities.Typed(Of Object).EmptyArray)
+    End Function
+
+    <Extension()>
+    Public Function RunSharedMethod(Of T1)(ByVal Self As Type, ByVal Name As String, ByVal Arg1 As T1) As Object
+        Return Self.GetMethod(Name, {GetType(T1)}).Invoke(Nothing, {Arg1})
+    End Function
+
+    <Extension()>
+    Public Function RunSharedMethod(Of T1, T2)(ByVal Self As Type, ByVal Name As String, ByVal Arg1 As T1, ByVal Arg2 As T2) As Object
+        Return Self.GetMethod(Name, {GetType(T1), GetType(T2)}).Invoke(Nothing, {Arg1, Arg2})
+    End Function
+
+    <Extension()>
+    Public Function RunSharedMethod(Of T1, T2, T3)(ByVal Self As Type, ByVal Name As String, ByVal Arg1 As T1, ByVal Arg2 As T2, ByVal Arg3 As T3) As Object
+        Return Self.GetMethod(Name, {GetType(T1), GetType(T2), GetType(T3)}).Invoke(Nothing, {Arg1, Arg2, Arg3})
+    End Function
+
+    <Extension()>
+    Public Function RunSharedMethod(Of T1, T2, T3, T4)(ByVal Self As Type, ByVal Name As String, ByVal Arg1 As T1, ByVal Arg2 As T2, ByVal Arg3 As T3, ByVal Arg4 As T4) As Object
+        Return Self.GetMethod(Name, {GetType(T1), GetType(T2), GetType(T3), GetType(T4)}).Invoke(Nothing, {Arg1, Arg2, Arg3, Arg4})
+    End Function
+
+    <Extension()>
+    Public Function RunMethod(ByVal Self As Object, ByVal Name As String) As Object
+        Return Self.GetType().GetMethod(Name, Utilities.Typed(Of Type).EmptyArray).Invoke(Self, Utilities.Typed(Of Object).EmptyArray)
+    End Function
+
+    <Extension()>
+    Public Function RunMethod(Of T1)(ByVal Self As Object, ByVal Name As String, ByVal Arg1 As T1) As Object
+        Return Self.GetType().GetMethod(Name, {GetType(T1)}).Invoke(Self, {Arg1})
+    End Function
+
+    <Extension()>
+    Public Function RunMethod(Of T1, T2)(ByVal Self As Object, ByVal Name As String, ByVal Arg1 As T1, ByVal Arg2 As T2) As Object
+        Return Self.GetType().GetMethod(Name, {GetType(T1), GetType(T2)}).Invoke(Self, {Arg1, Arg2})
+    End Function
+
+    <Extension()>
+    Public Function RunMethod(Of T1, T2, T3)(ByVal Self As Object, ByVal Name As String, ByVal Arg1 As T1, ByVal Arg2 As T2, ByVal Arg3 As T3) As Object
+        Return Self.GetType().GetMethod(Name, {GetType(T1), GetType(T2), GetType(T3)}).Invoke(Self, {Arg1, Arg2, Arg3})
+    End Function
+
+    <Extension()>
+    Public Function RunMethod(Of T1, T2, T3, T4)(ByVal Self As Object, ByVal Name As String, ByVal Arg1 As T1, ByVal Arg2 As T2, ByVal Arg3 As T3, ByVal Arg4 As T4) As Object
+        Return Self.GetType().GetMethod(Name, {GetType(T1), GetType(T2), GetType(T3), GetType(T4)}).Invoke(Self, {Arg1, Arg2, Arg3, Arg4})
+    End Function
+
+    <Extension()>
     Private Function GetCustomAttributeInternal(Of TAttribute As Attribute)(ByVal Self As Reflection.MemberInfo, Optional ByVal Inherit As Boolean = True) As TAttribute
         Return DirectCast(Self.GetCustomAttributeInternal(GetType(TAttribute), Inherit), TAttribute)
     End Function
@@ -386,5 +471,13 @@ Public Module CommonExtensions
         Loop
     End Sub
 #End Region
+
+    <Extension()>
+    Public Function NothingIfEmpty(ByVal Self As String) As String
+        If Self.Length = 0 Then
+            Return Nothing
+        End If
+        Return Self
+    End Function
 
 End Module
