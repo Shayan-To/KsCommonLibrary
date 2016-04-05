@@ -1,4 +1,4 @@
-Imports System.Globalization
+﻿Imports System.Globalization
 Imports System.Windows.Data
 Imports System.Windows.Media
 

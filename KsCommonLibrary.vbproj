@@ -94,7 +94,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Cecil">
-      <HintPath>References\Mono.Cecil.dll</HintPath>
+      <HintPath>..\..\Libs\Mono.Cecil\cecil\bin\net_4_5_Debug\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -124,27 +124,42 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\TextBlock.vb" />
+    <Compile Include="MVVM\KsLanguage.vb" />
     <Compile Include="Collections\AutoStoreDictionary.vb" />
+    <Compile Include="Collections\BaseDictionary.vb" />
+    <Compile Include="Collections\BaseList.vb" />
+    <Compile Include="Collections\BaseReadOnlyList.vb" />
     <Compile Include="Collections\CreateInstanceList.vb" />
+    <Compile Include="Collections\DictionaryEnumerator.vb" />
     <Compile Include="Collections\HeapOperations.vb" />
     <Compile Include="Collections\InserstionSorter.vb" />
+    <Compile Include="Collections\IOrderedDictionary.vb" />
     <Compile Include="Collections\MergedCollection.vb" />
     <Compile Include="Collections\MultiDictionary.vb" />
     <Compile Include="Collections\MultiDictionaryList.vb" />
     <Compile Include="Collections\NullAcceptingDic.vb" />
     <Compile Include="Collections\MergedList.vb" />
+    <Compile Include="Collections\OneToOneDictionary.vb" />
+    <Compile Include="Collections\OneToOneOrderedFreezableDictionary.vb" />
+    <Compile Include="Collections\OneToOneOrderedDictionary.vb" />
+    <Compile Include="Collections\OrderedDictionary.vb" />
     <Compile Include="Collections\PushPopList.vb" />
     <Compile Include="Collections\NullExpandingDic.vb" />
     <Compile Include="Collections\NullExpandingList.vb" />
     <Compile Include="Collections\ReadOnlyCollection.vb" />
+    <Compile Include="Collections\SelectAsNotifyingListCollection.vb" />
+    <Compile Include="Collections\SelectAsListCollection.vb" />
     <Compile Include="Common\AccentColors.vb" />
     <Compile Include="Common\Assert.vb" />
-    <Compile Include="Common\CsvData.vb" />
-    <Compile Include="Common\CsvEntry.vb" />
-    <Compile Include="Common\CsvEntryList.vb" />
-    <Compile Include="Common\CsvColumn.vb" />
-    <Compile Include="Common\CsvColumnList.vb" />
-    <Compile Include="Common\CsvParser.vb" />
+    <Compile Include="Common\ConsoleProgressDrawer.vb" />
+    <Compile Include="Common\Csv\CsvData.vb" />
+    <Compile Include="Common\Csv\CsvEntry.vb" />
+    <Compile Include="Common\Csv\CsvEntryList.vb" />
+    <Compile Include="Common\Csv\CsvColumn.vb" />
+    <Compile Include="Common\Csv\CsvColumnList.vb" />
+    <Compile Include="Common\Csv\CsvParser.vb" />
+    <Compile Include="Common\SaveDelayer.vb" />
     <Compile Include="Common\InvalidImplementationException.vb" />
     <Compile Include="Common\AssertionException.vb" />
     <Compile Include="Common\CecilHelper.vb" />
@@ -163,12 +178,13 @@
     <Compile Include="Common\DefaultCacher.vb" />
     <Compile Include="Common\Freezable.vb" />
     <Compile Include="Common\Lazy.vb" />
-    <Compile Include="Common\ListShifter.vb" />
+    <Compile Include="Collections\ListShifter.vb" />
     <Compile Include="Common\MergeSorter.vb" />
     <Compile Include="Collections\NotifyingDictionary.vb" />
     <Compile Include="Collections\NotifyingSet.vb" />
     <Compile Include="Common\SampleAttribute.vb" />
     <Compile Include="Common\StringSplitEnumerator.vb" />
+    <Compile Include="Common\TaskDelayer.vb" />
     <Compile Include="Common\Utf8Encoding.vb" />
     <Compile Include="Common\Utilities.vb" />
     <Compile Include="Collections\ValueBag.vb" />

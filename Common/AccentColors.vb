@@ -1,4 +1,4 @@
-Imports Media = System.Windows.Media
+﻿Imports Media = System.Windows.Media
 
 Public NotInheritable Class AccentColors
 

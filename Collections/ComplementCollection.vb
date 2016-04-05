@@ -1,4 +1,4 @@
-Imports System.Collections.Specialized
+﻿Imports System.Collections.Specialized
 Imports Ks.Common
 
 Public Class ComplementingCollectionMaster(Of T)

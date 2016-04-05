@@ -1,4 +1,4 @@
-Imports System.Windows.Media
+﻿Imports System.Windows.Media
 Imports Ks.Common
 
 Namespace Controls

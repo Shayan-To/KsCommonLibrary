@@ -8,66 +8,33 @@
     End Sub
 
     Public Sub New(ByVal Stream As IO.Stream, Optional ByVal LeaveOpen As Boolean = False)
-        'Me.Dispatcher = Dispatcher.CurrentDispatcher
         Me.Stream = Stream
         Me.LeaveOpen = LeaveOpen
 
-        Me.StoreThread = New Threading.Thread(AddressOf Me.StoreThreadProcedure) With {.IsBackground = True}
-        Me.StoreThread.Start()
-
         If Stream.Length = 0 Then
-            Me.Dic = New Dictionary(Of String, String)()
+            Me.Dic = New Concurrent.ConcurrentDictionary(Of String, String)()
             Exit Sub
         End If
-        Dim BinaryData = New Byte(CInt(Stream.Length - 1)) {}
-        If Stream.ReadAll(BinaryData, 0, BinaryData.Length) <> BinaryData.Length Then
-            Throw New Exception("Invalid strem object...")
-        End If
 
+        Dim BinaryData = Stream.ReadToEnd()
         Dim Data = New String(Text.Encoding.UTF8.GetChars(BinaryData))
-        Me.Dic = Utilities.Serialization.DicFromStirng(Data)
+        Me.Dic = New Concurrent.ConcurrentDictionary(Of String, String)(2, Utilities.Serialization.DicFromStirng(Data), StringComparer.CurrentCulture)
     End Sub
 
     Private Sub Collection_Changed()
-        If Me.IsWritePending Then
-            Exit Sub
-        End If
-        'SyncLock Me.LockObject
-        Me.IsWritePending = True
-        'End SyncLock
-        Me.StoreWaitHandle.Set()
+        Me.TaskDelayer.RunTask(TaskDelayerRunningMode.Delayed)
     End Sub
 
-    Private Sub StoreThreadProcedure()
-        Do
-            Me.StoreWaitHandle.WaitOne()
+    Private Sub Store()
+        Dim SerializedData As String
 
-            If Not Me.IsWritePending Then
-                Assert.True(Me._IsDisposed)
-                Exit Do
-            End If
+        SerializedData = Utilities.Serialization.DicToStirng(Me.Dic)
 
-            Me.DelayWaitHandle.WaitOne(StoreDelay)
-
-            SyncLock Me.SerializationLockObject
-                'SyncLock Me.LockObject
-                Me.IsWritePending = False
-                'End SyncLock
-                'Me.Dispatcher.BeginInvoke()
-
-                Dim SerializedData As String
-
-                SyncLock Me.DicLockObject
-                    SerializedData = Utilities.Serialization.DicToStirng(Me.Dic)
-                End SyncLock
-
-                Dim SerializedBinaryData = Text.Encoding.UTF8.GetBytes(SerializedData)
-                Me.Stream.Seek(0, IO.SeekOrigin.Begin)
-                Me.Stream.Write(SerializedBinaryData, 0, SerializedBinaryData.Length)
-                Me.Stream.SetLength(SerializedBinaryData.Length)
-                Me.Stream.Flush()
-            End SyncLock
-        Loop
+        Dim SerializedBinaryData = Text.Encoding.UTF8.GetBytes(SerializedData)
+        Me.Stream.Position = 0
+        Me.Stream.Write(SerializedBinaryData, 0, SerializedBinaryData.Length)
+        Me.Stream.SetLength(SerializedBinaryData.Length)
+        Me.Stream.Flush()
     End Sub
 
 #Region "Dictionary Implementation"
@@ -88,55 +55,35 @@
             Return Me.Dic.Item(Key)
         End Get
         Set(ByVal Value As String)
-            SyncLock Me.DicLockObject
-                Me.Dic.Item(Key) = Value
-            End SyncLock
+            Me.Dic.Item(Key) = Value
             Me.Collection_Changed()
         End Set
     End Property
 
-    Private ReadOnly Property Int_Keys As ICollection(Of String) Implements IDictionary(Of String, String).Keys
+    Public ReadOnly Property Keys As ICollection(Of String) Implements IDictionary(Of String, String).Keys
         Get
             Return Me.Dic.Keys
         End Get
     End Property
 
-    Public ReadOnly Property Keys As Dictionary(Of String, String).KeyCollection
-        Get
-            Return Me.Dic.Keys
-        End Get
-    End Property
-
-    Private ReadOnly Property Int_Values As ICollection(Of String) Implements IDictionary(Of String, String).Values
-        Get
-            Return Me.Dic.Values
-        End Get
-    End Property
-
-    Public ReadOnly Property Values As Dictionary(Of String, String).ValueCollection
+    Public ReadOnly Property Values As ICollection(Of String) Implements IDictionary(Of String, String).Values
         Get
             Return Me.Dic.Values
         End Get
     End Property
 
     Public Sub Add(ByVal Item As KeyValuePair(Of String, String)) Implements ICollection(Of KeyValuePair(Of String, String)).Add
-        SyncLock Me.DicLockObject
-            Me.Dic.Add(Item.Key, Item.Value)
-        End SyncLock
+        Me.Dic.Add(Item.Key, Item.Value)
         Me.Collection_Changed()
     End Sub
 
     Public Sub Add(ByVal Key As String, ByVal Value As String) Implements IDictionary(Of String, String).Add
-        SyncLock Me.DicLockObject
-            Me.Dic.Add(Key, Value)
-        End SyncLock
+        Me.Dic.Add(Key, Value)
         Me.Collection_Changed()
     End Sub
 
     Public Sub Clear() Implements ICollection(Of KeyValuePair(Of String, String)).Clear
-        SyncLock Me.DicLockObject
-            Me.Dic.Clear()
-        End SyncLock
+        Me.Dic.Clear()
         Me.Collection_Changed()
     End Sub
 
@@ -156,28 +103,20 @@
         Return Me.Dic.GetEnumerator()
     End Function
 
-    Private Function Int_GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, String)) Implements IEnumerable(Of KeyValuePair(Of String, String)).GetEnumerator
-        Return Me.Dic.GetEnumerator()
-    End Function
-
-    Public Function GetEnumerator() As Dictionary(Of String, String).Enumerator
+    Public Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, String)) Implements IEnumerable(Of KeyValuePair(Of String, String)).GetEnumerator
         Return Me.Dic.GetEnumerator()
     End Function
 
     Public Function Remove(item As KeyValuePair(Of String, String)) As Boolean Implements ICollection(Of KeyValuePair(Of String, String)).Remove
         Dim R = False
-        SyncLock Me.DicLockObject
-            R = DirectCast(Me.Dic, ICollection(Of KeyValuePair(Of String, String))).Remove(item)
-        End SyncLock
+        R = DirectCast(Me.Dic, ICollection(Of KeyValuePair(Of String, String))).Remove(item)
         Me.Collection_Changed()
         Return R
     End Function
 
     Public Function Remove(key As String) As Boolean Implements IDictionary(Of String, String).Remove
         Dim R = False
-        SyncLock Me.DicLockObject
-            R = Me.Dic.Remove(key)
-        End SyncLock
+        R = Me.Dic.Remove(key)
         Me.Collection_Changed()
         Return R
     End Function
@@ -207,38 +146,25 @@
     End Function
 #End Region
 
-#Region "IDisposable Implementation"
-    Protected Overridable Sub Dispose(ByVal Disposing As Boolean)
+#Region "IDisposable Support"
+    Protected Overridable Sub Dispose(disposing As Boolean)
         If Not Me._IsDisposed Then
             Me._IsDisposed = True
 
-            If Disposing Then
-                Me.Stream.Dispose()
+            If disposing Then
+                ' Dispose managed state (managed objects).
+                Me.TaskDelayer.Dispose()
             End If
 
-            If Me.IsWritePending Then
-                Me.DelayWaitHandle.Set()
-            End If
-
-            Me.StoreWaitHandle.Set()
-            Me.StoreThread.Join()
-
-            Me.StoreWaitHandle.Dispose()
-            Me.DelayWaitHandle.Dispose()
-
+            ' Set large fields to null.
             Me.Dic = Nothing
         End If
     End Sub
 
-    Protected Overrides Sub Finalize()
-        Dispose(False)
-        MyBase.Finalize()
-    End Sub
-
     Public Sub Dispose() Implements IDisposable.Dispose
         Dispose(True)
-        GC.SuppressFinalize(Me)
     End Sub
+#End Region
 
 #Region "IsDisposed Property"
     Private _IsDisposed As Boolean
@@ -249,19 +175,11 @@
         End Get
     End Property
 #End Region
-#End Region
 
-    Private Const StoreDelay As Integer = 10000
-
-    Private Dic As Dictionary(Of String, String)
-    Private ReadOnly DicLockObject As Object = New Object()
-    Private ReadOnly SerializationLockObject As Object = New Object()
-    Private IsWritePending As Boolean = False
-    'Private ReadOnly Dispatcher As Dispatcher
+    ' ConcurrentDicionary has a weired API, so casting it as an IDictionary to use it with ease.
+    Private Dic As IDictionary(Of String, String) ' Concurrent.ConcurrentDicionary(Of String, String)
     Private ReadOnly Stream As IO.Stream
     Private ReadOnly LeaveOpen As Boolean
-    Private ReadOnly StoreWaitHandle As Threading.EventWaitHandle = New Threading.EventWaitHandle(False, Threading.EventResetMode.AutoReset)
-    Private ReadOnly DelayWaitHandle As Threading.EventWaitHandle = New Threading.EventWaitHandle(False, Threading.EventResetMode.AutoReset)
-    Private ReadOnly StoreThread As Threading.Thread
+    Private ReadOnly TaskDelayer As TaskDelayer = New TaskDelayer(AddressOf Me.Store, 10000)
 
 End Class

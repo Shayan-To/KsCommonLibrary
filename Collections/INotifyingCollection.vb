@@ -1,4 +1,4 @@
-Imports System.Collections.ObjectModel
+﻿Imports System.Collections.ObjectModel
 Imports System.Collections.Specialized
 Imports System.Diagnostics.Contracts
 Imports Ks.Common
@@ -127,26 +127,27 @@ Public Class NotifyCollectionChangedEventArgs(Of T)
         Select Case E.Action
             Case NotifyCollectionChangedAction.Move
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.Cast(Of T)().ToList(),
+                                                                  E.NewItems.Cast(Of T)().ToArray(),
                                                                   E.NewStartingIndex,
                                                                   E.OldStartingIndex)
             Case NotifyCollectionChangedAction.Replace
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.Cast(Of T)().ToList(),
-                                                                  E.OldItems.Cast(Of T)().ToList(),
+                                                                  E.NewItems.Cast(Of T)().ToArray(),
+                                                                  E.OldItems.Cast(Of T)().ToArray(),
                                                                   E.NewStartingIndex)
             Case NotifyCollectionChangedAction.Reset
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action)
             Case NotifyCollectionChangedAction.Add
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.Cast(Of T)().ToList(),
+                                                                  E.NewItems.Cast(Of T)().ToArray(),
                                                                   E.NewStartingIndex)
             Case NotifyCollectionChangedAction.Remove
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.OldItems.Cast(Of T)().ToList(),
+                                                                  E.OldItems.Cast(Of T)().ToArray(),
                                                                   E.OldStartingIndex)
         End Select
-        Debug.Assert(False)
+
+        Assert.Fail()
         Return Nothing
     End Function
 
@@ -154,22 +155,22 @@ Public Class NotifyCollectionChangedEventArgs(Of T)
         Select Case E.Action
             Case NotifyCollectionChangedAction.Move
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.Cast(Of T)().ToList())
+                                                                  E.NewItems.Cast(Of T)().ToArray())
             Case NotifyCollectionChangedAction.Replace
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.Cast(Of T)().ToList(),
-                                                                  E.OldItems.Cast(Of T)().ToList())
+                                                                  E.NewItems.Cast(Of T)().ToArray(),
+                                                                  E.OldItems.Cast(Of T)().ToArray())
             Case NotifyCollectionChangedAction.Reset
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action)
             Case NotifyCollectionChangedAction.Add
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.NewItems.Cast(Of T)().ToList())
+                                                                  E.NewItems.Cast(Of T)().ToArray())
             Case NotifyCollectionChangedAction.Remove
                 Return New NotifyCollectionChangedEventArgs(Of T)(E.Action,
-                                                                  E.OldItems.Cast(Of T)().ToList())
+                                                                  E.OldItems.Cast(Of T)().ToArray())
         End Select
 
-        Debug.Assert(False)
+        Assert.Fail()
         Return Nothing
     End Function
 
@@ -236,8 +237,7 @@ Public Class NotifyingList(Of T)
     Public Shadows Event CollectionChanged As NotifyCollectionChangedEventHandler(Of T) Implements INotifyCollectionChanged(Of T).CollectionChanged
 
     Protected Overrides Sub OnCollectionChanged(ByVal E As NotifyCollectionChangedEventArgs)
-        Dim E2 As NotifyCollectionChangedEventArgs(Of T)
-        E2 = NotifyCollectionChangedEventArgs(Of T).FromNotifyCollectionChangedEventArgs(E)
+        Dim E2 = NotifyCollectionChangedEventArgs(Of T).FromNotifyCollectionChangedEventArgs(E)
         RaiseEvent CollectionChanged(Me, E2)
         MyBase.OnCollectionChanged(E2)
     End Sub

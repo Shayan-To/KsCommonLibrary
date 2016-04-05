@@ -1,4 +1,4 @@
-Public Class ListShifter(Of T)
+﻿Public Class ListShifter(Of T)
     Implements IList(Of T)
 
     Private ReadOnly InnerList As IList(Of T),

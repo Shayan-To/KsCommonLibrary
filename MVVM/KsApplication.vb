@@ -24,6 +24,35 @@ Namespace MVVM
 
         Protected Overridable Sub OnInitialize()
             Me._Settings = New AutoStoreDictionary(IO.Path.Combine(".", "Settings.dat"))
+
+            Dim Dir = IO.Path.Combine(".", "Languages")
+            If Not IO.Directory.Exists(Dir) Then
+                IO.Directory.CreateDirectory(Dir)
+            End If
+
+            Dim Languages = New OneToOneDictionary(Of String, KsLanguage)(Function(L) L.Id)
+
+            For Each F In IO.Directory.EnumerateFiles(Dir)
+                If Not F.EndsWith(".csv") Then
+                    Continue For
+                End If
+                Dim File = IO.File.Open(F, IO.FileMode.Open, IO.FileAccess.ReadWrite, IO.FileShare.Read)
+                Languages.Add(New KsLanguage(File))
+            Next
+
+            If Languages.Count = 0 Then
+                Dim F = IO.Path.Combine(Dir, "Default.csv")
+                Dim File = IO.File.Open(F, IO.FileMode.Create, IO.FileAccess.ReadWrite, IO.FileShare.Read)
+                Languages.Add(New KsLanguage(File))
+            End If
+
+            Me._Languages = Languages.AsReadOnly()
+
+            Dim LangId As String = Nothing
+            If Not Me.Settings.TryGetValue(NameOf(Me.Language), LangId) Then
+                LangId = ""
+            End If
+            Me._Language = Me.Languages.Item(LangId)
         End Sub
 
         Protected Overridable Function OnTestConstruct() As KsApplicationTestData
@@ -46,6 +75,7 @@ Namespace MVVM
 
         End Sub
 
+        <DebuggerHidden()>
         Public Sub Run()
             If Me.State <> KsApplicationState.NotStarted Then
                 Throw New InvalidOperationException("Cannot run an already run KsApplication.")
@@ -330,6 +360,31 @@ Namespace MVVM
             End Get
             Private Set(ByVal Value As KsApplicationState)
                 Me._State = Value
+            End Set
+        End Property
+#End Region
+
+#Region "Languages Property"
+        Private _Languages As IReadOnlyDictionary(Of String, KsLanguage)
+
+        Public ReadOnly Property Languages As IReadOnlyDictionary(Of String, KsLanguage)
+            Get
+                Return Me._Languages
+            End Get
+        End Property
+#End Region
+
+#Region "Language Property"
+        Private _Language As KsLanguage
+
+        Public Property Language As KsLanguage
+            Get
+                Return Me._Language
+            End Get
+            Set(ByVal Value As KsLanguage)
+                If Me.SetProperty(Me._Language, Value) Then
+                    Me.Settings.Item(NameOf(Me.Language)) = Value.Id
+                End If
             End Set
         End Property
 #End Region

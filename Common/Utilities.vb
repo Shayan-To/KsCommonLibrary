@@ -1,4 +1,4 @@
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Media = System.Windows.Media
 Imports Reflect = System.Reflection
@@ -465,6 +465,33 @@ Public NotInheritable Class Utilities
             Return A \ B - 1
         End Function
 
+        Public Shared Function GreatestCommonDivisor(ByVal A As Integer, ByVal B As Integer) As Integer
+            Do Until B = 0
+                Dim C = A Mod B
+                A = B
+                B = C
+            Loop
+            Return A
+        End Function
+
+        Public Shared Function GreatestCommonDivisor(ByVal A As Long, ByVal B As Long) As Long
+            Do Until B = 0
+                Dim C = A Mod B
+                A = B
+                B = C
+            Loop
+            Return A
+        End Function
+
+        Public Shared Function LeastCommonMultiple(ByVal A As Integer, ByVal B As Integer) As Integer
+            Return (A \ GreatestCommonDivisor(A, B)) * B
+        End Function
+
+        Public Shared Function LeastCommonMultiple(ByVal A As Long, ByVal B As Long) As Long
+            Return (A \ GreatestCommonDivisor(A, B)) * B
+        End Function
+
+        <Obsolete("Use DefaultCacher instead.", True)>
         Public Shared Function GetStaticRandom() As Random
             Static Random As Random = New Random()
             Return Random
@@ -984,6 +1011,32 @@ Public NotInheritable Class Utilities
 
     End Class
 #End Region
+
+    ''' <returns>(Hour, IsPm)</returns>
+    Public Shared Function Hour24To12(ByVal Hour As Integer) As VTuple(Of Integer, Boolean)
+        Dim IsPm = False
+
+        If Hour >= 12 Then
+            Hour -= 12
+            IsPm = True
+        End If
+        If Hour = 0 Then
+            Hour = 12
+        End If
+
+        Return VTuple.Create(Hour, IsPm)
+    End Function
+
+    Public Shared Function Hour12To24(ByVal Hour As Integer, ByVal IsPm As Boolean) As Integer
+        If Hour = 12 Then
+            Hour = 0
+        End If
+        If IsPm Then
+            Hour += 12
+        End If
+
+        Return Hour
+    End Function
 
     Public Shared Iterator Function Range(ByVal Start As Integer, ByVal [End] As Integer, Optional ByVal [Step] As Integer = 1) As IEnumerable(Of Integer)
         Verify.TrueArg([Step] > 0, "Step")

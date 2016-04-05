@@ -1,4 +1,4 @@
-Public Class ComparableCollection(Of T)
+﻿Public Class ComparableCollection(Of T)
     Inherits List(Of T)
     Implements IComparable(Of ComparableCollection(Of T)), 
                IStructuralComparable, 

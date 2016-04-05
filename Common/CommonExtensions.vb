@@ -1,11 +1,152 @@
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
 
 Public Module CommonExtensions
 
+#Region "Math Group"
+    <Extension()>
+    Public Function GetLeastCommonMultiple(ByVal Self As IEnumerable(Of Integer)) As Integer
+        Dim Res = 0
+        Dim First = True
+
+        For Each I In Self
+            If First Then
+                Res = I
+                First = False
+            Else
+                Res = Utilities.Math.LeastCommonMultiple(Res, I)
+            End If
+        Next
+
+        Return Res
+    End Function
+
+    <Extension()>
+    Public Function GetLeastCommonMultiple(ByVal Self As IEnumerable(Of Long)) As Long
+        Dim Res = 0L
+        Dim First = True
+
+        For Each I In Self
+            If First Then
+                Res = I
+                First = False
+            Else
+                Res = Utilities.Math.LeastCommonMultiple(Res, I)
+            End If
+        Next
+
+        Return Res
+    End Function
+    <Extension()>
+    Public Function GetGreatestCommonDivisor(ByVal Self As IEnumerable(Of Integer)) As Integer
+        Dim Res = 0
+        Dim First = True
+
+        For Each I In Self
+            If First Then
+                Res = I
+                First = False
+            Else
+                Res = Utilities.Math.GreatestCommonDivisor(Res, I)
+            End If
+        Next
+
+        Return Res
+    End Function
+
+    <Extension()>
+    Public Function GetGreatestCommonDivisor(ByVal Self As IEnumerable(Of Long)) As Long
+        Dim Res = 0L
+        Dim First = True
+
+        For Each I In Self
+            If First Then
+                Res = I
+                First = False
+            Else
+                Res = Utilities.Math.GreatestCommonDivisor(Res, I)
+            End If
+        Next
+
+        Return Res
+    End Function
+#End Region
+
 #Region "CollectionUtils Group"
+    <Extension()>
+    Public Function Resize(ByVal Array() As Byte, ByVal Length As Integer) As Byte()
+        If Length <> Array.Length Then
+            Dim R = New Byte(Length - 1) {}
+            System.Array.Copy(Array, 0, R, 0, Math.Min(Length, Array.Length))
+            Array = R
+        End If
+
+        Return Array
+    End Function
+
+    <Extension()>
+    Public Function Resize(ByVal Array() As Byte, ByVal Offset As Integer, ByVal Length As Integer) As Byte()
+        If Length <> Array.Length Or Offset <> 0 Then
+            Dim R = New Byte(Length - 1) {}
+            System.Array.Copy(Array, Offset, R, 0, Math.Min(Length, Array.Length - Offset))
+            Array = R
+        End If
+
+        Return Array
+    End Function
+
+    <Extension()>
+    Public Function GetBoundsOf(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T) As VTuple(Of Integer, Integer)
+        Return Self.GetBoundsOf(Value, Comparer(Of T).Default)
+    End Function
+
+    <Extension()>
+    Public Function GetBoundsOf(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T, ByVal Comp As IComparer(Of T)) As VTuple(Of Integer, Integer)
+        Dim Count = Self.Count
+        Dim Offset1 = 0
+        Dim Offset2 = 0
+
+        Do While Count > 1
+            Count \= 2
+            If Offset1 = Offset2 Then
+                If Offset1 + Count < Self.Count Then
+                    Dim C = Comp.Compare(Self.Item(Offset1 + Count), Value)
+                    If C < 0 Then
+                        Offset1 += Count
+                        Offset2 += Count
+                    ElseIf C = 0 Then
+                        Offset2 += Count
+                    End If
+                End If
+            Else
+                If Offset1 + Count < Self.Count Then
+                    If Comp.Compare(Self.Item(Offset1 + Count), Value) < 0 Then
+                        Offset1 += Count
+                    End If
+                End If
+                If Offset2 + Count < Self.Count Then
+                    If Comp.Compare(Self.Item(Offset2 + Count), Value) <= 0 Then
+                        Offset2 += Count
+                    End If
+                End If
+            End If
+        Loop
+
+        Return VTuple.Create(Offset1 + 1, Offset2 + 1)
+    End Function
+
     <Extension()>
     Public Function EnumerateSplit(ByVal Str As String, ByVal Options As StringSplitOptions, ParamArray ByVal Chars As Char()) As StringSplitEnumerator
         Return New StringSplitEnumerator(Str, Options, Chars)
+    End Function
+
+    <Extension()>
+    Public Function SelectAsList(Of TIn, TOut)(ByVal Self As IReadOnlyList(Of TIn), ByVal Func As Func(Of TIn, TOut)) As SelectAsListCollection(Of TIn, TOut)
+        Return New SelectAsListCollection(Of TIn, TOut)(Self, Func)
+    End Function
+
+    <Extension()>
+    Public Function SelectAsNotifyingList(Of TIn, TOut)(ByVal Self As IReadOnlyList(Of TIn), ByVal Func As Func(Of TIn, TOut)) As SelectAsNotifyingListCollection(Of TIn, TOut)
+        Return New SelectAsNotifyingListCollection(Of TIn, TOut)(Self, Func)
     End Function
 
     <Extension()>
@@ -32,31 +173,45 @@ Public Module CommonExtensions
 
     <Extension>
     Public Function RandomElement(Of T)(ByVal Self As IEnumerable(Of T)) As T
-        Dim List1 As IList(Of T),
-            List As IList
+        Dim Rnd = DefaultCacher(Of Random).Value
 
         If TypeOf Self Is IList(Of T) Then
-            List1 = DirectCast(Self, IList(Of T))
-            Return List1.Item(Utilities.Math.GetStaticRandom().Next(List1.Count))
-        End If
-        If TypeOf Self Is IList Then
-            List = DirectCast(Self, IList)
-            Return DirectCast(List.Item(Utilities.Math.GetStaticRandom().Next(List.Count)), T)
+            Dim L = DirectCast(Self, IList(Of T))
+            Return L.Item(Rnd.Next(L.Count))
         End If
 
-        Return Self.ElementAt(Utilities.Math.GetStaticRandom().Next(Self.Count()))
+        If TypeOf Self Is IList Then
+            Dim L = DirectCast(Self, IList)
+            Return DirectCast(L.Item(Rnd.Next(L.Count)), T)
+        End If
+
+        Return Self.ElementAt(Rnd.Next(Self.Count()))
     End Function
 
     <Extension>
-    Public Sub CopyTo(Of T)(ByVal Self As IEnumerable(Of T), ByVal Destination As IList(Of T), Optional ByVal Index As Integer = 0)
-        If Destination.Count - Index < Self.Count() Then
-            Throw New ArgumentException("There is not enough space on the destination to copy the collection.")
-        End If
+    Public Sub CopyTo(Of T)(ByVal Self As IEnumerable(Of T), ByVal Destination As IList(Of T), Optional ByVal Index As Integer = 0, Optional ByVal Count As Integer = -1)
+        'If Destination.Count - Index < Self.Count() Then
+        '    Throw New ArgumentException("There is not enough space on the destination to copy the collection.")
+        'End If
+        Verify.TrueArg(Count >= -1, "Count")
 
-        For Each I As T In Self
-            Destination.Item(Index) = I
-            Index += 1
-        Next
+        If Count = -1 Then
+            For Each I In Self
+                Destination.Item(Index) = I
+                Index += 1
+            Next
+        Else
+            If Count > 0 Then
+                For Each I In Self
+                    Destination.Item(Index) = I
+                    Index += 1
+                    Count -= 1
+                    If Count = 0 Then
+                        Exit For
+                    End If
+                Next
+            End If
+        End If
     End Sub
 
     <Extension>
@@ -68,20 +223,12 @@ Public Module CommonExtensions
 
     <Extension>
     Public Sub Sort(Of T)(ByVal Self As IList(Of T))
-        Dim Sorter As MergeSorter(Of T)
-
-        Sorter = New MergeSorter(Of T)()
-
-        Sorter.Sort(Self)
+        DefaultCacher(Of MergeSorter(Of T)).Value.Sort(Self)
     End Sub
 
     <Extension>
     Public Sub Sort(Of T)(ByVal Self As IList(Of T), ByVal Comparer As IComparer(Of T))
-        Dim Sorter As MergeSorter(Of T)
-
-        Sorter = New MergeSorter(Of T)()
-
-        Sorter.Sort(Self, Comparer)
+        DefaultCacher(Of MergeSorter(Of T)).Value.Sort(Self, Comparer)
     End Sub
 
     <Extension()>
@@ -107,6 +254,11 @@ Public Module CommonExtensions
     <Extension()>
     Public Function AsReadOnly(Of T)(ByVal Self As IList(Of T)) As ObjectModel.ReadOnlyCollection(Of T)
         Return New ObjectModel.ReadOnlyCollection(Of T)(Self)
+    End Function
+
+    <Extension()>
+    Public Function AsReadOnly(Of TKey, TValue)(ByVal Self As IDictionary(Of TKey, TValue)) As ObjectModel.ReadOnlyDictionary(Of TKey, TValue)
+        Return New ObjectModel.ReadOnlyDictionary(Of TKey, TValue)(Self)
     End Function
 
     <Extension()>
@@ -375,6 +527,16 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
+    Public Function GetSharedFieldValue(Of T)(ByVal Self As Type, ByVal Name As String) As T
+        Return DirectCast(Self.GetField(Name).GetValue(Nothing), T)
+    End Function
+
+    <Extension()>
+    Public Function GetFieldValue(Of T)(ByVal Self As Object, ByVal Name As String) As T
+        Return DirectCast(Self.GetType().GetField(Name).GetValue(Self), T)
+    End Function
+
+    <Extension()>
     Private Function GetCustomAttributeInternal(Of TAttribute As Attribute)(ByVal Self As Reflection.MemberInfo, Optional ByVal Inherit As Boolean = True) As TAttribute
         Return DirectCast(Self.GetCustomAttributeInternal(GetType(TAttribute), Inherit), TAttribute)
     End Function
@@ -457,20 +619,75 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
-    Public Sub Write(ByVal Self As IO.Stream, ByVal Stream As IO.Stream)
+    Public Function ReadToEnd(ByVal Self As IO.Stream) As Byte()
+        Dim Arrs = New List(Of Byte())()
+
+        Dim BufLength = 8192
+
+        Dim N As Integer
+        Dim Buf As Byte()
+
+        Do
+            Buf = New Byte(BufLength - 1) {}
+            N = Self.ReadAll(Buf, 0, Buf.Length)
+            If N < Buf.Length Then
+                Exit Do
+            End If
+            Arrs.Add(Buf)
+        Loop
+
+        Dim Res = New Byte(Arrs.Count * BufLength + N - 1) {}
+        Dim Offset = 0
+        For Each A In Arrs
+            A.CopyTo(Res, Offset)
+            Offset += BufLength
+        Next
+        Array.Copy(Buf, 0, Res, Offset, N)
+
+        Return Res
+    End Function
+
+    <Extension()>
+    Public Function Write(ByVal Self As IO.Stream, ByVal Stream As IO.Stream, Optional ByVal Length As Integer = -1) As Integer
         Dim Buffer As Byte()
 
         Buffer = New Byte(65535) {}
 
+        Dim N As Integer
+        Dim Total = 0
         Do
-            Dim N = Stream.Read(Buffer, 0, Buffer.Length)
+            If Length = -1 Then
+                N = Stream.Read(Buffer, 0, Buffer.Length)
+            Else
+                N = Stream.Read(Buffer, 0, Math.Min(Length, Buffer.Length))
+            End If
+
             If N = 0 Then
                 Exit Do
             End If
+
             Self.Write(Buffer, 0, N)
+            Total += N
+
+            If Length <> -1 Then
+                Length -= N
+                If Length = 0 Then
+                    Exit Do
+                End If
+            End If
         Loop
-    End Sub
+
+        Return Total
+    End Function
 #End Region
+
+    <Extension()>
+    Public Function NothingIfEmpty(Of T As ICollection)(ByVal Self As T) As T
+        If Self.Count = 0 Then
+            Return Nothing
+        End If
+        Return Self
+    End Function
 
     <Extension()>
     Public Function NothingIfEmpty(ByVal Self As String) As String

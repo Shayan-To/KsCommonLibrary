@@ -1,4 +1,4 @@
-Public NotInheritable Class VTuple
+﻿Public NotInheritable Class VTuple
 
     Private Sub New()
         Throw New NotSupportedException()

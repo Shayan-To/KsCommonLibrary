@@ -1,4 +1,4 @@
-Namespace MVVM
+﻿Namespace MVVM
 
     Public Class WorldedObject(Of TWorld)
         Inherits BindableBase

@@ -1,4 +1,4 @@
-Public NotInheritable Class CreateInstanceList
+﻿Public NotInheritable Class CreateInstanceList
 
     Private Sub New()
         Throw New NotSupportedException()

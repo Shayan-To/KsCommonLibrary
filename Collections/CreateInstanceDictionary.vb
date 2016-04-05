@@ -1,4 +1,4 @@
-Public NotInheritable Class CreateInstanceDictionary
+﻿Public NotInheritable Class CreateInstanceDictionary
 
     Private Sub New()
         Throw New NotSupportedException()

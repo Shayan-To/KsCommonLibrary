@@ -1,4 +1,4 @@
-Public Structure Lazy(Of TRes)
+﻿Public Structure Lazy(Of TRes)
 
     Public Sub New(ByVal Func As Func(Of TRes))
         Me._Func = Func

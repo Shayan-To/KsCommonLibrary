@@ -138,7 +138,6 @@
         End Get
     End Property
 
-
 #Region "Obvious Implementations"
     ' The following methods call the ones from above.
 

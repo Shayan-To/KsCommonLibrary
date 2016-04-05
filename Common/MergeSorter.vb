@@ -1,4 +1,4 @@
-Public Class MergeSorter(Of T)
+﻿Public Class MergeSorter(Of T)
 
     Private List, Temp As IList(Of T),
             Comparer As IComparer(Of T)

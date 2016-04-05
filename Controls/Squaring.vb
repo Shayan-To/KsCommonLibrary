@@ -1,4 +1,4 @@
-Namespace Controls
+﻿Namespace Controls
 
     Public Class Squaring
         Inherits ContentControl

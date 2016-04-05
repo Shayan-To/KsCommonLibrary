@@ -15,9 +15,7 @@
     End Sub
 
     Protected Sub VerifyWrite()
-        If Me._IsFreezed Then
-            Throw New InvalidOperationException("Cannot change a freezed object.")
-        End If
+        Verify.False(Me._IsFreezed, "Cannot change a freezed object.")
     End Sub
 
 #Region "IsFreezed Property"

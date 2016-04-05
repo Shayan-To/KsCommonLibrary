@@ -1,4 +1,4 @@
-Imports System.Reflection
+﻿Imports System.Reflection
 
 <AttributeUsage(AttributeTargets.Method)>
 Public Class ConsoleTestMethodAttribute
@@ -34,7 +34,7 @@ Public Class ConsoleTestMethodAttribute
                 End If
 
                 If M.GetParameters().Length = 0 Then
-                    ' JustTrue => Attribute.ShouldBeRun === ~JustTrue | Attribute.ShouldBeRun
+                    ' JustTrue => Attribute.ShouldBeRun   ===   ~JustTrue | Attribute.ShouldBeRun
                     If Not JustTrue Or Attribute.ShouldBeRun Then
                         Console.BackgroundColor = ConsoleColor.Green
                         Console.Write(String.Concat("Run ", FullMethodName, "? (Y/N)"))
@@ -48,7 +48,19 @@ Public Class ConsoleTestMethodAttribute
                         Console.WriteLine(If(K = ConsoleKey.Y, " Y", " N"))
 
                         If K = ConsoleKey.Y Then
-                            M.Invoke(Nothing, Utilities.Typed(Of Object).EmptyArray)
+                            Do
+                                M.Invoke(Nothing, Utilities.Typed(Of Object).EmptyArray)
+
+                                Console.BackgroundColor = ConsoleColor.Green
+                                Console.Write(String.Concat("Rerun? (Y/N)"))
+                                Console.BackgroundColor = ConsoleColor.White
+
+                                Do
+                                    K = Console.ReadKey(True).Key
+                                Loop Until K = ConsoleKey.Y Or K = ConsoleKey.N
+
+                                Console.WriteLine(If(K = ConsoleKey.Y, " Y", " N"))
+                            Loop While K = ConsoleKey.Y
                         End If
                     End If
                 Else

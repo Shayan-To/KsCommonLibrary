@@ -1,4 +1,4 @@
-Imports System.Collections.Specialized
+﻿Imports System.Collections.Specialized
 Imports System.ComponentModel
 
 Public Class ChangeReporter

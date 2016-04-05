@@ -1,4 +1,4 @@
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports Ks.Common.MVVM
 
 <TypeDescriptionProvider(GetType(ValueBagTypeDescriptionProvider))>
@@ -95,7 +95,7 @@ Public Class ValueBag(Of T)
 
     Private ReadOnly Property SyncRoot As Object Implements ICollection.SyncRoot
         Get
-            Return Nothing
+            Throw New NotSupportedException()
         End Get
     End Property
 
@@ -247,7 +247,7 @@ Friend Class ValueBagTypeDescriptor
 
     Public Overrides Function GetProperties() As PropertyDescriptorCollection
         Dim BaseProps = MyBase.GetProperties()
-        Dim R = New PropertyDescriptor(BaseProps.Count + If(Me.Bag?.Count, 1) - 1) {}
+        Dim R = New PropertyDescriptor(BaseProps.Count + If(Me.Bag?.Count, 0) - 1) {}
         Dim I = 0
         For Each P As PropertyDescriptor In BaseProps
             R(I) = P
@@ -285,7 +285,7 @@ Friend Class ValueBagPropertyDescriptor
 
     Public Overrides ReadOnly Property IsReadOnly As Boolean
         Get
-            Return False
+            Return True
         End Get
     End Property
 
@@ -312,7 +312,7 @@ Friend Class ValueBagPropertyDescriptor
     End Function
 
     Public Overrides Function ShouldSerializeValue(component As Object) As Boolean
-        Return False
+        Return True
     End Function
 
     Private ReadOnly PropName As String
