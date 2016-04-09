@@ -52,7 +52,15 @@ Namespace MVVM
             If Not Me.Settings.TryGetValue(NameOf(Me.Language), LangId) Then
                 LangId = ""
             End If
-            Me._Language = Me.Languages.Item(LangId)
+
+            If Not Me.Languages.TryGetValue(LangId, Me._Language) Then
+                Me._Language = Nothing
+                For Each L In Me.Languages
+                    Me._Language = L.Value
+                    Exit For
+                Next
+                Me.Settings.Item(NameOf(Me.Language)) = Me._Language?.Id
+            End If
         End Sub
 
         Protected Overridable Function OnTestConstruct() As KsApplicationTestData

@@ -11,7 +11,7 @@
 
     Public MustOverride ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of T).Count, ICollection.Count, ICollection(Of T).Count
 
-    Public MustOverride Function IEnumerable_1_GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+    Protected MustOverride Function IEnumerable_1_GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
 
     Public Overridable Function IndexOf(item As T) As Integer Implements IList(Of T).IndexOf
         For I As Integer = 0 To Me.Count - 1

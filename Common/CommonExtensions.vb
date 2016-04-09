@@ -140,6 +140,15 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
+    Public Function CastAsList(Of T)(ByVal Self As IList) As IReadOnlyList(Of T)
+        Dim R = TryCast(Self, IReadOnlyList(Of T))
+        If R IsNot Nothing Then
+            Return R
+        End If
+        Return New CastAsListCollection(Of T)(Self)
+    End Function
+
+    <Extension()>
     Public Function SelectAsList(Of TIn, TOut)(ByVal Self As IReadOnlyList(Of TIn), ByVal Func As Func(Of TIn, TOut)) As SelectAsListCollection(Of TIn, TOut)
         Return New SelectAsListCollection(Of TIn, TOut)(Self, Func)
     End Function

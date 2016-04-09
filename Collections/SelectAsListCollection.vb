@@ -24,7 +24,7 @@
         Next
     End Function
 
-    Private ReadOnly List As IReadOnlyList(Of TIn)
-    Private ReadOnly Func As Func(Of TIn, TOut)
+    Protected ReadOnly List As IReadOnlyList(Of TIn)
+    Protected ReadOnly Func As Func(Of TIn, TOut)
 
 End Class

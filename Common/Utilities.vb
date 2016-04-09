@@ -497,6 +497,12 @@ Public NotInheritable Class Utilities
             Return Random
         End Function
 
+        Public Shared Function IsOfIntegralType(O As Object) As Boolean
+            Return TypeOf O Is Byte Or TypeOf O Is UShort Or TypeOf O Is UInteger Or TypeOf O Is ULong Or
+                   TypeOf O Is SByte Or TypeOf O Is Short Or TypeOf O Is Integer Or TypeOf O Is Long Or
+                   TypeOf O Is Single Or TypeOf O Is Double
+        End Function
+
     End Class
 
     Public Class Debug

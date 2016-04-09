@@ -124,6 +124,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\CastAsListCollection.vb" />
+    <Compile Include="Controls\Obj.vb" />
+    <Compile Include="Controls\ObjList.vb" />
     <Compile Include="Controls\TextBlock.vb" />
     <Compile Include="MVVM\KsLanguage.vb" />
     <Compile Include="Collections\AutoStoreDictionary.vb" />
