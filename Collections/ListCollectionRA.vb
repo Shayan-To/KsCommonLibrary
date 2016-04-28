@@ -104,7 +104,7 @@ Public Class ListCollectionRA(Of T, List As IList(Of T))
                 NewItems.Add(T)
             Next
 
-            Me.OnCollectionChanged(New NotifyCollectionChangedEventArgs(Of List)(NotifyCollectionChangedAction.Add, NewItems))
+            Me.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of List).CreateAdd(NewItems))
         End If
     End Sub
 

@@ -7,7 +7,7 @@
             Me.Stream = Stream
 
             Stream.Position = 0
-            Me.Csv = CsvData.ParseCSV(New String(Text.Encoding.UTF8.GetChars(Stream.ReadToEnd())), False)
+            Me.Csv = CsvData.Parse(New String(Text.Encoding.UTF8.GetChars(Stream.ReadToEnd())), False)
 
             Verify.True(Me.Csv.Columns.Count <= 2, "Invalid language file.")
             Do While Me.Csv.Columns.Count < 2

@@ -21,15 +21,21 @@
         Next
     End Sub
 
+    Friend Sub ReportColumnsClear()
+        For Each E In Me.List
+            E.Data.Clear()
+        Next
+    End Sub
+
     Friend Sub ReportColumnMove(ByVal OldIndex As Integer, ByVal NewIndex As Integer)
         For Each E In Me.List
             If OldIndex < E.Data.Count Then
-                Dim C = E.Data.Item(OldIndex)
+                Dim T = E.Data.Item(OldIndex)
                 E.Data.RemoveAt(OldIndex)
                 If NewIndex < E.Data.Count Then
-                    E.Data.Insert(NewIndex, C)
+                    E.Data.Insert(NewIndex, T)
                 Else
-                    E.Item(NewIndex) = C
+                    E.Item(NewIndex) = T
                 End If
             ElseIf NewIndex < E.Data.Count Then
                 E.Data.Insert(NewIndex, "")
@@ -74,15 +80,11 @@
     End Sub
 
     Public Sub Move(ByVal Index As Integer, ByVal NewIndex As Integer)
-        Dim T = Me.List.Item(Index)
-        Me.List.RemoveAt(Index)
-        Me.List.Insert(NewIndex, T)
+        Me.List.Move(Index, NewIndex)
     End Sub
 
     Public Sub Move(ByVal Entry As CsvEntry, ByVal NewIndex As Integer)
-        Verify.TrueArg(Entry.Parent Is Me.Parent, "Entry", "Given entry is not part of this csv data.")
-        Me.List.Remove(Entry)
-        Me.List.Insert(NewIndex, Entry)
+        Me.List.Move(Me.List.IndexOf(Entry), NewIndex)
     End Sub
 
     Public Sub Clear()

@@ -18,25 +18,21 @@ Public Class SelectAsNotifyingListCollection(Of TIn, TOut)
 
         Select Case E.Action
             Case NotifyCollectionChangedAction.Move
-                NE = New NotifyCollectionChangedEventArgs(Of TOut)(NotifyCollectionChangedAction.Move,
-                                                                   E.NewItems.CastAsList(Of TIn).SelectAsList(Me.Func),
-                                                                   E.NewStartingIndex,
-                                                                   E.OldStartingIndex)
+                NE = NotifyCollectionChangedEventArgs(Of TOut).CreateMove(E.NewItems.CastAsList(Of TIn).SelectAsList(Me.Func),
+                                                                          E.NewStartingIndex,
+                                                                          E.OldStartingIndex)
             Case NotifyCollectionChangedAction.Replace
-                NE = New NotifyCollectionChangedEventArgs(Of TOut)(NotifyCollectionChangedAction.Replace,
-                                                                   E.NewItems.CastAsList(Of TIn).SelectAsList(Me.Func),
-                                                                   E.OldItems.CastAsList(Of TIn).SelectAsList(Me.Func),
-                                                                   E.NewStartingIndex)
+                NE = NotifyCollectionChangedEventArgs(Of TOut).CreateReplace(E.NewItems.CastAsList(Of TIn).SelectAsList(Me.Func),
+                                                                             E.OldItems.CastAsList(Of TIn).SelectAsList(Me.Func),
+                                                                             E.NewStartingIndex)
             Case NotifyCollectionChangedAction.Reset
-                NE = New NotifyCollectionChangedEventArgs(Of TOut)(NotifyCollectionChangedAction.Reset)
+                NE = NotifyCollectionChangedEventArgs(Of TOut).CreateReset()
             Case NotifyCollectionChangedAction.Add
-                NE = New NotifyCollectionChangedEventArgs(Of TOut)(NotifyCollectionChangedAction.Add,
-                                                                   E.NewItems.CastAsList(Of TIn).SelectAsList(Me.Func),
-                                                                   E.NewStartingIndex)
+                NE = NotifyCollectionChangedEventArgs(Of TOut).CreateAdd(E.NewItems.CastAsList(Of TIn).SelectAsList(Me.Func),
+                                                                         E.NewStartingIndex)
             Case NotifyCollectionChangedAction.Remove
-                NE = New NotifyCollectionChangedEventArgs(Of TOut)(NotifyCollectionChangedAction.Remove,
-                                                                   E.OldItems.CastAsList(Of TIn).SelectAsList(Me.Func),
-                                                                   E.OldStartingIndex)
+                NE = NotifyCollectionChangedEventArgs(Of TOut).CreateRemove(E.OldItems.CastAsList(Of TIn).SelectAsList(Me.Func),
+                                                                            E.OldStartingIndex)
             Case Else
                 Throw New InvalidOperationException("Action not supported.")
         End Select

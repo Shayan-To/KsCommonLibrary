@@ -1,8 +1,14 @@
 ﻿Public Class CsvData
 
-    Public Shared Function ParseCSV(ByVal Str As String, Optional ByVal HasHeaders As Boolean = True, Optional ByVal Delimiter As Char = ","c, Optional ByVal NormalizeLineEndings As Boolean = True) As CsvData
-        Return CsvParser.Instance.ParseCSV(Str, HasHeaders, Delimiter, NormalizeLineEndings)
+    Public Shared Function Parse(ByVal Str As String, Optional ByVal HasHeaders As Boolean = True, Optional ByVal Delimiter As Char = ","c, Optional ByVal NormalizeLineEndings As Boolean = True) As CsvData
+        Dim Res = New CsvData()
+        CsvParser.Instance.ParseCsv(Res, Str, HasHeaders, Delimiter, NormalizeLineEndings)
+        Return Res
     End Function
+
+    Public Sub ParseIn(ByVal Str As String, Optional ByVal HasHeaders As Boolean = True, Optional ByVal Delimiter As Char = ","c, Optional ByVal NormalizeLineEndings As Boolean = True)
+        CsvParser.Instance.ParseCsv(Me, Str, HasHeaders, Delimiter, NormalizeLineEndings)
+    End Sub
 
     Public Overrides Function ToString() As String
         Return Me.ToString(True)
@@ -63,6 +69,11 @@
 
         Return Res.ToString()
     End Function
+
+    Public Sub Clear()
+        Me.Entries.Clear()
+        Me.Columns.Clear()
+    End Sub
 
 #Region "HasHeaders Property"
     Private _HasHeaders As Boolean = True

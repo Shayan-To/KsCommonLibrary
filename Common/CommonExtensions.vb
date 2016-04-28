@@ -73,6 +73,18 @@ Public Module CommonExtensions
 
 #Region "CollectionUtils Group"
     <Extension()>
+    Public Sub Move(Of T)(ByVal Self As IList(Of T), ByVal OldIndex As Integer, ByVal NewIndex As Integer)
+        Dim Item = Self.Item(OldIndex)
+        For I As Integer = OldIndex To NewIndex - 1
+            Self.Item(I) = Self.Item(I + 1)
+        Next
+        For I As Integer = OldIndex To NewIndex + 1 Step -1
+            Self.Item(I) = Self.Item(I - 1)
+        Next
+        Self.Item(NewIndex) = Item
+    End Sub
+
+    <Extension()>
     Public Function Resize(ByVal Array() As Byte, ByVal Length As Integer) As Byte()
         If Length <> Array.Length Then
             Dim R = New Byte(Length - 1) {}

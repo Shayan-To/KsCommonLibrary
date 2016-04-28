@@ -9,9 +9,7 @@ Public Class AddChildList(Of T)
     End Sub
 
     Public Sub AddText(text As String) Implements IAddChild.AddText
-        If text.Trim().Length <> 0 Then
-            Throw New ArgumentException()
-        End If
+        Throw New NotSupportedException()
     End Sub
 
 End Class

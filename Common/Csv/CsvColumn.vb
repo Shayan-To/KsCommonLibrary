@@ -6,7 +6,7 @@
     End Sub
 
     Friend Sub Detach()
-        Me.IsRemoved = True
+        Me.IsDetached = True
         Me.Parent.Columns.ReportHeaderNameChanged(Me, Me._HeaderName, Nothing)
     End Sub
 
@@ -15,12 +15,12 @@
 
     Public Property HeaderName As String
         Get
-            Verify.False(Me.IsRemoved, "Header is detached.")
+            Verify.False(Me.IsDetached, "Header is detached.")
             Verify.True(Me.Parent.HasHeaders, "The CSV does not have headers.")
             Return Me._HeaderName
         End Get
         Set(ByVal Value As String)
-            Verify.False(Me.IsRemoved, "Header is detached.")
+            Verify.False(Me.IsDetached, "Header is detached.")
             Verify.True(Me.Parent.HasHeaders, "The CSV does not have headers.")
             If Value Is Nothing Then
                 Value = ""
@@ -39,7 +39,7 @@
 
     Public Property Index As Integer
         Get
-            Verify.False(Me.IsRemoved, "Header is detached.")
+            Verify.False(Me.IsDetached, "Header is detached.")
             Return Me._Index
         End Get
         Friend Set(ByVal Value As Integer)
@@ -53,12 +53,12 @@
 
     Public ReadOnly Property Parent As CsvData
         Get
-            Verify.False(Me.IsRemoved, "Header is detached.")
+            Verify.False(Me.IsDetached, "Header is detached.")
             Return Me._Parent
         End Get
     End Property
 #End Region
 
-    Private IsRemoved As Boolean = False
+    Private IsDetached As Boolean = False
 
 End Class

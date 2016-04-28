@@ -60,18 +60,27 @@
         Column.Detach()
 
         Me.Parent.Entries.ReportColumnRemove(Index)
+        Me.UpdateIndexes(Index)
+    End Sub
+
+    Public Sub Clear()
+        For Each C In Me.List
+            C.Detach()
+        Next
+        Me.List.Clear()
+        Me.Parent.Entries.ReportColumnsClear()
     End Sub
 
     Public Sub Move(ByVal Column As CsvColumn, ByVal NewIndex As Integer)
         Verify.TrueArg(Column.Parent Is Me.Parent, "Column", "Given column is not part of this csv data.")
         Dim OldIndex = Column.Index
+        Assert.True(Me.List.Item(OldIndex) Is Column)
 
         If OldIndex = NewIndex Then
             Exit Sub
         End If
 
-        Me.List.RemoveAt(OldIndex)
-        Me.List.Insert(NewIndex, Column)
+        Me.List.Move(OldIndex, NewIndex)
 
         Dim A = NewIndex
         Dim B = OldIndex

@@ -89,8 +89,8 @@ Public Class ComplementingCollectionMaster(Of T)
         End If
         C1.AddI(Item)
 
-        C1.OnCollectionChanged(New NotifyCollectionChangedEventArgs(Of T)(NotifyCollectionChangedAction.Add, Item))
-        C2.OnCollectionChanged(New NotifyCollectionChangedEventArgs(Of T)(NotifyCollectionChangedAction.Remove, Item))
+        C1.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of T).CreateAdd(Item))
+        C2.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of T).CreateRemove(Item))
     End Sub
 
     Friend Sub ClearC(ByVal C1 As ChildComplementCollection(Of T), Optional C2 As ChildComplementCollection(Of T) = Nothing)
@@ -111,10 +111,10 @@ Public Class ComplementingCollectionMaster(Of T)
 
         For Each I As T In C1Clone
             C2.AddI(I)
-            C2.OnCollectionChanged(New NotifyCollectionChangedEventArgs(Of T)(NotifyCollectionChangedAction.Add, I))
+            C2.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of T).CreateAdd(I))
         Next
 
-        C1.OnCollectionChanged(New NotifyCollectionChangedEventArgs(Of T)(NotifyCollectionChangedAction.Reset))
+        C1.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of T).CreateReset())
     End Sub
 
     Friend Function RemoveC(ByVal Item As T, ByVal C1 As ChildComplementCollection(Of T), Optional C2 As ChildComplementCollection(Of T) = Nothing) As Boolean
@@ -131,8 +131,8 @@ Public Class ComplementingCollectionMaster(Of T)
         End If
         C2.AddI(Item)
 
-        C1.OnCollectionChanged(New NotifyCollectionChangedEventArgs(Of T)(NotifyCollectionChangedAction.Remove, Item))
-        C2.OnCollectionChanged(New NotifyCollectionChangedEventArgs(Of T)(NotifyCollectionChangedAction.Add, Item))
+        C1.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of T).CreateRemove(Item))
+        C2.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of T).CreateAdd(Item))
 
         Return True
     End Function
@@ -144,19 +144,19 @@ Public Class ComplementingCollectionMaster(Of T)
         End If
 
         Me._Collection1.Add(item)
-        Me.OnCollectionChanged(New NotifyCollectionChangedEventArgs(Of T)(NotifyCollectionChangedAction.Add, item))
+        Me.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of T).CreateAdd(item))
     End Sub
 
     Public Sub Clear() Implements ICollection(Of T).Clear
         Me._Collection1.Clear()
         Me._Collection2.Clear()
-        Me.OnCollectionChanged(New NotifyCollectionChangedEventArgs(Of T)(NotifyCollectionChangedAction.Reset))
+        Me.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of T).CreateReset())
     End Sub
 
     Public Function Remove(item As T) As Boolean Implements ICollection(Of T).Remove
         If Me._Collection1.Remove(item) OrElse
            Me._Collection2.Remove(item) Then
-            Me.OnCollectionChanged(New NotifyCollectionChangedEventArgs(Of T)(NotifyCollectionChangedAction.Remove, item))
+            Me.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of T).CreateRemove(item))
             Return True
         End If
         Return False

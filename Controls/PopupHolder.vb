@@ -5,14 +5,15 @@ Namespace Controls
 
     <ContentProperty("Content")>
     Public Class PopupHolder
-        Inherits UIElement
+        Inherits FrameworkElement ' UIElement is not used as base type throughout the whole libraries! Using FrameworkElement instead.
 
-        Protected Overrides Function MeasureCore(availableSize As Size) As Size
+        Protected Overrides Function MeasureOverride(availableSize As Size) As Size
             Return Nothing
         End Function
 
-        Protected Overrides Sub ArrangeCore(finalRect As Rect)
-        End Sub
+        Protected Overrides Function ArrangeOverride(finalSize As Size) As Size
+            Return Nothing
+        End Function
 
         Protected Overridable Function ArrangePopup(ByVal Panel As PopupPanel, ByVal PanelSize As Size, ByVal PopupSize As Size) As Rect?
             Dim Target = Me.GetTarget()

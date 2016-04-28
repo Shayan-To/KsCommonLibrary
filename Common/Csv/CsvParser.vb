@@ -1,14 +1,15 @@
 ﻿Friend Class CsvParser
 
-    Public Function ParseCSV(ByVal Str As String, Optional ByVal HasHeaders As Boolean = True, Optional ByVal Delimiter As Char = ","c, Optional ByVal NormalizeLineEndings As Boolean = True) As CsvData
+    Public Sub ParseCsv(ByVal Csv As CsvData, ByVal Str As String, Optional ByVal HasHeaders As Boolean = True, Optional ByVal Delimiter As Char = ","c, Optional ByVal NormalizeLineEndings As Boolean = True)
         Me.Str = Str.ToCharArray()
         Me.Index = 0
         Me.NormalizeLineEndings = True
         Me.DelimiterChar = Delimiter
         Me.Delimiter = Delimiter
+        Me.Csv = Csv
 
-        Return ParseCSV(HasHeaders)
-    End Function
+        Me.ParseCsv(HasHeaders)
+    End Sub
 
     Private Shared Sub EnsureColumns(ByVal Data As CsvData, ByVal I As Integer)
         Do Until I < Data.Columns.Count
@@ -16,8 +17,9 @@
         Loop
     End Sub
 
-    Private Function ParseCSV(ByVal HasHeaders As Boolean) As CsvData
-        Dim Res = New CsvData()
+    Private Sub ParseCsv(ByVal HasHeaders As Boolean)
+        Dim Res = Me.Csv
+        Res.Clear()
 
         Res.HasHeaders = HasHeaders
         If HasHeaders Then
@@ -109,9 +111,7 @@
         If IsLastEntryEmpty Then
             Res.Entries.Remove(Res.Entries.Count - 1)
         End If
-
-        Return Res
-    End Function
+    End Sub
 
     Private Function ReadToken(ByVal T As String) As Boolean
         If Me.PeekToken() = T Then
@@ -239,5 +239,6 @@
     Private NormalizeLineEndings As Boolean
     Private Str As Char()
     Private Index As Integer
+    Private Csv As CsvData
 
 End Class
