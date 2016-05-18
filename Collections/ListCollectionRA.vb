@@ -67,7 +67,7 @@ Public Class ListCollectionRA(Of T, List As IList(Of T))
 
 #Region "ISerializable Logic"
     Protected Sub New(ByVal info As SerializationInfo, ByVal context As StreamingContext)
-        If (info Is Nothing) Then Throw New ArgumentNullException("info")
+        If (info Is Nothing) Then Throw New ArgumentNullException(NameOf(info))
 
         '_Title = info.GetString("Title")
     End Sub

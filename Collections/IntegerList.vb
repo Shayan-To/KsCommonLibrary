@@ -49,7 +49,7 @@ Public Class IntegerList
             Res = Me._Start + Index * Me._Step
 
             If Res >= Me._End OrElse Res < Me._Start Then
-                Throw New ArgumentOutOfRangeException("Index")
+                Throw New ArgumentOutOfRangeException(NameOf(Index))
             End If
 
             Return Res

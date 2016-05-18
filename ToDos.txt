@@ -1,2 +1,2 @@
-﻿ - The headered binary serializer.
- - The object-database binding engine.
+﻿ - [ ] The headered binary serializer.
+ - [ ] The object-database binding engine.

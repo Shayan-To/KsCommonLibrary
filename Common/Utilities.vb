@@ -553,6 +553,7 @@ Public NotInheritable Class Utilities
              .Append(M.DeclaringType.Name) _
              .Append("."c) _
              .Append(M.Name) _
+             .Append("_"c) _
              .Append(P.Length) _
              .Append("("c)
 
@@ -562,13 +563,13 @@ Public NotInheritable Class Utilities
                 End If
             Else
                 Dim Bl = True
-                For Each A In Args
+                For I As Integer = 0 To Args.Length - 1
                     If Bl Then
                         Bl = False
                     Else
                         R.Append(", ")
                     End If
-                    R.Append(A)
+                    R.Append(P(I).Name).Append("="c).Append(Args(I))
                 Next
             End If
 

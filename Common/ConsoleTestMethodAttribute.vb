@@ -8,6 +8,7 @@ Public Class ConsoleTestMethodAttribute
         Me._ShouldBeRun = ShouldBeRun
     End Sub
 
+    <DebuggerHidden()>
     Public Shared Sub RunTestMethods(ByVal Methods As IEnumerable(Of MethodInfo), ByVal Optional JustTrue As Boolean = True)
         ConsoleUtilities.Initialize()
 
@@ -125,6 +126,7 @@ Public Class ConsoleTestMethodAttribute
         Next
     End Sub
 
+    <DebuggerHidden()>
     Public Shared Sub RunTestMethods(ByVal Optional JustTrue As Boolean = True)
         RunTestMethods(Utilities.Reflection.GetAllMethods(), JustTrue)
     End Sub

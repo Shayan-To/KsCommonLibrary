@@ -30,7 +30,7 @@
                 End If
                 Index -= Count
             Next
-            Throw New ArgumentOutOfRangeException("Index")
+            Throw New ArgumentOutOfRangeException(NameOf(Index))
         End Get
         Set(Value As T)
             Throw New NotSupportedException()

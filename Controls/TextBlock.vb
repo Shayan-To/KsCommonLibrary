@@ -307,6 +307,34 @@ Namespace Controls
         End Property
 #End Region
 
+#Region "TextWrapping Property"
+        Public Shared ReadOnly TextWrappingProperty As DependencyProperty = DependencyProperty.Register("TextWrapping", GetType(TextWrapping), GetType(TextBlock), New PropertyMetadata(TextWrapping.NoWrap, AddressOf TextWrapping_Changed, AddressOf TextWrapping_Coerce))
+
+        Private Shared Function TextWrapping_Coerce(ByVal D As DependencyObject, ByVal BaseValue As Object) As Object
+            'Dim Self = DirectCast(D, TextBlock)
+
+            'Dim Value = DirectCast(BaseValue, TextWrapping)
+
+            Return BaseValue
+        End Function
+
+        Private Shared Sub TextWrapping_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+            'Dim Self = DirectCast(D, TextBlock)
+
+            'Dim OldValue = DirectCast(E.OldValue, TextWrapping)
+            'Dim NewValue = DirectCast(E.NewValue, TextWrapping)
+        End Sub
+
+        Public Property TextWrapping As TextWrapping
+            Get
+                Return DirectCast(Me.GetValue(TextWrappingProperty), TextWrapping)
+            End Get
+            Set(ByVal value As TextWrapping)
+                Me.SetValue(TextWrappingProperty, value)
+            End Set
+        End Property
+#End Region
+
         Private ReadOnly Obj1Array As Obj() = New Obj(0) {New Obj()}
 
     End Class

@@ -60,7 +60,7 @@ Namespace MVVM
 
         Public Shared Function GetViewModel(ByVal Element As DependencyObject) As ViewModel
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Return DirectCast(Element.GetValue(ViewModelProperty), ViewModel)
@@ -68,7 +68,7 @@ Namespace MVVM
 
         Public Shared Sub SetViewModel(ByVal Element As DependencyObject, ByVal Value As ViewModel)
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Element.SetValue(ViewModelProperty, Value)
@@ -114,7 +114,7 @@ Namespace MVVM
 
         Public Shared Function GetDesignViewModelType(ByVal Element As DependencyObject) As Type
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Return DirectCast(Element.GetValue(DesignViewModelTypeProperty), Type)
@@ -122,7 +122,7 @@ Namespace MVVM
 
         Public Shared Sub SetDesignViewModelType(ByVal Element As DependencyObject, ByVal Value As Type)
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Element.SetValue(DesignViewModelTypeProperty, Value)
@@ -173,7 +173,7 @@ Namespace MVVM
 
         Public Shared Function GetIndexInParent(ByVal Element As DependencyObject) As Integer
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Return DirectCast(Element.GetValue(IndexInParentProperty), Integer)
@@ -181,7 +181,7 @@ Namespace MVVM
 
         Public Shared Sub SetIndexInParent(ByVal Element As DependencyObject, ByVal Value As Integer)
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Element.SetValue(IndexInParentProperty, Value)
@@ -207,7 +207,7 @@ Namespace MVVM
 
         Public Shared Function GetUpTPProp1(ByVal Element As DependencyObject) As Object
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Return DirectCast(Element.GetValue(UpTPProp1Property), Object)
@@ -215,7 +215,7 @@ Namespace MVVM
 
         Public Shared Sub SetUpTPProp1(ByVal Element As DependencyObject, ByVal Value As Object)
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Element.SetValue(UpTPProp1Property, Value)
@@ -238,7 +238,7 @@ Namespace MVVM
 
         Public Shared Function GetUpTPProp2(ByVal Element As DependencyObject) As Object
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Return DirectCast(Element.GetValue(UpTPProp2Property), Object)
@@ -246,7 +246,7 @@ Namespace MVVM
 
         Public Shared Sub SetUpTPProp2(ByVal Element As DependencyObject, ByVal Value As Object)
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Element.SetValue(UpTPProp2Property, Value)
@@ -269,7 +269,7 @@ Namespace MVVM
 
         Public Shared Function GetUpTPProp3(ByVal Element As DependencyObject) As Object
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Return DirectCast(Element.GetValue(UpTPProp3Property), Object)
@@ -277,7 +277,7 @@ Namespace MVVM
 
         Public Shared Sub SetUpTPProp3(ByVal Element As DependencyObject, ByVal Value As Object)
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Element.SetValue(UpTPProp3Property, Value)
@@ -289,7 +289,7 @@ Namespace MVVM
 
         Public Shared Function GetProp1(ByVal Element As DependencyObject) As Object
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Return DirectCast(Element.GetValue(Prop1Property), Object)
@@ -297,7 +297,7 @@ Namespace MVVM
 
         Public Shared Sub SetProp1(ByVal Element As DependencyObject, ByVal Value As Object)
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Element.SetValue(Prop1Property, Value)
@@ -309,7 +309,7 @@ Namespace MVVM
 
         Public Shared Function GetProp2(ByVal Element As DependencyObject) As Object
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Return DirectCast(Element.GetValue(Prop2Property), Object)
@@ -317,7 +317,7 @@ Namespace MVVM
 
         Public Shared Sub SetProp2(ByVal Element As DependencyObject, ByVal Value As Object)
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Element.SetValue(Prop2Property, Value)
@@ -329,7 +329,7 @@ Namespace MVVM
 
         Public Shared Function GetProp3(ByVal Element As DependencyObject) As Object
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Return DirectCast(Element.GetValue(Prop3Property), Object)
@@ -337,7 +337,7 @@ Namespace MVVM
 
         Public Shared Sub SetProp3(ByVal Element As DependencyObject, ByVal Value As Object)
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Element.SetValue(Prop3Property, Value)
@@ -349,7 +349,7 @@ Namespace MVVM
 
         Public Shared Function GetProp4(ByVal Element As DependencyObject) As Object
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Return DirectCast(Element.GetValue(Prop4Property), Object)
@@ -357,7 +357,7 @@ Namespace MVVM
 
         Public Shared Sub SetProp4(ByVal Element As DependencyObject, ByVal Value As Object)
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Element.SetValue(Prop4Property, Value)
@@ -369,7 +369,7 @@ Namespace MVVM
 
         Public Shared Function GetProp5(ByVal Element As DependencyObject) As Object
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Return DirectCast(Element.GetValue(Prop5Property), Object)
@@ -377,10 +377,94 @@ Namespace MVVM
 
         Public Shared Sub SetProp5(ByVal Element As DependencyObject, ByVal Value As Object)
             If Element Is Nothing Then
-                Throw New ArgumentNullException("Element")
+                Throw New ArgumentNullException(NameOf(Element))
             End If
 
             Element.SetValue(Prop5Property, Value)
+        End Sub
+#End Region
+
+#Region "SnapsToDevicePixels Property"
+        Public Shared ReadOnly SnapsToDevicePixelsProperty As DependencyProperty = DependencyProperty.RegisterAttached("SnapsToDevicePixels", GetType(Boolean), GetType(Utils), New FrameworkPropertyMetadata(False, FrameworkPropertyMetadataOptions.Inherits, AddressOf SnapsToDevicePixels_Changed, AddressOf SnapsToDevicePixels_Coerce))
+
+        Private Shared Function SnapsToDevicePixels_Coerce(ByVal D As DependencyObject, ByVal BaseValue As Object) As Object
+            'Dim Self = TryCast(D, UIElement)
+            'If Self Is Nothing Then
+            '    Return SnapsToDevicePixelsProperty.DefaultMetadata.DefaultValue
+            'End If
+
+            'Dim Value = DirectCast(BaseValue, Boolean)
+
+            Return BaseValue
+        End Function
+
+        Private Shared Sub SnapsToDevicePixels_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+            Dim Self = TryCast(D, UIElement)
+
+            If Self Is Nothing Then
+                Exit Sub
+            End If
+
+            'Dim OldValue = DirectCast(E.OldValue, Boolean)
+            Dim NewValue = DirectCast(E.NewValue, Boolean)
+
+            Self.SnapsToDevicePixels = NewValue
+        End Sub
+
+        Public Shared Function GetSnapsToDevicePixels(ByVal Element As DependencyObject) As Boolean
+            Verify.NonNullArg(Element, NameOf(Element))
+            Return DirectCast(Element.GetValue(SnapsToDevicePixelsProperty), Boolean)
+        End Function
+
+        Public Shared Sub SetSnapsToDevicePixels(ByVal Element As DependencyObject, ByVal Value As Boolean)
+            Verify.NonNullArg(Element, NameOf(Element))
+            Element.SetValue(SnapsToDevicePixelsProperty, Value)
+        End Sub
+#End Region
+
+#Region "Foreground Property"
+        Public Shared ReadOnly ForegroundProperty As DependencyProperty = DependencyProperty.RegisterAttached("Foreground", GetType(Media.Brush), GetType(Utils), New FrameworkPropertyMetadata(Nothing, FrameworkPropertyMetadataOptions.Inherits, AddressOf Foreground_Changed, AddressOf Foreground_Coerce))
+
+        Private Shared Function Foreground_Coerce(ByVal D As DependencyObject, ByVal BaseValue As Object) As Object
+            'Dim Self = TryCast(D, UIElement)
+            'If Self Is Nothing Then
+            '    Return ForegroundProperty.DefaultMetadata.DefaultValue
+            'End If
+
+            'Dim Value = DirectCast(BaseValue, Media.Brush)
+
+            Return BaseValue
+        End Function
+
+        Private Shared Sub Foreground_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+            Dim Self = TryCast(D, UIElement)
+
+            If Self Is Nothing Then
+                Exit Sub
+            End If
+
+            'Dim OldValue = DirectCast(E.OldValue, Media.Brush)
+            Dim NewValue = DirectCast(E.NewValue, Media.Brush)
+
+            Documents.TextElement.SetForeground(Self, NewValue)
+
+            Self = TryCast(TryCast(Self, ContentPresenter)?.Content, UIElement)
+
+            If Self Is Nothing Then
+                Exit Sub
+            End If
+
+            Documents.TextElement.SetForeground(Self, NewValue)
+        End Sub
+
+        Public Shared Function GetForeground(ByVal Element As DependencyObject) As Media.Brush
+            Verify.NonNullArg(Element, NameOf(Element))
+            Return DirectCast(Element.GetValue(ForegroundProperty), Media.Brush)
+        End Function
+
+        Public Shared Sub SetForeground(ByVal Element As DependencyObject, ByVal Value As Media.Brush)
+            Verify.NonNullArg(Element, NameOf(Element))
+            Element.SetValue(ForegroundProperty, Value)
         End Sub
 #End Region
 

@@ -60,7 +60,7 @@
     Public Sub RemoveAt(index As Integer) Implements IList(Of TValue).RemoveAt, IList.RemoveAt
         Me.CheckChanges()
         If Me.List Is Nothing Then
-            Throw New ArgumentOutOfRangeException("index")
+            Throw New ArgumentOutOfRangeException(NameOf(index))
         End If
         Me.List.RemoveAt(index)
         Me.AfterOut()
@@ -115,14 +115,14 @@
         Get
             Me.CheckChanges()
             If Me.List Is Nothing Then
-                Throw New ArgumentOutOfRangeException("index")
+                Throw New ArgumentOutOfRangeException(NameOf(index))
             End If
             Return Me.List.Item(index)
         End Get
         Set(value As TValue)
             Me.CheckChanges()
             If Me.List Is Nothing Then
-                Throw New ArgumentOutOfRangeException("index")
+                Throw New ArgumentOutOfRangeException(NameOf(index))
             End If
             Me.List.Item(index) = value
         End Set
