@@ -124,6 +124,36 @@ Namespace Controls
             End Set
         End Property
 
+#Region "WindowStartupPosition Property"
+        Public Shared ReadOnly WindowStartupPositionProperty As DependencyProperty = DependencyProperty.Register("WindowStartupPosition", GetType(WindowStartupLocation), GetType(Window), New PropertyMetadata(WindowStartupLocation.Manual, AddressOf WindowStartupPosition_Changed, AddressOf WindowStartupPosition_Coerce))
+
+        Private Shared Function WindowStartupPosition_Coerce(ByVal D As DependencyObject, ByVal BaseValue As Object) As Object
+            'Dim Self = DirectCast(D, Window)
+
+            'Dim Value = DirectCast(BaseValue, WindowStartupLocation)
+
+            Return BaseValue
+        End Function
+
+        Private Shared Sub WindowStartupPosition_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+            Dim Self = DirectCast(D, Window)
+
+            'Dim OldValue = DirectCast(E.OldValue, WindowStartupLocation)
+            Dim NewValue = DirectCast(E.NewValue, WindowStartupLocation)
+
+            Self.WindowStartupLocation = NewValue
+        End Sub
+
+        Public Property WindowStartupPosition As WindowStartupLocation
+            Get
+                Return DirectCast(Me.GetValue(WindowStartupPositionProperty), WindowStartupLocation)
+            End Get
+            Set(ByVal value As WindowStartupLocation)
+                Me.SetValue(WindowStartupPositionProperty, value)
+            End Set
+        End Property
+#End Region
+
 #Region "ShelterStyle Property"
         Public Shared ReadOnly ShelterStyleProperty As DependencyProperty = DependencyProperty.Register("ShelterStyle", GetType(Style), GetType(Window), New PropertyMetadata(Nothing, AddressOf ShelterStyle_Changed))
 

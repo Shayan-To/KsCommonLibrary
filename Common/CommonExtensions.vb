@@ -73,6 +73,81 @@ Public Module CommonExtensions
 
 #Region "CollectionUtils Group"
     <Extension()>
+    Public Sub Reverse(Of T)(ByVal Self As IList(Of T))
+#Disable Warning BC40008 ' Type or member is obsolete
+        Self.Reverse(0)
+#Enable Warning BC40008 ' Type or member is obsolete
+    End Sub
+
+    <Obsolete(),
+     Extension()>
+    Public Sub Reverse(Of T)(ByVal Self As IList(Of T), ByVal Index As Integer, Optional ByVal Count As Integer = -1)
+        If Count = -1 Then
+            Count = Self.Count + Index
+        Else
+            Count += 2 * Index
+        End If
+        For I As Integer = Index To Index + (Count - 2 * Index) \ 2 - 1
+            Dim C = Self.Item(I)
+            Self.Item(I) = Self.Item(Count - 1 - I)
+            Self.Item(Count - 1 - I) = Self.Item(I)
+        Next
+    End Sub
+
+    <Extension()>
+    Public Function AsList(ByVal Self As String) As StringAsListCollection
+        Return New StringAsListCollection(Self)
+    End Function
+
+    <Extension()>
+    Public Function Equals(Of T1, T2)(ByVal Self As IEnumerable(Of T1), ByVal Other As IEnumerable(Of T2), ByVal Comparison As Func(Of T1, T2, Boolean)) As Boolean
+        Using Enum1 = Self.GetEnumerator(),
+              Enum2 = Other.GetEnumerator()
+            Do
+                If Not Enum1.MoveNext() Then
+                    Return Not Enum2.MoveNext()
+                End If
+                If Not Enum2.MoveNext() Then
+                    Return False
+                End If
+                If Not Comparison.Invoke(Enum1.Current, Enum2.Current) Then
+                    Return False
+                End If
+            Loop
+        End Using
+    End Function
+
+    <Extension()>
+    Public Function Aggregate(Of TAggregate, T)(ByVal Self As IEnumerable(Of T), ByVal Seed As TAggregate, ByVal Func As Func(Of TAggregate, T, Integer, TAggregate)) As TAggregate
+        Dim Ind = 0
+        For Each I In Self
+            Seed = Func.Invoke(Seed, I, Ind)
+            Ind += 1
+        Next
+        Return Seed
+    End Function
+
+    <Extension()>
+    Public Function IndexOf(Of T)(ByVal Self As IList(Of T), ByVal Predicate As Func(Of T, Integer, Boolean)) As Integer
+        For I As Integer = 0 To Self.Count - 1
+            If Predicate.Invoke(Self.Item(I), I) Then
+                Return I
+            End If
+        Next
+        Return -1
+    End Function
+
+    <Extension()>
+    Public Function LastIndexOf(Of T)(ByVal Self As IList(Of T), ByVal Predicate As Func(Of T, Integer, Boolean)) As Integer
+        For I As Integer = Self.Count - 1 To 0 Step -1
+            If Predicate.Invoke(Self.Item(I), I) Then
+                Return I
+            End If
+        Next
+        Return -1
+    End Function
+
+    <Extension()>
     Public Sub Move(Of T)(ByVal Self As IList(Of T), ByVal OldIndex As Integer, ByVal NewIndex As Integer)
         Dim Item = Self.Item(OldIndex)
         For I As Integer = OldIndex To NewIndex - 1
@@ -107,29 +182,43 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
-    Public Function GetBoundsOf(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T) As VTuple(Of Integer, Integer)
-        Return Self.GetBoundsOf(Value, Comparer(Of T).Default)
+    Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T) As VTuple(Of Integer, Integer)
+        Return Self.BinarySearch(Value, Comparer(Of T).Default)
     End Function
 
+    ''' <summary>
+    ''' Gets the interval in which the Value resides in inside a sorted list.
+    ''' </summary>
+    ''' <param name="Value">The value to look for.</param>
+    ''' <returns>
+    ''' The tuple (start index, length).
+    ''' Start index being the index of fist occurrance of Value, and length being the count of its occurrances.
+    ''' If no occurrance of Value has been found, start index will be at the first element larger than Value.
+    ''' </returns>
     <Extension()>
-    Public Function GetBoundsOf(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T, ByVal Comp As IComparer(Of T)) As VTuple(Of Integer, Integer)
-        Dim Count = Self.Count
-        Dim Offset1 = 0
-        Dim Offset2 = 0
+    Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T, ByVal Comp As IComparer(Of T)) As VTuple(Of Integer, Integer)
+        Dim Count = Utilities.Math.LeastPowerOfTwoOnMax(Self.Count + 1) \ 2
+        Dim Offset1 = -1
 
-        Do While Count > 1
-            Count \= 2
-            If Offset1 = Offset2 Then
-                If Offset1 + Count < Self.Count Then
-                    Dim C = Comp.Compare(Self.Item(Offset1 + Count), Value)
-                    If C < 0 Then
-                        Offset1 += Count
-                        Offset2 += Count
-                    ElseIf C = 0 Then
-                        Offset2 += Count
-                    End If
+        Do While Count > 0
+            If Offset1 + Count < Self.Count Then
+                Dim C = Comp.Compare(Self.Item(Offset1 + Count), Value)
+                If C < 0 Then
+                    Offset1 += Count
+                ElseIf C = 0 Then
+                    Exit Do
                 End If
-            Else
+            End If
+            Count \= 2
+        Loop
+
+        Dim Offset2 = Offset1
+        If Count > 0 Then
+            ' This should have been done in the ElseIf block in the previous loop before the Exit statement.
+            Offset2 += Count
+
+            Do While Count > 1
+                Count \= 2
                 If Offset1 + Count < Self.Count Then
                     If Comp.Compare(Self.Item(Offset1 + Count), Value) < 0 Then
                         Offset1 += Count
@@ -140,10 +229,10 @@ Public Module CommonExtensions
                         Offset2 += Count
                     End If
                 End If
-            End If
-        Loop
+            Loop
+        End If
 
-        Return VTuple.Create(Offset1 + 1, Offset2 + 1)
+        Return VTuple.Create(Offset1 + 1, Offset2 - Offset1)
     End Function
 
     <Extension()>
@@ -166,7 +255,17 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
+    Public Function SelectAsList(Of TIn, TOut)(ByVal Self As IReadOnlyList(Of TIn), ByVal Func As Func(Of TIn, Integer, TOut)) As SelectAsListCollection(Of TIn, TOut)
+        Return New SelectAsListCollection(Of TIn, TOut)(Self, Func)
+    End Function
+
+    <Extension()>
     Public Function SelectAsNotifyingList(Of TIn, TOut)(ByVal Self As IReadOnlyList(Of TIn), ByVal Func As Func(Of TIn, TOut)) As SelectAsNotifyingListCollection(Of TIn, TOut)
+        Return New SelectAsNotifyingListCollection(Of TIn, TOut)(Self, Func)
+    End Function
+
+    <Extension()>
+    Public Function SelectAsNotifyingList(Of TIn, TOut)(ByVal Self As IReadOnlyList(Of TIn), ByVal Func As Func(Of TIn, Integer, TOut)) As SelectAsNotifyingListCollection(Of TIn, TOut)
         Return New SelectAsNotifyingListCollection(Of TIn, TOut)(Self, Func)
     End Function
 
@@ -254,12 +353,9 @@ Public Module CommonExtensions
 
     <Extension()>
     Public Function AllToString(Of T)(ByVal Collection As IEnumerable(Of T)) As String
-        Dim Res As Text.StringBuilder,
-            Enumerator As IEnumerator(Of T)
+        Dim Res = New Text.StringBuilder("{")
 
-        Res = New Text.StringBuilder("{")
-
-        Enumerator = Collection.GetEnumerator()
+        Dim Enumerator = Collection.GetEnumerator()
 
         If Enumerator.MoveNext() Then
             Res.Append(Enumerator.Current)

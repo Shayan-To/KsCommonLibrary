@@ -451,6 +451,48 @@ Public NotInheritable Class Utilities
         End Function
 #End Region
 
+        Public Shared Function LeastPowerOfTwoOnMax(ByVal Max As Integer) As Integer
+            If Max < 1 Then
+                Return 1
+            End If
+
+            ' If Max is a power of two, we should return Max, otherwise, Max * 2
+            Dim T = (Max - 1) And Max
+            If T = 0 Then
+                Return Max
+            End If
+            Max = T
+
+            Do
+                T = (Max - 1) And Max
+                If T = 0 Then
+                    Return Max << 1
+                End If
+                Max = T
+            Loop
+        End Function
+
+        Public Shared Function LeastPowerOfTwoOnMax(ByVal Max As Long) As Long
+            If Max < 1 Then
+                Return 1
+            End If
+
+            ' If Max is a power of two, we should return Max, otherwise, Max * 2
+            Dim T = (Max - 1) And Max
+            If T = 0 Then
+                Return Max
+            End If
+            Max = T
+
+            Do
+                T = (Max - 1) And Max
+                If T = 0 Then
+                    Return Max << 1
+                End If
+                Max = T
+            Loop
+        End Function
+
         Public Shared Function FloorDiv(ByVal A As Integer, ByVal B As Integer) As Integer
             If A >= 0 Or A Mod B = 0 Then
                 Return A \ B

@@ -128,7 +128,12 @@ Public Class ConsoleTestMethodAttribute
 
     <DebuggerHidden()>
     Public Shared Sub RunTestMethods(ByVal Optional JustTrue As Boolean = True)
-        RunTestMethods(Utilities.Reflection.GetAllMethods(), JustTrue)
+        RunTestMethods({Assembly.GetEntryAssembly()}, JustTrue)
+    End Sub
+
+    <DebuggerHidden()>
+    Public Shared Sub RunTestMethods(ByVal Assemblies As IEnumerable(Of Assembly), ByVal Optional JustTrue As Boolean = True)
+        RunTestMethods(Utilities.Reflection.GetAllMethods(Assemblies), JustTrue)
     End Sub
 
 #Region "ShouldBeRun Property"

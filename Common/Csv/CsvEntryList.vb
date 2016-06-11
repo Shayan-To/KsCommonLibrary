@@ -3,6 +3,12 @@
 
     Friend Sub New(ByVal Parent As CsvData)
         Me._Parent = Parent
+        Me.List = New List(Of CsvEntry)()
+    End Sub
+
+    Friend Sub New(ByVal Parent As CsvData, ByVal Capacity As Integer)
+        Me._Parent = Parent
+        Me.List = New List(Of CsvEntry)(Capacity)
     End Sub
 
     Friend Sub ReportColumnInsert(ByVal Index As Integer)
@@ -127,6 +133,6 @@
     End Property
 #End Region
 
-    Private ReadOnly List As List(Of CsvEntry) = New List(Of CsvEntry)()
+    Private ReadOnly List As List(Of CsvEntry)
 
 End Class

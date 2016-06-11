@@ -14,30 +14,18 @@ Namespace Controls
             Dim Content = Me.Content
             If Content IsNot Nothing Then
                 Content.Measure(AvailableSize)
-            End If
-
-            If Content IsNot Nothing Then
                 Return Content.DesiredSize
-            Else
-                Return New Size()
             End If
+            Return New Size()
         End Function
 
         Protected Overrides Function ArrangeOverride(ByVal FinalSize As Size) As Size
-            Dim Content = Me.Content
-
-            If Content IsNot Nothing Then
-                Content.Arrange(New Rect(New Point(), FinalSize))
-            End If
-
+            Me.Content?.Arrange(New Rect(FinalSize))
             Return FinalSize
         End Function
 
         Protected Overrides Function GetVisualChild(index As Integer) As Windows.Media.Visual
-            If index <> 0 Or Me.Content Is Nothing Then
-                Throw New ArgumentException()
-            End If
-
+            Verify.TrueArg(index = 0 And Me.Content IsNot Nothing, NameOf(index))
             Return Me.Content
         End Function
 
@@ -61,13 +49,14 @@ Namespace Controls
         Public Shared Sub Content_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
             Dim Self = DirectCast(D, ContentControl)
 
-            If E.OldValue IsNot Nothing Then
-                Dim OldValue = DirectCast(E.OldValue, UIElement)
+            Dim OldValue = DirectCast(E.OldValue, UIElement)
+            Dim NewValue = DirectCast(E.NewValue, UIElement)
+
+            If OldValue IsNot Nothing Then
                 Self.RemoveVisualChild(OldValue)
                 Self.RemoveLogicalChild(OldValue)
             End If
-            If E.NewValue IsNot Nothing Then
-                Dim NewValue = DirectCast(E.NewValue, UIElement)
+            If NewValue IsNot Nothing Then
                 Self.AddVisualChild(NewValue)
                 Self.AddLogicalChild(NewValue)
             End If

@@ -1,5 +1,13 @@
 ﻿Public Class CsvData
 
+    Public Sub New(ByVal EntriesCapacity As Integer)
+        Me._Entries = New CsvEntryList(Me, EntriesCapacity)
+    End Sub
+
+    Public Sub New()
+        Me._Entries = New CsvEntryList(Me)
+    End Sub
+
     Public Shared Function Parse(ByVal Str As String, Optional ByVal HasHeaders As Boolean = True, Optional ByVal Delimiter As Char = ","c, Optional ByVal NormalizeLineEndings As Boolean = True) As CsvData
         Dim Res = New CsvData()
         CsvParser.Instance.ParseCsv(Res, Str, HasHeaders, Delimiter, NormalizeLineEndings)
@@ -45,7 +53,7 @@
                 If Bl Then
                     Bl = False
                 Else
-                    Res.Append(","c)
+                    Res.Append(Delimiter)
                 End If
                 WriteField(C.HeaderName, UseQuotes, Res)
             Next
@@ -60,7 +68,7 @@
                 If Bl Then
                     Bl = False
                 Else
-                    Res.Append(","c)
+                    Res.Append(Delimiter)
                 End If
                 WriteField(E.Item(I), UseQuotes, Res)
             Next
@@ -102,7 +110,7 @@
 #End Region
 
 #Region "Entries Property"
-    Private ReadOnly _Entries As CsvEntryList = New CsvEntryList(Me)
+    Private ReadOnly _Entries As CsvEntryList
 
     Public ReadOnly Property Entries As CsvEntryList
         Get

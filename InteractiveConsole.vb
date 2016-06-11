@@ -1,9 +1,8 @@
 ﻿Imports System.Reflection
 
-Public MustInherit Class InteractiveConsole
+Public MustInherit Class InteractiveConsoleBase
 
     Public Sub Run()
-        'AddHandler Console.CancelKeyPress, AddressOf Me.Console_CancelKeyPress
         Console.TreatControlCAsInput = True
         Me.OnLoad()
         Do
@@ -11,22 +10,20 @@ Public MustInherit Class InteractiveConsole
         Loop
     End Sub
 
-    'Private Sub Console_CancelKeyPress(ByVal S As Object, ByVal E As ConsoleCancelEventArgs)
-    '    E.Cancel = True
-    '    If E.SpecialKey = ConsoleSpecialKey.ControlC Then
-    '        Me.OnCombinationalKeyPressed(New ConsoleKeyInfo(New Char(), ConsoleKey.C, False, False, True))
-    '    ElseIf E.SpecialKey = ConsoleSpecialKey.ControlBreak Then
-    '        Me.OnCombinationalKeyPressed(New ConsoleKeyInfo(New Char(), ConsoleKey.Pause, False, False, True))
-    '    Else
-    '        Me.OnCombinationalKeyPressed(New ConsoleKeyInfo(New Char(), 0, False, False, True))
-    '    End If
-    'End Sub
-
     Protected Overridable Sub OnLoad()
 
     End Sub
 
     Protected Overridable Sub OnKeyPressed(ByVal KeyInfo As ConsoleKeyInfo)
+
+    End Sub
+
+End Class
+
+Public MustInherit Class InteractiveConsole
+    Inherits InteractiveConsoleBase
+
+    Protected NotOverridable Overrides Sub OnKeyPressed(ByVal KeyInfo As ConsoleKeyInfo)
         If KeyInfo.Modifiers <> 0 Then
             Me.OnCombinationalKeyPressed(KeyInfo)
             Exit Sub
@@ -110,7 +107,7 @@ Public Class Scripter
         C.Parent.Children.Add(C.Name, C)
 
         If Me.Names.ContainsKey(C.Name) Then
-            Me.Names.Item(C.Name) = Container.Ambigues
+            Me.Names.Item(C.Name) = Container.Ambiguous
         Else
             Me.Names.Item(C.Name) = C
         End If
@@ -149,7 +146,7 @@ Public Class Scripter
         Public Property Children As SortedDictionary(Of String, Container) = New SortedDictionary(Of String, Container)()
         Public Property Parent As Container
 
-        Public Shared ReadOnly Ambigues As Container = New Container()
+        Public Shared ReadOnly Ambiguous As Container = New Container()
 
     End Class
 

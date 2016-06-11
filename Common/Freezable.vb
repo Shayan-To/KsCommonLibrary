@@ -8,9 +8,14 @@
         Me.FreezeCalled = True
         Me.OnFreezing()
         Me._IsFreezed = True
+        Me.OnFroze()
     End Sub
 
     Protected Overridable Sub OnFreezing()
+
+    End Sub
+
+    Protected Overridable Sub OnFroze()
 
     End Sub
 
@@ -21,7 +26,7 @@
 #Region "IsFreezed Property"
     Private _IsFreezed As Boolean
 
-    Public ReadOnly Property IsFreezed As Boolean
+    Public ReadOnly Property IsFrozen As Boolean
         Get
             Return Me._IsFreezed
         End Get
