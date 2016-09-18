@@ -105,7 +105,7 @@ Namespace MVVM
             'Dim OldValue = DirectCast(E.OldValue, Type)
             Dim NewValue = DirectCast(E.NewValue, Type)
 
-            Dim ViewModel = DirectCast(NewValue.GetConstructor(Utilities.Typed(Of Type).EmptyArray).Invoke(Utilities.Typed(Of Object).EmptyArray), ViewModel)
+            Dim ViewModel = DirectCast(NewValue.CreateInstance(), ViewModel)
 
             Self.DataContext = ViewModel
             SetViewModel(Self, ViewModel)
@@ -449,11 +449,9 @@ Namespace MVVM
             Documents.TextElement.SetForeground(Self, NewValue)
 
             Self = TryCast(TryCast(Self, ContentPresenter)?.Content, UIElement)
-
             If Self Is Nothing Then
                 Exit Sub
             End If
-
             Documents.TextElement.SetForeground(Self, NewValue)
         End Sub
 
@@ -465,6 +463,74 @@ Namespace MVVM
         Public Shared Sub SetForeground(ByVal Element As DependencyObject, ByVal Value As Media.Brush)
             Verify.NonNullArg(Element, NameOf(Element))
             Element.SetValue(ForegroundProperty, Value)
+        End Sub
+#End Region
+
+#Region "DescriptionToolTip Property"
+        Public Shared ReadOnly DescriptionToolTipProperty As DependencyProperty = DependencyProperty.RegisterAttached("DescriptionToolTip", GetType(String), GetType(Utils), New PropertyMetadata(Nothing, AddressOf DescriptionToolTip_Changed, AddressOf DescriptionToolTip_Coerce))
+
+        Private Shared Function DescriptionToolTip_Coerce(ByVal D As DependencyObject, ByVal BaseValue As Object) As Object
+            Dim Self = TryCast(D, FrameworkElement)
+            If Self Is Nothing Then
+                Return DescriptionToolTipProperty.DefaultMetadata.DefaultValue
+            End If
+
+            Dim Value = DirectCast(BaseValue, String)
+
+            Return BaseValue
+        End Function
+
+        Private Shared Sub DescriptionToolTip_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+            Dim Self = DirectCast(D, FrameworkElement)
+
+            Dim OldValue = DirectCast(E.OldValue, String)
+            Dim NewValue = DirectCast(E.NewValue, String)
+
+            Self.ToolTip = New Controls.ToolTip() With {.Text = "Desc@" & If(NewValue, "")}
+        End Sub
+
+        Public Shared Function GetDescriptionToolTip(ByVal Element As DependencyObject) As String
+            Verify.NonNullArg(Element, NameOf(Element))
+            Return DirectCast(Element.GetValue(DescriptionToolTipProperty), String)
+        End Function
+
+        Public Shared Sub SetDescriptionToolTip(ByVal Element As DependencyObject, ByVal Value As String)
+            Verify.NonNullArg(Element, NameOf(Element))
+            Element.SetValue(DescriptionToolTipProperty, Value)
+        End Sub
+#End Region
+
+#Region "ToolTip Property"
+        Public Shared ReadOnly ToolTipProperty As DependencyProperty = DependencyProperty.RegisterAttached("ToolTip", GetType(String), GetType(Utils), New PropertyMetadata(Nothing, AddressOf ToolTip_Changed, AddressOf ToolTip_Coerce))
+
+        Private Shared Function ToolTip_Coerce(ByVal D As DependencyObject, ByVal BaseValue As Object) As Object
+            Dim Self = TryCast(D, FrameworkElement)
+            If Self Is Nothing Then
+                Return ToolTipProperty.DefaultMetadata.DefaultValue
+            End If
+
+            Dim Value = DirectCast(BaseValue, String)
+
+            Return BaseValue
+        End Function
+
+        Private Shared Sub ToolTip_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+            Dim Self = DirectCast(D, FrameworkElement)
+
+            Dim OldValue = DirectCast(E.OldValue, String)
+            Dim NewValue = DirectCast(E.NewValue, String)
+
+            Self.ToolTip = New Controls.ToolTip() With {.Text = If(NewValue, "")}
+        End Sub
+
+        Public Shared Function GetToolTip(ByVal Element As DependencyObject) As String
+            Verify.NonNullArg(Element, NameOf(Element))
+            Return DirectCast(Element.GetValue(ToolTipProperty), String)
+        End Function
+
+        Public Shared Sub SetToolTip(ByVal Element As DependencyObject, ByVal Value As String)
+            Verify.NonNullArg(Element, NameOf(Element))
+            Element.SetValue(ToolTipProperty, Value)
         End Sub
 #End Region
 

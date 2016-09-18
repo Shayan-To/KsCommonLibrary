@@ -23,6 +23,10 @@
         Verify.False(Me._IsFreezed, "Cannot change a freezed object.")
     End Sub
 
+    Protected Sub VerifyFrozen()
+        Verify.True(Me._IsFreezed, "The object has to be frozen to perform this operation.")
+    End Sub
+
 #Region "IsFreezed Property"
     Private _IsFreezed As Boolean
 

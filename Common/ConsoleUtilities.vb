@@ -7,6 +7,7 @@
     Public Shared Sub Initialize()
         Console.ForegroundColor = ConsoleColor.Black
         Console.BackgroundColor = ConsoleColor.White
+        Console.Clear()
     End Sub
 
     Public Shared Sub WriteExceptionData(ByVal Ex As Exception)
@@ -29,11 +30,13 @@
     End Sub
 
     Public Shared Sub Pause()
-        Console.BackgroundColor = ConsoleColor.Green
-        Console.Write("Press any key to continue...")
-        Console.BackgroundColor = ConsoleColor.White
-        Console.ReadKey(True)
-        Console.WriteLine()
+        If Environment.UserInteractive Then
+            Console.BackgroundColor = ConsoleColor.Green
+            Console.Write("Press any key to continue...")
+            Console.BackgroundColor = ConsoleColor.White
+            Console.ReadKey(True)
+            Console.WriteLine()
+        End If
     End Sub
 
 End Class

@@ -125,17 +125,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\CastAsListCollection.vb" />
+    <Compile Include="Collections\ConcurrentList.vb" />
+    <Compile Include="Collections\ConcurrentOrderedDictionary.vb" />
     <Compile Include="Collections\MultiDimensionalList.vb" />
+    <Compile Include="Collections\OneToOneFreezableDictionary.vb" />
+    <Compile Include="Collections\ReadOnlyListWrapper.vb" />
     <Compile Include="Collections\StringAsListCollection.vb" />
     <Compile Include="Collections\SyncedWrapList.vb" />
+    <Compile Include="Common\Conversion.vb" />
     <Compile Include="Common\MultiTextWriter.vb" />
     <Compile Include="Common\TextWriterWrapperTemplate.vb" />
     <Compile Include="Common\TextWriterTimeStampAdder.vb" />
     <Compile Include="TestingVisualizer.vb" />
+    <Compile Include="WPF\Controls\NumericUpDown.vb" />
     <Compile Include="WPF\Controls\Obj.vb" />
     <Compile Include="WPF\Controls\ObjList.vb" />
     <Compile Include="WPF\Controls\EqualizingStackPanel.vb" />
     <Compile Include="WPF\Controls\TextBlock.vb" />
+    <Compile Include="WPF\Controls\ToolTip.vb" />
+    <Compile Include="WPF\MVVM\AutoStoreObject.vb" />
     <Compile Include="WPF\MVVM\KsLanguage.vb" />
     <Compile Include="Collections\AutoStoreDictionary.vb" />
     <Compile Include="Collections\BaseDictionary.vb" />
@@ -158,7 +166,7 @@
     <Compile Include="Collections\PushPopList.vb" />
     <Compile Include="Collections\NullExpandingDic.vb" />
     <Compile Include="Collections\NullExpandingList.vb" />
-    <Compile Include="Collections\ReadOnlyCollection.vb" />
+    <Compile Include="Collections\ReadOnlyCollectionWrapper.vb" />
     <Compile Include="Collections\SelectAsNotifyingListCollection.vb" />
     <Compile Include="Collections\SelectAsListCollection.vb" />
     <Compile Include="Common\AccentColors.vb" />
@@ -202,8 +210,8 @@
     <Compile Include="Common\Verify.vb" />
     <Compile Include="Common\VTuple.vb" />
     <Compile Include="WPF\Controls\NavigationPage.vb" />
-    <Compile Include="WPF\Controls\ContentControl.vb" />
-    <Compile Include="WPF\Controls\ListBox.vb" />
+    <Compile Include="WPF\Controls\ContentElement.vb" />
+    <Compile Include="WPF\Controls\CheckListBox.vb" />
     <Compile Include="WPF\MVVM\Converters\ModuloConverter.vb" />
     <Compile Include="WPF\MVVM\Converters\AdderConverter.vb" />
     <Compile Include="WPF\MVVM\INavigationView.vb" />

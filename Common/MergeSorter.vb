@@ -1,44 +1,51 @@
 ﻿Public Class MergeSorter(Of T)
 
-    Private List, Temp As IList(Of T),
-            Comparer As IComparer(Of T)
-
     Private Sub Merge(ByVal Start As Integer, ByVal Mid As Integer, ByVal [End] As Integer)
-        Dim A, B, P, Size As Integer
-
         If Me.Comparer.Compare(Me.List.Item(Mid - 1), Me.List.Item(Mid)) <= 0 Then
             Exit Sub
         End If
 
-        Size = Mid - Start
-
-        For I As Integer = 0 To Size - 1
+        For I As Integer = 0 To Mid - Start - 1
             Me.Temp.Item(I) = Me.List.Item(I + Start)
         Next
 
-        P = Start
-        A = 0
-        B = Mid
+        Merge(Me.List, Start,
+              Me.Temp, 0, Mid - Start,
+              Me.List, Mid, [End] - Mid,
+              Me.Comparer)
+    End Sub
 
-        Do While A < Size AndAlso B < [End]
-            If Me.Comparer.Compare(Me.Temp.Item(A), Me.List.Item(B)) <= 0 Then
-                Me.List.Item(P) = Me.Temp.Item(A)
-                A += 1
+    Public Shared Sub Merge(ByVal BaseList As IList(Of T), ByVal BaseIndex As Integer,
+                            ByVal List1 As IList(Of T), ByVal Index1 As Integer, ByVal Length1 As Integer,
+                            ByVal List2 As IList(Of T), ByVal Index2 As Integer, ByVal Length2 As Integer,
+                            ByVal Comparer As IComparer(Of T))
+        Dim End1 = Index1 + Length1
+        Dim End2 = Index2 + Length2
+
+        Do While Index1 < End1 And Index2 < End2
+            If Comparer.Compare(List1.Item(Index1), List2.Item(Index2)) <= 0 Then
+                BaseList.Item(BaseIndex) = List1.Item(Index1)
+                Index1 += 1
             Else
-                Me.List.Item(P) = Me.List.Item(B)
-                B += 1
+                BaseList.Item(BaseIndex) = List2.Item(Index2)
+                Index2 += 1
             End If
-            P += 1
+            BaseIndex += 1
         Loop
 
-        Do While A < Size
-            Me.List.Item(P) = Me.Temp.Item(A)
-            A += 1
-            P += 1
+        Do While Index1 < End1
+            BaseList.Item(BaseIndex) = List1.Item(Index1)
+            Index1 += 1
+            BaseIndex += 1
+        Loop
+        Do While Index2 < End2
+            BaseList.Item(BaseIndex) = List2.Item(Index2)
+            Index2 += 1
+            BaseIndex += 1
         Loop
     End Sub
 
-    Private Sub Sort(ByVal Start As Integer, ByVal [End] As Integer)
+    Private Sub SortRecursive(ByVal Start As Integer, ByVal [End] As Integer)
         Dim Mid As Integer
 
         If [End] - Start < 2 Then
@@ -47,8 +54,8 @@
 
         Mid = (Start + [End]) \ 2
 
-        Me.Sort(Start, Mid)
-        Me.Sort(Mid, [End])
+        Me.SortRecursive(Start, Mid)
+        Me.SortRecursive(Mid, [End])
         Me.Merge(Start, Mid, [End])
     End Sub
 
@@ -73,8 +80,6 @@
             Length *= 2
         Loop
 
-        'Me.Sort(0, List.Count)
-
         Me.Temp = Nothing
         Me.List = Nothing
     End Sub
@@ -92,5 +97,8 @@
         End Get
     End Property
 #End Region
+
+    Private List, Temp As IList(Of T)
+    Private Comparer As IComparer(Of T)
 
 End Class

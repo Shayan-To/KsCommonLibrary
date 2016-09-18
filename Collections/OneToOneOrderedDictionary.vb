@@ -9,25 +9,23 @@ Public Class OneToOneOrderedDictionary(Of TKey, TValue)
 
     Public Overridable ReadOnly Property Values As ICollection(Of TValue) Implements IDictionary(Of TKey, TValue).Values
         Get
-            Return Me._Keys.SelectAsList(Function(K) Me._Dic.Item(K))
+            Return Me._Values
         End Get
     End Property
 
     Public Overridable ReadOnly Property ItemAt(index As Integer) As KeyValuePair(Of TKey, TValue)
         Get
-            Dim Key = Me._Keys.Item(index)
+            Dim Key = Me.__Keys.Item(index)
             Return New KeyValuePair(Of TKey, TValue)(Key, Me._Dic.Item(Key))
         End Get
     End Property
 
-    Public Overridable Sub Add(ByVal Value As TValue)
-        Dim Key = Me.KeySelector.Invoke(Value)
-        Me._Keys.Add(Key)
-        Me._Dic.Add(Key, Value)
+    Public Sub Add(ByVal Value As TValue)
+        Me.Insert(Me.Count, Value)
     End Sub
 
     ''' <summary>
-    ''' Sets or adds the provided value.
+    ''' Sets or adds the provided value. The value will be added to the end of the collection if not present.
     ''' </summary>
     ''' <returns>True if the collection was expanded, and false otherwise, when the key was already in the collection.</returns>
     Public Overridable Function [Set](ByVal Value As TValue) As Boolean
@@ -44,19 +42,20 @@ Public Class OneToOneOrderedDictionary(Of TKey, TValue)
     End Function
 
     Public Overridable Sub Clear() Implements IList.Clear, IDictionary.Clear, IDictionary(Of TKey, TValue).Clear
-        Me._Keys.Clear()
+        Me.__Keys.Clear()
         Me._Dic.Clear()
     End Sub
 
     Public Overridable Sub Insert(ByVal Index As Integer, ByVal Value As TValue)
         Dim Key = Me.KeySelector.Invoke(Value)
-        Me._Keys.Insert(Index, key)
-        Me._Dic.Add(key, Value)
+        Verify.False(Me._Dic.ContainsKey(Key), "Key is already present in the collection.")
+        Me.__Keys.Insert(Index, Key)
+        Me._Dic.Add(Key, Value)
     End Sub
 
     Public Overridable Sub RemoveAt(index As Integer) Implements IOrderedDictionary.RemoveAt, IList.RemoveAt, IList(Of KeyValuePair(Of TKey, TValue)).RemoveAt
-        Dim Key = Me._Keys.Item(index)
-        Me._Keys.RemoveAt(index)
+        Dim Key = Me.__Keys.Item(index)
+        Me.__Keys.RemoveAt(index)
         Assert.True(Me._Dic.Remove(Key))
     End Sub
 
@@ -64,16 +63,16 @@ Public Class OneToOneOrderedDictionary(Of TKey, TValue)
         If Not Me._Dic.Remove(key) Then
             Return False
         End If
-        Assert.True(Me._Keys.Remove(key))
+        Assert.True(Me.__Keys.Remove(key))
         Return True
     End Function
 
     Public Overridable Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of TKey, TValue)) Implements IDictionary(Of TKey, TValue).GetEnumerator
-        Return Me._Keys.Select(Function(K) New KeyValuePair(Of TKey, TValue)(K, Me._Dic.Item(K))).GetEnumerator()
+        Return Me.__Keys.Select(Function(K) New KeyValuePair(Of TKey, TValue)(K, Me._Dic.Item(K))).GetEnumerator()
     End Function
 
 #Region "Obvious"
-    Default Public ReadOnly Property Item(key As TKey) As TValue
+    Default Public Overridable ReadOnly Property Item(key As TKey) As TValue
         Get
             Return Me._Dic.Item(key)
         End Get
@@ -81,22 +80,22 @@ Public Class OneToOneOrderedDictionary(Of TKey, TValue)
 
     Private Property IDictionary_Item(key As TKey) As TValue Implements IDictionary(Of TKey, TValue).Item
         Get
-            Return Me._Dic.Item(key)
+            Return Me.Item(key)
         End Get
         Set(value As TValue)
             Throw New NotSupportedException()
         End Set
     End Property
 
-    Public ReadOnly Property Count As Integer Implements IList(Of KeyValuePair(Of TKey, TValue)).Count, ICollection.Count
+    Public Overridable ReadOnly Property Count As Integer Implements IList(Of KeyValuePair(Of TKey, TValue)).Count, ICollection.Count
         Get
-            Return Me._Keys.Count
+            Return Me.__Keys.Count
         End Get
     End Property
 
-    Public ReadOnly Property Keys As ICollection(Of TKey) Implements IDictionary(Of TKey, TValue).Keys
+    Public Overridable ReadOnly Property Keys As ICollection(Of TKey) Implements IDictionary(Of TKey, TValue).Keys
         Get
-            Return Me._Keys.AsReadOnly()
+            Return Me._Keys
         End Get
     End Property
 
@@ -108,15 +107,15 @@ Public Class OneToOneOrderedDictionary(Of TKey, TValue)
         Throw New NotSupportedException()
     End Sub
 
-    Public Function ContainsKey(key As TKey) As Boolean Implements IDictionary(Of TKey, TValue).ContainsKey
+    Public Overridable Function ContainsKey(key As TKey) As Boolean Implements IDictionary(Of TKey, TValue).ContainsKey
         Return Me._Dic.ContainsKey(key)
     End Function
 
-    Public Function IndexOf(key As TKey) As Integer
-        Return Me._Keys.IndexOf(key)
+    Public Overridable Function IndexOf(key As TKey) As Integer
+        Return Me.__Keys.IndexOf(key)
     End Function
 
-    Public Function TryGetValue(key As TKey, ByRef value As TValue) As Boolean Implements IDictionary(Of TKey, TValue).TryGetValue
+    Public Overridable Function TryGetValue(key As TKey, ByRef value As TValue) As Boolean Implements IDictionary(Of TKey, TValue).TryGetValue
         Return Me._Dic.TryGetValue(key, value)
     End Function
 #End Region
@@ -310,7 +309,9 @@ Public Class OneToOneOrderedDictionary(Of TKey, TValue)
 #End Region
 
     Private ReadOnly _Dic As Dictionary(Of TKey, TValue) = New Dictionary(Of TKey, TValue)()
-    Private ReadOnly _Keys As List(Of TKey) = New List(Of TKey)()
+    Private ReadOnly __Keys As List(Of TKey) = New List(Of TKey)()
+    Private ReadOnly _Keys As ICollection(Of TKey) = Me.__Keys.AsReadOnly()
+    Private ReadOnly _Values As IList(Of TValue) = Me.__Keys.SelectAsList(Function(K) Me._Dic.Item(K))
     Private ReadOnly KeySelector As Func(Of TValue, TKey)
 
 End Class

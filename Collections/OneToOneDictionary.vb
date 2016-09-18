@@ -119,13 +119,13 @@
     End Function
 #End Region
 
-    Public ReadOnly Property Count As Integer Implements ICollection.Count, IDictionary(Of TKey, TValue).Count
+    Public Overridable ReadOnly Property Count As Integer Implements ICollection.Count, IDictionary(Of TKey, TValue).Count
         Get
             Return Me.BaseDictionary.Count
         End Get
     End Property
 
-    Default Public ReadOnly Property Item(key As TKey) As TValue
+    Default Public Overridable ReadOnly Property Item(key As TKey) As TValue
         Get
             Return Me.BaseDictionary.Item(key)
         End Get
@@ -133,20 +133,20 @@
 
     Private Property IDictionary_Item(key As TKey) As TValue Implements IDictionary(Of TKey, TValue).Item
         Get
-            Return Me.BaseDictionary.Item(key)
+            Return Me.Item(key)
         End Get
         Set(value As TValue)
             Throw New NotSupportedException()
         End Set
     End Property
 
-    Public ReadOnly Property Keys As ICollection(Of TKey) Implements IDictionary(Of TKey, TValue).Keys
+    Public Overridable ReadOnly Property Keys As ICollection(Of TKey) Implements IDictionary(Of TKey, TValue).Keys
         Get
             Return Me.BaseDictionary.Keys
         End Get
     End Property
 
-    Public ReadOnly Property Values As ICollection(Of TValue) Implements IDictionary(Of TKey, TValue).Values
+    Public Overridable ReadOnly Property Values As ICollection(Of TValue) Implements IDictionary(Of TKey, TValue).Values
         Get
             Return Me.BaseDictionary.Values
         End Get
@@ -158,38 +158,47 @@
         Throw New NotSupportedException()
     End Sub
 
-    Public Sub Add(ByVal Value As TValue)
+    Public Overridable Sub Add(ByVal Value As TValue)
         Me.BaseDictionary.Add(Me.KeySelector.Invoke(Value), Value)
     End Sub
 
     ''' <summary>
     ''' Sets or adds the provided value.
     ''' </summary>
-    Public Overridable Sub [Set](ByVal Value As TValue)
-        Me.BaseDictionary.Item(Me.KeySelector.Invoke(Value)) = Value
-    End Sub
+    ''' <returns>True if the collection was expanded (the key was not in the collection), and false otherwise.</returns>
+    Public Overridable Function [Set](ByVal Value As TValue) As Boolean
+        Dim Key = Me.KeySelector.Invoke(Value)
 
-    Public Sub Clear() Implements IDictionary.Clear, IDictionary(Of TKey, TValue).Clear
+        If Me.BaseDictionary.ContainsKey(Key) Then
+            Me.BaseDictionary.Item(Key) = Value
+            Return False
+        End If
+
+        Me.BaseDictionary.Add(Key, Value)
+        Return True
+    End Function
+
+    Public Overridable Sub Clear() Implements IDictionary.Clear, IDictionary(Of TKey, TValue).Clear
         Me.BaseDictionary.Clear()
     End Sub
 
-    Public Function ContainsKey(key As TKey) As Boolean Implements IDictionary(Of TKey, TValue).ContainsKey
+    Public Overridable Function ContainsKey(key As TKey) As Boolean Implements IDictionary(Of TKey, TValue).ContainsKey
         Return Me.BaseDictionary.ContainsKey(key)
     End Function
 
-    Public Function RemoveKey(key As TKey) As Boolean Implements IDictionary(Of TKey, TValue).Remove
+    Public Overridable Function RemoveKey(key As TKey) As Boolean Implements IDictionary(Of TKey, TValue).Remove
         Return Me.BaseDictionary.Remove(key)
     End Function
 
-    Public Function RemoveValue(ByVal Value As TValue) As Boolean
-        Return Me.BaseDictionary.Remove(Me.KeySelector.Invoke(Value))
+    Public Overridable Function RemoveValue(ByVal Value As TValue) As Boolean
+        Return Me.RemoveKey(Me.KeySelector.Invoke(Value))
     End Function
 
-    Public Function TryGetValue(key As TKey, ByRef value As TValue) As Boolean Implements IDictionary(Of TKey, TValue).TryGetValue
+    Public Overridable Function TryGetValue(key As TKey, ByRef value As TValue) As Boolean Implements IDictionary(Of TKey, TValue).TryGetValue
         Return Me.BaseDictionary.TryGetValue(key, value)
     End Function
 
-    Public Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of TKey, TValue)) Implements IEnumerable(Of KeyValuePair(Of TKey, TValue)).GetEnumerator
+    Public Overridable Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of TKey, TValue)) Implements IEnumerable(Of KeyValuePair(Of TKey, TValue)).GetEnumerator
         Return Me.BaseDictionary.GetEnumerator()
     End Function
 

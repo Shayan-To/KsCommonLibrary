@@ -1,5 +1,7 @@
 ﻿Public Class SaveDelayer
 
+    ' ToDo Implement IDisposable support.
+
     Public Sub New(ByVal Stream As IO.Stream, Optional ByVal Encoding As Text.Encoding = Nothing)
         If Encoding Is Nothing Then
             Encoding = Text.Encoding.UTF8

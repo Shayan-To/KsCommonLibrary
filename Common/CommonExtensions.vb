@@ -197,7 +197,7 @@ Public Module CommonExtensions
     ''' </returns>
     <Extension()>
     Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T, ByVal Comp As IComparer(Of T)) As VTuple(Of Integer, Integer)
-        Dim Count = Utilities.Math.LeastPowerOfTwoOnMax(Self.Count + 1) \ 2
+        Dim Count = Utilities.Math.LeastPowerOfTwoOnMin(Self.Count + 1) \ 2
         Dim Offset1 = -1
 
         Do While Count > 0
@@ -342,6 +342,13 @@ Public Module CommonExtensions
     End Sub
 
     <Extension>
+    Public Sub AddRange(ByVal Self As IList, ByVal Items As IEnumerable)
+        For Each I In Items
+            Self.Add(I)
+        Next
+    End Sub
+
+    <Extension>
     Public Sub Sort(Of T)(ByVal Self As IList(Of T))
         DefaultCacher(Of MergeSorter(Of T)).Value.Sort(Self)
     End Sub
@@ -369,8 +376,8 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
-    Public Function AsReadOnly(Of T)(ByVal Self As IList(Of T)) As ObjectModel.ReadOnlyCollection(Of T)
-        Return New ObjectModel.ReadOnlyCollection(Of T)(Self)
+    Public Function AsReadOnly(Of T)(ByVal Self As IList(Of T)) As ReadOnlyListWrapper(Of T)
+        Return New ReadOnlyListWrapper(Of T)(Self)
     End Function
 
     <Extension()>
@@ -379,8 +386,8 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
-    Public Function AsReadOnly(Of T)(ByVal Self As ICollection(Of T)) As ReadOnlyCollection(Of T)
-        Return New ReadOnlyCollection(Of T)(Self)
+    Public Function AsReadOnly(Of T)(ByVal Self As ICollection(Of T)) As ReadOnlyCollectionWrapper(Of T)
+        Return New ReadOnlyCollectionWrapper(Of T)(Self)
     End Function
 #End Region
 
@@ -556,6 +563,17 @@ Public Module CommonExtensions
 #End Region
 
 #Region "Reflection Group"
+    ''' <summary>
+    ''' First element is the given type.
+    ''' </summary>
+    <Extension()>
+    Public Iterator Function GetBaseTypes(ByVal Self As Type) As IEnumerable(Of Type)
+        Do
+            Yield Self
+            Self = Self.BaseType
+        Loop Until Self Is Nothing
+    End Function
+
     <Extension()>
     Public Function GetRecursiveReferencedAssemblies(ByVal Assembly As Reflection.Assembly) As IEnumerable(Of Reflection.Assembly)
         Dim Helper = CecilHelper.Instance

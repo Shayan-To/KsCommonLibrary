@@ -5,6 +5,8 @@ Namespace MVVM
     Public MustInherit Class KsApplication
         Inherits BindableBase
 
+        ' ToDo OnShuttingDown is only called when the ShutDown method is called, not when the application is shutting down.
+
         Public Sub New(ByVal Name As String, ByVal Application As Application)
             Me._Name = Name
             Me._Window = New WindowViewModel(Me)
@@ -76,11 +78,14 @@ Namespace MVVM
         End Sub
 
         Protected Overridable Sub OnShuttingDown()
-            TryCast(Me.Settings, IDisposable)?.Dispose()
+
         End Sub
 
         Protected Overridable Sub OnShutDown()
-
+            TryCast(Me.Settings, IDisposable)?.Dispose()
+            For Each L In Me.Languages.Values
+                L.Dispose()
+            Next
         End Sub
 
         <DebuggerHidden()>
@@ -109,6 +114,7 @@ Namespace MVVM
             Me.Application.Run(Window)
 
             Me.State = KsApplicationState.ShutDown
+            Me.OnShutDown()
         End Sub
 
         Public Sub ShutDown(Optional ByVal ExitCode As Integer = 0)
@@ -205,8 +211,8 @@ Namespace MVVM
             Do
                 Frame.Add(V)
                 If V.NavigationFrame.Count < 2 Then
-                    Debug.Assert(V.NavigationFrame.Count = 1)
-                    Debug.Assert(V Is Me.Window)
+                    Assert.True(V.NavigationFrame.Count = 1)
+                    Assert.True(V Is Me.Window)
                     Exit Do
                 End If
                 V = V.NavigationFrame.Item(1)

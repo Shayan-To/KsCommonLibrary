@@ -451,24 +451,48 @@ Public NotInheritable Class Utilities
         End Function
 #End Region
 
-        Public Shared Function LeastPowerOfTwoOnMax(ByVal Max As Integer) As Integer
-            If Max < 1 Then
+        Public Shared Function Power(ByVal A As Integer, ByVal B As Integer) As Integer
+            Dim R = 1
+            Do Until B = 0
+                If (B And 1) = 1 Then
+                    R *= A
+                End If
+                A *= A
+                B >>= 1
+            Loop
+            Return R
+        End Function
+
+        Public Shared Function PowerL(ByVal A As Long, ByVal B As Long) As Long
+            Dim R = 1L
+            Do Until B = 0
+                If (B And 1) = 1 Then
+                    R *= A
+                End If
+                A *= A
+                B >>= 1
+            Loop
+            Return R
+        End Function
+
+        Public Shared Function LeastPowerOfTwoOnMin(ByVal Min As Integer) As Integer
+            If Min < 1 Then
                 Return 1
             End If
 
-            ' If Max is a power of two, we should return Max, otherwise, Max * 2
-            Dim T = (Max - 1) And Max
+            ' If Min is a power of two, we should return Min, otherwise, Min * 2
+            Dim T = (Min - 1) And Min
             If T = 0 Then
-                Return Max
+                Return Min
             End If
-            Max = T
+            Min = T
 
             Do
-                T = (Max - 1) And Max
+                T = (Min - 1) And Min
                 If T = 0 Then
-                    Return Max << 1
+                    Return Min << 1
                 End If
-                Max = T
+                Min = T
             Loop
         End Function
 
@@ -494,6 +518,7 @@ Public NotInheritable Class Utilities
         End Function
 
         Public Shared Function FloorDiv(ByVal A As Integer, ByVal B As Integer) As Integer
+            ' ToDo What if B is negative?
             If A >= 0 Or A Mod B = 0 Then
                 Return A \ B
             End If
@@ -501,6 +526,7 @@ Public NotInheritable Class Utilities
         End Function
 
         Public Shared Function FloorDiv(ByVal A As Long, ByVal B As Long) As Long
+            ' ToDo What if B is negative?
             If A >= 0 Or A Mod B = 0 Then
                 Return A \ B
             End If
@@ -551,6 +577,10 @@ Public NotInheritable Class Utilities
 
         Private Sub New()
             Throw New NotSupportedException()
+        End Sub
+
+        Public Shared Sub ShowMessageBox(text As String, Optional caption As String = "")
+            Forms.MessageBox.Show(text, caption)
         End Sub
 
         Public Shared Function CompactStackTrace(ByVal Count As Integer) As String
@@ -834,7 +864,35 @@ Public NotInheritable Class Utilities
                                  Color.B.ToString("X2"))
         End Function
 
-        Public Shared Function ListToStirng(ByVal List As IEnumerable(Of String)) As String
+        Private Shared Function EscapeChar(ByVal Ch As Char, ByVal EscapeChars As String) As String
+            Select Case Ch
+                Case ControlChars.Cr
+                    Return "\r"
+                Case ControlChars.Lf
+                    Return "\n"
+                Case Else
+                    If EscapeChars.Contains(Ch) Then
+                        Return "\"c & Ch
+                    End If
+                    Return Ch
+            End Select
+        End Function
+
+        Private Shared Function UnescapeChar(ByVal Ch As Char, ByVal EscapeChars As String) As Char
+            Select Case Ch
+                Case "r"c
+                    Return ControlChars.Cr
+                Case "n"c
+                    Return ControlChars.Lf
+                Case Else
+                    If EscapeChars.Contains(Ch) Then
+                        Return Ch
+                    End If
+                    Throw New Exception("Invalid escape character.")
+            End Select
+        End Function
+
+        Public Shared Function ListToString(ByVal List As IEnumerable(Of String)) As String
             Dim Res = New StringBuilder("{")
             Dim Bl = True
 
@@ -846,23 +904,14 @@ Public NotInheritable Class Utilities
                 End If
 
                 For Each Ch In Str
-                    Select Case Ch
-                        Case ControlChars.Cr
-                            Res.Append("\r")
-                        Case ControlChars.Lf
-                            Res.Append("\n")
-                        Case ","c, "\"c, "{"c, "}"c
-                            Res.Append("\"c).Append(Ch)
-                        Case Else
-                            Res.Append(Ch)
-                    End Select
+                    Res.Append(EscapeChar(Ch, ",\{}"))
                 Next
             Next
 
             Return Res.Append("}").ToString()
         End Function
 
-        Public Shared Function ListFromStirng(ByVal Str As String) As List(Of String)
+        Public Shared Function ListFromString(ByVal Str As String) As List(Of String)
             Dim Res = New List(Of String)()
             Dim R = New StringBuilder()
 
@@ -881,19 +930,8 @@ Public NotInheritable Class Utilities
                     If I = Str.Length Then
                         Throw New Exception("Invalid list string.")
                     End If
-                    Ch = Str.Chars(I)
 
-                    Select Case Ch
-                        Case "r"c
-                            R.Append(ControlChars.Cr)
-                        Case "n"c
-                            R.Append(ControlChars.Lf)
-                        Case ","c, "\"c, "{"c, "}"c
-                            R.Append(Ch)
-                        Case Else
-                            Throw New Exception("Invalid escape character.")
-                    End Select
-
+                    R.Append(UnescapeChar(Str.Chars(I), ",\{}"))
                     Continue For
                 End If
 
@@ -914,33 +952,7 @@ Public NotInheritable Class Utilities
             Return Res
         End Function
 
-        Private Shared Function EscapeChar(ByVal Ch As Char) As String
-            Select Case Ch
-                Case ControlChars.Cr
-                    Return "\r"
-                Case ControlChars.Lf
-                    Return "\n"
-                Case ","c, "\"c, "{"c, "}"c, ":"c
-                    Return "\"c & Ch
-                Case Else
-                    Return Ch
-            End Select
-        End Function
-
-        Private Shared Function UnescapeChar(ByVal Ch As Char) As Char
-            Select Case Ch
-                Case "r"c
-                    Return ControlChars.Cr
-                Case "n"c
-                    Return ControlChars.Lf
-                Case ","c, "\"c, "{"c, "}"c, ":"c
-                    Return Ch
-                Case Else
-                    Throw New Exception("Invalid escape character.")
-            End Select
-        End Function
-
-        Public Shared Function DicToStirng(ByVal Dic As IDictionary(Of String, String)) As String
+        Public Shared Function DicToString(ByVal Dic As IDictionary(Of String, String)) As String
             Dim Res = New StringBuilder("{")
             Dim Bl = True
 
@@ -952,19 +964,19 @@ Public NotInheritable Class Utilities
                 End If
 
                 For Each Ch In KV.Key
-                    Res.Append(EscapeChar(Ch))
+                    Res.Append(EscapeChar(Ch, ",\{}:"))
                 Next
                 Res.Append(":"c)
                 For Each Ch In KV.Value
-                    Res.Append(EscapeChar(Ch))
+                    Res.Append(EscapeChar(Ch, ",\{}"))
                 Next
             Next
 
             Return Res.Append("}").ToString()
         End Function
 
-        Public Shared Function DicFromStirng(ByVal Str As String) As Dictionary(Of String, String)
-            Dim Res = New Dictionary(Of String, String)()
+        Public Shared Function DicFromString(ByVal Str As String) As OrderedDictionary(Of String, String)
+            Dim Res = New OrderedDictionary(Of String, String)()
             Dim R = New StringBuilder()
             Dim Key As String = Nothing
 
@@ -984,7 +996,7 @@ Public NotInheritable Class Utilities
                         Throw New Exception("Invalid dictionary string.")
                     End If
 
-                    R.Append(UnescapeChar(Str.Chars(I)))
+                    R.Append(UnescapeChar(Str.Chars(I), ",\{}:"))
                     Continue For
                 End If
 
@@ -1014,6 +1026,73 @@ Public NotInheritable Class Utilities
             Next
 
             Return Res
+        End Function
+
+        Public Shared Function DicToStringMultiline(ByVal Dic As IDictionary(Of String, String)) As String
+            Dim Res = New StringBuilder()
+
+            For Each KV In Dic
+                For Each Ch In KV.Key
+                    Res.Append(EscapeChar(Ch, "\:"))
+                Next
+                Res.Append(":"c)
+                For Each Ch In KV.Value
+                    Res.Append(EscapeChar(Ch, "\"))
+                Next
+
+                Res.AppendLine()
+            Next
+
+            Return Res.ToString()
+        End Function
+
+        Public Shared Function DicFromStringMultiline(ByVal Str As String) As OrderedDictionary(Of String, String)
+            Dim Res = New OrderedDictionary(Of String, String)()
+            Dim R = New StringBuilder()
+            Dim Key As String = Nothing
+
+            For I As Integer = 0 To Str.Length - 1
+                Dim Ch = Str.Chars(I)
+
+                If Ch = "\"c Then
+                    I += 1
+                    Verify.False(I = Str.Length, "Invalid dictionary string.")
+
+                    R.Append(UnescapeChar(Str.Chars(I), "\:"))
+                    Continue For
+                End If
+
+                If Ch = ":"c And Key Is Nothing Then
+                    Key = R.ToString()
+                    R.Clear()
+
+                    Continue For
+                End If
+
+                If Ch = ControlChars.Cr Or Ch = ControlChars.Lf Then
+                    If Ch = ControlChars.Cr Then
+                        If I + 1 < Str.Length AndAlso Str.Chars(I + 1) = ControlChars.Lf Then
+                            I += 1
+                        End If
+                    End If
+
+                    Verify.False(Key Is Nothing, "Invalid dictionary string.")
+                    Res.Add(Key, R.ToString())
+                    R.Clear()
+                    Key = Nothing
+
+                    If I + 1 = Str.Length Then
+                        Return Res
+                    End If
+
+                    Continue For
+                End If
+
+                R.Append(Ch)
+            Next
+
+            Verify.Fail("Invalid dictionary string.")
+            Return Nothing
         End Function
 
     End Class
@@ -1061,6 +1140,56 @@ Public NotInheritable Class Utilities
     End Class
 #End Region
 
+    ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
+    ''' <param name="MaxX">Func(MaxIndex) must equal True.</param>
+    ''' <returns>Index of first true.</returns>
+    Public Shared Function BinarySearch(ByVal Func As Func(Of Integer, Boolean), Optional ByVal MaxX As Integer = -1) As Integer
+        If MaxX = -1 Then
+            MaxX = 8
+            Do Until Func.Invoke(MaxX)
+                MaxX <<= 1
+            Loop
+        Else
+            Verify.True(Func.Invoke(MaxX))
+            MaxX = Math.LeastPowerOfTwoOnMin(MaxX)
+        End If
+
+        Dim X = -1
+        Do While MaxX > 1
+            MaxX >>= 1
+            If Not Func.Invoke(X + MaxX) Then
+                X += MaxX
+            End If
+        Loop
+
+        Return X + 1
+    End Function
+
+    ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
+    ''' <param name="MaxX">Func(MaxIndex) must equal True.</param>
+    ''' <returns>Some X that Func(X) = True and |X - N| &lt; MaxError (N is from doc of Func).</returns>
+    Public Shared Function BinarySearch(ByVal Func As Func(Of Double, Boolean), ByVal MaxError As Double, Optional ByVal MaxX As Double = Double.NaN) As Double
+        Verify.True(MaxError > 0)
+        If Double.IsNaN(MaxX) Then
+            MaxX = 8 * MaxError
+            Do Until Func.Invoke(MaxX)
+                MaxX *= 2
+            Loop
+        Else
+            Verify.True(Func.Invoke(MaxX))
+        End If
+
+        Dim X = 0.0
+        Do While MaxX > MaxError
+            MaxX /= 2
+            If Not Func.Invoke(X + MaxX) Then
+                X += MaxX
+            End If
+        Loop
+
+        Return X + MaxError
+    End Function
+
     ''' <returns>(Hour, IsPm)</returns>
     Public Shared Function Hour24To12(ByVal Hour As Integer) As VTuple(Of Integer, Boolean)
         Dim IsPm = False
@@ -1101,5 +1230,73 @@ Public NotInheritable Class Utilities
     Public Shared Sub DoNothing()
 
     End Sub
+
+    Public Shared Iterator Function Repeat(Of T)(ByVal I1 As T, ByVal Count As Integer) As IEnumerable(Of T)
+        For I As Integer = 1 To Count
+            Yield I1
+        Next
+    End Function
+
+#Region "InEnumerable Logic"
+    Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T) As IEnumerable(Of T)
+        Yield I1
+    End Function
+
+    Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T) As IEnumerable(Of T)
+        Yield I1
+        Yield I2
+    End Function
+
+    Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T) As IEnumerable(Of T)
+        Yield I1
+        Yield I2
+        Yield I3
+    End Function
+
+    Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T) As IEnumerable(Of T)
+        Yield I1
+        Yield I2
+        Yield I3
+        Yield I4
+    End Function
+
+    Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T) As IEnumerable(Of T)
+        Yield I1
+        Yield I2
+        Yield I3
+        Yield I4
+        Yield I5
+    End Function
+
+    Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T, ByVal I6 As T) As IEnumerable(Of T)
+        Yield I1
+        Yield I2
+        Yield I3
+        Yield I4
+        Yield I5
+        Yield I6
+    End Function
+
+    Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T, ByVal I6 As T, ByVal I7 As T) As IEnumerable(Of T)
+        Yield I1
+        Yield I2
+        Yield I3
+        Yield I4
+        Yield I5
+        Yield I6
+        Yield I7
+    End Function
+
+    Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T, ByVal I6 As T, ByVal I7 As T, ByVal I8 As T) As IEnumerable(Of T)
+        Yield I1
+        Yield I2
+        Yield I3
+        Yield I4
+        Yield I5
+        Yield I6
+        Yield I7
+        Yield I8
+    End Function
+#End Region
 
 End Class

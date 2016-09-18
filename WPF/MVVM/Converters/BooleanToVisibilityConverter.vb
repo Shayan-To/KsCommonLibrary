@@ -7,7 +7,7 @@ Namespace MVVM.Converters
         Implements IValueConverter
 
         Public Function Convert(ByVal Value As Object, ByVal TargetType As Type, ByVal Parameter As Object, ByVal Culture As CultureInfo) As Object Implements IValueConverter.Convert
-            If CType(Value, Boolean) Then
+            If CType(Parameter, String) = "~" Xor CType(Value, Boolean) Then
                 Return Visibility.Visible
             Else
                 Return Visibility.Collapsed
@@ -15,7 +15,7 @@ Namespace MVVM.Converters
         End Function
 
         Public Function ConvertBack(ByVal Value As Object, ByVal TargetType As Type, ByVal Parameter As Object, ByVal Culture As CultureInfo) As Object Implements IValueConverter.ConvertBack
-            Return CType(Value, Visibility) = Visibility.Visible
+            Return (CType(Parameter, String) = "~") Xor CType(Value, Visibility) = Visibility.Visible
         End Function
 
     End Class

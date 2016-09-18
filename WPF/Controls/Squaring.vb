@@ -1,7 +1,7 @@
 ﻿Namespace Controls
 
     Public Class Squaring
-        Inherits ContentControl
+        Inherits ContentElement
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(Squaring), New FrameworkPropertyMetadata(GetType(Squaring)))

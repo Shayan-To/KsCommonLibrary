@@ -3,6 +3,16 @@ Imports Ks.Common.MVVM
 
 Namespace Controls
 
+    ' FText help:
+    '
+    ' ` -> Escape character.
+    ' {{ObjNum(,[+-]?##)?(:.*)?}} -> No change.
+    ' {ObjNum(,[+-]?##)?(:.*)?} -> Common corrections.
+    ' [[.*]] -> Common corrections.
+    ' [.*] -> Translate.
+    '
+    ' {}s could exist inside []s.
+
     Public Class TextBlock
         Inherits Control
 
@@ -335,7 +345,7 @@ Namespace Controls
         End Property
 #End Region
 
-        Private ReadOnly Obj1Array As Obj() = New Obj(0) {New Obj()}
+        Private ReadOnly Obj1Array As Obj() = {New Obj()}
 
     End Class
 

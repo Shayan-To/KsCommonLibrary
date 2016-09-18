@@ -1,5 +1,5 @@
-﻿Public Class OneToOneOrderedFreezableDictionary(Of TKey, TValue)
-    Inherits OneToOneOrderedDictionary(Of TKey, TValue)
+﻿Public Class OneToOneFreezableDictionary(Of TKey, TValue)
+    Inherits OneToOneDictionary(Of TKey, TValue)
 
     Public Sub New(ByVal KeySelector As Func(Of TValue, TKey))
         MyBase.New(KeySelector)
@@ -42,6 +42,11 @@
     Private FreezeCalled As Boolean
 #End Region
 
+    Public Overrides Sub Add(Value As TValue)
+        Me.VerifyWrite()
+        MyBase.Add(Value)
+    End Sub
+
     Public Overrides Function [Set](Value As TValue) As Boolean
         Me.VerifyWrite()
         Return MyBase.Set(Value)
@@ -50,16 +55,6 @@
     Public Overrides Sub Clear()
         Me.VerifyWrite()
         MyBase.Clear()
-    End Sub
-
-    Public Overrides Sub Insert(Index As Integer, Value As TValue)
-        Me.VerifyWrite()
-        MyBase.Insert(Index, Value)
-    End Sub
-
-    Public Overrides Sub RemoveAt(index As Integer)
-        Me.VerifyWrite()
-        MyBase.RemoveAt(index)
     End Sub
 
     Public Overrides Function RemoveKey(key As TKey) As Boolean

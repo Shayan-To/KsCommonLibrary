@@ -1,4 +1,4 @@
-﻿Public Class ReadOnlyCollection(Of T)
+﻿Public Class ReadOnlyCollectionWrapper(Of T)
     Implements ICollection,
                ICollection(Of T),
                IReadOnlyCollection(Of T)

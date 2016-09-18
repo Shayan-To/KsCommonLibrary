@@ -3,7 +3,7 @@
 Namespace Controls
 
     Public Class Popup
-        Inherits ContentControl
+        Inherits ContentElement
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(Popup), New FrameworkPropertyMetadata(GetType(Popup)))
@@ -11,7 +11,6 @@ Namespace Controls
             VerticalAlignmentProperty.OverrideMetadata(GetType(Popup), New FrameworkPropertyMetadata(VerticalAlignment.Center))
             'WidthProperty.OverrideMetadata(GetType(Popup), New FrameworkPropertyMetadata(300.0))
             'HeightProperty.OverrideMetadata(GetType(Popup), New FrameworkPropertyMetadata(300.0))
-            BackgroundProperty.OverrideMetadata(GetType(Popup), New FrameworkPropertyMetadata(Media.Brushes.White))
         End Sub
 
 #Region "BeforeShow Event"

@@ -56,8 +56,8 @@
         End If
 
         Dim Entry As CsvEntry = Nothing
-        Dim IsLastEntryEmpty As Boolean
-        Dim I As Integer
+        Dim IsLastEntryEmpty = False
+        Dim I = 0
         Dim NewEntry = True
 
         Do

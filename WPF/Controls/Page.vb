@@ -4,7 +4,7 @@ Namespace Controls
 
     <ComponentModel.DesignTimeVisible(False)>
     Public Class Page
-        Inherits Windows.Controls.ContentControl
+        Inherits ContentControl
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(Page), New FrameworkPropertyMetadata(GetType(Page)))

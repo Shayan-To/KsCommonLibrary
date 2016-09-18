@@ -11,52 +11,95 @@ Namespace MVVM
         Private Sub Collection_CollectionChanged(ByVal Sender As Object, ByVal E As NotifyCollectionChangedEventArgs)
             Select Case E.Action
                 Case NotifyCollectionChangedAction.Add
-                    Dim I = E.NewStartingIndex
-                    For Each El In E.NewItems
-                        Me.OnElementMoved(New ElementMovedEventArgs(Of T)(DirectCast(El, T), -1, I))
-                        I += 1
+                    For Each I As T In E.NewItems
+                        Me.OnElementGotIn(New ElementEventArgs(Of T)(I))
                     Next
                 Case NotifyCollectionChangedAction.Remove
-                    Dim I = E.OldStartingIndex
-                    For Each El In E.OldItems
-                        Me.OnElementMoved(New ElementMovedEventArgs(Of T)(DirectCast(El, T), I, -1))
+                    For Each I As T In E.OldItems
+                        Me.OnElementGotOut(New ElementEventArgs(Of T)(I))
                     Next
                 Case NotifyCollectionChangedAction.Move
-                    Me.OnElementMoved(New ElementMovedEventArgs(Of T)(DirectCast(E.NewItems(0), T), E.OldStartingIndex, E.NewStartingIndex))
                 Case NotifyCollectionChangedAction.Replace
-                    Me.OnElementMoved(New ElementMovedEventArgs(Of T)(DirectCast(E.OldItems(0), T), E.OldStartingIndex, -1))
-                    Me.OnElementMoved(New ElementMovedEventArgs(Of T)(DirectCast(E.NewItems(0), T), -1, E.NewStartingIndex))
+                    For Each I As T In E.OldItems
+                        Me.OnElementGotOut(New ElementEventArgs(Of T)(I))
+                    Next
+                    For Each I As T In E.NewItems
+                        Me.OnElementGotIn(New ElementEventArgs(Of T)(I))
+                    Next
                 Case NotifyCollectionChangedAction.Reset
-                    Me.OnCollectionReset()
+                    For Each I As T In Me.Clone
+                        Me.OnElementGotOut(New ElementEventArgs(Of T)(I))
+                    Next
+                    For Each I As T In Me.Collection
+                        Me.OnElementGotIn(New ElementEventArgs(Of T)(I))
+                    Next
+            End Select
+
+            Me.OnCollectionChanged()
+
+            Select Case E.Action
+                Case NotifyCollectionChangedAction.Add
+                    For I As Integer = 0 To E.NewItems.Count - 1
+                        Me.Clone.Insert(E.NewStartingIndex + I, E.NewItems(I))
+                    Next
+                Case NotifyCollectionChangedAction.Remove
+                    For I As Integer = E.OldItems.Count - 1 To 0 Step -1
+                        Me.Clone.RemoveAt(E.OldStartingIndex + I)
+                    Next
+                Case NotifyCollectionChangedAction.Move
+                    If E.NewStartingIndex < E.OldStartingIndex Then
+                        For I As Integer = 0 To E.NewItems.Count - 1
+                            Me.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I)
+                        Next
+                    Else
+                        For I As Integer = E.NewItems.Count - 1 To 0 Step -1
+                            Me.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I)
+                        Next
+                    End If
+                Case NotifyCollectionChangedAction.Replace
+                    For I As Integer = 0 To E.NewItems.Count - 1
+                        Me.Clone.Item(E.NewStartingIndex + I) = E.NewItems(I)
+                    Next
+                Case NotifyCollectionChangedAction.Reset
+                    Me.Clone.Clear()
+                    If Me.Collection IsNot Nothing Then
+                        Me.Clone.AddRange(Me.Collection)
+                    End If
             End Select
         End Sub
 
-        Private ReadOnly _Collection_CollectionChanged As NotifyCollectionChangedEventHandler = New NotifyCollectionChangedEventHandler(AddressOf Me.Collection_CollectionChanged)
+#Region "ElementGotIn Event"
+        Public Event ElementGotIn As EventHandler(Of ElementEventArgs(Of T))
 
-#Region "ElementMoved Event"
-        Public Event ElementMoved As EventHandler(Of ElementMovedEventArgs(Of T))
-
-        Protected Sub OnElementMoved(ByVal E As ElementMovedEventArgs(Of T))
-            RaiseEvent ElementMoved(Me, E)
+        Protected Overridable Sub OnElementGotIn(ByVal E As ElementEventArgs(Of T))
+            RaiseEvent ElementGotIn(Me, E)
         End Sub
 #End Region
 
-#Region "CollectionReset Event"
-        Public Event CollectionReset As EventHandler
+#Region "ElementGotOut Event"
+        Public Event ElementGotOut As EventHandler(Of ElementEventArgs(Of T))
 
-        Protected Sub OnCollectionReset()
-            RaiseEvent CollectionReset(Me, EventArgs.Empty)
+        Protected Overridable Sub OnElementGotOut(ByVal E As ElementEventArgs(Of T))
+            RaiseEvent ElementGotOut(Me, E)
+        End Sub
+#End Region
+
+#Region "CollectionChanged Event"
+        Public Event CollectionChanged As EventHandler
+
+        Protected Overridable Sub OnCollectionChanged()
+            RaiseEvent CollectionChanged(Me, EventArgs.Empty)
         End Sub
 #End Region
 
 #Region "Collection Property"
-        Private _Collection As IEnumerable(Of T)
+        Private _Collection As IEnumerable
 
-        Public Property Collection As IEnumerable(Of T)
+        Public Property Collection As IEnumerable
             Get
                 Return Me._Collection
             End Get
-            Set(ByVal Value As IEnumerable(Of T))
+            Set(ByVal Value As IEnumerable)
                 Dim Obs = TryCast(Me._Collection, INotifyCollectionChanged)
                 If Obs IsNot Nothing Then
                     RemoveHandler Obs.CollectionChanged, Me._Collection_CollectionChanged
@@ -68,19 +111,42 @@ Namespace MVVM
                 If Obs IsNot Nothing Then
                     AddHandler Obs.CollectionChanged, Me._Collection_CollectionChanged
                 End If
+
+                If Me.AssumeSettingOfCollectionAsReset Then
+                    Me.Collection_CollectionChanged(Me.Collection, New NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset))
+                Else
+                    Me.Clone.Clear()
+                    If Me.Collection IsNot Nothing Then
+                        Me.Clone.AddRange(Me.Collection)
+                    End If
+                End If
             End Set
         End Property
 #End Region
 
+#Region "AssumeSettingOfCollectionAsReset Property"
+        Private _AssumeSettingOfCollectionAsReset As Boolean = True
+
+        Public Property AssumeSettingOfCollectionAsReset As Boolean
+            Get
+                Return Me._AssumeSettingOfCollectionAsReset
+            End Get
+            Set(ByVal Value As Boolean)
+                Me._AssumeSettingOfCollectionAsReset = Value
+            End Set
+        End Property
+#End Region
+
+        Private ReadOnly Clone As List(Of Object) = New List(Of Object)()
+        Private ReadOnly _Collection_CollectionChanged As NotifyCollectionChangedEventHandler = New NotifyCollectionChangedEventHandler(AddressOf Me.Collection_CollectionChanged)
+
     End Class
 
-    Public Class ElementMovedEventArgs(Of T)
+    Public Class ElementEventArgs(Of T)
         Inherits EventArgs
 
-        Public Sub New(ByVal Element As T, ByVal OldIndex As Integer, ByVal NewIndex As Integer)
+        Public Sub New(ByVal Element As T)
             Me._Element = Element
-            Me._OldIndex = OldIndex
-            Me._NewIndex = NewIndex
         End Sub
 
 #Region "Element Property"
@@ -93,26 +159,37 @@ Namespace MVVM
         End Property
 #End Region
 
-#Region "NewIndex Property"
-        Private ReadOnly _NewIndex As Integer
-
-        Public ReadOnly Property NewIndex As Integer
-            Get
-                Return Me._NewIndex
-            End Get
-        End Property
-#End Region
-
-#Region "OldIndex Property"
-        Private ReadOnly _OldIndex As Integer
-
-        Public ReadOnly Property OldIndex As Integer
-            Get
-                Return Me._OldIndex
-            End Get
-        End Property
-#End Region
-
     End Class
+
+    '    Public Class ElementMovedEventArgs(Of T)
+    '        Inherits ElementEventArgs(Of T)
+
+    '        Public Sub New(ByVal Element As T, ByVal OldIndex As Integer, ByVal NewIndex As Integer)
+    '            MyBase.New(Element)
+    '            Me._OldIndex = OldIndex
+    '            Me._NewIndex = NewIndex
+    '        End Sub
+
+    '#Region "NewIndex Property"
+    '        Private ReadOnly _NewIndex As Integer
+
+    '        Public ReadOnly Property NewIndex As Integer
+    '            Get
+    '                Return Me._NewIndex
+    '            End Get
+    '        End Property
+    '#End Region
+
+    '#Region "OldIndex Property"
+    '        Private ReadOnly _OldIndex As Integer
+
+    '        Public ReadOnly Property OldIndex As Integer
+    '            Get
+    '                Return Me._OldIndex
+    '            End Get
+    '        End Property
+    '#End Region
+
+    '    End Class
 
 End Namespace

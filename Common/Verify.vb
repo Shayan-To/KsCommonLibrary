@@ -49,23 +49,13 @@
     End Sub
 
     <DebuggerHidden()>
-    Public Shared Sub ThrowArg(Optional ByVal Name As String = Nothing, Optional ByVal Message As String = Nothing)
-        If Name Is Nothing And Message Is Nothing Then
-            Throw New ArgumentException()
-        Else
-            Throw New ArgumentException(Message, Name)
-        End If
-    End Sub
-
-    <DebuggerHidden()>
-    Public Shared Sub [Throw](Optional ByVal Message As String = Nothing)
-        Throw New InvalidOperationException(Message)
-    End Sub
-
-    <DebuggerHidden()>
-    Public Shared Sub NonNull(Of T As Class)(ByVal O As T, ByVal Name As String)
+    Public Shared Sub NonNull(Of T As Class)(ByVal O As T, Optional ByVal Name As String = Nothing)
         If O Is Nothing Then
-            Throw New NullReferenceException(String.Format("Object reference '{0}' not set to an instance of an object.", Name))
+            If Name Is Nothing Then
+                Throw New NullReferenceException(String.Format("Object reference '{0}' not set to an instance of an object.", Name))
+            Else
+                Throw New NullReferenceException()
+            End If
         End If
     End Sub
 
@@ -86,6 +76,15 @@
     <DebuggerHidden()>
     Public Shared Sub Fail(Optional ByVal Message As String = Nothing)
         Throw New InvalidOperationException(Message)
+    End Sub
+
+    <DebuggerHidden()>
+    Public Shared Sub FailArg(Optional ByVal Name As String = Nothing, Optional ByVal Message As String = Nothing)
+        If Name Is Nothing And Message Is Nothing Then
+            Throw New ArgumentException()
+        Else
+            Throw New ArgumentException(Message, Name)
+        End If
     End Sub
 
 End Class

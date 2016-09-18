@@ -3,11 +3,11 @@
 Namespace Controls
 
     <ContentProperty("Content")>
-    Public Class ContentControl
-        Inherits Control
+    Public Class ContentElement
+        Inherits FrameworkElement
 
         Shared Sub New()
-            DefaultStyleKeyProperty.OverrideMetadata(GetType(ContentControl), New FrameworkPropertyMetadata(GetType(ContentControl)))
+            DefaultStyleKeyProperty.OverrideMetadata(GetType(ContentElement), New FrameworkPropertyMetadata(GetType(ContentElement)))
         End Sub
 
         Protected Overrides Function MeasureOverride(ByVal AvailableSize As Size) As Size
@@ -47,7 +47,7 @@ Namespace Controls
         Public Shared ReadOnly ContentProperty As DependencyProperty = DependencyProperty.Register("Content", GetType(UIElement), GetType(Squaring), New PropertyMetadata(Nothing, AddressOf Content_Changed))
 
         Public Shared Sub Content_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
-            Dim Self = DirectCast(D, ContentControl)
+            Dim Self = DirectCast(D, ContentElement)
 
             Dim OldValue = DirectCast(E.OldValue, UIElement)
             Dim NewValue = DirectCast(E.NewValue, UIElement)

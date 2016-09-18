@@ -86,6 +86,14 @@ Namespace MVVM
         End Property
 #End Region
 
+#Region "Type Property"
+        Public ReadOnly Property Type As Type
+            Get
+                Return Me.GetType()
+            End Get
+        End Property
+#End Region
+
     End Class
 
 End Namespace

@@ -55,6 +55,9 @@
             If Me.Name Is Nothing And Me.NativeName Is Nothing Then
                 Me._Name = "Default"
             End If
+            If Me.NativeName Is Nothing Then
+                Me._NativeName = ""
+            End If
 
             If I = Me.Csv.Entries.Count Then
                 Dim E = Me.Csv.Entries.LastOrDefault()
@@ -69,7 +72,11 @@
                 Dim Key = E.Item(0)
                 Dim Value = E.Item(1)
 
-                Me.Dictionary.Add(Key, Value)
+                If Key.Length = 0 Then
+                    Verify.True(Value.Length = 0, "Cannot set a translation to an empty string.")
+                Else
+                    Me.Dictionary.Add(Key, Value)
+                End If
 
                 I += 1
             Loop
@@ -153,9 +160,11 @@
             If Not Me._IsDisposed Then
                 Me._IsDisposed = True
 
+                ' This is more critical to be given over to the non-reliable GC.
+                Me.TaskDelayer.Dispose()
+
                 If disposing Then
                     ' Dispose managed state (managed objects).
-                    Me.TaskDelayer.Dispose()
                 End If
 
                 ' Set large fields to null.

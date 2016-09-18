@@ -355,6 +355,12 @@ Public Class NotifyingList(Of T)
         Me.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of T).CreateMove(Item, NewIndex, OldIndex))
     End Sub
 
+    Public Overridable Sub SetFrom(ByVal Collection As IEnumerable(Of T))
+        Me.BaseList.Clear()
+        Me.BaseList.AddRange(Collection)
+        Me.OnCollectionChanged(NotifyCollectionChangedEventArgs(Of T).CreateReset())
+    End Sub
+
     Protected Overrides Function IEnumerable_1_GetEnumerator() As IEnumerator(Of T)
         Return Me.BaseList.GetEnumerator()
     End Function
