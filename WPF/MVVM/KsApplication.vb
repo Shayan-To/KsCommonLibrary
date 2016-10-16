@@ -32,10 +32,10 @@ Namespace MVVM
                 IO.Directory.CreateDirectory(Dir)
             End If
 
-            Dim Languages = New OneToOneDictionary(Of String, KsLanguage)(Function(L) L.Id)
+            Dim Languages = New OneToOneDictionary(Of String, KsLanguage)(New Dictionary(Of String, KsLanguage)(StringComparer.InvariantCultureIgnoreCase), Function(L) L.Id)
 
             For Each F In IO.Directory.EnumerateFiles(Dir)
-                If Not F.EndsWith(".csv") Then
+                If Not F.ToLowerInvariant().EndsWith(".csv") Then
                     Continue For
                 End If
                 Dim File = IO.File.Open(F, IO.FileMode.Open, IO.FileAccess.ReadWrite, IO.FileShare.Read)
@@ -56,11 +56,7 @@ Namespace MVVM
             End If
 
             If Not Me.Languages.TryGetValue(LangId, Me._Language) Then
-                Me._Language = Nothing
-                For Each L In Me.Languages
-                    Me._Language = L.Value
-                    Exit For
-                Next
+                Me._Language = Me.Languages.FirstOrDefault().Value
                 Me.Settings.Item(NameOf(Me.Language)) = Me._Language?.Id
             End If
         End Sub
@@ -104,7 +100,7 @@ Namespace MVVM
             'Me.Application.StartupUri = Nothing
 
             Dim Window = DirectCast(Me.Window.View, Window)
-            Window.Resources.MergedDictionaries.Add(Application.Resources)
+            Window.Resources.MergedDictionaries.Add(Me.Application.Resources)
 
             Me.Application.Dispatcher.BeginInvoke(Sub()
                                                       Me.OnStart()
@@ -243,7 +239,7 @@ Namespace MVVM
         Private _NavigateBackCommand As DelegateCommand = New DelegateCommand(AddressOf Me.NavigateBack)
 
         Public Sub NavigateBack()
-            If Me.NavigationFrames.Count <> 0 AndAlso Me.NavigationFrames.Peek() = CurrentNavigationFrame Then
+            If Me.NavigationFrames.Count <> 0 AndAlso Me.NavigationFrames.Peek() = Me.CurrentNavigationFrame Then
                 If Me.NavigationFrames.Count = 1 Then
                     If Me.CanNavigateToEmpty(Me.CurrentNavigationFrame.Item(0)) Then
                         Me.NavigationFrames.Pop()

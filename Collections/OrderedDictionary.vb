@@ -4,6 +4,17 @@ Public Class OrderedDictionary(Of TKey, TValue)
     Inherits BaseDictionary(Of TKey, TValue)
     Implements IOrderedDictionary(Of TKey, TValue)
 
+    ' ToDo Do the current done changes (in this commit) to the other ordered dictionaries.
+
+    Public Sub New()
+        Me.New(EqualityComparer(Of TKey).Default)
+    End Sub
+
+    Public Sub New(ByVal Comparer As IEqualityComparer(Of TKey))
+        Me.Comparer = Comparer
+        Me._Dic = New Dictionary(Of TKey, TValue)(Comparer)
+    End Sub
+
     Public Overrides ReadOnly Property Count As Integer Implements IList(Of KeyValuePair(Of TKey, TValue)).Count
         Get
             Return Me._Keys.Count
@@ -104,14 +115,21 @@ Public Class OrderedDictionary(Of TKey, TValue)
     End Function
 
     Public Function IndexOf(key As TKey) As Integer
-        Return Me._Keys.IndexOf(key)
+        For I As Integer = 0 To Me._Keys.Count - 1
+            If Me.Comparer.Equals(key, Me._Keys.Item(I)) Then
+                Return I
+            End If
+        Next
+        Return -1
     End Function
 
     Public Overrides Function Remove(key As TKey) As Boolean
         If Not Me._Dic.Remove(key) Then
             Return False
         End If
-        Assert.True(Me._Keys.Remove(key))
+        Dim I = Me.IndexOf(key)
+        Assert.True(I <> -1)
+        Me._Keys.RemoveAt(I)
         Return True
     End Function
 
@@ -182,7 +200,8 @@ Public Class OrderedDictionary(Of TKey, TValue)
     End Function
 #End Region
 
-    Private ReadOnly _Dic As Dictionary(Of TKey, TValue) = New Dictionary(Of TKey, TValue)()
+    Private ReadOnly Comparer As IEqualityComparer(Of TKey)
+    Private ReadOnly _Dic As Dictionary(Of TKey, TValue)
     Private ReadOnly _Keys As List(Of TKey) = New List(Of TKey)()
 
 End Class

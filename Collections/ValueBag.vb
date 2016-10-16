@@ -239,7 +239,7 @@ Friend Class ValueBagTypeDescriptor
             Exit Sub
         End If
         Dim BagType = Bag.GetType()
-        If BagType.GetGenericTypeDefinition() <> GetType(ValueBag(Of)) Then
+        If Not BagType.IsGenericType OrElse BagType.GetGenericTypeDefinition() <> GetType(ValueBag(Of)) Then
             ' ToDo Throw New ArgumentException(BagType.GetGenericTypeDefinition().ToString(), "Bag.Type")
         End If
         Me.Type = BagType.GetGenericArguments()(0)

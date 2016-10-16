@@ -42,6 +42,16 @@
     Private FreezeCalled As Boolean
 #End Region
 
+    Public Overrides Property ItemAt(index As Integer) As TValue
+        Get
+            Return MyBase.ItemAt(index)
+        End Get
+        Set(value As TValue)
+            Me.VerifyWrite()
+            MyBase.ItemAt(index) = value
+        End Set
+    End Property
+
     Public Overrides Function [Set](Value As TValue) As Boolean
         Me.VerifyWrite()
         Return MyBase.Set(Value)

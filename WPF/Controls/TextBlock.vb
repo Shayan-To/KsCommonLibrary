@@ -87,7 +87,7 @@ Namespace Controls
                                   End If
 
                                   Dim T = String.Format(Globalization.CultureInfo.InvariantCulture, "{0" & UnEscape.Invoke(M.Groups(2).Value) & "}", Objs.Item(I).Obj)
-                                  Return Me.CorrectString(T, Lang)
+                                  Return CorrectString(T, Lang)
                               End Function)
 
             Verify.False(S.Contains("{") Or S.Contains("}"), "Invalid format string.")
@@ -95,7 +95,7 @@ Namespace Controls
             S = Regex.Replace(S, "\[\[([^\[\]]*)\]\]",
                               Function(M)
                                   Dim T = UnEscape.Invoke(M.Groups.Item(1).Value)
-                                  Return Me.CorrectString(T, Lang)
+                                  Return CorrectString(T, Lang)
                               End Function)
             S = Regex.Replace(S, "\[([^\[\]]*)\]",
                               Function(M)
@@ -109,7 +109,7 @@ Namespace Controls
             Me.OutText = S
         End Sub
 
-        Private Function CorrectString(ByVal S As String, ByVal Lang As KsLanguage) As String
+        Private Shared Function CorrectString(ByVal S As String, ByVal Lang As KsLanguage) As String
             If Lang Is Nothing Then
                 Return S
             End If
@@ -117,6 +117,14 @@ Namespace Controls
             If Lang.Id.ToLowerInvariant() = "pes" Then
                 Dim OldDigits = "0123456789"
                 Dim NewDigits = "۰۱۲۳۴۵۶۷۸۹"
+                For I As Integer = 0 To 9
+                    S = S.Replace(OldDigits.Chars(I), NewDigits.Chars(I))
+                Next
+                Return S
+            End If
+            If Lang.Id.ToLowerInvariant() = "arb" Then
+                Dim OldDigits = "0123456789"
+                Dim NewDigits = "٠١٢٣٤٥٦٧٨٩"
                 For I As Integer = 0 To 9
                     S = S.Replace(OldDigits.Chars(I), NewDigits.Chars(I))
                 Next
@@ -204,7 +212,7 @@ Namespace Controls
             Verify.True(Self.FText Is Nothing, "Cannot set both Text and FText.")
 
             Dim Lang = GetKsLanguage(Self)
-            Self.OutText = If(Lang Is Nothing, NewValue, Lang.Translation(NewValue))
+            Self.OutText = CorrectString(If(Lang Is Nothing, NewValue, Lang.Translation(NewValue)), Lang)
         End Sub
 
         Public Property Text As String

@@ -124,16 +124,31 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Serialization\FormatterGetProxy.vb" />
+    <Compile Include="Common\Serialization\FormatterSetProxy.vb" />
+    <Compile Include="Common\Serialization\SerializationArrayChunk.vb" />
     <Compile Include="Collections\CastAsListCollection.vb" />
     <Compile Include="Collections\ConcurrentList.vb" />
     <Compile Include="Collections\ConcurrentOrderedDictionary.vb" />
     <Compile Include="Collections\MultiDimensionalList.vb" />
     <Compile Include="Collections\OneToOneFreezableDictionary.vb" />
+    <Compile Include="Collections\PartialReadOnlyDictionary.vb" />
     <Compile Include="Collections\ReadOnlyListWrapper.vb" />
     <Compile Include="Collections\StringAsListCollection.vb" />
-    <Compile Include="Collections\SyncedWrapList.vb" />
+    <Compile Include="Common\ArrayComparer.vb" />
     <Compile Include="Common\Conversion.vb" />
     <Compile Include="Common\MultiTextWriter.vb" />
+    <Compile Include="Common\ReferenceEqualityComparer.vb" />
+    <Compile Include="Common\Serialization\ListSerializer.vb" />
+    <Compile Include="Common\Serialization\DictionarySerializer.vb" />
+    <Compile Include="Common\Serialization\ArraySerializer.vb" />
+    <Compile Include="Common\Serialization\StringFormatterBase.vb" />
+    <Compile Include="Common\Serialization\GenericSerializer.vb" />
+    <Compile Include="Common\Serialization\BinaryFormatterBase.vb" />
+    <Compile Include="Common\Serialization\Formatter.vb" />
+    <Compile Include="Common\Serialization\Serializer.vb" />
+    <Compile Include="Common\Serialization\SerializerCollection.vb" />
+    <Compile Include="Common\Serialization\XmlFormatter.vb" />
     <Compile Include="Common\TextWriterWrapperTemplate.vb" />
     <Compile Include="Common\TextWriterTimeStampAdder.vb" />
     <Compile Include="TestingVisualizer.vb" />
@@ -277,6 +292,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Serialization\Formatter.Serializers.vb" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
