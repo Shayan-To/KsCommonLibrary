@@ -475,6 +475,62 @@ Public NotInheritable Class Utilities
             Return R
         End Function
 
+        Public Shared Function SquareRoot(ByVal A As Integer) As Integer
+            Dim ARev = 0
+            Dim T = A
+            Do Until T = 0
+                ARev = (ARev << 2) Or (T And 3)
+                T >>= 2
+            Loop
+
+            Dim Reminder = 0
+            Dim Root = 0
+            Do Until A = 0
+                Reminder = (Reminder << 2) Or (ARev And 3)
+
+                ARev >>= 2
+                A >>= 2
+
+                Root <<= 1
+                Dim Root2 = (Root << 1) Or 1
+
+                If Reminder >= Root2 Then
+                    Root = Root Or 1
+                    Reminder -= Root2
+                End If
+            Loop
+
+            Return Root
+        End Function
+
+        Public Shared Function SquareRootL(ByVal A As Long) As Long
+            Dim ARev = 0L
+            Dim T = A
+            Do Until T = 0
+                ARev = (ARev << 2) Or (T And 3)
+                T >>= 2
+            Loop
+
+            Dim Reminder = 0L
+            Dim Root = 0L
+            Do Until A = 0
+                Reminder = (Reminder << 2) Or (ARev And 3)
+
+                ARev >>= 2
+                A >>= 2
+
+                Root <<= 1
+                Dim Root2 = (Root << 1) Or 1
+
+                If Reminder >= Root2 Then
+                    Root = Root Or 1
+                    Reminder -= Root2
+                End If
+            Loop
+
+            Return Root
+        End Function
+
         Public Shared Function LeastPowerOfTwoOnMin(ByVal Min As Integer) As Integer
             If Min < 1 Then
                 Return 1

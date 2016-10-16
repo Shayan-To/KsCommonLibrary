@@ -124,6 +124,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\BitArray.vb" />
     <Compile Include="Common\Serialization\FormatterGetProxy.vb" />
     <Compile Include="Common\Serialization\FormatterSetProxy.vb" />
     <Compile Include="Common\Serialization\SerializationArrayChunk.vb" />
@@ -152,6 +153,7 @@
     <Compile Include="Common\TextWriterWrapperTemplate.vb" />
     <Compile Include="Common\TextWriterTimeStampAdder.vb" />
     <Compile Include="TestingVisualizer.vb" />
+    <Compile Include="Win32\Files.vb" />
     <Compile Include="WPF\Controls\NumericUpDown.vb" />
     <Compile Include="WPF\Controls\Obj.vb" />
     <Compile Include="WPF\Controls\ObjList.vb" />

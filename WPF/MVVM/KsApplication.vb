@@ -341,6 +341,16 @@ Namespace MVVM
         End Property
 #End Region
 
+#Region "Version Property"
+        Private ReadOnly _Version As String
+
+        Public ReadOnly Property Version As String
+            Get
+                Return Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString()
+            End Get
+        End Property
+#End Region
+
 #Region "Window Property"
         Private ReadOnly _Window As NavigationViewModel
 

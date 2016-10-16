@@ -682,6 +682,16 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
+    Private Function GetCustomAttributeInternal(Of TAttribute As Attribute)(ByVal Self As Reflection.Assembly, Optional ByVal Inherit As Boolean = True) As TAttribute
+        Return DirectCast(Self.GetCustomAttributeInternal(GetType(TAttribute), Inherit), TAttribute)
+    End Function
+
+    <Extension()>
+    Private Function GetCustomAttributeInternal(ByVal Self As Reflection.Assembly, ByVal AttributeType As Type, Optional ByVal Inherit As Boolean = True) As Attribute
+        Return DirectCast(Self.GetCustomAttributes(AttributeType, Inherit).FirstOrDefault(), Attribute)
+    End Function
+
+    <Extension()>
     Public Function GetCustomAttribute(Of TAttribute As Attribute)(ByVal Self As Reflection.MemberInfo, Optional ByVal Inherit As Boolean = True) As TAttribute
         Dim AttributeType = GetType(TAttribute)
         Dim Usage = AttributeType.GetCustomAttributeInternal(Of AttributeUsageAttribute)()
@@ -694,6 +704,27 @@ Public Module CommonExtensions
 
     <Extension()>
     Public Function GetCustomAttribute(ByVal Self As Reflection.MemberInfo, ByVal AttributeType As Type, Optional ByVal Inherit As Boolean = True) As Attribute
+        Dim Usage = AttributeType.GetCustomAttributeInternal(Of AttributeUsageAttribute)()
+        If Usage IsNot Nothing AndAlso Usage.AllowMultiple Then
+            Throw New ArgumentException("The attribute should not allow multiple.")
+        End If
+
+        Return Self.GetCustomAttributeInternal(AttributeType, Inherit)
+    End Function
+
+    <Extension()>
+    Public Function GetCustomAttribute(Of TAttribute As Attribute)(ByVal Self As Reflection.Assembly, Optional ByVal Inherit As Boolean = True) As TAttribute
+        Dim AttributeType = GetType(TAttribute)
+        Dim Usage = AttributeType.GetCustomAttributeInternal(Of AttributeUsageAttribute)()
+        If Usage IsNot Nothing AndAlso Usage.AllowMultiple Then
+            Throw New ArgumentException("The attribute should not allow multiple.")
+        End If
+
+        Return Self.GetCustomAttributeInternal(Of TAttribute)(Inherit)
+    End Function
+
+    <Extension()>
+    Public Function GetCustomAttribute(ByVal Self As Reflection.Assembly, ByVal AttributeType As Type, Optional ByVal Inherit As Boolean = True) As Attribute
         Dim Usage = AttributeType.GetCustomAttributeInternal(Of AttributeUsageAttribute)()
         If Usage IsNot Nothing AndAlso Usage.AllowMultiple Then
             Throw New ArgumentException("The attribute should not allow multiple.")

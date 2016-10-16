@@ -54,6 +54,54 @@ Public NotInheritable Class ParseInv
         Return Boolean.Parse(Str)
     End Function
 
+    Public Shared Function TryInteger(ByVal Str As String, ByRef Value As Integer) As Boolean
+        Return Integer.TryParse(Str, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture, Value)
+    End Function
+
+    Public Shared Function TryLong(ByVal Str As String, ByRef Value As Long) As Boolean
+        Return Long.TryParse(Str, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture, Value)
+    End Function
+
+    Public Shared Function TryShort(ByVal Str As String, ByRef Value As Short) As Boolean
+        Return Short.TryParse(Str, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture, Value)
+    End Function
+
+    Public Shared Function TryByte(ByVal Str As String, ByRef Value As Byte) As Boolean
+        Return Byte.TryParse(Str, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture, Value)
+    End Function
+
+    Public Shared Function TryUInteger(ByVal Str As String, ByRef Value As UInteger) As Boolean
+        Return UInteger.TryParse(Str, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture, Value)
+    End Function
+
+    Public Shared Function TryULong(ByVal Str As String, ByRef Value As ULong) As Boolean
+        Return ULong.TryParse(Str, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture, Value)
+    End Function
+
+    Public Shared Function TryUShort(ByVal Str As String, ByRef Value As UShort) As Boolean
+        Return UShort.TryParse(Str, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture, Value)
+    End Function
+
+    Public Shared Function TrySByte(ByVal Str As String, ByRef Value As SByte) As Boolean
+        Return SByte.TryParse(Str, Globalization.NumberStyles.Integer, Globalization.CultureInfo.InvariantCulture, Value)
+    End Function
+
+    Public Shared Function TryDouble(ByVal Str As String, ByRef Value As Double) As Boolean
+        Return Double.TryParse(Str, Globalization.NumberStyles.Float Or Globalization.NumberStyles.AllowThousands, Globalization.CultureInfo.InvariantCulture, Value)
+    End Function
+
+    Public Shared Function TrySingle(ByVal Str As String, ByRef Value As Single) As Boolean
+        Return Single.TryParse(Str, Globalization.NumberStyles.Float Or Globalization.NumberStyles.AllowThousands, Globalization.CultureInfo.InvariantCulture, Value)
+    End Function
+
+    Public Shared Function TryDecimal(ByVal Str As String, ByRef Value As Decimal) As Boolean
+        Return Decimal.TryParse(Str, Globalization.NumberStyles.Number, Globalization.CultureInfo.InvariantCulture, Value)
+    End Function
+
+    Public Shared Function TryBoolean(ByVal Str As String, ByRef Value As Boolean) As Boolean
+        Return Boolean.TryParse(Str, Value)
+    End Function
+
 End Class
 
 Public Module ConversionExtensions

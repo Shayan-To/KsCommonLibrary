@@ -37,7 +37,8 @@ Namespace Controls
         Private Sub UpdateText()
             Dim Text = Me.Text
             If Text IsNot Nothing Then
-                Me.OutText = If(GetKsLanguage(Me)?.Translation(Text), Text)
+                Dim Lang = GetKsLanguage(Me)
+                Me.OutText = CorrectString(If(Lang IsNot Nothing, Lang.Translation(Text), Text), Lang)
                 Exit Sub
             End If
 
@@ -52,7 +53,7 @@ Namespace Controls
             Verify.False(Regex.IsMatch(S, "`[^`\[\]\{\}]"), "Invalid escape sequence.")
 
             S = Regex.Replace(S, "`[\[\]\{\}]", Function(M) "`" & "[]{}".IndexOf(M.Value.Chars(1)).ToString())
-            Dim UnEscape = Function(T As String) Regex.Replace(T, "`([0123])", Function(M) "[]{}".Chars(Integer.Parse(M.Groups.Item(1).Value)).ToString())
+            Dim UnEscape = Function(T As String) Regex.Replace(T, "`([0123])", Function(M) "[]{}".Chars(ParseInv.Integer(M.Groups.Item(1).Value)).ToString())
 
             If S.StartsWith("{}") Then
                 S = S.Substring(2)
@@ -71,7 +72,7 @@ Namespace Controls
 
             S = Regex.Replace(S, "\{\{(\d+)((?:,[+-]?\d+)?(?::[^\{\}]*)?)\}\}",
                               Function(M)
-                                  Dim I = Integer.Parse(M.Groups.Item(1).Value)
+                                  Dim I = ParseInv.Integer(M.Groups.Item(1).Value)
                                   If I >= Objs.Count Then
                                       Return ""
                                   End If
@@ -81,7 +82,7 @@ Namespace Controls
                               End Function)
             S = Regex.Replace(S, "\{(\d+)((?:,[+-]?\d+)?(?::[^\{\}]*)?)\}",
                               Function(M)
-                                  Dim I = Integer.Parse(M.Groups.Item(1).Value)
+                                  Dim I = ParseInv.Integer(M.Groups.Item(1).Value)
                                   If I >= Objs.Count Then
                                       Return ""
                                   End If
@@ -211,8 +212,7 @@ Namespace Controls
 
             Verify.True(Self.FText Is Nothing, "Cannot set both Text and FText.")
 
-            Dim Lang = GetKsLanguage(Self)
-            Self.OutText = CorrectString(If(Lang Is Nothing, NewValue, Lang.Translation(NewValue)), Lang)
+            Self.UpdateText()
         End Sub
 
         Public Property Text As String
