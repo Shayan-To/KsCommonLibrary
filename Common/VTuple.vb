@@ -27,8 +27,8 @@
 End Class
 
 Public Structure VTuple(Of T1)
-    Implements IComparable(Of VTuple(Of T1)), 
-               IStructuralComparable, 
+    Implements IComparable(Of VTuple(Of T1)),
+               IStructuralComparable,
                IStructuralEquatable
 
     Public Sub New(ByVal Item1 As T1)

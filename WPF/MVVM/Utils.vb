@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Controls.Primitives
+Imports System.Windows.Documents
 
 Namespace MVVM
 
@@ -36,6 +37,40 @@ Namespace MVVM
         '            Element.SetValue(ExtraLogicalChildrenProperty, Value)
         '        End Sub
         '#End Region
+
+#Region "Document Property"
+        Public Shared ReadOnly DocumentProperty As DependencyProperty = DependencyProperty.RegisterAttached("Document", GetType(FlowDocument), GetType(Utils), New PropertyMetadata(Nothing, AddressOf Document_Changed, AddressOf Document_Coerce))
+
+        Private Shared Function Document_Coerce(ByVal D As DependencyObject, ByVal BaseValue As Object) As Object
+            Dim Self = TryCast(D, RichTextBox)
+            If Self Is Nothing Then
+                Return DocumentProperty.DefaultMetadata.DefaultValue
+            End If
+
+            Dim Value = DirectCast(BaseValue, FlowDocument)
+
+            Return BaseValue
+        End Function
+
+        Private Shared Sub Document_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+            Dim Self = DirectCast(D, RichTextBox)
+
+            Dim OldValue = DirectCast(E.OldValue, FlowDocument)
+            Dim NewValue = DirectCast(E.NewValue, FlowDocument)
+
+            Self.Document = NewValue
+        End Sub
+
+        Public Shared Function GetDocument(ByVal Element As DependencyObject) As FlowDocument
+            Verify.NonNullArg(Element, NameOf(Element))
+            Return DirectCast(Element.GetValue(DocumentProperty), FlowDocument)
+        End Function
+
+        Public Shared Sub SetDocument(ByVal Element As DependencyObject, ByVal Value As FlowDocument)
+            Verify.NonNullArg(Element, NameOf(Element))
+            Element.SetValue(DocumentProperty, Value)
+        End Sub
+#End Region
 
 #Region "ViewModel Property"
         Public Shared ReadOnly ViewModelProperty As DependencyProperty = DependencyProperty.RegisterAttached("ViewModel", GetType(ViewModel), GetType(Utils), New FrameworkPropertyMetadata(Nothing, FrameworkPropertyMetadataOptions.Inherits, AddressOf ViewModel_Changed, AddressOf ViewModel_Coerce))

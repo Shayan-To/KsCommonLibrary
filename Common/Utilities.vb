@@ -552,24 +552,24 @@ Public NotInheritable Class Utilities
             Loop
         End Function
 
-        Public Shared Function LeastPowerOfTwoOnMax(ByVal Max As Long) As Long
-            If Max < 1 Then
+        Public Shared Function LeastPowerOfTwoOnMin(ByVal Min As Long) As Long
+            If Min < 1 Then
                 Return 1
             End If
 
-            ' If Max is a power of two, we should return Max, otherwise, Max * 2
-            Dim T = (Max - 1) And Max
+            ' If Min is a power of two, we should return Min, otherwise, Min * 2
+            Dim T = (Min - 1) And Min
             If T = 0 Then
-                Return Max
+                Return Min
             End If
-            Max = T
+            Min = T
 
             Do
-                T = (Max - 1) And Max
+                T = (Min - 1) And Min
                 If T = 0 Then
-                    Return Max << 1
+                    Return Min << 1
                 End If
-                Max = T
+                Min = T
             Loop
         End Function
 
@@ -613,12 +613,6 @@ Public NotInheritable Class Utilities
 
         Public Shared Function LeastCommonMultiple(ByVal A As Long, ByVal B As Long) As Long
             Return (A \ GreatestCommonDivisor(A, B)) * B
-        End Function
-
-        <Obsolete("Use DefaultCacher instead.", True)>
-        Public Shared Function GetStaticRandom() As Random
-            Static Random As Random = New Random()
-            Return Random
         End Function
 
         Public Shared Function IsOfIntegralType(O As Object) As Boolean
@@ -1008,6 +1002,59 @@ Public NotInheritable Class Utilities
             Return Res
         End Function
 
+        Public Shared Function ListToStringMultiline(ByVal List As IEnumerable(Of String)) As String
+            Dim Res = New StringBuilder()
+
+            For Each Str As String In List
+                For Each Ch In Str
+                    Res.Append(EscapeChar(Ch, "\"))
+                Next
+
+                Res.AppendLine()
+            Next
+
+            Return Res.ToString()
+        End Function
+
+        Public Shared Function ListFromStringMultiline(ByVal Str As String) As List(Of String)
+            Dim Res = New List(Of String)()
+            Dim R = New StringBuilder()
+
+            For I As Integer = 0 To Str.Length - 1
+                Dim Ch = Str.Chars(I)
+
+                If Ch = "\"c Then
+                    I += 1
+                    If I = Str.Length Then
+                        Verify.Fail("Invalid list string.")
+                    End If
+
+                    R.Append(UnescapeChar(Str.Chars(I), "\"))
+                    Continue For
+                End If
+
+                If Ch = ControlChars.Cr Or Ch = ControlChars.Lf Then
+                    If (Ch = ControlChars.Cr And I + 1 < Str.Length) AndAlso Str.Chars(I + 1) = ControlChars.Lf Then
+                        I += 1
+                    End If
+
+                    Res.Add(R.ToString())
+                    R.Clear()
+
+                    If I + 1 = Str.Length Then
+                        Return Res
+                    End If
+
+                    Continue For
+                End If
+
+                R.Append(Ch)
+            Next
+
+            Verify.Fail("Invalid list string.")
+            Return Nothing
+        End Function
+
         Public Shared Function DicToString(ByVal Dic As IDictionary(Of String, String)) As String
             Dim Res = New StringBuilder("{")
             Dim Bl = True
@@ -1126,10 +1173,8 @@ Public NotInheritable Class Utilities
                 End If
 
                 If Ch = ControlChars.Cr Or Ch = ControlChars.Lf Then
-                    If Ch = ControlChars.Cr Then
-                        If I + 1 < Str.Length AndAlso Str.Chars(I + 1) = ControlChars.Lf Then
-                            I += 1
-                        End If
+                    If (Ch = ControlChars.Cr And I + 1 < Str.Length) AndAlso Str.Chars(I + 1) = ControlChars.Lf Then
+                        I += 1
                     End If
 
                     Verify.False(Key Is Nothing, "Invalid dictionary string.")
@@ -1222,6 +1267,32 @@ Public NotInheritable Class Utilities
     End Function
 
     ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
+    ''' <param name="End">Func(End) must equal True.</param>
+    ''' <returns>Index of first true.</returns>
+    Public Shared Function BinarySearch(ByVal Func As Func(Of Integer, Boolean), ByVal Foreward As Boolean, ByVal Start As Integer, Optional ByVal [End] As Integer? = Nothing) As Integer
+        If Foreward Then
+            Dim R = BinarySearch(Function(I) Func(I + Start), If([End] - Start, -1))
+            Return R + Start
+        Else
+            Dim R = BinarySearch(Function(I) Func(Start - I), If(Start - [End], -1))
+            Return Start - R
+        End If
+    End Function
+
+    ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
+    ''' <param name="End">Func(End) must equal True. Func will never be called on End.</param>
+    ''' <returns>Index of first true.</returns>
+    Public Shared Function BinarySearchIn(ByVal Func As Func(Of Integer, Boolean), ByVal Start As Integer, ByVal [End] As Integer) As Integer
+        If Start <= [End] Then
+            Dim R = BinarySearch(Function(I) If(I + Start >= [End], True, Func(I + Start)), [End] - Start)
+            Return R + Start
+        Else
+            Dim R = BinarySearch(Function(I) If(Start - I <= [End], True, Func(Start - I)), Start - [End])
+            Return Start - R
+        End If
+    End Function
+
+    ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
     ''' <param name="MaxX">Func(MaxIndex) must equal True.</param>
     ''' <returns>Some X that Func(X) = True and |X - N| &lt; MaxError (N is from doc of Func).</returns>
     Public Shared Function BinarySearch(ByVal Func As Func(Of Double, Boolean), ByVal MaxError As Double, Optional ByVal MaxX As Double = Double.NaN) As Double
@@ -1272,6 +1343,18 @@ Public NotInheritable Class Utilities
         Return Hour
     End Function
 
+    Public Shared Iterator Function Concat(Of T)(ByVal Collections As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
+        For Each L In Collections
+            For Each I In L
+                Yield I
+            Next
+        Next
+    End Function
+
+    Public Shared Function Concat(Of T)(ParamArray ByVal Collections As IEnumerable(Of T)()) As IEnumerable(Of T)
+        Return Concat(DirectCast(Collections, IEnumerable(Of IEnumerable(Of T))))
+    End Function
+
     Public Shared Iterator Function Range(ByVal Start As Integer, ByVal [End] As Integer, Optional ByVal [Step] As Integer = 1) As IEnumerable(Of Integer)
         Verify.TrueArg([Step] > 0, "Step")
         For Start = Start To [End] - 1 Step [Step]
@@ -1281,6 +1364,26 @@ Public NotInheritable Class Utilities
 
     Public Shared Function Range(ByVal [End] As Integer) As IEnumerable(Of Integer)
         Return Range(0, [End])
+    End Function
+
+    Public Function HslToRgb(ByVal H As Integer, ByVal S As Integer, ByVal L As Integer) As VTuple(Of Byte, Byte, Byte)
+        Verify.True(0 <= H And H < 360)
+        Verify.True(0 <= S And S < 100)
+        Verify.True(0 <= L And L < 100)
+
+        Dim HPart = H \ 60
+
+        Throw New NotImplementedException()
+    End Function
+
+    Public Function HsbToRgb(ByVal H As Integer, ByVal S As Integer, ByVal B As Integer) As VTuple(Of Byte, Byte, Byte)
+        Verify.True(0 <= H And H < 360)
+        Verify.True(0 <= S And S < 100)
+        Verify.True(0 <= B And B < 100)
+
+        Dim HPart = H \ 60
+
+        Throw New NotImplementedException()
     End Function
 
     Public Shared Sub DoNothing()

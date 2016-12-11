@@ -128,8 +128,8 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
-    Public Function IndexOf(Of T)(ByVal Self As IList(Of T), ByVal Predicate As Func(Of T, Integer, Boolean)) As Integer
-        For I As Integer = 0 To Self.Count - 1
+    Public Function IndexOf(Of T)(ByVal Self As IList(Of T), ByVal Predicate As Func(Of T, Integer, Boolean), Optional ByVal StartIndex As Integer = 0) As Integer
+        For I = StartIndex To Self.Count - 1
             If Predicate.Invoke(Self.Item(I), I) Then
                 Return I
             End If
@@ -138,8 +138,8 @@ Public Module CommonExtensions
     End Function
 
     <Extension()>
-    Public Function LastIndexOf(Of T)(ByVal Self As IList(Of T), ByVal Predicate As Func(Of T, Integer, Boolean)) As Integer
-        For I As Integer = Self.Count - 1 To 0 Step -1
+    Public Function LastIndexOf(Of T)(ByVal Self As IList(Of T), ByVal Predicate As Func(Of T, Integer, Boolean), Optional ByVal StartIndex As Integer = -1) As Integer
+        For I = If(StartIndex <> -1, StartIndex, Self.Count - 1) To 0 Step -1
             If Predicate.Invoke(Self.Item(I), I) Then
                 Return I
             End If

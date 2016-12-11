@@ -127,6 +127,8 @@
     <Compile Include="Collections\BitArray.vb" />
     <Compile Include="Common\Serialization\FormatterGetProxy.vb" />
     <Compile Include="Common\Serialization\FormatterSetProxy.vb" />
+    <Compile Include="Common\Serialization\ObjectTraverseProvider.vb" />
+    <Compile Include="Common\Serialization\ObjectTraverser.vb" />
     <Compile Include="Common\Serialization\SerializationArrayChunk.vb" />
     <Compile Include="Collections\CastAsListCollection.vb" />
     <Compile Include="Collections\ConcurrentList.vb" />
@@ -152,6 +154,7 @@
     <Compile Include="Common\Serialization\XmlFormatter.vb" />
     <Compile Include="Common\TextWriterWrapperTemplate.vb" />
     <Compile Include="Common\TextWriterTimeStampAdder.vb" />
+    <Compile Include="Common\Void.vb" />
     <Compile Include="TestingVisualizer.vb" />
     <Compile Include="Win32\Files.vb" />
     <Compile Include="WPF\Controls\NumericUpDown.vb" />

@@ -88,6 +88,7 @@ Public MustInherit Class Serializer(Of T)
         Throw New NotSupportedException()
     End Sub
 
+    ' ToDo This does not work... Fix it.
     <ComponentModel.EditorBrowsable(ComponentModel.EditorBrowsableState.Never)>
     Public Overrides Function CanSerializeType(ByVal Type As Type) As Boolean
         Return Type = GetType(T)
