@@ -1,12 +1,16 @@
 ﻿Imports System.Collections.Specialized
 
-Public Interface IOrderedDictionary(Of TKey, TValue)
-    Inherits IOrderedDictionary,
-             IList,
-             IList(Of KeyValuePair(Of TKey, TValue)),
-             IDictionary(Of TKey, TValue),
-             IDictionary
+Namespace Common
 
-    Overloads Sub Insert(index As Integer, key As TKey, value As TValue)
+    Public Interface IOrderedDictionary(Of TKey, TValue)
+        Inherits IOrderedDictionary,
+                 IList,
+                 IList(Of KeyValuePair(Of TKey, TValue)),
+                 IDictionary(Of TKey, TValue),
+                 IDictionary
 
-End Interface
+        Overloads Sub Insert(index As Integer, key As TKey, value As TValue)
+
+    End Interface
+
+End Namespace

@@ -1,39 +1,43 @@
-﻿Public Structure CNullable(Of T)
+﻿Namespace Common
 
-    Public Sub New(ByVal Value As T)
-        Me._Value = Value
-        Me._HasValue = True
-    End Sub
+    Public Structure CNullable(Of T)
 
-    Public Shared Widening Operator CType(ByVal O As T) As CNullable(Of T)
-        Return New CNullable(Of T)(O)
-    End Operator
+        Public Sub New(ByVal Value As T)
+            Me._Value = Value
+            Me._HasValue = True
+        End Sub
 
-    Public Shared Narrowing Operator CType(ByVal O As CNullable(Of T)) As T
-        Return O.Value
-    End Operator
+        Public Shared Widening Operator CType(ByVal O As T) As CNullable(Of T)
+            Return New CNullable(Of T)(O)
+        End Operator
+
+        Public Shared Narrowing Operator CType(ByVal O As CNullable(Of T)) As T
+            Return O.Value
+        End Operator
 
 #Region "Value Property"
-    Private ReadOnly _Value As T
+        Private ReadOnly _Value As T
 
-    Public ReadOnly Property Value As T
-        Get
-            If Not Me.HasValue Then
-                Throw New NullReferenceException()
-            End If
-            Return Me._Value
-        End Get
-    End Property
+        Public ReadOnly Property Value As T
+            Get
+                If Not Me.HasValue Then
+                    Throw New NullReferenceException()
+                End If
+                Return Me._Value
+            End Get
+        End Property
 #End Region
 
 #Region "HasValue Property"
-    Private ReadOnly _HasValue As Boolean
+        Private ReadOnly _HasValue As Boolean
 
-    Public ReadOnly Property HasValue As Boolean
-        Get
-            Return Me._HasValue
-        End Get
-    End Property
+        Public ReadOnly Property HasValue As Boolean
+            Get
+                Return Me._HasValue
+            End Get
+        End Property
 #End Region
 
-End Structure
+    End Structure
+
+End Namespace

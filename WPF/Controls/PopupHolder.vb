@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Markup
 Imports Ks.Common.MVVM
 
-Namespace Controls
+Namespace Common.Controls
 
     <ContentProperty("Content")>
     Public Class PopupHolder

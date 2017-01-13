@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 
-Namespace MVVM
+Namespace Common.MVVM
 
     Public MustInherit Class AutoStoreObject
         Implements INotifyPropertyChanged

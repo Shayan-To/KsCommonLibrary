@@ -1,4 +1,4 @@
-﻿Namespace MVVM
+﻿Namespace Common.MVVM
 
     Public Class NavigationFrame
         Implements IList(Of ViewModel)

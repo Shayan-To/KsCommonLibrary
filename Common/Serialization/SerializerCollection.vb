@@ -1,49 +1,53 @@
-﻿Public Class SerializerCollection
-    Inherits OneToOneOrderedDictionary(Of String, Serializer)
+﻿Namespace Common
 
-    Public Sub New()
-        MyBase.New(Function(S) S.Id)
-    End Sub
+    Public Class SerializerCollection
+        Inherits OneToOneOrderedDictionary(Of String, Serializer)
 
-    Friend Sub LockCurrentElements()
-        For Each I In Me.Values
-            Me.LockedItems.Add(I)
-        Next
-    End Sub
+        Public Sub New()
+            MyBase.New(Function(S) S.Id)
+        End Sub
 
-    Public Overrides Sub Clear()
-        Dim State = Me.LockedItems.ToArray()
-        MyBase.Clear()
-        For Each I In State
-            Me.Add(I)
-        Next
-    End Sub
+        Friend Sub LockCurrentElements()
+            For Each I In Me.Values
+                Me.LockedItems.Add(I)
+            Next
+        End Sub
 
-    Public Overrides Sub RemoveAt(index As Integer)
-        Verify.False(Me.LockedItems.Contains(Me.ItemAt(index)), "Serializer is locked.")
-        MyBase.RemoveAt(index)
-    End Sub
+        Public Overrides Sub Clear()
+            Dim State = Me.LockedItems.ToArray()
+            MyBase.Clear()
+            For Each I In State
+                Me.Add(I)
+            Next
+        End Sub
 
-    Public Overrides Function RemoveKey(key As String) As Boolean
-        Verify.False(Me.LockedItems.Contains(Me.Item(key)), "Serializer is locked.")
-        Return MyBase.RemoveKey(key)
-    End Function
+        Public Overrides Sub RemoveAt(index As Integer)
+            Verify.False(Me.LockedItems.Contains(Me.ItemAt(index)), "Serializer is locked.")
+            MyBase.RemoveAt(index)
+        End Sub
 
-    Public Overrides Function [Set](Value As Serializer) As Boolean
-        Verify.False(Me.LockedItems.Contains(Value), "Serializer is locked.")
-        Return MyBase.Set(Value)
-    End Function
+        Public Overrides Function RemoveKey(key As String) As Boolean
+            Verify.False(Me.LockedItems.Contains(Me.Item(key)), "Serializer is locked.")
+            Return MyBase.RemoveKey(key)
+        End Function
 
-    Public Overrides Property ItemAt(index As Integer) As Serializer
-        Get
-            Return MyBase.ItemAt(index)
-        End Get
-        Set(value As Serializer)
-            Verify.False(Me.LockedItems.Contains(value), "Serializer is locked.")
-            MyBase.ItemAt(index) = value
-        End Set
-    End Property
+        Public Overrides Function [Set](Value As Serializer) As Boolean
+            Verify.False(Me.LockedItems.Contains(Value), "Serializer is locked.")
+            Return MyBase.Set(Value)
+        End Function
 
-    Private ReadOnly LockedItems As HashSet(Of Serializer) = New HashSet(Of Serializer)()
+        Public Overrides Property ItemAt(index As Integer) As Serializer
+            Get
+                Return MyBase.ItemAt(index)
+            End Get
+            Set(value As Serializer)
+                Verify.False(Me.LockedItems.Contains(value), "Serializer is locked.")
+                MyBase.ItemAt(index) = value
+            End Set
+        End Property
 
-End Class
+        Private ReadOnly LockedItems As HashSet(Of Serializer) = New HashSet(Of Serializer)()
+
+    End Class
+
+End Namespace

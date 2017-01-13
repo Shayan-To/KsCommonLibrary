@@ -1,26 +1,30 @@
-﻿Public Class CastAsListCollection(Of T)
-    Inherits BaseReadOnlyList(Of T)
+﻿Namespace Common
 
-    Public Sub New(ByVal List As IList)
-        Me.List = List
-    End Sub
+    Public Class CastAsListCollection(Of T)
+        Inherits BaseReadOnlyList(Of T)
 
-    Public Overrides ReadOnly Property Count As Integer
-        Get
-            Return Me.List.Count
-        End Get
-    End Property
+        Public Sub New(ByVal List As IList)
+            Me.List = List
+        End Sub
 
-    Default Public Overrides ReadOnly Property Item(ByVal Index As Integer) As T
-        Get
-            Return DirectCast(Me.List.Item(Index), T)
-        End Get
-    End Property
+        Public Overrides ReadOnly Property Count As Integer
+            Get
+                Return Me.List.Count
+            End Get
+        End Property
 
-    Public Overrides Function GetEnumerator() As IEnumerator(Of T)
-        Return Me.List.Cast(Of T).GetEnumerator()
-    End Function
+        Default Public Overrides ReadOnly Property Item(ByVal Index As Integer) As T
+            Get
+                Return DirectCast(Me.List.Item(Index), T)
+            End Get
+        End Property
 
-    Private ReadOnly List As IList
+        Public Overrides Function GetEnumerator() As IEnumerator(Of T)
+            Return Me.List.Cast(Of T).GetEnumerator()
+        End Function
 
-End Class
+        Private ReadOnly List As IList
+
+    End Class
+
+End Namespace

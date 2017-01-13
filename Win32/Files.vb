@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Runtime.InteropServices
 
-Namespace Win32
+Namespace Common.Win32
 
     Public NotInheritable Class Files
 

@@ -1,27 +1,31 @@
-﻿Public Class ArraySerializer(Of T)
-    Inherits Serializer(Of T())
+﻿Namespace Common
 
-    Public Sub New()
-        MyBase.New(NameOf(Array))
-    End Sub
+    Public Class ArraySerializer(Of T)
+        Inherits Serializer(Of T())
 
-    Public Overrides Sub SetT(Formatter As FormatterSetProxy, Obj As T())
-        Formatter.Set(NameOf(Obj.Length), Obj.Length)
-        For I As Integer = 0 To Obj.Length - 1
-            Formatter.Set(Nothing, Obj(I))
-        Next
-    End Sub
+        Public Sub New()
+            MyBase.New(NameOf(Array))
+        End Sub
 
-    Public Overrides Function GetT(Formatter As FormatterGetProxy) As T()
-        Dim Length As Integer
-        Length = Formatter.Get(Of Integer)(NameOf(Length))
+        Public Overrides Sub SetT(Formatter As FormatterSetProxy, Obj As T())
+            Formatter.Set(NameOf(Obj.Length), Obj.Length)
+            For I As Integer = 0 To Obj.Length - 1
+                Formatter.Set(Nothing, Obj(I))
+            Next
+        End Sub
 
-        Dim R = New T(Length - 1) {}
-        For I As Integer = 0 To Length - 1
-            R(I) = Formatter.Get(Of T)(Nothing)
-        Next
+        Public Overrides Function GetT(Formatter As FormatterGetProxy) As T()
+            Dim Length As Integer
+            Length = Formatter.Get(Of Integer)(NameOf(Length))
 
-        Return R
-    End Function
+            Dim R = New T(Length - 1) {}
+            For I As Integer = 0 To Length - 1
+                R(I) = Formatter.Get(Of T)(Nothing)
+            Next
 
-End Class
+            Return R
+        End Function
+
+    End Class
+
+End Namespace

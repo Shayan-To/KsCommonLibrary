@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Controls.Primitives
 Imports System.Windows.Documents
 
-Namespace MVVM
+Namespace Common.MVVM
 
     Public Class Utils
         Inherits DependencyObject

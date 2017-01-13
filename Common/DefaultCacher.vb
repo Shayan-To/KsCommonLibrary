@@ -1,11 +1,15 @@
-﻿Public Class DefaultCacher(Of T As New)
+﻿Namespace Common
 
-    Private Shared ReadOnly _Value As T = New T()
+    Public Class DefaultCacher(Of T As New)
 
-    Public Shared ReadOnly Property Value As T
-        Get
-            Return _Value
-        End Get
-    End Property
+        Private Shared ReadOnly _Value As T = New T()
 
-End Class
+        Public Shared ReadOnly Property Value As T
+            Get
+                Return _Value
+            End Get
+        End Property
+
+    End Class
+
+End Namespace

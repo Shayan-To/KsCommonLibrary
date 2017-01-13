@@ -1,4 +1,4 @@
-﻿Namespace NonUI
+﻿Namespace Common.NonUI
 
     Public MustInherit Class NonUIElement
         Inherits FrameworkElement

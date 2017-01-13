@@ -1,4 +1,4 @@
-﻿Namespace MVVM
+﻿Namespace Common.MVVM
 
     <AttributeUsage(AttributeTargets.Class, Inherited:=False)>
     Public Class ViewModelMetadataAttribute

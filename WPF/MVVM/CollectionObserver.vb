@@ -1,6 +1,6 @@
 ﻿Imports System.Collections.Specialized
 
-Namespace MVVM
+Namespace Common.MVVM
 
     Public Class CollectionObserver(Of T)
 

@@ -1,4 +1,4 @@
-﻿Namespace NonUI
+﻿Namespace Common.NonUI
 
     Public Class OneWaySetter
         Inherits NonUIElement

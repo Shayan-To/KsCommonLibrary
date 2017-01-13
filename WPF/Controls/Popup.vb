@@ -1,6 +1,6 @@
 ﻿Imports Ks.Common.MVVM
 
-Namespace Controls
+Namespace Common.Controls
 
     Public Class Popup
         Inherits ContentElement

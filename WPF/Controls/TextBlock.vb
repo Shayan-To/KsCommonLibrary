@@ -1,7 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Ks.Common.MVVM
 
-Namespace Controls
+Namespace Common.Controls
 
     ' FText help:
     '

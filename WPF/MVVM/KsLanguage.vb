@@ -1,4 +1,4 @@
-﻿Namespace MVVM
+﻿Namespace Common.MVVM
 
     Public Class KsLanguage
         Implements IDisposable
@@ -230,7 +230,7 @@
 
         Private ReadOnly Dictionary As Dictionary(Of String, String) = New Dictionary(Of String, String)()
         Private ReadOnly Csv As CsvData
-        Private ReadOnly TaskDelayer As TaskDelayer = New TaskDelayer(AddressOf Me.DoStore, 10000)
+        Private ReadOnly TaskDelayer As TaskDelayer = New TaskDelayer(AddressOf Me.DoStore, TimeSpan.FromSeconds(10))
         Private ReadOnly Stream As IO.Stream
 
     End Class

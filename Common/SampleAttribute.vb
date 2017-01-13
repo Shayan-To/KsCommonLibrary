@@ -1,5 +1,9 @@
-﻿<AttributeUsage(AttributeTargets.All)>
-Public Class SampleAttribute
-    Inherits Attribute
+﻿Namespace Common
 
-End Class
+    <AttributeUsage(AttributeTargets.All)>
+    Public Class SampleAttribute
+        Inherits Attribute
+
+    End Class
+
+End Namespace

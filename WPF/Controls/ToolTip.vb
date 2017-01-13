@@ -1,7 +1,7 @@
-﻿Namespace Controls
+﻿Namespace Common.Controls
 
     Public Class ToolTip
-        Inherits Windows.Controls.ToolTip
+        Inherits System.Windows.Controls.ToolTip
 
         ' ToDo Make the popup be above the mouse using the CustomPopupPlacementCallback and Placement properties.
 

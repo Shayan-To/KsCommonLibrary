@@ -1,6 +1,6 @@
 ﻿Imports Ks.Common.Controls
 
-Namespace MVVM
+Namespace Common.MVVM
 
     <ViewModelMetadata(GetType(Window), IsSingleInstance:=True)>
     Public Class WindowViewModel

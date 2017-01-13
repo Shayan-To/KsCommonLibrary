@@ -1,6 +1,6 @@
 ﻿Imports Ks.Common.Controls
 
-Namespace MVVM
+Namespace Common.MVVM
 
     Public MustInherit Class KsApplication
         Inherits BindableBase

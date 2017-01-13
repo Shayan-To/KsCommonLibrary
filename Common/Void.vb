@@ -1,7 +1,11 @@
-﻿Public NotInheritable Class Void
+﻿Namespace Common
 
-    Private Sub New()
-        Throw New NotSupportedException()
-    End Sub
+    Public NotInheritable Class Void
 
-End Class
+        Private Sub New()
+            Throw New NotSupportedException()
+        End Sub
+
+    End Class
+
+End Namespace

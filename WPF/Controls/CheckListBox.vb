@@ -1,6 +1,6 @@
 ﻿Imports Ks.Common.MVVM
 
-Namespace Controls
+Namespace Common.Controls
 
     <StyleTypedProperty(Property:=NameOf(CheckListBox.ItemContainerStyle), StyleTargetType:=GetType(CheckListBoxItem))>
     Public Class CheckListBox
@@ -12,8 +12,8 @@ Namespace Controls
         End Sub
 
         Public Sub New()
-            AddHandler Me.CollectionObserver.ElementGotIn, AddressOf CheckedItems_ItemGotIn
-            AddHandler Me.CollectionObserver.ElementGotOut, AddressOf CheckedItems_ItemGotOut
+            AddHandler Me.CollectionObserver.ElementGotIn, AddressOf Me.CheckedItems_ItemGotIn
+            AddHandler Me.CollectionObserver.ElementGotOut, AddressOf Me.CheckedItems_ItemGotOut
         End Sub
 
         'Private Shared Sub SelectionMode_Changed(d As DependencyObject, e As DependencyPropertyChangedEventArgs)

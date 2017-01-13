@@ -1,16 +1,20 @@
-﻿Public Class AssertionException
-    Inherits Exception
+﻿Namespace Common
 
-    Public Sub New()
+    Public Class AssertionException
+        Inherits Exception
 
-    End Sub
+        Public Sub New()
 
-    Public Sub New(ByVal Message As String)
-        MyBase.New(Message)
-    End Sub
+        End Sub
 
-    Public Sub New(ByVal Message As String, ByVal InnerException As Exception)
-        MyBase.New(Message, InnerException)
-    End Sub
+        Public Sub New(ByVal Message As String)
+            MyBase.New(Message)
+        End Sub
 
-End Class
+        Public Sub New(ByVal Message As String, ByVal InnerException As Exception)
+            MyBase.New(Message, InnerException)
+        End Sub
+
+    End Class
+
+End Namespace

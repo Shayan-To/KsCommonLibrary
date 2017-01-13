@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Media
 Imports Ks.Common
 
-Namespace Controls
+Namespace Common.Controls
 
     Public Class ResizableCanvas
         Inherits Panel

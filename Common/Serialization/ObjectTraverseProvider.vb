@@ -1,36 +1,40 @@
-﻿Public MustInherit Class ObjectTraverseProvider
+﻿Namespace Common
 
-    Protected MustOverride Function GetSetPropertiesOverride(ByVal Handler As PropertyTraverseHandler) As IEnumerable(Of Void)
+    Public MustInherit Class ObjectTraverseProvider
 
-End Class
+        Protected MustOverride Function GetSetPropertiesOverride(ByVal Handler As PropertyTraverseHandler) As IEnumerable(Of Void)
 
-
-Public Class PropertyTraverseHandler
-
+    End Class
 
 
-End Class
+    Public Class PropertyTraverseHandler
 
-Public Structure PropertyTraverseCurrent
 
-    Public Sub New(ByVal Handler As PropertyTraverseHandler)
-        Me._Handler = Handler
-    End Sub
+
+    End Class
+
+    Public Structure PropertyTraverseCurrent
+
+        Public Sub New(ByVal Handler As PropertyTraverseHandler)
+            Me._Handler = Handler
+        End Sub
 
 #Region "Handler Property"
-    Private ReadOnly _Handler As PropertyTraverseHandler
+        Private ReadOnly _Handler As PropertyTraverseHandler
 
-    Public ReadOnly Property Handler As PropertyTraverseHandler
-        Get
-            Return Me._Handler
-        End Get
-    End Property
+        Public ReadOnly Property Handler As PropertyTraverseHandler
+            Get
+                Return Me._Handler
+            End Get
+        End Property
 #End Region
 
-End Structure
+    End Structure
 
-Public Interface PropertyTraverseProcessor
+    Public Interface PropertyTraverseProcessor
 
-    Sub Process(Of T)(ByVal Prop As PropertyTraverseHandler)
+        Sub Process(Of T)(ByVal Prop As PropertyTraverseHandler)
 
-End Interface
+    End Interface
+
+End Namespace

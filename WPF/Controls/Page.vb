@@ -1,6 +1,6 @@
 ﻿Imports Ks.Common.MVVM
 
-Namespace Controls
+Namespace Common.Controls
 
     <ComponentModel.DesignTimeVisible(False)>
     Public Class Page

@@ -1,4 +1,6 @@
-﻿'Public Class NotifyingDictionary(Of TKey, TValue)
+﻿'Namespace Common
+
+'Public Class NotifyingDictionary(Of TKey, TValue)
 '    Implements IDictionary(Of TKey, TValue), 
 '               INotifyCollectionChanged(Of KeyValuePair(Of TKey, TValue))
 
@@ -105,3 +107,5 @@
 '    Private ReadOnly Dic As IDictionary(Of TKey, TValue)
 
 'End Class
+
+'End Namespace

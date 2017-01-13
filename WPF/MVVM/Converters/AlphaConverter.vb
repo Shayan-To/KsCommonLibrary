@@ -2,7 +2,7 @@
 Imports System.Windows.Data
 Imports System.Windows.Media
 
-Namespace MVVM.Converters
+Namespace Common.MVVM.Converters
 
     Public Class AlphaConverter
         Implements IValueConverter

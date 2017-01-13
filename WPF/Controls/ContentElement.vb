@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Markup
 
-Namespace Controls
+Namespace Common.Controls
 
     <ContentProperty("Content")>
     Public Class ContentElement
@@ -24,7 +24,7 @@ Namespace Controls
             Return FinalSize
         End Function
 
-        Protected Overrides Function GetVisualChild(index As Integer) As Windows.Media.Visual
+        Protected Overrides Function GetVisualChild(index As Integer) As System.Windows.Media.Visual
             Verify.TrueArg(index = 0 And Me.Content IsNot Nothing, NameOf(index))
             Return Me.Content
         End Function

@@ -6,7 +6,7 @@
 'Imports System.Windows.Media
 'Imports System.Windows.Shell
 
-'Namespace Controls
+'Namespace Common.Controls
 
 '    <ContentProperty("Content")>
 '    Public Class WindowBase

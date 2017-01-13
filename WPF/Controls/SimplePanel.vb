@@ -1,4 +1,4 @@
-﻿Namespace Controls
+﻿Namespace Common.Controls
 
     Public Class SimplePanel
         Inherits Panel

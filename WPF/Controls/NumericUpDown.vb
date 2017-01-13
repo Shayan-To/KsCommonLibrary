@@ -2,7 +2,7 @@
 
 Imports Ks.Common.MVVM
 
-Namespace Controls
+Namespace Common.Controls
 
     Public Class NumericUpDown
         Inherits Control

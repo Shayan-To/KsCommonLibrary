@@ -1,7 +1,7 @@
 ﻿Imports System.Globalization
 Imports System.Windows.Data
 
-Namespace MVVM.Converters
+Namespace Common.MVVM.Converters
 
     Public Class ThicknessConverter
         Implements IValueConverter

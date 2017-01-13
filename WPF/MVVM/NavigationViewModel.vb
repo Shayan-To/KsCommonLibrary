@@ -1,4 +1,4 @@
-﻿Namespace MVVM
+﻿Namespace Common.MVVM
 
     Public MustInherit Class NavigationViewModel
         Inherits ViewModel

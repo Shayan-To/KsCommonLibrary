@@ -1,141 +1,241 @@
-﻿Public Class TaskDelayer
-    Implements IDisposable
+﻿Namespace Common
 
-    ''' <param name="Task">The task that should be invoked. This call will be taken place on some background thread.</param>
-    Public Sub New(ByVal Task As Action, ByVal Delay As Integer)
-        Me.Task = Task
-        Me.Delay = Delay
+    ' ToDo Change this to use StopWatch.
 
-        Me.TaskThread = New Threading.Thread(AddressOf Me.TaskThreadProcedure) With {.IsBackground = True}
-        Me.TaskThread.Start()
-    End Sub
+    Public Class TaskDelayer
+        Implements IDisposable
 
-    Public Sub RunTask(ByVal RunningMode As TaskDelayerRunningMode)
-        If Me.IsTaskPending Then
-            SyncLock Me.WaitLockObject
-                If Me.IsTaskPending Then
-                    If RunningMode = TaskDelayerRunningMode.Instant Then
-                        Me.DelayWaitHandle.Set()
-                    End If
-                    Exit Sub
-                End If
-            End SyncLock
-        End If
-        Me.IsTaskPending = True
+        ''' <param name="Task">The task that should be invoked. This call will be taken place on some background thread.</param>
+        Public Sub New(ByVal Task As Action, ByVal MinDelay As TimeSpan, Optional ByVal MaxDelay As TimeSpan = Nothing, Optional ByVal InactivityTime As TimeSpan = Nothing)
+            Me._Task = Task
+            Me._MinDelay = MinDelay
+            Me._MaxDelay = If(MaxDelay = TimeSpan.Zero, TimeSpan.MaxValue, MaxDelay)
+            Me._InactivityTime = InactivityTime
 
-        If RunningMode = TaskDelayerRunningMode.Instant Then
-            Me.DelayWaitHandle.Set()
-        End If
-        Me.TaskWaitHandle.Set()
-    End Sub
+            Me.TaskThread = New Threading.Thread(AddressOf Me.TaskThreadProcedure) With {.IsBackground = True}
+            Me.TaskThread.Start()
+        End Sub
 
-    Private Sub TaskThreadProcedure()
-        Do
-            Me.TaskWaitHandle.WaitOne()
-
-            If Not Me.IsTaskPending Then
-                Assert.True(Me._IsDisposed)
-                Exit Do
-            End If
-
-            Me.DelayWaitHandle.WaitOne(Delay)
-
-            SyncLock Me.WaitLockObject
-                Me.DelayWaitHandle.Reset()
-                Me.IsTaskPending = False
-            End SyncLock
-
-            Task.Invoke()
-        Loop
-    End Sub
-
-#Region "IDisposable Support"
-    Protected Overridable Sub Dispose(ByVal Disposing As Boolean)
-        If Not Me._IsDisposed Then
-            Me._IsDisposed = True
-
-            If Disposing Then
-                ' Dispose managed state (managed objects).
-            End If
-
-            ' Free unmanaged resources (unmanaged objects) and override Finalize() below.
+        Public Sub RunTask(ByVal RunningMode As TaskDelayerRunningMode)
+            ' First Check that IsTaskPending is REALLY true. We have to lock to make that sure.
             If Me.IsTaskPending Then
+                SyncLock Me.WaitLockObject
+                    If Me.IsTaskPending Then
+                        If RunningMode = TaskDelayerRunningMode.Instant Then
+                            Me.IsInstantSet = True
+                            Me.DelayWaitHandle.Set()
+                        Else
+                            ' As setting LastActivityTime can at most delay the run of a task, it is only important to have it at the time of deciding whether to run the task.
+                            Dim Now = DateTime.UtcNow
+                            If Me.LastActivityTime > Now Then
+                                ' This usually means that the system's time has changed.
+                                ' The simplest thing to do is to set instant.
+                                Me.IsInstantSet = True
+                                Me.DelayWaitHandle.Set()
+                            Else
+                                Me.LastActivityTime = Now
+                            End If
+                        End If
+                        Exit Sub
+                    End If
+                End SyncLock
+            End If
+
+            ' If IsTaskPending is REALLY false, then the other thread is for sure locked at TaskWaitHandle.
+            ' So we safely can set it to true.
+            Me.IsTaskPending = True
+            Me.FirstActivityTime = DateTime.UtcNow
+            Me.LastActivityTime = Me.FirstActivityTime
+
+            If RunningMode = TaskDelayerRunningMode.Instant Then
+                Me.IsInstantSet = True
+                ' We set the wait handle before waiting on it. The wait will then immediately return.
                 Me.DelayWaitHandle.Set()
             End If
-
             Me.TaskWaitHandle.Set()
-            Me.TaskThread.Join()
+        End Sub
 
-            Me.TaskWaitHandle.Dispose()
-            Me.DelayWaitHandle.Dispose()
+        Private Sub TaskThreadProcedure()
+            ' ToDo Prove that we need two wait handles. (Have done it once.)
+            Do
+                Me.TaskWaitHandle.WaitOne()
 
-            ' Set large fields to null.
-        End If
-    End Sub
+                If Not Me.IsTaskPending Then
+                    Assert.True(Me.IsDisposed)
+                    Exit Do
+                End If
 
-    Protected Overrides Sub Finalize()
-        Me.Dispose(False)
-        MyBase.Finalize()
-    End Sub
+                Do
+                    Dim WaitTime = TimeSpan.Zero
+                    Dim ShouldRunTask = False
 
-    Public Sub Dispose() Implements IDisposable.Dispose
-        Me.Dispose(True)
-        GC.SuppressFinalize(Me)
-    End Sub
+                    ' Here we will decide whether to run the task or not.
+                    ' So as LastActivityTime can set that to a later time, we have to take the last LastActivityTime into account.
+                    ' Every call to RunTask has to have an effect, either to start a pending task or to set an activity time (or set instant).
+                    ' So if RunTask has determined that IsTaskPending is true, it must set its activity time as it cannot set out a new pending task.
+                    SyncLock Me.WaitLockObject
+                        ShouldRunTask = Me.IsInstantSet
+
+                        Dim Now = DateTime.UtcNow
+                        Do
+                            If ShouldRunTask Then
+                                Exit Do
+                            End If
+
+                            ' These " - Now"s were at the end. To avoid overflows, moved them a step back.
+
+                            WaitTime = Me.FirstActivityTime - Now + Me.MinDelay
+                            If WaitTime > TimeEpsilon Then
+                                Exit Do
+                            End If
+
+                            Dim MaxWaitTime = Me.FirstActivityTime - Now + Me.MaxDelay
+                            WaitTime = Me.LastActivityTime - Now + Me.InactivityTime
+
+                            If WaitTime <= TimeEpsilon Or MaxWaitTime <= TimeEpsilon Then
+                                ShouldRunTask = True
+                                Exit Do
+                            End If
+
+                            If WaitTime > MaxWaitTime Then
+                                ' We know that next time the task must surely be done, so we set instant to avoid next-time unnecessary calculation.
+                                Me.IsInstantSet = True
+                                WaitTime = MaxWaitTime
+                            End If
+
+                            Exit Do
+                        Loop
+
+                        If ShouldRunTask Then
+                            ' ToDo Isn't DelayWaitHandle always reset at this point?
+                            Me.DelayWaitHandle.Reset()
+                            Me.IsTaskPending = False
+                            Me.IsInstantSet = False
+                        End If
+                    End SyncLock
+
+                    If ShouldRunTask Then
+                        Me.Task.Invoke()
+                        Exit Sub
+                    Else
+                        Me.DelayWaitHandle.WaitOne(WaitTime)
+                    End If
+                Loop
+            Loop
+        End Sub
+
+        Protected Overridable Sub Dispose(ByVal Disposing As Boolean)
+            If Not Me.IsDisposed Then
+                Me._IsDisposed = True
+
+                If Disposing Then
+                    ' Dispose managed state (managed objects).
+                End If
+
+                ' Free unmanaged resources (unmanaged objects) and override Finalize() below.
+
+                ' The other thread is necessarily waiting in one of the wait handles (or soon will be).
+
+                ' ... If it is waiting in DelayWaitHandle, a task is pending and must be done, so we set instant.
+                If Me.IsTaskPending Then
+                    ' We have to ensure that when a task is set to be done, it is always necessarily done.
+                    Me.IsInstantSet = True
+                    Me.DelayWaitHandle.Set()
+                End If
+
+                ' ... Otherwise, we set the TaskWaitHandle without setting IsTaskPending, so the thread understands that object is being disposed.
+                Me.TaskWaitHandle.Set()
+                ' ... And the important part, joining the thread so that everything is done before Dispose method returns.
+                Me.TaskThread.Join()
+
+                Me.TaskWaitHandle.Dispose()
+                Me.DelayWaitHandle.Dispose()
+
+                ' Set large fields to null.
+            End If
+        End Sub
+
+#Region "IDisposable Support"
+        Protected Overrides Sub Finalize()
+            Me.Dispose(False)
+            MyBase.Finalize()
+        End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            Me.Dispose(True)
+            GC.SuppressFinalize(Me)
+        End Sub
 #End Region
 
 #Region "IsDisposed Property"
-    Private _IsDisposed As Boolean
+        Private _IsDisposed As Boolean
 
-    Public ReadOnly Property IsDisposed As Boolean
-        Get
-            Return Me._IsDisposed
-        End Get
-    End Property
+        Public ReadOnly Property IsDisposed As Boolean
+            Get
+                Return Me._IsDisposed
+            End Get
+        End Property
 #End Region
 
-    Private ReadOnly Task As Action
-    Private ReadOnly Delay As Integer
+#Region "Task Property"
+        Private ReadOnly _Task As Action
 
-    Private IsTaskPending As Boolean = False
+        Public ReadOnly Property Task As Action
+            Get
+                Return Me._Task
+            End Get
+        End Property
+#End Region
 
-    Private ReadOnly WaitLockObject As Object = New Object()
-    Private ReadOnly TaskWaitHandle As Threading.EventWaitHandle = New Threading.EventWaitHandle(False, Threading.EventResetMode.AutoReset)
-    Private ReadOnly DelayWaitHandle As Threading.EventWaitHandle = New Threading.EventWaitHandle(False, Threading.EventResetMode.AutoReset)
-    Private ReadOnly TaskThread As Threading.Thread
+#Region "MinDelay Property"
+        Private ReadOnly _MinDelay As TimeSpan
 
-End Class
+        Public ReadOnly Property MinDelay As TimeSpan
+            Get
+                Return Me._MinDelay
+            End Get
+        End Property
+#End Region
 
-Public Enum TaskDelayerRunningMode
+#Region "MaxDelay Property"
+        Private ReadOnly _MaxDelay As TimeSpan
 
-    Instant
-    Delayed
+        Public ReadOnly Property MaxDelay As TimeSpan
+            Get
+                Return Me._MaxDelay
+            End Get
+        End Property
+#End Region
 
-End Enum
+#Region "InactivityTime Property"
+        Private ReadOnly _InactivityTime As TimeSpan
 
-'Public Class TaskDelayer(Of TParams)
-'    Inherits TaskDelayer
+        Public ReadOnly Property InactivityTime As TimeSpan
+            Get
+                Return Me._InactivityTime
+            End Get
+        End Property
+#End Region
 
-'    Public Sub New(ByVal Task As Action(Of TParams), ByVal Delay As Integer)
-'        MyBase.New(AddressOf Me.TaskProc, Delay)
-'        Me.Task = Task
-'    End Sub
+        Private IsTaskPending As Boolean = False
+        Private IsInstantSet As Boolean = False
+        Private FirstActivityTime As DateTime
+        Private LastActivityTime As DateTime
 
-'    Private Sub TaskProc()
-'        Me.Task.Invoke(Me.Params)
-'    End Sub
+        Private Shared ReadOnly TimeEpsilon As TimeSpan = TimeSpan.FromMilliseconds(30)
 
-'    Private Shadows Sub DoTask()
+        Private ReadOnly WaitLockObject As Object = New Object()
+        Private ReadOnly TaskWaitHandle As Threading.EventWaitHandle = New Threading.EventWaitHandle(False, Threading.EventResetMode.AutoReset)
+        Private ReadOnly DelayWaitHandle As Threading.EventWaitHandle = New Threading.EventWaitHandle(False, Threading.EventResetMode.AutoReset)
+        Private ReadOnly TaskThread As Threading.Thread
 
-'    End Sub
+    End Class
 
-'    Public Shadows Sub DoTask(ByVal Params As TParams)
-'        Me.Params = Params
+    Public Enum TaskDelayerRunningMode
 
-'        MyBase.DoTask()
-'    End Sub
+        Instant
+        Delayed
 
-'    Private ReadOnly Task As Action(Of TParams)
-'    Private Params As TParams
+    End Enum
 
-'End Class
+End Namespace

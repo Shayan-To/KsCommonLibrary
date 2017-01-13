@@ -1,10 +1,10 @@
 ﻿Imports System.Windows.Input
 Imports System.Windows.Interop
 
-Namespace Controls
+Namespace Common.Controls
 
     Public Class NoChromeWindow
-        Inherits Windows.Window
+        Inherits System.Windows.Window
 
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(NoChromeWindow), New FrameworkPropertyMetadata(GetType(NoChromeWindow)))
@@ -17,7 +17,7 @@ Namespace Controls
             Dim Handle = Helper.EnsureHandle()
             Dim HandleSource = HwndSource.FromHwnd(Handle)
             'Dim HandleSource = HwndSource.FromVisual(Me)
-            HandleSource.AddHook(AddressOf WindowProcess)
+            HandleSource.AddHook(AddressOf Me.WindowProcess)
         End Sub
 
         Private Function WindowProcess(ByVal hwnd As IntPtr, ByVal msg As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr, ByRef handled As Boolean) As IntPtr

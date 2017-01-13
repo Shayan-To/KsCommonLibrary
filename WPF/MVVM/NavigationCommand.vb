@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Input
 
-Namespace MVVM
+Namespace Common.MVVM
 
     Public Class NavigationCommand
         Inherits DependencyObject

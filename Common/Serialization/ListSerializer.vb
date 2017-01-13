@@ -1,27 +1,31 @@
-﻿Public Class ListSerializer(Of T)
-    Inherits Serializer(Of IEnumerable(Of T))
+﻿Namespace Common
 
-    Public Sub New()
-        MyBase.New(NameOf(List(Of Object)))
-    End Sub
+    Public Class ListSerializer(Of T)
+        Inherits Serializer(Of IEnumerable(Of T))
 
-    Public Overrides Sub SetT(Formatter As FormatterSetProxy, Obj As IEnumerable(Of T))
-        Formatter.Set(NameOf(Obj.Count), Obj.Count())
-        For Each I In Obj
-            Formatter.Set(Nothing, I)
-        Next
-    End Sub
+        Public Sub New()
+            MyBase.New(NameOf(List(Of Object)))
+        End Sub
 
-    Public Overrides Function GetT(Formatter As FormatterGetProxy) As IEnumerable(Of T)
-        Dim Count As Integer
-        Count = Formatter.Get(Of Integer)(NameOf(Count))
+        Public Overrides Sub SetT(Formatter As FormatterSetProxy, Obj As IEnumerable(Of T))
+            Formatter.Set(NameOf(Obj.Count), Obj.Count())
+            For Each I In Obj
+                Formatter.Set(Nothing, I)
+            Next
+        End Sub
 
-        Dim R = New List(Of T)(Count)
-        For I As Integer = 0 To Count - 1
-            R.Add(Formatter.Get(Of T)(Nothing))
-        Next
+        Public Overrides Function GetT(Formatter As FormatterGetProxy) As IEnumerable(Of T)
+            Dim Count As Integer
+            Count = Formatter.Get(Of Integer)(NameOf(Count))
 
-        Return R
-    End Function
+            Dim R = New List(Of T)(Count)
+            For I As Integer = 0 To Count - 1
+                R.Add(Formatter.Get(Of T)(Nothing))
+            Next
 
-End Class
+            Return R
+        End Function
+
+    End Class
+
+End Namespace

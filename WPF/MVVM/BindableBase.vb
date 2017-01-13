@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 
-Namespace MVVM
+Namespace Common.MVVM
 
     Public Class BindableBase
         Implements INotifyPropertyChanged

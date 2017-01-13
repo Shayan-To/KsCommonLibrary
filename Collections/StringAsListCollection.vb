@@ -1,26 +1,30 @@
-﻿Public Class StringAsListCollection
-    Inherits BaseReadOnlyList(Of Char)
+﻿Namespace Common
 
-    Public Sub New(ByVal Str As String)
-        Me.Base = Str
-    End Sub
+    Public Class StringAsListCollection
+        Inherits BaseReadOnlyList(Of Char)
 
-    Public Overrides ReadOnly Property Count As Integer
-        Get
-            Return Me.Base.Length
-        End Get
-    End Property
+        Public Sub New(ByVal Str As String)
+            Me.Base = Str
+        End Sub
 
-    Default Public Overrides ReadOnly Property Item(Index As Integer) As Char
-        Get
-            Return Me.Base.Chars(Index)
-        End Get
-    End Property
+        Public Overrides ReadOnly Property Count As Integer
+            Get
+                Return Me.Base.Length
+            End Get
+        End Property
 
-    Public Overrides Function GetEnumerator() As IEnumerator(Of Char)
-        Return Me.Base.GetEnumerator()
-    End Function
+        Default Public Overrides ReadOnly Property Item(Index As Integer) As Char
+            Get
+                Return Me.Base.Chars(Index)
+            End Get
+        End Property
 
-    Private ReadOnly Base As String
+        Public Overrides Function GetEnumerator() As IEnumerator(Of Char)
+            Return Me.Base.GetEnumerator()
+        End Function
 
-End Class
+        Private ReadOnly Base As String
+
+    End Class
+
+End Namespace

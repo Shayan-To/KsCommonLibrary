@@ -2,6 +2,8 @@
 
 'Imports System.Collections.Specialized
 
+'Namespace Common
+
 'Public Class ObservableDictionary(Of T)
 '    Implements ISet(Of T),
 '               INotifyCollectionChanged
@@ -103,3 +105,5 @@
 '    End Function
 
 'End Class
+
+'End Namespace
