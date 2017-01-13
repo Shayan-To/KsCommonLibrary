@@ -1,7 +1,8 @@
-bin/
-obj/
-Documents/
-*.suo
+/bin/
+/obj/
+/Documents/
+/packages/
+/*.suo
 *~
 ~*
 .*/
