@@ -275,6 +275,7 @@
     <Compile Include="WPF\MVVM\NavigationCommand.vb" />
     <Compile Include="WPF\MVVM\NavigationFrame.vb" />
     <Compile Include="WPF\MVVM\NavigationViewModel.vb" />
+    <Compile Include="WPF\MVVM\TranslationConverter.vb" />
     <Compile Include="WPF\MVVM\Utils.vb" />
     <Compile Include="WPF\MVVM\ViewModel.vb" />
     <Compile Include="WPF\MVVM\ViewModelMetadataAttribute.vb" />

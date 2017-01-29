@@ -1,6 +1,7 @@
 ﻿Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
+Imports System.Windows.Markup
 
 ' General Information about an assembly is controlled through the following 
 ' set of attributes. Change these attribute values to modify the information
@@ -8,12 +9,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("KsCommonLibrary")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("KsCommonLibrary")> 
-<Assembly: AssemblyCopyright("Copyright ©  2014")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("KsCommonLibrary")>
+<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyProduct("KsCommonLibrary")>
+<Assembly: AssemblyCopyright("Copyright ©  2014")>
+<Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
@@ -35,3 +36,10 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyFileVersion("1.9.4.0")>
 
 <Assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)>
+
+<Assembly: XmlnsPrefix("Ks.Common", "Ks")>
+
+<Assembly: XmlnsDefinition("Ks.Common", "Ks.Common.MVVM.Converters")>
+<Assembly: XmlnsDefinition("Ks.Common", "Ks.Common.Controls")>
+<Assembly: XmlnsDefinition("Ks.Common", "Ks.Common.MVVM")>
+<Assembly: XmlnsDefinition("Ks.Common", "Ks.Common.NonUI")>

@@ -404,6 +404,8 @@ Namespace Common.MVVM
             Set(ByVal Value As KsLanguage)
                 If Me.SetProperty(Me._Language, Value) Then
                     Me.Settings.Item(NameOf(Me.Language)) = Value.Id
+                    ' ToDo A very bad workaround for updating the title of the window.
+                    Me.NotifyPropertyChanged(NameOf(Me.Name))
                 End If
             End Set
         End Property

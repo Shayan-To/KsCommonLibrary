@@ -1,17 +1,23 @@
 ﻿Imports System.Globalization
 Imports System.Windows.Data
 
-Namespace Common.MVVM.Converters
+Namespace Common.MVVM
 
-    Public Class AdderConverter
+    Public Class TranslationConverter
         Implements IValueConverter
 
+        Private Function GetLanguage() As KsLanguage
+            Return KsApplication.Current?.Language
+        End Function
+
         Public Function Convert(ByVal Value As Object, ByVal TargetType As Type, ByVal Parameter As Object, ByVal Culture As CultureInfo) As Object Implements IValueConverter.Convert
-            Return CType(Value, Double) + CType(Parameter, Double)
+            Dim Lang = Me.GetLanguage()
+            Dim Text = CType(Value, String)
+            Return If(Lang?.Translation(Text), Text)
         End Function
 
         Public Function ConvertBack(ByVal Value As Object, ByVal TargetType As Type, ByVal Parameter As Object, ByVal Culture As CultureInfo) As Object Implements IValueConverter.ConvertBack
-            Return CType(Value, Double) - CType(Parameter, Double)
+            Throw New NotSupportedException()
         End Function
 
     End Class

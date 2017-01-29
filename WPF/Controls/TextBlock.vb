@@ -12,6 +12,9 @@ Namespace Common.Controls
     ' [.*] -> Translate.
     '
     ' {}s could exist inside []s.
+    ' A '{}' at the beginning is ignored.
+    '
+    ' If just Obj is set, only common corrections will be applied.
 
     Public Class TextBlock
         Inherits Control
@@ -38,7 +41,7 @@ Namespace Common.Controls
             Dim Text = Me.Text
             If Text IsNot Nothing Then
                 Dim Lang = GetKsLanguage(Me)
-                Me.OutText = CorrectString(If(Lang IsNot Nothing, Lang.Translation(Text), Text), Lang)
+                Me.OutText = CorrectString(If(Lang?.Translation(Text), Text), Lang)
                 Exit Sub
             End If
 
@@ -70,6 +73,7 @@ Namespace Common.Controls
                 Objs = Me.Objs
             End If
 
+            ' ToDo If the value returned by the object (by String.Format) contains braces or brackets, the code will break. Fix this.
             S = Regex.Replace(S, "\{\{(\d+)((?:,[+-]?\d+)?(?::[^\{\}]*)?)\}\}",
                               Function(M)
                                   Dim I = ParseInv.Integer(M.Groups.Item(1).Value)
