@@ -1,8 +1,111 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 
 Namespace Common
 
     Public Module CommonExtensions
+
+#Region "String Group"
+        <Extension()>
+        Public Function RegexEscape(str As String) As String
+            Return Regex.Escape(str)
+        End Function
+
+        <Extension()>
+        Public Function RegexIsMatch(input As String, pattern As String) As Boolean
+            Return Regex.IsMatch(input, pattern)
+        End Function
+
+        <Extension()>
+        Public Function RegexIsMatch(input As String, pattern As String, options As RegexOptions) As Boolean
+            Return Regex.IsMatch(input, pattern, options)
+        End Function
+
+        <Extension()>
+        Public Function RegexIsMatch(input As String, pattern As String, options As RegexOptions, matchTimeout As TimeSpan) As Boolean
+            Return Regex.IsMatch(input, pattern, options, matchTimeout)
+        End Function
+
+        <Extension()>
+        Public Function RegexMatch(input As String, pattern As String) As Match
+            Return Regex.Match(input, pattern)
+        End Function
+
+        <Extension()>
+        Public Function RegexMatch(input As String, pattern As String, options As RegexOptions) As Match
+            Return Regex.Match(input, pattern, options)
+        End Function
+
+        <Extension()>
+        Public Function RegexMatch(input As String, pattern As String, options As RegexOptions, matchTimeout As TimeSpan) As Match
+            Return Regex.Match(input, pattern, options, matchTimeout)
+        End Function
+
+        <Extension()>
+        Public Function RegexMatches(input As String, pattern As String) As MatchCollection
+            Return Regex.Matches(input, pattern)
+        End Function
+
+        <Extension()>
+        Public Function RegexMatches(input As String, pattern As String, options As RegexOptions) As MatchCollection
+            Return Regex.Matches(input, pattern, options)
+        End Function
+
+        <Extension()>
+        Public Function RegexMatches(input As String, pattern As String, options As RegexOptions, matchTimeout As TimeSpan) As MatchCollection
+            Return Regex.Matches(input, pattern, options, matchTimeout)
+        End Function
+
+        <Extension()>
+        Public Function RegexReplace(input As String, pattern As String, evaluator As MatchEvaluator) As String
+            Return Regex.Replace(input, pattern, evaluator)
+        End Function
+
+        <Extension()>
+        Public Function RegexReplace(input As String, pattern As String, replacement As String) As String
+            Return Regex.Replace(input, pattern, replacement)
+        End Function
+
+        <Extension()>
+        Public Function RegexReplace(input As String, pattern As String, evaluator As MatchEvaluator, options As RegexOptions) As String
+            Return Regex.Replace(input, pattern, evaluator, options)
+        End Function
+
+        <Extension()>
+        Public Function RegexReplace(input As String, pattern As String, replacement As String, options As RegexOptions) As String
+            Return Regex.Replace(input, pattern, replacement, options)
+        End Function
+
+        <Extension()>
+        Public Function RegexReplace(input As String, pattern As String, replacement As String, options As RegexOptions, matchTimeout As TimeSpan) As String
+            Return Regex.Replace(input, pattern, replacement, options, matchTimeout)
+        End Function
+
+        <Extension()>
+        Public Function RegexReplace(input As String, pattern As String, evaluator As MatchEvaluator, options As RegexOptions, matchTimeout As TimeSpan) As String
+            Return Regex.Replace(input, pattern, evaluator, options, matchTimeout)
+        End Function
+
+        <Extension()>
+        Public Function RegexSplit(input As String, pattern As String) As String()
+            Return Regex.Split(input, pattern)
+        End Function
+
+        <Extension()>
+        Public Function RegexSplit(input As String, pattern As String, options As RegexOptions) As String()
+            Return Regex.Split(input, pattern, options)
+        End Function
+
+        <Extension()>
+        Public Function RegexSplit(input As String, pattern As String, options As RegexOptions, matchTimeout As TimeSpan) As String()
+            Return Regex.Split(input, pattern, options, matchTimeout)
+        End Function
+
+        <Extension()>
+        Public Function RegexUnescape(str As String) As String
+            Return Regex.Unescape(str)
+        End Function
+#End Region
 
 #Region "Math Group"
         <Extension()>
