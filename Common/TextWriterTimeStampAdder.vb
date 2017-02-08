@@ -97,8 +97,13 @@
 
             Dim SI = index
             Dim Bl = False
-            For I As Integer = index To index + count - 1
-                Dim Ch = buffer(I)
+            For I As Integer = index To index + count
+                Dim Ch As Char
+                If I < index + count Then
+                    Ch = buffer(I)
+                Else
+                    Ch = ControlChars.Lf
+                End If
                 If Ch = ControlChars.Cr Or Ch = ControlChars.Lf Then
                     If Bl Then
                         Me.Base.Write(New String(" "c, StampLength))
@@ -106,17 +111,14 @@
                     Bl = True
                     Me.Base.WriteLine(buffer, SI, I - SI)
 
-                    If Ch = ControlChars.Cr And buffer(I + 1) = ControlChars.Lf Then
+                    If I < index + count - 1 AndAlso
+                       (Ch = ControlChars.Cr And buffer(I + 1) = ControlChars.Lf) Then
                         I += 1
                     End If
                     SI = I + 1
                 End If
             Next
 
-            If Bl Then
-                Me.Base.Write(New String(" "c, StampLength))
-            End If
-            Me.Base.WriteLine(buffer, SI, count - SI)
             If Me.AutoFlush Then
                 Me.Base.Flush()
             End If
