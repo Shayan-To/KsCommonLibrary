@@ -233,6 +233,21 @@ Namespace Common
         End Function
 
         <Extension()>
+        Public Function Aggregate(Of T)(ByVal Self As IEnumerable(Of T), ByVal Func As Func(Of T, T, T), ByVal EmptyValue As T) As T
+            Dim R As T = Nothing
+            Dim Bl = True
+            For Each I In Self
+                If Bl Then
+                    R = I
+                    Bl = False
+                    Continue For
+                End If
+                R = Func.Invoke(R, I)
+            Next
+            Return R
+        End Function
+
+        <Extension()>
         Public Function IndexOf(Of T)(ByVal Self As IList(Of T), ByVal Predicate As Func(Of T, Integer, Boolean), Optional ByVal StartIndex As Integer = 0) As Integer
             For I = StartIndex To Self.Count - 1
                 If Predicate.Invoke(Self.Item(I), I) Then
