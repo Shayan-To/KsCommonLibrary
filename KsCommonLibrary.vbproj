@@ -134,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\BitArray.vb" />
+    <Compile Include="Common\EventBasedTask.vb" />
     <Compile Include="Common\Serialization\FormatterGetProxy.vb" />
     <Compile Include="Common\Serialization\FormatterSetProxy.vb" />
     <Compile Include="Common\Serialization\ObjectTraverseProvider.vb" />
