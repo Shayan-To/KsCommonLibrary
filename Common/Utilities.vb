@@ -1495,6 +1495,9 @@ Namespace Common
         End Function
 
 #Region "InEnumerable Logic"
+        Public Shared Iterator Function InEnumerable(Of T)() As IEnumerable(Of T)
+        End Function
+
         Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T) As IEnumerable(Of T)
             Yield I1
         End Function
