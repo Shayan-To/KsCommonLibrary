@@ -1240,6 +1240,69 @@ Namespace Common
         End Class
 #End Region
 
+        Public Shared Function GetFriendlyRepresentation(ByVal Time As TimeSpan, ByVal [Error] As TimeSpan) As String
+            Dim Units = {VTuple.Create("ms", TimeSpan.FromMilliseconds(1)),
+                         VTuple.Create("s", TimeSpan.FromSeconds(1)),
+                         VTuple.Create("min", TimeSpan.FromMinutes(1)),
+                         VTuple.Create("h", TimeSpan.FromHours(1)),
+                         VTuple.Create("d", TimeSpan.FromDays(1))}
+            ' We want the units that are greater than or equal to Error.
+            ' And if the last unit is less that Error, we have no choice but to use it alone. So Func is true for the last unit.
+            Dim Start = BinarySearchIn(Function(X) Units(X).Item2 >= [Error], 0, Units.Length - 1)
+            ' The Units with false should not be used.
+            ' And from the remaining ones, we will use at most Count of them.
+            Dim Count = 2
+
+            Dim Res = New StringBuilder()
+            Dim Ticks = Time.Ticks
+            ' We will start from the greatest unit, and pick at most Count of them with non-zero Value.
+            ' ToDo If ticks is negative, the greatest unit will always be non-zero, even if not necessary. (-1 days 23 hours, instead of -1 hours)
+            Dim I = 0
+            For I = Units.Length - 1 To Start + 1 Step -1
+                Dim Unit = Units(I)
+                Dim UnitTicks = Unit.Item2.Ticks
+                Dim Value = Math.FloorDiv(Ticks, UnitTicks)
+                Ticks -= Value * UnitTicks
+
+                If Value <> 0 Then
+                    If Count = 1 Then
+                        Exit For
+                    End If
+                    If Res.Length <> 0 Then
+                        Res.Append(" ")
+                    End If
+                    Res.Append(Value).Append(Unit.Item1.ToLowerInvariant())
+                    Count -= 1
+                End If
+            Next
+
+            ' A block for variable scopes.
+            Do
+                Dim Unit = Units(I)
+                Dim UnitTicks = Unit.Item2.Ticks
+
+                ' Just like the units, we have to check whether (0.01 U) is a good unit or not. (Division will move us upwards in the list.)
+                ' And we cannot optimize it by assuming we can do any number of digits when not at Start.
+                ' A unit is something about 20-100 times smaller than the previous one, so maybe we are forced to use only one digit.
+                Dim Prec = 100
+                Do Until UnitTicks \ Prec >= [Error].Ticks
+                    Prec \= 10
+                    If Prec = 1 Then
+                        Exit Do
+                    End If
+                Loop
+
+                ' We assume (Unit / Prec) to be another unit, but print the result divided by Prec.
+                Dim Value = System.Math.Round(Ticks / (UnitTicks \ Prec))
+                If Res.Length <> 0 Then
+                    Res.Append(" ")
+                End If
+                Res.Append(Value / Prec).Append(Unit.Item1.ToLowerInvariant())
+            Loop Until True
+
+            Return Res.ToString()
+        End Function
+
         Public Shared Function GetTimeStamp(ByVal Compact As Boolean) As String
             Static Builder As StringBuilder = New StringBuilder()
 
