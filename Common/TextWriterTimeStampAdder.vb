@@ -209,20 +209,58 @@
             Throw New NotSupportedException()
         End Function
 
-        Public Overrides Function WriteLineAsync() As Task
-            Return Me.Base.WriteLineAsync()
+        Public Overrides Async Function WriteLineAsync(buffer() As Char, index As Integer, count As Integer) As Task
+            If buffer Is Nothing Then
+                Await Me.Base.WriteLineAsync(Me.GetTimeStamp())
+                If Me.AutoFlush Then
+                    Await Me.Base.FlushAsync()
+                End If
+                Exit Function
+            End If
+
+            Dim Stamp = Me.GetTimeStamp()
+            Dim StampLength = Stamp.Length
+            Await Me.Base.WriteAsync(Stamp)
+
+            Dim SI = index
+            Dim Bl = False
+            For I As Integer = index To index + count
+                Dim Ch As Char
+                If I < index + count Then
+                    Ch = buffer(I)
+                Else
+                    Ch = ControlChars.Lf
+                End If
+                If Ch = ControlChars.Cr Or Ch = ControlChars.Lf Then
+                    If Bl Then
+                        Await Me.Base.WriteAsync(New String(" "c, StampLength))
+                    End If
+                    Bl = True
+                    Await Me.Base.WriteLineAsync(buffer, SI, I - SI)
+
+                    If I < index + count - 1 AndAlso
+                       (Ch = ControlChars.Cr And buffer(I + 1) = ControlChars.Lf) Then
+                        I += 1
+                    End If
+                    SI = I + 1
+                End If
+            Next
+
+            If Me.AutoFlush Then
+                Await Me.Base.FlushAsync()
+            End If
         End Function
 
-        Public Overrides Function WriteLineAsync(buffer() As Char, index As Integer, count As Integer) As Task
-            Return Me.Base.WriteLineAsync(buffer, index, count)
+        Public Overrides Async Function WriteLineAsync() As Task
+            Await Me.WriteLineAsync(Nothing, 0, 0)
         End Function
 
-        Public Overrides Function WriteLineAsync(value As Char) As Task
-            Return Me.Base.WriteLineAsync(value)
+        Public Overrides Async Function WriteLineAsync(value As Char) As Task
+            Await Me.WriteLineAsync(value.ToString(Me.Base.FormatProvider))
         End Function
 
-        Public Overrides Function WriteLineAsync(value As String) As Task
-            Return Me.Base.WriteLineAsync(value)
+        Public Overrides Async Function WriteLineAsync(value As String) As Task
+            Await Me.WriteLineAsync(value?.ToCharArray(), 0, If(value?.Length, 0))
         End Function
 #End Region
 
