@@ -177,6 +177,7 @@
     <Compile Include="WPF\MVVM\AutoStoreObject.vb" />
     <Compile Include="WPF\MVVM\Converters\SubstringConverter.vb" />
     <Compile Include="WPF\MVVM\Converters\MultiplyMultiConverter.vb" />
+    <Compile Include="WPF\MVVM\Converters\TimeSpanFriendlyConverter.vb" />
     <Compile Include="WPF\MVVM\KsLanguage.vb" />
     <Compile Include="Collections\AutoStoreDictionary.vb" />
     <Compile Include="Collections\BaseDictionary.vb" />
