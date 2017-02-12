@@ -1,4 +1,6 @@
-﻿Namespace Common
+﻿#Const WriteDebugInfo = False
+
+Namespace Common
 
     ' ToDo Change this to use StopWatch.
 
@@ -7,31 +9,46 @@
 
         ''' <param name="Task">The task that should be invoked. This call will be taken place on some background thread.</param>
         Public Sub New(ByVal Task As Action, ByVal MinDelay As TimeSpan, Optional ByVal MaxDelay As TimeSpan = Nothing, Optional ByVal InactivityTime As TimeSpan = Nothing)
+            Me.StopWatch.Start()
+
             Me._Task = Task
             Me._MinDelay = MinDelay
             Me._MaxDelay = If(MaxDelay = TimeSpan.Zero, TimeSpan.MaxValue, MaxDelay)
             Me._InactivityTime = InactivityTime
 
-            Me.TaskThread = New Threading.Thread(AddressOf Me.TaskThreadProcedure) With {.IsBackground = True}
+            Me.TaskThread = New Threading.Thread(AddressOf Me.TaskThreadProcedure) With {.IsBackground = True, .Name = NameOf(TaskDelayer) & " thread - " & Me.GetHashCode()}
             Me.TaskThread.Start()
         End Sub
 
         Public Sub RunTask(ByVal RunningMode As TaskDelayerRunningMode)
+#If WriteDebugInfo Then
+            Console.WriteLine("{0}: Started. Mode: {1}", NameOf(RunTask), RunningMode)
+#End If
+            Dim Now As TimeSpan
             ' First Check that IsTaskPending is REALLY true. We have to lock to make that sure.
             If Me.IsTaskPending Then
                 SyncLock Me.WaitLockObject
+                    Now = Me.StopWatch.Elapsed
                     If Me.IsTaskPending Then
+#If WriteDebugInfo Then
+                        Console.WriteLine("{0}: Task was pending.", NameOf(RunTask))
+#End If
                         If RunningMode = TaskDelayerRunningMode.Instant Then
                             Me.IsInstantSet = True
                             Me.DelayWaitHandle.Set()
+#If WriteDebugInfo Then
+                            Console.WriteLine("{0}: {1} was set.", NameOf(RunTask), NameOf(Me.DelayWaitHandle))
+#End If
                         Else
                             ' As setting LastActivityTime can at most delay the run of a task, it is only important to have it at the time of deciding whether to run the task.
-                            Dim Now = DateTime.UtcNow
                             If Me.LastActivityTime > Now Then
                                 ' This usually means that the system's time has changed.
                                 ' The simplest thing to do is to set instant.
                                 Me.IsInstantSet = True
                                 Me.DelayWaitHandle.Set()
+#If WriteDebugInfo Then
+                                Console.WriteLine("{0}: {1} was set.", NameOf(RunTask), NameOf(Me.DelayWaitHandle))
+#End If
                             Else
                                 Me.LastActivityTime = Now
                             End If
@@ -39,28 +56,49 @@
                         Exit Sub
                     End If
                 End SyncLock
+            Else
+                ' We can skip locking as the other thread is locked at TaskWaitHandle. See the comment below.
+                Now = Me.StopWatch.Elapsed
             End If
 
             ' If IsTaskPending is REALLY false, then the other thread is for sure locked at TaskWaitHandle.
             ' So we safely can set it to true.
             Me.IsTaskPending = True
-            Me.FirstActivityTime = DateTime.UtcNow
+            Me.FirstActivityTime = Now
             Me.LastActivityTime = Me.FirstActivityTime
 
             If RunningMode = TaskDelayerRunningMode.Instant Then
                 Me.IsInstantSet = True
                 ' We set the wait handle before waiting on it. The wait will then immediately return.
                 Me.DelayWaitHandle.Set()
+#If WriteDebugInfo Then
+                Console.WriteLine("{0}: {1} was set.", NameOf(RunTask), NameOf(Me.DelayWaitHandle))
+#End If
             End If
             Me.TaskWaitHandle.Set()
+#If WriteDebugInfo Then
+            Console.WriteLine("{0}: {1} was set.", NameOf(RunTask), NameOf(Me.TaskWaitHandle))
+#End If
         End Sub
 
         Private Sub TaskThreadProcedure()
+#If WriteDebugInfo Then
+            Console.WriteLine("{0}: Started.", NameOf(TaskThreadProcedure))
+#End If
             ' ToDo Prove that we need two wait handles. (Have done it once.)
             Do
+#If WriteDebugInfo Then
+                Console.WriteLine("{0}: {1}, getting into wait.", NameOf(TaskThreadProcedure), NameOf(Me.TaskWaitHandle))
+#End If
                 Me.TaskWaitHandle.WaitOne()
+#If WriteDebugInfo Then
+                Console.WriteLine("{0}: {1}, out of wait.", NameOf(TaskThreadProcedure), NameOf(Me.TaskWaitHandle))
+#End If
 
                 If Not Me.IsTaskPending Then
+#If WriteDebugInfo Then
+                    Console.WriteLine("{0}: Exiting...", NameOf(TaskThreadProcedure))
+#End If
                     Assert.True(Me.IsDisposed)
                     Exit Do
                 End If
@@ -76,9 +114,12 @@
                     SyncLock Me.WaitLockObject
                         ShouldRunTask = Me.IsInstantSet
 
-                        Dim Now = DateTime.UtcNow
+                        Dim Now = Me.StopWatch.Elapsed
                         Do
                             If ShouldRunTask Then
+#If WriteDebugInfo Then
+                                Console.WriteLine("{0}: Wait -> Instant.", NameOf(TaskThreadProcedure))
+#End If
                                 Exit Do
                             End If
 
@@ -86,6 +127,9 @@
 
                             WaitTime = Me.FirstActivityTime - Now + Me.MinDelay
                             If WaitTime > TimeEpsilon Then
+#If WriteDebugInfo Then
+                                Console.WriteLine("{0}: Wait -> Min delay.", NameOf(TaskThreadProcedure))
+#End If
                                 Exit Do
                             End If
 
@@ -93,15 +137,26 @@
                             WaitTime = Me.LastActivityTime - Now + Me.InactivityTime
 
                             If WaitTime <= TimeEpsilon Or MaxWaitTime <= TimeEpsilon Then
+#If WriteDebugInfo Then
+                                Console.WriteLine("{0}: Wait -> No wait.", NameOf(TaskThreadProcedure))
+#End If
                                 ShouldRunTask = True
                                 Exit Do
                             End If
 
-                            If WaitTime > MaxWaitTime Then
-                                ' We know that next time the task must surely be done, so we set instant to avoid next-time unnecessary calculation.
+                            If WaitTime >= MaxWaitTime Then
+#If WriteDebugInfo Then
+                                Console.WriteLine("{0}: Wait -> Reaching max wait.", NameOf(TaskThreadProcedure))
+#End If
+                                ' We know that next time the task must surely be done, so we set instant to avoid unnecessary next-time calculations.
                                 Me.IsInstantSet = True
                                 WaitTime = MaxWaitTime
+                                Exit Do
                             End If
+
+#If WriteDebugInfo Then
+                            Console.WriteLine("{0}: Wait -> Regular wait.", NameOf(TaskThreadProcedure))
+#End If
 
                             Exit Do
                         Loop
@@ -115,10 +170,19 @@
                     End SyncLock
 
                     If ShouldRunTask Then
+#If WriteDebugInfo Then
+                        Console.WriteLine("{0}: Running task...", NameOf(TaskThreadProcedure))
+#End If
                         Me.Task.Invoke()
-                        Exit Sub
+                        Exit Do
                     Else
+#If WriteDebugInfo Then
+                        Console.WriteLine("{0}: {1}, getting into wait. WaitTime: {2}", NameOf(TaskThreadProcedure), NameOf(Me.DelayWaitHandle), WaitTime)
+#End If
                         Me.DelayWaitHandle.WaitOne(WaitTime)
+#If WriteDebugInfo Then
+                        Console.WriteLine("{0}: {1}, out of wait.", NameOf(TaskThreadProcedure), NameOf(Me.DelayWaitHandle))
+#End If
                     End If
                 Loop
             Loop
@@ -219,11 +283,12 @@
 
         Private IsTaskPending As Boolean = False
         Private IsInstantSet As Boolean = False
-        Private FirstActivityTime As DateTime
-        Private LastActivityTime As DateTime
+        Private FirstActivityTime As TimeSpan
+        Private LastActivityTime As TimeSpan
 
         Private Shared ReadOnly TimeEpsilon As TimeSpan = TimeSpan.FromMilliseconds(30)
 
+        Private ReadOnly StopWatch As Stopwatch = New Stopwatch()
         Private ReadOnly WaitLockObject As Object = New Object()
         Private ReadOnly TaskWaitHandle As Threading.EventWaitHandle = New Threading.EventWaitHandle(False, Threading.EventResetMode.AutoReset)
         Private ReadOnly DelayWaitHandle As Threading.EventWaitHandle = New Threading.EventWaitHandle(False, Threading.EventResetMode.AutoReset)
