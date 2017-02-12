@@ -589,6 +589,12 @@ Namespace Common
             End Function
 
             Public Shared Function GreatestCommonDivisor(ByVal A As Integer, ByVal B As Integer) As Integer
+                If B < 0 Then
+                    B = -B
+                End If
+                If A < 0 Then
+                    A = -A
+                End If
                 Do Until B = 0
                     Dim C = A Mod B
                     A = B
@@ -598,6 +604,12 @@ Namespace Common
             End Function
 
             Public Shared Function GreatestCommonDivisor(ByVal A As Long, ByVal B As Long) As Long
+                If B < 0 Then
+                    B = -B
+                End If
+                If A < 0 Then
+                    A = -A
+                End If
                 Do Until B = 0
                     Dim C = A Mod B
                     A = B
