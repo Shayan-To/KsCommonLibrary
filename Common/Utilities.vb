@@ -390,6 +390,11 @@ Namespace Common
                 Return Res.Append("}"c).ToString()
             End Function
 
+            Public Enum TextAlignment
+                Right
+                Center
+                Left
+            End Enum
         End Class
 
         Public Class Math
