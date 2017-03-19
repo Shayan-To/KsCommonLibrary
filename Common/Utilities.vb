@@ -395,6 +395,28 @@ Namespace Common
                 Center
                 Left
             End Enum
+
+            Public Shared Function PadAlignString(Str As String, Ch As Char, Lentgh As Integer, Alignment As TextAlignment) As String
+                Dim Res = ""
+
+                If Lentgh < Str.Length Then
+                    Throw New Exception("String lentgh is smaller than line lentgh.")
+                End If
+
+                Dim N = Lentgh - Str.Length
+
+                Select Case Alignment
+                    Case TextAlignment.Left
+                        Res = Str + New String(Ch, N)
+                    Case TextAlignment.Center
+                        Res = New String(Ch, N \ 2) + Str + New String(Ch, N - N \ 2)
+                    Case TextAlignment.Right
+                        Res = New String(Ch, N) + Str
+                End Select
+
+                Return Res
+            End Function
+
         End Class
 
         Public Class Math
