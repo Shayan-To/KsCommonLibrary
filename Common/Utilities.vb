@@ -390,6 +390,32 @@ Namespace Common
                 Return Res.Append("}"c).ToString()
             End Function
 
+            Public Shared Function PadAlignString(Str As String, Ch As Char, Length As Integer, Alignment As TextAlignment) As String
+                Verify.False(Length < Str.Length, "Length of Str is less than Length.")
+
+                Dim N = Str.Length
+
+                Dim Res = ""
+                Select Case Alignment
+                    Case TextAlignment.Left
+                        Res = Str.PadRight(Length, Ch)
+                    Case TextAlignment.Center
+                        Res = Str.PadRight(Length - N \ 2, Ch).PadLeft(Length, Ch)
+                    Case TextAlignment.Right
+                        Res = Str.PadLeft(Length, Ch)
+                    Case Else
+                        Verify.FailArg(NameOf(Alignment), "Invalid Alignment.")
+                End Select
+
+                Return Res
+            End Function
+
+            Public Enum TextAlignment
+                Right
+                Center
+                Left
+            End Enum
+
         End Class
 
         Public Class Math
