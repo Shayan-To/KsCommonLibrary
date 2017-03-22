@@ -8,33 +8,34 @@
                 Exit Sub
             End If
             Me.FreezeCalled = True
+
             Me.OnFreezing()
-            Me._IsFreezed = True
-            Me.OnFroze()
+            Me._IsFrozen = True
+            Me.OnFrozen()
         End Sub
 
         Protected Overridable Sub OnFreezing()
 
         End Sub
 
-        Protected Overridable Sub OnFroze()
+        Protected Overridable Sub OnFrozen()
 
         End Sub
 
         Protected Sub VerifyWrite()
-            Verify.False(Me._IsFreezed, "Cannot change a freezed object.")
+            Verify.False(Me._IsFrozen, "Cannot change a frozen object.")
         End Sub
 
         Protected Sub VerifyFrozen()
-            Verify.True(Me._IsFreezed, "The object has to be frozen to perform this operation.")
+            Verify.True(Me._IsFrozen, "The object has to be frozen to perform this operation.")
         End Sub
 
-#Region "IsFreezed Property"
-        Private _IsFreezed As Boolean
+#Region "IsFrozen Property"
+        Private _IsFrozen As Boolean
 
         Public ReadOnly Property IsFrozen As Boolean
             Get
-                Return Me._IsFreezed
+                Return Me._IsFrozen
             End Get
         End Property
 #End Region
