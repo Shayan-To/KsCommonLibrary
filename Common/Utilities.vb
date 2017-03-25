@@ -1548,6 +1548,97 @@ Namespace Common
                 Return X + MaxError
             End Function
 
+            ''' <summary>
+            ''' Returns a list of (I, J) where List1[I] = List2[J] and the list is [one of] the longest possible list[s].
+            ''' </summary>
+            Public Shared Function GetLongestCommonSubsequence(Of T)(ByVal List1 As IReadOnlyList(Of T), ByVal List2 As IReadOnlyList(Of T)) As IReadOnlyList(Of VTuple(Of Integer, Integer))
+                Return GetLongestCommonSubsequence(List1, List2, EqualityComparer(Of T).Default)
+            End Function
+
+            ''' <summary>
+            ''' Returns a list of (I, J) where List1[I] = List2[J] and the list is [one of] the longest possible list[s].
+            ''' </summary>
+            Public Shared Function GetLongestCommonSubsequence(Of T)(ByVal List1 As IReadOnlyList(Of T), ByVal List2 As IReadOnlyList(Of T), ByVal Comparer As IEqualityComparer(Of T)) As IReadOnlyList(Of VTuple(Of Integer, Integer))
+                ' We use dynamic programming.
+
+                ' The length of longest common subsequence of List1[0..m] and List2[0..n] is max of:
+                ' - If List1[m] = List2[n] Then: 1 + The length of longest common subsequence of List1[0..(m - 1)] and List2[0..(n - 1)].
+                ' - The length of longest common subsequence of List1[0..m] and List2[0..(n - 1)].
+                ' - The length of longest common subsequence of List1[0..(m - 1)] and List2[0..n].
+
+                ' We do it from the other end so that we can have the result without reversing it.
+
+                Dim M = List1.Count
+                Dim N = List2.Count
+
+                ' The tuple is (Length, Mode). See below.
+                Dim Dyn = New VTuple(Of Integer, Integer)(M - 1, N - 1) {}
+
+                ' Mode:
+                ' 1 -> Did equal?
+                ' 2 -> First index has +1?
+                ' 4 -> Second index has +1?
+
+                For I = M - 1 To 0 Step -1
+                    For J = N - 1 To 0 Step -1
+                        Dim Length = 0
+                        Dim Mode = 0
+
+                        If Comparer.Equals(List1.Item(I), List2.Item(J)) Then
+                            Length = 1
+                            Mode = 1
+                            If I <> M - 1 And J <> N - 1 Then
+                                Length += Dyn(I + 1, J + 1).Item1
+                                Mode += 2 + 4
+                            End If
+                        End If
+
+                        If I <> M - 1 Then
+                            Dim L = Dyn(I + 1, J).Item1
+                            If L > Length Then
+                                Length = L
+                                Mode = 2
+                            End If
+                        End If
+
+                        If J <> N - 1 Then
+                            Dim L = Dyn(I, J + 1).Item1
+                            If L > Length Then
+                                Length = L
+                                Mode = 4
+                            End If
+                        End If
+
+                        Dyn(I, J) = VTuple.Create(Length, Mode)
+                    Next
+                Next
+
+                Dim Res = New List(Of VTuple(Of Integer, Integer))()
+                Do ' Block for variable scopes
+                    Dim I = 0
+                    Dim J = 0
+                    Dim Cur As VTuple(Of Integer, Integer)
+                    Do
+                        Cur = Dyn(I, J)
+                        If (Cur.Item2 And 1) = 1 Then
+                            Res.Add(VTuple.Create(I, J))
+                        End If
+                        If (Cur.Item2 And 2) = 2 Then
+                            I += 1
+                        End If
+                        If (Cur.Item2 And 4) = 4 Then
+                            J += 1
+                        End If
+
+                        Assert.True(((Cur.Item2 And (2 + 4)) = 2 + 4).Implies((Cur.Item2 And 1) = 1))
+                    Loop Until (Cur.Item2 And (2 + 4)) = 0
+
+                    Exit Do
+                Loop
+
+                Return Res.AsReadOnly()
+            End Function
+
         End Class
 
 #Region "CombineHashCodes Logic"
