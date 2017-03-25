@@ -29,7 +29,6 @@ Namespace Common
         Public Shared ReadOnly Mauve As Media.Color = Utilities.Serialization.HexToColor("#76608A")
         Public Shared ReadOnly Taupe As Media.Color = Utilities.Serialization.HexToColor("#87794E")
 
-#If VBC_VER >= 11.0 Then
         Public Shared ReadOnly Iterator Property Colors As IEnumerable(Of Media.Color)
             Get
                 Yield Lime
@@ -54,7 +53,6 @@ Namespace Common
                 Yield Taupe
             End Get
         End Property
-#End If
 
     End Class
 

@@ -76,12 +76,8 @@ Namespace Common
             Return -1
         End Function
 
-#If VBC_VER >= 11.0 Then
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Contains(ByVal Item As Integer) As Boolean Implements ICollection(Of Integer).Contains
-#Else
-    Public Function Contains(ByVal Item As Integer) As Boolean Implements ICollection(Of Integer).Contains
-#End If
             Return Item >= Me._Start AndAlso
                    Item < Me._End AndAlso
                    (Item - Me._Start) Mod Me._Step = 0
@@ -94,17 +90,11 @@ Namespace Common
             Next
         End Sub
 
-#If VBC_VER >= 11.0 Then
         Public Iterator Function GetEnumerator() As IEnumerator(Of Integer) Implements IEnumerable(Of Integer).GetEnumerator
             For I As Integer = Me._Start To Me._End - 1 Step Me._Step
                 Yield I
             Next
         End Function
-#Else
-    Public Function GetEnumerator() As IEnumerator(Of Integer) Implements IEnumerable(Of Integer).GetEnumerator
-        Throw New NotImplementedException()
-    End Function
-#End If
 
 #Region "Trivial Implementations"
         Public ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of Integer).IsReadOnly

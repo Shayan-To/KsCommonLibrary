@@ -434,12 +434,8 @@ Namespace Common
             ''' The reminder, R, of A divided by B. If it is a negative number, A + Abs(B) will be returned.
             ''' The result is always between 0 and B - 1.
             ''' </returns>
-#If VBC_VER >= 11.0 Then
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Public Shared Function NonNegMod(ByVal A As Integer, ByVal B As Integer) As Integer
-#Else
-    Public Shared Function NonNegMod(ByVal A As Integer, ByVal B As Integer) As Integer
-#End If
                 A = A Mod B
                 If A >= 0 Then
                     Return A
@@ -459,12 +455,8 @@ Namespace Common
             ''' The reminder, R, of A divided by B. If it is not a positive number, A + Abs(B) will be returned.
             ''' The result is always between 1 and B.
             ''' </returns>
-#If VBC_VER >= 11.0 Then
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Public Shared Function PosMod(ByVal A As Integer, ByVal B As Integer) As Integer
-#Else
-    Public Shared Function PosMod(ByVal A As Integer, ByVal B As Integer) As Integer
-#End If
                 A = A Mod B
                 If A > 0 Then
                     Return A
