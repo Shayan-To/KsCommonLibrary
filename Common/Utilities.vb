@@ -1235,6 +1235,329 @@ Namespace Common
 
         End Class
 
+        Public Class Collections
+
+            Public Shared Iterator Function Concat(Of T)(ByVal Collections As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
+                For Each L In Collections
+                    For Each I In L
+                        Yield I
+                    Next
+                Next
+            End Function
+
+            Public Shared Function Concat(Of T)(ParamArray ByVal Collections As IEnumerable(Of T)()) As IEnumerable(Of T)
+                Return Concat(DirectCast(Collections, IEnumerable(Of IEnumerable(Of T))))
+            End Function
+
+            Public Shared Iterator Function Range(ByVal Start As Integer, ByVal [End] As Integer, Optional ByVal [Step] As Integer = 1) As IEnumerable(Of Integer)
+                Verify.TrueArg([Step] > 0, "Step")
+                For Start = Start To [End] - 1 Step [Step]
+                    Yield Start
+                Next
+            End Function
+
+            Public Shared Function Range(ByVal [End] As Integer) As IEnumerable(Of Integer)
+                Return Range(0, [End])
+            End Function
+
+            Public Shared Iterator Function Repeat(Of T)(ByVal I1 As T, ByVal Count As Integer) As IEnumerable(Of T)
+                For I As Integer = 1 To Count
+                    Yield I1
+                Next
+            End Function
+
+#Region "InEnumerable Logic"
+            Public Shared Iterator Function InEnumerable(Of T)() As IEnumerable(Of T)
+            End Function
+
+            Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T) As IEnumerable(Of T)
+                Yield I1
+            End Function
+
+            Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T) As IEnumerable(Of T)
+                Yield I1
+                Yield I2
+            End Function
+
+            Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T) As IEnumerable(Of T)
+                Yield I1
+                Yield I2
+                Yield I3
+            End Function
+
+            Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T) As IEnumerable(Of T)
+                Yield I1
+                Yield I2
+                Yield I3
+                Yield I4
+            End Function
+
+            Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T) As IEnumerable(Of T)
+                Yield I1
+                Yield I2
+                Yield I3
+                Yield I4
+                Yield I5
+            End Function
+
+            Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T, ByVal I6 As T) As IEnumerable(Of T)
+                Yield I1
+                Yield I2
+                Yield I3
+                Yield I4
+                Yield I5
+                Yield I6
+            End Function
+
+            Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T, ByVal I6 As T, ByVal I7 As T) As IEnumerable(Of T)
+                Yield I1
+                Yield I2
+                Yield I3
+                Yield I4
+                Yield I5
+                Yield I6
+                Yield I7
+            End Function
+
+            Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T, ByVal I6 As T, ByVal I7 As T, ByVal I8 As T) As IEnumerable(Of T)
+                Yield I1
+                Yield I2
+                Yield I3
+                Yield I4
+                Yield I5
+                Yield I6
+                Yield I7
+                Yield I8
+            End Function
+#End Region
+
+        End Class
+
+        Public Class Time
+
+            Public Shared Function GetFriendlyRepresentation(ByVal Time As TimeSpan, ByVal MaxError As TimeSpan) As String
+                Dim Units = {VTuple.Create("ms", TimeSpan.FromMilliseconds(1)),
+                         VTuple.Create("s", TimeSpan.FromSeconds(1)),
+                         VTuple.Create("min", TimeSpan.FromMinutes(1)),
+                         VTuple.Create("h", TimeSpan.FromHours(1)),
+                         VTuple.Create("d", TimeSpan.FromDays(1))}
+                ' We want to be able to show values using a max error value, so we have to remove the unnecessary units.
+                ' So we will keep the units that are greater than or equal to MaxError.
+                ' But these are not enough, as they may not show the value with needed precision if no unit is equal to MaxError.
+                ' We will use in that case A'shari numbers. See below.
+
+                ' We want the units that are greater than or equal to Error.
+                ' And if the last unit is less that Error, we have no choice but to use it alone. So Func is true for the last unit.
+                Dim Start = Algorithm.BinarySearchIn(Function(X) Units(X).Item2 >= MaxError, 0, Units.Length - 1)
+                ' The Units with false should not be used.
+                ' And from the remaining ones, we will use at most Count of them.
+                Dim Count = 2
+
+                Dim Res = New StringBuilder()
+                Dim Ticks = Time.Ticks
+                ' We will start from the greatest unit, and pick at most Count of them with non-zero Value.
+                ' ToDo If ticks is negative, the greatest unit will always be non-zero, even if not necessary. (-1 days 23 hours, instead of -1 hours)
+                Dim I = 0
+                For I = Units.Length - 1 To Start + 1 Step -1
+                    Dim Unit = Units(I)
+                    Dim UnitTicks = Unit.Item2.Ticks
+                    Dim Value = Math.FloorDiv(Ticks, UnitTicks)
+                    Ticks -= Value * UnitTicks
+
+                    If Value <> 0 Then
+                        If Count = 1 Then
+                            Exit For
+                        End If
+                        If Res.Length <> 0 Then
+                            Res.Append(" ")
+                        End If
+                        Res.Append(Value).Append(Unit.Item1.ToLowerInvariant())
+                        Count -= 1
+                    End If
+                Next
+
+                ' A block for limiting the scope of variables.
+                Do
+                    Dim Unit = Units(I)
+                    Dim UnitTicks = Unit.Item2.Ticks
+
+                    ' Just like the units, we have to check whether (0.01 U) is a good unit or not. (Division will move us upwards in the list.)
+                    ' We will find units less than or equal to MaxError (the bad ones + equals), and choose the first of them (plus the good ones of course).
+                    ' 
+                    ' And we cannot optimize it by assuming we can do any number of digits when not at Start.
+                    ' A unit is something about 20-100 times smaller than the previous one, so maybe we are forced to use only one digit.
+                    Dim Prec = 100
+                    Do While UnitTicks \ Prec <= MaxError.Ticks
+                        Prec \= 10
+                        If Prec = 0 Then
+                            ' We will end up here only if the unit equals the error.
+                            Exit Do
+                        End If
+                    Loop
+                    Prec = If(Prec = 0, 1, Prec * 10)
+                    If Prec > 100 Then
+                        Prec = 100
+                    End If
+
+                    ' We assume (Unit / Prec) to be another unit, but print the result divided by Prec.
+                    Dim Value = System.Math.Round(Ticks / (UnitTicks \ Prec))
+                    If Value <> 0 Or Res.Length = 0 Then
+                        If Res.Length <> 0 Then
+                            Res.Append(" ")
+                        End If
+                        Res.Append(Value / Prec).Append(Unit.Item1.ToLowerInvariant())
+                    End If
+
+                    Exit Do
+                Loop
+
+                Return Res.ToString()
+            End Function
+
+            Public Shared Function GetTimeStamp(ByVal Compact As Boolean) As String
+                Static Builder As StringBuilder = New StringBuilder()
+
+                Dim Now = DateTime.Now
+                Dim IC = Globalization.CultureInfo.InvariantCulture
+
+                If Compact Then
+                    Builder.Clear() _
+                      .Append(Now.Year.ToString(IC).PadLeft(4, "0"c)) _
+                      .Append(Now.Month.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(Now.Day.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(Now.Hour.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(Now.Minute.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(Now.Second.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(Now.Millisecond.ToString(IC).PadLeft(3, "0"c))
+                Else
+                    Builder.Clear() _
+                      .Append(Now.Year.ToString(IC).PadLeft(4, "0"c)) _
+                      .Append("-"c) _
+                      .Append(Now.Month.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append("-"c) _
+                      .Append(Now.Day.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(" "c) _
+                      .Append(Now.Hour.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(":"c) _
+                      .Append(Now.Minute.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(":"c) _
+                      .Append(Now.Second.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append("."c) _
+                      .Append(Now.Millisecond.ToString(IC).PadLeft(3, "0"c))
+                End If
+
+                Dim Stamp = Builder.ToString()
+                Return Stamp
+            End Function
+
+            ''' <returns>(Hour, IsPm)</returns>
+            Public Shared Function Hour24To12(ByVal Hour As Integer) As VTuple(Of Integer, Boolean)
+                Dim IsPm = False
+
+                If Hour >= 12 Then
+                    Hour -= 12
+                    IsPm = True
+                End If
+                If Hour = 0 Then
+                    Hour = 12
+                End If
+
+                Return VTuple.Create(Hour, IsPm)
+            End Function
+
+            Public Shared Function Hour12To24(ByVal Hour As Integer, ByVal IsPm As Boolean) As Integer
+                If Hour = 12 Then
+                    Hour = 0
+                End If
+                If IsPm Then
+                    Hour += 12
+                End If
+
+                Return Hour
+            End Function
+
+        End Class
+
+        Public Class Algorithm
+
+            ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
+            ''' <param name="MaxX">Func(MaxIndex) must equal True.</param>
+            ''' <returns>Index of first true.</returns>
+            Public Shared Function BinarySearch(ByVal Func As Func(Of Integer, Boolean), Optional ByVal MaxX As Integer = -1) As Integer
+                If MaxX = -1 Then
+                    MaxX = 8
+                    Do Until Func.Invoke(MaxX)
+                        MaxX <<= 1
+                    Loop
+                Else
+                    Verify.True(Func.Invoke(MaxX))
+                    MaxX = Math.LeastPowerOfTwoOnMin(MaxX)
+                End If
+
+                Dim X = -1
+                Do While MaxX > 1
+                    MaxX >>= 1
+                    If Not Func.Invoke(X + MaxX) Then
+                        X += MaxX
+                    End If
+                Loop
+
+                Return X + 1
+            End Function
+
+            ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
+            ''' <param name="End">Func(End) must equal True.</param>
+            ''' <returns>Index of first true.</returns>
+            Public Shared Function BinarySearch(ByVal Func As Func(Of Integer, Boolean), ByVal Foreward As Boolean, ByVal Start As Integer, Optional ByVal [End] As Integer? = Nothing) As Integer
+                If Foreward Then
+                    Dim R = BinarySearch(Function(I) Func(I + Start), If([End] - Start, -1))
+                    Return R + Start
+                Else
+                    Dim R = BinarySearch(Function(I) Func(Start - I), If(Start - [End], -1))
+                    Return Start - R
+                End If
+            End Function
+
+            ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
+            ''' <param name="End">Func(End) must equal True. Func will never be called on End.</param>
+            ''' <returns>Index of first true.</returns>
+            Public Shared Function BinarySearchIn(ByVal Func As Func(Of Integer, Boolean), ByVal Start As Integer, ByVal [End] As Integer) As Integer
+                If Start <= [End] Then
+                    Dim R = BinarySearch(Function(I) If(I + Start >= [End], True, Func(I + Start)), [End] - Start)
+                    Return R + Start
+                Else
+                    Dim R = BinarySearch(Function(I) If(Start - I <= [End], True, Func(Start - I)), Start - [End])
+                    Return Start - R
+                End If
+            End Function
+
+            ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
+            ''' <param name="MaxX">Func(MaxIndex) must equal True.</param>
+            ''' <returns>Some X that Func(X) = True and |X - N| &lt; MaxError (N is from doc of Func).</returns>
+            Public Shared Function BinarySearch(ByVal Func As Func(Of Double, Boolean), ByVal MaxError As Double, Optional ByVal MaxX As Double = Double.NaN) As Double
+                Verify.True(MaxError > 0)
+                If Double.IsNaN(MaxX) Then
+                    MaxX = 8 * MaxError
+                    Do Until Func.Invoke(MaxX)
+                        MaxX *= 2
+                    Loop
+                Else
+                    Verify.True(Func.Invoke(MaxX))
+                End If
+
+                Dim X = 0.0
+                Do While MaxX > MaxError
+                    MaxX /= 2
+                    If Not Func.Invoke(X + MaxX) Then
+                        X += MaxX
+                    End If
+                Loop
+
+                Return X + MaxError
+            End Function
+
+        End Class
+
 #Region "CombineHashCodes Logic"
         Public Shared Function CombineHashCodes(ByVal H1 As Integer,
                                                 ByVal H2 As Integer) As Integer
@@ -1278,246 +1601,6 @@ Namespace Common
         End Class
 #End Region
 
-        Public Shared Function GetFriendlyRepresentation(ByVal Time As TimeSpan, ByVal MaxError As TimeSpan) As String
-            Dim Units = {VTuple.Create("ms", TimeSpan.FromMilliseconds(1)),
-                         VTuple.Create("s", TimeSpan.FromSeconds(1)),
-                         VTuple.Create("min", TimeSpan.FromMinutes(1)),
-                         VTuple.Create("h", TimeSpan.FromHours(1)),
-                         VTuple.Create("d", TimeSpan.FromDays(1))}
-            ' We want to be able to show values using a max error value, so we have to remove the unnecessary units.
-            ' So we will keep the units that are greater than or equal to MaxError.
-            ' But these are not enough, as they may not show the value with needed precision if no unit is equal to MaxError.
-            ' We will use in that case A'shari numbers. See below.
-
-            ' We want the units that are greater than or equal to Error.
-            ' And if the last unit is less that Error, we have no choice but to use it alone. So Func is true for the last unit.
-            Dim Start = BinarySearchIn(Function(X) Units(X).Item2 >= MaxError, 0, Units.Length - 1)
-            ' The Units with false should not be used.
-            ' And from the remaining ones, we will use at most Count of them.
-            Dim Count = 2
-
-            Dim Res = New StringBuilder()
-            Dim Ticks = Time.Ticks
-            ' We will start from the greatest unit, and pick at most Count of them with non-zero Value.
-            ' ToDo If ticks is negative, the greatest unit will always be non-zero, even if not necessary. (-1 days 23 hours, instead of -1 hours)
-            Dim I = 0
-            For I = Units.Length - 1 To Start + 1 Step -1
-                Dim Unit = Units(I)
-                Dim UnitTicks = Unit.Item2.Ticks
-                Dim Value = Math.FloorDiv(Ticks, UnitTicks)
-                Ticks -= Value * UnitTicks
-
-                If Value <> 0 Then
-                    If Count = 1 Then
-                        Exit For
-                    End If
-                    If Res.Length <> 0 Then
-                        Res.Append(" ")
-                    End If
-                    Res.Append(Value).Append(Unit.Item1.ToLowerInvariant())
-                    Count -= 1
-                End If
-            Next
-
-            ' A block for limiting the scope of variables.
-            Do
-                Dim Unit = Units(I)
-                Dim UnitTicks = Unit.Item2.Ticks
-
-                ' Just like the units, we have to check whether (0.01 U) is a good unit or not. (Division will move us upwards in the list.)
-                ' We will find units less than or equal to MaxError (the bad ones + equals), and choose the first of them (plus the good ones of course).
-                ' 
-                ' And we cannot optimize it by assuming we can do any number of digits when not at Start.
-                ' A unit is something about 20-100 times smaller than the previous one, so maybe we are forced to use only one digit.
-                Dim Prec = 100
-                Do While UnitTicks \ Prec <= MaxError.Ticks
-                    Prec \= 10
-                    If Prec = 0 Then
-                        ' We will end up here only if the unit equals the error.
-                        Exit Do
-                    End If
-                Loop
-                Prec = If(Prec = 0, 1, Prec * 10)
-                If Prec > 100 Then
-                    Prec = 100
-                End If
-
-                ' We assume (Unit / Prec) to be another unit, but print the result divided by Prec.
-                Dim Value = System.Math.Round(Ticks / (UnitTicks \ Prec))
-                If Value <> 0 Or Res.Length = 0 Then
-                    If Res.Length <> 0 Then
-                        Res.Append(" ")
-                    End If
-                    Res.Append(Value / Prec).Append(Unit.Item1.ToLowerInvariant())
-                End If
-
-                Exit Do
-            Loop
-
-            Return Res.ToString()
-        End Function
-
-        Public Shared Function GetTimeStamp(ByVal Compact As Boolean) As String
-            Static Builder As StringBuilder = New StringBuilder()
-
-            Dim Now = DateTime.Now
-            Dim IC = Globalization.CultureInfo.InvariantCulture
-
-            If Compact Then
-                Builder.Clear() _
-                      .Append(Now.Year.ToString(IC).PadLeft(4, "0"c)) _
-                      .Append(Now.Month.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(Now.Day.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(Now.Hour.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(Now.Minute.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(Now.Second.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(Now.Millisecond.ToString(IC).PadLeft(3, "0"c))
-            Else
-                Builder.Clear() _
-                      .Append(Now.Year.ToString(IC).PadLeft(4, "0"c)) _
-                      .Append("-"c) _
-                      .Append(Now.Month.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append("-"c) _
-                      .Append(Now.Day.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(" "c) _
-                      .Append(Now.Hour.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(":"c) _
-                      .Append(Now.Minute.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(":"c) _
-                      .Append(Now.Second.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append("."c) _
-                      .Append(Now.Millisecond.ToString(IC).PadLeft(3, "0"c))
-            End If
-
-            Dim Stamp = Builder.ToString()
-            Return Stamp
-        End Function
-
-        ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
-        ''' <param name="MaxX">Func(MaxIndex) must equal True.</param>
-        ''' <returns>Index of first true.</returns>
-        Public Shared Function BinarySearch(ByVal Func As Func(Of Integer, Boolean), Optional ByVal MaxX As Integer = -1) As Integer
-            If MaxX = -1 Then
-                MaxX = 8
-                Do Until Func.Invoke(MaxX)
-                    MaxX <<= 1
-                Loop
-            Else
-                Verify.True(Func.Invoke(MaxX))
-                MaxX = Math.LeastPowerOfTwoOnMin(MaxX)
-            End If
-
-            Dim X = -1
-            Do While MaxX > 1
-                MaxX >>= 1
-                If Not Func.Invoke(X + MaxX) Then
-                    X += MaxX
-                End If
-            Loop
-
-            Return X + 1
-        End Function
-
-        ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
-        ''' <param name="End">Func(End) must equal True.</param>
-        ''' <returns>Index of first true.</returns>
-        Public Shared Function BinarySearch(ByVal Func As Func(Of Integer, Boolean), ByVal Foreward As Boolean, ByVal Start As Integer, Optional ByVal [End] As Integer? = Nothing) As Integer
-            If Foreward Then
-                Dim R = BinarySearch(Function(I) Func(I + Start), If([End] - Start, -1))
-                Return R + Start
-            Else
-                Dim R = BinarySearch(Function(I) Func(Start - I), If(Start - [End], -1))
-                Return Start - R
-            End If
-        End Function
-
-        ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
-        ''' <param name="End">Func(End) must equal True. Func will never be called on End.</param>
-        ''' <returns>Index of first true.</returns>
-        Public Shared Function BinarySearchIn(ByVal Func As Func(Of Integer, Boolean), ByVal Start As Integer, ByVal [End] As Integer) As Integer
-            If Start <= [End] Then
-                Dim R = BinarySearch(Function(I) If(I + Start >= [End], True, Func(I + Start)), [End] - Start)
-                Return R + Start
-            Else
-                Dim R = BinarySearch(Function(I) If(Start - I <= [End], True, Func(Start - I)), Start - [End])
-                Return Start - R
-            End If
-        End Function
-
-        ''' <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
-        ''' <param name="MaxX">Func(MaxIndex) must equal True.</param>
-        ''' <returns>Some X that Func(X) = True and |X - N| &lt; MaxError (N is from doc of Func).</returns>
-        Public Shared Function BinarySearch(ByVal Func As Func(Of Double, Boolean), ByVal MaxError As Double, Optional ByVal MaxX As Double = Double.NaN) As Double
-            Verify.True(MaxError > 0)
-            If Double.IsNaN(MaxX) Then
-                MaxX = 8 * MaxError
-                Do Until Func.Invoke(MaxX)
-                    MaxX *= 2
-                Loop
-            Else
-                Verify.True(Func.Invoke(MaxX))
-            End If
-
-            Dim X = 0.0
-            Do While MaxX > MaxError
-                MaxX /= 2
-                If Not Func.Invoke(X + MaxX) Then
-                    X += MaxX
-                End If
-            Loop
-
-            Return X + MaxError
-        End Function
-
-        ''' <returns>(Hour, IsPm)</returns>
-        Public Shared Function Hour24To12(ByVal Hour As Integer) As VTuple(Of Integer, Boolean)
-            Dim IsPm = False
-
-            If Hour >= 12 Then
-                Hour -= 12
-                IsPm = True
-            End If
-            If Hour = 0 Then
-                Hour = 12
-            End If
-
-            Return VTuple.Create(Hour, IsPm)
-        End Function
-
-        Public Shared Function Hour12To24(ByVal Hour As Integer, ByVal IsPm As Boolean) As Integer
-            If Hour = 12 Then
-                Hour = 0
-            End If
-            If IsPm Then
-                Hour += 12
-            End If
-
-            Return Hour
-        End Function
-
-        Public Shared Iterator Function Concat(Of T)(ByVal Collections As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
-            For Each L In Collections
-                For Each I In L
-                    Yield I
-                Next
-            Next
-        End Function
-
-        Public Shared Function Concat(Of T)(ParamArray ByVal Collections As IEnumerable(Of T)()) As IEnumerable(Of T)
-            Return Concat(DirectCast(Collections, IEnumerable(Of IEnumerable(Of T))))
-        End Function
-
-        Public Shared Iterator Function Range(ByVal Start As Integer, ByVal [End] As Integer, Optional ByVal [Step] As Integer = 1) As IEnumerable(Of Integer)
-            Verify.TrueArg([Step] > 0, "Step")
-            For Start = Start To [End] - 1 Step [Step]
-                Yield Start
-            Next
-        End Function
-
-        Public Shared Function Range(ByVal [End] As Integer) As IEnumerable(Of Integer)
-            Return Range(0, [End])
-        End Function
-
         Public Function HslToRgb(ByVal H As Integer, ByVal S As Integer, ByVal L As Integer) As VTuple(Of Byte, Byte, Byte)
             Verify.True(0 <= H And H < 360)
             Verify.True(0 <= S And S < 100)
@@ -1541,77 +1624,6 @@ Namespace Common
         Public Shared Sub DoNothing()
 
         End Sub
-
-        Public Shared Iterator Function Repeat(Of T)(ByVal I1 As T, ByVal Count As Integer) As IEnumerable(Of T)
-            For I As Integer = 1 To Count
-                Yield I1
-            Next
-        End Function
-
-#Region "InEnumerable Logic"
-        Public Shared Iterator Function InEnumerable(Of T)() As IEnumerable(Of T)
-        End Function
-
-        Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T) As IEnumerable(Of T)
-            Yield I1
-        End Function
-
-        Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T) As IEnumerable(Of T)
-            Yield I1
-            Yield I2
-        End Function
-
-        Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T) As IEnumerable(Of T)
-            Yield I1
-            Yield I2
-            Yield I3
-        End Function
-
-        Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T) As IEnumerable(Of T)
-            Yield I1
-            Yield I2
-            Yield I3
-            Yield I4
-        End Function
-
-        Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T) As IEnumerable(Of T)
-            Yield I1
-            Yield I2
-            Yield I3
-            Yield I4
-            Yield I5
-        End Function
-
-        Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T, ByVal I6 As T) As IEnumerable(Of T)
-            Yield I1
-            Yield I2
-            Yield I3
-            Yield I4
-            Yield I5
-            Yield I6
-        End Function
-
-        Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T, ByVal I6 As T, ByVal I7 As T) As IEnumerable(Of T)
-            Yield I1
-            Yield I2
-            Yield I3
-            Yield I4
-            Yield I5
-            Yield I6
-            Yield I7
-        End Function
-
-        Public Shared Iterator Function InEnumerable(Of T)(ByVal I1 As T, ByVal I2 As T, ByVal I3 As T, ByVal I4 As T, ByVal I5 As T, ByVal I6 As T, ByVal I7 As T, ByVal I8 As T) As IEnumerable(Of T)
-            Yield I1
-            Yield I2
-            Yield I3
-            Yield I4
-            Yield I5
-            Yield I6
-            Yield I7
-            Yield I8
-        End Function
-#End Region
 
     End Class
 
