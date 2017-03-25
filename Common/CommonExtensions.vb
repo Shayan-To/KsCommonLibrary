@@ -1081,6 +1081,11 @@ Namespace Common
             Return Self
         End Function
 
+        <Extension()>
+        Public Function Implies(ByVal B1 As Boolean, ByVal B2 As Boolean) As Boolean
+            Return Not B1 Or B2
+        End Function
+
     End Module
 
 End Namespace
