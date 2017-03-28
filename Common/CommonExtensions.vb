@@ -307,7 +307,7 @@ Namespace Common
         End Function
 
         ''' <summary>
-        ''' Gets the interval in which the Value resides in inside a sorted list.
+        ''' Gets the interval in which Value resides in inside a sorted list.
         ''' </summary>
         ''' <param name="Value">The value to look for.</param>
         ''' <returns>

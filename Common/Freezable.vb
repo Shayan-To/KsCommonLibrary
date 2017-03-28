@@ -23,11 +23,11 @@
         End Sub
 
         Protected Sub VerifyWrite()
-            Verify.False(Me._IsFrozen, "Cannot change a frozen object.")
+            Verify.False(Me.IsFrozen, "Cannot change a frozen object.")
         End Sub
 
         Protected Sub VerifyFrozen()
-            Verify.True(Me._IsFrozen, "The object has to be frozen to perform this operation.")
+            Verify.True(Me.IsFrozen, "The object has to be frozen to perform this operation.")
         End Sub
 
 #Region "IsFrozen Property"
