@@ -25,7 +25,7 @@
         End Function
 
         Public Overridable Sub CopyTo(array() As T, arrayIndex As Integer) Implements ICollection(Of T).CopyTo
-            Verify.True(arrayIndex + Me.Count <= array.Length, "Array is not large enough.")
+            Verify.TrueArg(arrayIndex + Me.Count <= array.Length, , "Array is not large enough.")
             For I As Integer = 0 To Me.Count - 1
                 array(arrayIndex) = Me.Item(I)
                 arrayIndex += 1
@@ -33,7 +33,8 @@
         End Sub
 
         Protected Overridable Sub CopyTo(array As Array, index As Integer) Implements ICollection.CopyTo
-            Verify.True(index + Me.Count <= array.GetLength(0), "Array is not large enough.")
+            Verify.TrueArg(array.Rank = 1, NameOf(array), "Array's rank must be 1.")
+            Verify.TrueArg(index + Me.Count <= array.Length, , "Array is not large enough.")
             For I As Integer = 0 To Me.Count - 1
                 array.SetValue(Me.Item(I), index)
                 index += 1
