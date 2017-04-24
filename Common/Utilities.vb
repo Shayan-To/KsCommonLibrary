@@ -1258,6 +1258,12 @@ Namespace Common
                 Next
             End Function
 
+            Public Shared Iterator Function InfiniteEnumerable() As IEnumerable(Of Void)
+                Do
+                    Yield Nothing
+                Loop
+            End Function
+
 #Region "InEnumerable Logic"
             Public Shared Iterator Function InEnumerable(Of T)() As IEnumerable(Of T)
             End Function
