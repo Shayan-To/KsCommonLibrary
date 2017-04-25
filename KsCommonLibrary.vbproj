@@ -135,6 +135,13 @@
   <ItemGroup>
     <Compile Include="Collections\BitArray.vb" />
     <Compile Include="Common\EventBasedTask.vb" />
+    <Compile Include="Common\Json\JsonExtensions.vb" />
+    <Compile Include="Common\Json\JsonDictionaryObject.vb" />
+    <Compile Include="Common\Json\JsonListObject.vb" />
+    <Compile Include="Common\Json\JsonObject.vb" />
+    <Compile Include="Common\Json\JsonParser.vb" />
+    <Compile Include="Common\Json\JsonValueObject.vb" />
+    <Compile Include="Common\Json\JsonWriter.vb" />
     <Compile Include="Common\Ratio.vb" />
     <Compile Include="Common\Serialization\FormatterGetProxy.vb" />
     <Compile Include="Common\Serialization\FormatterSetProxy.vb" />
