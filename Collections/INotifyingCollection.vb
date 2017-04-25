@@ -254,11 +254,11 @@ Namespace Common
         End Sub
 
         Private Sub InitializeAdd(action As NotifyCollectionChangedAction, newItems As IList(Of T), newStartingIndex As Integer)
-            _NewItems = If((newItems Is Nothing), Nothing, New List(Of T)(newItems).AsReadOnly())
+            Me._NewItems = If((newItems Is Nothing), Nothing, New List(Of T)(newItems).AsReadOnly())
         End Sub
 
         Private Sub InitializeRemove(action As NotifyCollectionChangedAction, oldItems As IList(Of T), oldStartingIndex As Integer)
-            _OldItems = If((oldItems Is Nothing), Nothing, New List(Of T)(oldItems).AsReadOnly())
+            Me._OldItems = If((oldItems Is Nothing), Nothing, New List(Of T)(oldItems).AsReadOnly())
         End Sub
 
         Private Sub InitializeMoveOrReplace(action As NotifyCollectionChangedAction, newItems As IList(Of T), oldItems As IList(Of T), startingIndex As Integer, oldStartingIndex As Integer)
@@ -269,7 +269,7 @@ Namespace Common
 #Region "ItemsGotIn Property"
         Public ReadOnly Property ItemsGotIn As IList(Of T)
             Get
-                If Me.Action = NotifyCollectionChangedAction.Add Or Action = NotifyCollectionChangedAction.Replace Then
+                If Me.Action = NotifyCollectionChangedAction.Add Or Me.Action = NotifyCollectionChangedAction.Replace Then
                     Return Me.NewItems
                 End If
                 Return Utilities.Typed(Of T).EmptyArray
@@ -280,7 +280,7 @@ Namespace Common
 #Region "ItemsWentOut Property"
         Public ReadOnly Property ItemsWentOut As IList(Of T)
             Get
-                If Me.Action = NotifyCollectionChangedAction.Remove Or Action = NotifyCollectionChangedAction.Replace Then
+                If Me.Action = NotifyCollectionChangedAction.Remove Or Me.Action = NotifyCollectionChangedAction.Replace Then
                     Return Me.OldItems
                 End If
                 Return Utilities.Typed(Of T).EmptyArray
