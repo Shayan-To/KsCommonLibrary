@@ -306,6 +306,11 @@ Namespace Common
             Return Self.BinarySearch(Value, Comparer(Of T).Default)
         End Function
 
+        <Extension()>
+        Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T, ByVal Comp As IComparer(Of T)) As VTuple(Of Integer, Integer)
+            Return Self.BinarySearch(Value, AddressOf Comp.Compare)
+        End Function
+
         ''' <summary>
         ''' Gets the interval in which Value resides in inside a sorted list.
         ''' </summary>
@@ -316,13 +321,13 @@ Namespace Common
         ''' If no occurrance of Value has been found, start index will be at the first element larger than Value.
         ''' </returns>
         <Extension()>
-        Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T, ByVal Comp As IComparer(Of T)) As VTuple(Of Integer, Integer)
+        Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T, ByVal Comp As Comparison(Of T)) As VTuple(Of Integer, Integer)
             Dim Count = Utilities.Math.LeastPowerOfTwoOnMin(Self.Count + 1) \ 2
             Dim Offset1 = -1
 
             Do While Count > 0
                 If Offset1 + Count < Self.Count Then
-                    Dim C = Comp.Compare(Self.Item(Offset1 + Count), Value)
+                    Dim C = Comp.Invoke(Self.Item(Offset1 + Count), Value)
                     If C < 0 Then
                         Offset1 += Count
                     ElseIf C = 0 Then
@@ -340,12 +345,12 @@ Namespace Common
                 Do While Count > 1
                     Count \= 2
                     If Offset1 + Count < Self.Count Then
-                        If Comp.Compare(Self.Item(Offset1 + Count), Value) < 0 Then
+                        If Comp.Invoke(Self.Item(Offset1 + Count), Value) < 0 Then
                             Offset1 += Count
                         End If
                     End If
                     If Offset2 + Count < Self.Count Then
-                        If Comp.Compare(Self.Item(Offset2 + Count), Value) <= 0 Then
+                        If Comp.Invoke(Self.Item(Offset2 + Count), Value) <= 0 Then
                             Offset2 += Count
                         End If
                     End If
