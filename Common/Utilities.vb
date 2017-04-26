@@ -1241,15 +1241,15 @@ Namespace Common
                 Return Concat(DirectCast(Collections, IEnumerable(Of IEnumerable(Of T))))
             End Function
 
-            Public Shared Iterator Function Range(ByVal Start As Integer, ByVal [End] As Integer, Optional ByVal [Step] As Integer = 1) As IEnumerable(Of Integer)
-                Verify.TrueArg([Step] > 0, "Step")
-                For Start = Start To [End] - 1 Step [Step]
+            Public Shared Iterator Function Range(ByVal Start As Integer, ByVal Length As Integer, Optional ByVal [Step] As Integer = 1) As IEnumerable(Of Integer)
+                Verify.TrueArg([Step] <> 0, "Step")
+                For Start = Start To Start + Length - If(Length < 0, -1, 1) Step [Step]
                     Yield Start
                 Next
             End Function
 
-            Public Shared Function Range(ByVal [End] As Integer) As IEnumerable(Of Integer)
-                Return Range(0, [End])
+            Public Shared Function Range(ByVal Length As Integer) As IEnumerable(Of Integer)
+                Return Range(0, Length)
             End Function
 
             Public Shared Iterator Function Repeat(Of T)(ByVal I1 As T, ByVal Count As Integer) As IEnumerable(Of T)
