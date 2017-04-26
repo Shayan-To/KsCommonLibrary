@@ -650,6 +650,103 @@ Namespace Common
                        TypeOf O Is Single Or TypeOf O Is Double
             End Function
 
+            Public Shared Function ConvertToBase(ByVal N As Long, ByVal Digits As Char(), Optional ByVal NegativeSign As Char = "-"c) As String
+                Dim IsNegative = N < 0
+                If IsNegative Then
+                    N = -N
+                End If
+
+                Dim Res = New List(Of Char)()
+                Dim Base = Digits.Length
+
+                Do Until N = 0
+                    Res.Add(Digits(CInt(N Mod Base)))
+                    N \= Base
+                Loop
+
+                If IsNegative Then
+                    Res.Add(NegativeSign)
+                End If
+
+                Res.Reverse()
+
+                Return New String(Res.ToArray())
+            End Function
+
+            Public Shared Function ConvertFromBase(ByVal N As String, ByVal Digits As Char(), Optional ByVal NegativeSign As Char = "-"c) As Long
+                Dim I = 0
+                Dim IsNegative = N.Chars(I) = NegativeSign
+                If IsNegative Then
+                    I += 1
+                End If
+
+                Dim Res = 0L
+                Dim Base = Digits.Length
+
+                For I = I To N.Length - 1
+                    Dim T = Array.IndexOf(Digits, N.Chars(I))
+                    Verify.False(T = -1, $"Invalid digit at index {I}.")
+                    Res = Res * Base + T
+                Next
+
+                If IsNegative Then
+                    Res = -Res
+                End If
+
+                Return Res
+            End Function
+
+            Public Shared Function ConvertToBaseU(ByVal N As ULong, ByVal Digits As Char()) As String
+                Dim Res = New List(Of Char)()
+                Dim Base = CUInt(Digits.Length)
+
+                Do Until N = 0
+                    Res.Add(Digits(CInt(N Mod Base)))
+                    N \= Base
+                Loop
+
+                Res.Reverse()
+
+                Return New String(Res.ToArray())
+            End Function
+
+            Public Shared Function ConvertFromBaseU(ByVal N As String, ByVal Digits As Char()) As ULong
+                Dim I = 0
+
+                Dim Res = 0UL
+                Dim Base = CUInt(Digits.Length)
+
+                For I = I To N.Length - 1
+                    Dim T = Array.IndexOf(Digits, N.Chars(I))
+                    Verify.False(T = -1, $"Invalid digit at index {I}.")
+                    Res = Res * Base + CUInt(T)
+                Next
+
+                Return Res
+            End Function
+
+            Private Shared ReadOnly Digits As Char()() =
+                (Function()
+                     Dim D = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                     Return Collections.Range(2, D.Length - 2).Select(Function(I) D.Substring(0, I).ToCharArray()).ToArray()
+                 End Function).Invoke()
+
+            Public Shared Function ConvertToBase(ByVal N As Long, ByVal Base As Integer) As String
+                Return ConvertToBase(N, Digits(Base))
+            End Function
+
+            Public Shared Function ConvertFromBase(ByVal N As String, ByVal Base As Integer) As Long
+                Return ConvertFromBase(N, Digits(Base))
+            End Function
+
+            Public Shared Function ConvertToBaseU(ByVal N As ULong, ByVal Base As Integer) As String
+                Return ConvertToBaseU(N, Digits(Base))
+            End Function
+
+            Public Shared Function ConvertFromBaseU(ByVal N As String, ByVal Base As Integer) As ULong
+                Return ConvertFromBaseU(N, Digits(Base))
+            End Function
+
         End Class
 
         Public Class Debug
