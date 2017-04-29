@@ -130,15 +130,12 @@
         Public MustOverride Sub Clear() Implements IDictionary.Clear, IDictionary(Of TKey, TValue).Clear
 
         Public Overridable Sub CopyTo(array() As KeyValuePair(Of TKey, TValue), arrayIndex As Integer) Implements ICollection(Of KeyValuePair(Of TKey, TValue)).CopyTo
-            Verify.True(arrayIndex + Me.Count <= array.Length, "Array is not large enough.")
-            For Each I In Me
-                array(arrayIndex) = I
-                arrayIndex += 1
-            Next
+            Me.CopyTo(DirectCast(array, Array), arrayIndex)
         End Sub
 
         Protected Overridable Sub CopyTo(array As Array, index As Integer) Implements ICollection.CopyTo
-            Verify.True(index + Me.Count <= array.GetLength(0), "Array is not large enough.")
+            Verify.TrueArg(array.Rank = 1, NameOf(array), "Array's rank must be 1.")
+            Verify.TrueArg(index + Me.Count <= array.Length, NameOf(array), "Array does not have enough length to copy the collection.")
             For Each I In Me
                 array.SetValue(I, index)
                 index += 1
