@@ -200,7 +200,7 @@
     <Compile Include="Collections\MergedCollection.vb" />
     <Compile Include="Collections\MultiDictionary.vb" />
     <Compile Include="Collections\MultiDictionaryList.vb" />
-    <Compile Include="Collections\NullAcceptingDic.vb" />
+    <Compile Include="Collections\NullAcceptingDictionary.vb" />
     <Compile Include="Collections\MergedList.vb" />
     <Compile Include="Collections\OneToOneDictionary.vb" />
     <Compile Include="Collections\OneToOneOrderedFreezableDictionary.vb" />
