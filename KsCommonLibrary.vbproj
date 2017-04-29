@@ -207,7 +207,7 @@
     <Compile Include="Collections\OneToOneOrderedDictionary.vb" />
     <Compile Include="Collections\OrderedDictionary.vb" />
     <Compile Include="Collections\PushPopList.vb" />
-    <Compile Include="Collections\NullExpandingDic.vb" />
+    <Compile Include="Collections\NullExpandingDictionary.vb" />
     <Compile Include="Collections\NullExpandingList.vb" />
     <Compile Include="Collections\ReadOnlyCollectionWrapper.vb" />
     <Compile Include="Collections\SelectAsNotifyingListCollection.vb" />
