@@ -13,6 +13,8 @@
 
         Public Sub New(ByVal Dic As IDictionary(Of TKey, TValue))
             Me.Dic = Dic
+            Me.KeysCollection = New MergedCollection(Of TKey)(New TKey(0) {Nothing}, Me.Dic.Keys)
+            Me.ValuesCollection = New MergedCollection(Of TValue)(Me.NullValue, Me.Dic.Values)
         End Sub
 
         Public Sub New()
@@ -27,7 +29,7 @@
 
         Public Overrides ReadOnly Property Count As Integer
             Get
-                If Me.NullValue.HasValue Then
+                If Me.HasNullValue Then
                     Return Me.Dic.Count + 1
                 End If
                 Return Me.Dic.Count
@@ -37,10 +39,10 @@
         Default Public Overrides Property Item(key As TKey) As TValue
             Get
                 If key Is Nothing Then
-                    If Not Me.NullValue.HasValue Then
+                    If Not Me.HasNullValue Then
                         Throw New KeyNotFoundException()
                     End If
-                    Return Me.NullValue.Value
+                    Return Me.NullValue(0)
                 End If
                 Return Me.Dic.Item(key)
             End Get
@@ -49,7 +51,8 @@
                     If Me.IsReadOnly Then
                         Throw New NotSupportedException("Collection is read only.")
                     End If
-                    Me.NullValue = value
+                    Me.NullValue(0) = value
+                    Me.HasNullValue = True
                     Exit Property
                 End If
                 Me.Dic.Item(key) = value
@@ -58,29 +61,25 @@
 
         Public Overrides ReadOnly Property Keys As ICollection(Of TKey)
             Get
-                ' ToDo Cache the MergedCollection. Why is the dic cached, but not the collection??
-                If Not Me.NullValue.HasValue Then
+                If Not Me.HasNullValue Then
                     Return Me.Dic.Keys
                 End If
-                Me.KeyList(0) = Nothing
-                Return New MergedCollection(Of TKey)(Me.KeyList, Me.Dic.Keys)
+                Return Me.KeysCollection
             End Get
         End Property
 
         Public Overrides ReadOnly Property Values As ICollection(Of TValue)
             Get
-                ' ToDo Cache the MergedCollection. Why is the dic cached, but not the collection??
-                If Not Me.NullValue.HasValue Then
+                If Not Me.HasNullValue Then
                     Return Me.Dic.Values
                 End If
-                Me.ValueList(0) = Me.NullValue.Value
-                Return New MergedCollection(Of TValue)(Me.ValueList, Me.Dic.Values)
+                Return Me.ValuesCollection
             End Get
         End Property
 
         Protected Overrides Sub CopyTo(ByVal Array As Array, ByVal ArrayIndex As Integer)
-            If Me.NullValue.HasValue Then
-                Array.SetValue(New KeyValuePair(Of TKey, TValue)(Nothing, Me.NullValue.Value), ArrayIndex)
+            If Me.HasNullValue Then
+                Array.SetValue(New KeyValuePair(Of TKey, TValue)(Nothing, Me.NullValue(0)), ArrayIndex)
                 ArrayIndex += 1
             End If
 
@@ -101,7 +100,8 @@
                 If Me.IsReadOnly Then
                     Throw New NotSupportedException()
                 End If
-                Me.NullValue = value
+                Me.NullValue(0) = value
+                Me.HasNullValue = True
                 Exit Sub
             End If
             Me.Dic.Add(key, value)
@@ -111,13 +111,14 @@
             If Me.IsReadOnly Then
                 Throw New NotSupportedException()
             End If
-            Me.NullValue = Nothing
+            Me.NullValue(0) = Nothing
+            Me.HasNullValue = False
             Me.Dic.Clear()
         End Sub
 
         Public Overrides Function ContainsKey(key As TKey) As Boolean
             If key Is Nothing Then
-                Return Me.NullValue.HasValue
+                Return Me.HasNullValue
             End If
             Return Me.Dic.ContainsKey(key)
         End Function
@@ -127,10 +128,11 @@
                 If Me.IsReadOnly Then
                     Throw New NotSupportedException()
                 End If
-                If Not Me.NullValue.HasValue Then
+                If Not Me.HasNullValue Then
                     Return False
                 End If
-                Me.NullValue = Nothing
+                Me.NullValue(0) = Nothing
+                Me.HasNullValue = False
                 Return True
             End If
             Return Me.Dic.Remove(key)
@@ -138,8 +140,8 @@
 
         Public Overrides Function TryGetValue(key As TKey, ByRef value As TValue) As Boolean
             If key Is Nothing Then
-                If Me.NullValue.HasValue Then
-                    value = Me.NullValue.Value
+                If Me.HasNullValue Then
+                    value = Me.NullValue(0)
                     Return True
                 End If
                 Return False
@@ -149,14 +151,14 @@
         End Function
 
         Private Iterator Function GetEnumeratorWithNull() As IEnumerator(Of KeyValuePair(Of TKey, TValue))
-            Yield New KeyValuePair(Of TKey, TValue)(Nothing, Me.NullValue.Value)
+            Yield New KeyValuePair(Of TKey, TValue)(Nothing, Me.NullValue(0))
             For Each KV In Me.Dic
                 Yield KV
             Next
         End Function
 
         Public Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of TKey, TValue))
-            If Me.NullValue.HasValue Then
+            If Me.HasNullValue Then
                 Return Me.GetEnumeratorWithNull()
             End If
             Return Me.Dic.GetEnumerator()
@@ -167,9 +169,11 @@
         End Function
 
         Private ReadOnly Dic As IDictionary(Of TKey, TValue)
-        Private NullValue As CNullable(Of TValue)
-        Private ReadOnly KeyList As TKey() = New TKey(0) {}
-        Private ReadOnly ValueList As TValue() = New TValue(0) {}
+        Private HasNullValue As Boolean
+        Private ReadOnly NullValue As TValue() = New TValue(0) {}
+
+        Private ReadOnly KeysCollection As MergedCollection(Of TKey)
+        Private ReadOnly ValuesCollection As MergedCollection(Of TValue)
 
     End Class
 
