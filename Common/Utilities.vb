@@ -1826,6 +1826,36 @@ Namespace Common
                                                 ByVal H5 As Integer) As Integer
             Return CombineHashCodes(CombineHashCodes(H1, H2), CombineHashCodes(H3, H4, H5))
         End Function
+
+        Public Shared Function CombineHashCodes(ByVal H1 As Integer,
+                                                ByVal H2 As Integer,
+                                                ByVal H3 As Integer,
+                                                ByVal H4 As Integer,
+                                                ByVal H5 As Integer,
+                                                ByVal H6 As Integer) As Integer
+            Return CombineHashCodes(CombineHashCodes(H1, H2, H3), CombineHashCodes(H4, H5, H6))
+        End Function
+
+        Public Shared Function CombineHashCodes(ByVal H1 As Integer,
+                                                ByVal H2 As Integer,
+                                                ByVal H3 As Integer,
+                                                ByVal H4 As Integer,
+                                                ByVal H5 As Integer,
+                                                ByVal H6 As Integer,
+                                                ByVal H7 As Integer) As Integer
+            Return CombineHashCodes(CombineHashCodes(H1, H2, H3), CombineHashCodes(H4, H5, H6, H7))
+        End Function
+
+        Public Shared Function CombineHashCodes(ByVal H1 As Integer,
+                                                ByVal H2 As Integer,
+                                                ByVal H3 As Integer,
+                                                ByVal H4 As Integer,
+                                                ByVal H5 As Integer,
+                                                ByVal H6 As Integer,
+                                                ByVal H7 As Integer,
+                                                ByVal H8 As Integer) As Integer
+            Return CombineHashCodes(CombineHashCodes(H1, H2, H3, H4), CombineHashCodes(H5, H6, H7, H8))
+        End Function
 #End Region
 
 #Region "Empties Group"
