@@ -135,6 +135,8 @@
   <ItemGroup>
     <Compile Include="Collections\BitArray.vb" />
     <Compile Include="Common\EventBasedTask.vb" />
+    <Compile Include="Common\JoinDirection.vb" />
+    <Compile Include="Common\JoinElement.vb" />
     <Compile Include="Common\Json\JsonExtensions.vb" />
     <Compile Include="Common\Json\JsonDictionaryObject.vb" />
     <Compile Include="Common\Json\JsonListObject.vb" />

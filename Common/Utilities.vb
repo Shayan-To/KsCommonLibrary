@@ -1361,7 +1361,63 @@ Namespace Common
                 Loop
             End Function
 
-#Region "InEnumerable Logic"
+            Public Shared Function Join(Of T, TKey)(ByVal Items1 As IEnumerable(Of T),
+                                                    ByVal Items2 As IEnumerable(Of T),
+                                                    ByVal KeySelector As Func(Of T, TKey),
+                                                    ByVal JoinType As JoinDirection) As JoinElement(Of T, T, TKey)()
+                Return Join(Items1, Items2, KeySelector, KeySelector, JoinType, EqualityComparer(Of TKey).Default)
+            End Function
+
+            Public Shared Function Join(Of T, TKey)(ByVal Items1 As IEnumerable(Of T),
+                                                    ByVal Items2 As IEnumerable(Of T),
+                                                    ByVal KeySelector As Func(Of T, TKey),
+                                                    ByVal JoinType As JoinDirection,
+                                                    ByVal Comparer As IEqualityComparer(Of TKey)) As JoinElement(Of T, T, TKey)()
+                Return Join(Items1, Items2, KeySelector, KeySelector, JoinType, Comparer)
+            End Function
+
+            Public Shared Function Join(Of T1, T2, TKey)(ByVal Items1 As IEnumerable(Of T1),
+                                                         ByVal Items2 As IEnumerable(Of T2),
+                                                         ByVal KeySelector1 As Func(Of T1, TKey),
+                                                         ByVal KeySelector2 As Func(Of T2, TKey),
+                                                         ByVal JoinType As JoinDirection) As JoinElement(Of T1, T2, TKey)()
+                Return Join(Items1, Items2, KeySelector1, KeySelector2, JoinType, EqualityComparer(Of TKey).Default)
+            End Function
+
+            Public Shared Function Join(Of T1, T2, TKey)(ByVal Items1 As IEnumerable(Of T1),
+                                                         ByVal Items2 As IEnumerable(Of T2),
+                                                         ByVal KeySelector1 As Func(Of T1, TKey),
+                                                         ByVal KeySelector2 As Func(Of T2, TKey),
+                                                         ByVal JoinType As JoinDirection,
+                                                         ByVal Comparer As IEqualityComparer(Of TKey)) As JoinElement(Of T1, T2, TKey)()
+                Dim Dic = New Dictionary(Of TKey, T2)(Comparer)
+                For Each I In Items2
+                    Dic.Add(KeySelector2.Invoke(I), I)
+                Next
+
+                Dim Res = New List(Of JoinElement(Of T1, T2, TKey))()
+
+                For Each I1 In Items1
+                    Dim Key = KeySelector1.Invoke(I1)
+                    Dim I2 As T2 = Nothing
+                    If Dic.TryGetValue(Key, I2) Then
+                        Res.Add(New JoinElement(Of T1, T2, TKey)(Key, JoinDirection.Both, I1, I2))
+                        Dic.Remove(Key)
+                    ElseIf (JoinType And JoinDirection.Left) = JoinDirection.Left Then
+                        Res.Add(New JoinElement(Of T1, T2, TKey)(Key, JoinDirection.Left, I1, Nothing))
+                    End If
+                Next
+
+                If (JoinType And JoinDirection.Right) = JoinDirection.Right Then
+                    For Each KI2 In Dic
+                        Res.Add(New JoinElement(Of T1, T2, TKey)(KI2.Key, JoinDirection.Left, Nothing, KI2.Value))
+                    Next
+                End If
+
+                Return Res.ToArray()
+            End Function
+
+#Region "InEnumerable Group"
             Public Shared Iterator Function InEnumerable(Of T)() As IEnumerable(Of T)
             End Function
 
@@ -1782,6 +1838,7 @@ Namespace Common
                 Throw New NotSupportedException()
             End Sub
 
+            Public Shared ReadOnly IdentityFunc As Func(Of T, T) = Function(X) X
             Public Shared ReadOnly EmptyArray As T() = New T(-1) {}
 
         End Class
