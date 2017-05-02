@@ -1,8 +1,12 @@
-﻿Public Enum JoinDirection
+﻿Namespace Common
 
-    None = 0
-    Left = 1
-    Right = 2
-    Both = 3
+    Public Enum JoinDirection
 
-End Enum
+        None = 0
+        Left = 1
+        Right = 2
+        Both = 3
+
+    End Enum
+
+End Namespace
