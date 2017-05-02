@@ -1,6 +1,6 @@
 ﻿Namespace Common
 
-    Public Class DebugWriter
+    Public Class DebugTextWriter
         Inherits IO.TextWriter
 
         Private Sub New()
@@ -214,7 +214,7 @@
         End Function
 
         Public Overrides Function ToString() As String
-            Return NameOf(DebugWriter)
+            Return NameOf(DebugTextWriter)
         End Function
 
         Public Overrides ReadOnly Property Encoding As Text.Encoding
@@ -239,9 +239,9 @@
         End Property
 
 #Region "Instance Shared Read-Only Property"
-        Private Shared ReadOnly _Instance As DebugWriter = New DebugWriter()
+        Private Shared ReadOnly _Instance As DebugTextWriter = New DebugTextWriter()
 
-        Public Shared ReadOnly Property Instance As DebugWriter
+        Public Shared ReadOnly Property Instance As DebugTextWriter
             Get
                 Return _Instance
             End Get

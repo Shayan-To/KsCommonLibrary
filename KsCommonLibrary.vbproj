@@ -170,7 +170,7 @@
     <Compile Include="Common\Serialization\Serializer.vb" />
     <Compile Include="Common\Serialization\SerializerCollection.vb" />
     <Compile Include="Common\Serialization\XmlFormatter.vb" />
-    <Compile Include="Common\DebugWriter.vb" />
+    <Compile Include="Common\DebugTextWriter.vb" />
     <Compile Include="Common\TextWriterWrapperTemplate.vb" />
     <Compile Include="Common\TextWriterTimeStampAdder.vb" />
     <Compile Include="Common\Void.vb" />
