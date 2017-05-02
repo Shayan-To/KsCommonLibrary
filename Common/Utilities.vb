@@ -1487,11 +1487,11 @@ Namespace Common
         Public Class Time
 
             Public Shared Function GetFriendlyRepresentation(ByVal Time As TimeSpan, ByVal MaxError As TimeSpan) As String
-                Dim Units = {VTuple.Create("ms", TimeSpan.FromMilliseconds(1)),
-                         VTuple.Create("s", TimeSpan.FromSeconds(1)),
-                         VTuple.Create("min", TimeSpan.FromMinutes(1)),
-                         VTuple.Create("h", TimeSpan.FromHours(1)),
-                         VTuple.Create("d", TimeSpan.FromDays(1))}
+                Dim Units = {("ms", TimeSpan.FromMilliseconds(1)),
+                             ("s", TimeSpan.FromSeconds(1)),
+                             ("min", TimeSpan.FromMinutes(1)),
+                             ("h", TimeSpan.FromHours(1)),
+                             ("d", TimeSpan.FromDays(1))}
                 ' We want to be able to show values using a max error value, so we have to remove the unnecessary units.
                 ' So we will keep the units that are greater than or equal to MaxError.
                 ' But these are not enough, as they may not show the value with needed precision if no unit is equal to MaxError.
@@ -1601,8 +1601,7 @@ Namespace Common
                 Return Stamp
             End Function
 
-            ''' <returns>(Hour, IsPm)</returns>
-            Public Shared Function Hour24To12(ByVal Hour As Integer) As VTuple(Of Integer, Boolean)
+            Public Shared Function Hour24To12(ByVal Hour As Integer) As (Hour As Integer, IsPm As Boolean)
                 Dim IsPm = False
 
                 If Hour >= 12 Then
@@ -1613,7 +1612,7 @@ Namespace Common
                     Hour = 12
                 End If
 
-                Return VTuple.Create(Hour, IsPm)
+                Return (Hour, IsPm)
             End Function
 
             Public Shared Function Hour12To24(ByVal Hour As Integer, ByVal IsPm As Boolean) As Integer
@@ -1710,14 +1709,14 @@ Namespace Common
             ''' <summary>
             ''' Returns a list of (I, J) where List1[I] = List2[J] and the list is [one of] the longest possible list[s].
             ''' </summary>
-            Public Shared Function GetLongestCommonSubsequence(Of T)(ByVal List1 As IReadOnlyList(Of T), ByVal List2 As IReadOnlyList(Of T)) As IReadOnlyList(Of VTuple(Of Integer, Integer))
+            Public Shared Function GetLongestCommonSubsequence(Of T)(ByVal List1 As IReadOnlyList(Of T), ByVal List2 As IReadOnlyList(Of T)) As IReadOnlyList(Of (Index1 As Integer, Index2 As Integer))
                 Return GetLongestCommonSubsequence(List1, List2, EqualityComparer(Of T).Default)
             End Function
 
             ''' <summary>
             ''' Returns a list of (I, J) where List1[I] = List2[J] and the list is [one of] the longest possible list[s].
             ''' </summary>
-            Public Shared Function GetLongestCommonSubsequence(Of T)(ByVal List1 As IReadOnlyList(Of T), ByVal List2 As IReadOnlyList(Of T), ByVal Comparer As IEqualityComparer(Of T)) As IReadOnlyList(Of VTuple(Of Integer, Integer))
+            Public Shared Function GetLongestCommonSubsequence(Of T)(ByVal List1 As IReadOnlyList(Of T), ByVal List2 As IReadOnlyList(Of T), ByVal Comparer As IEqualityComparer(Of T)) As IReadOnlyList(Of (Index1 As Integer, Index2 As Integer))
                 ' We use dynamic programming.
 
                 ' The length of longest common subsequence of List1[0..m] and List2[0..n] is max of:
@@ -1731,7 +1730,7 @@ Namespace Common
                 Dim N = List2.Count
 
                 ' The tuple is (Length, Mode). See below.
-                Dim Dyn = New VTuple(Of Integer, Integer)(M - 1, N - 1) {}
+                Dim Dyn = New(Integer, Integer)(M - 1, N - 1) {}
 
                 ' Mode:
                 ' 1 -> Did equal?
@@ -1768,19 +1767,19 @@ Namespace Common
                             End If
                         End If
 
-                        Dyn(I, J) = VTuple.Create(Length, Mode)
+                        Dyn(I, J) = (Length, Mode)
                     Next
                 Next
 
-                Dim Res = New List(Of VTuple(Of Integer, Integer))()
+                Dim Res = New List(Of (Integer, Integer))()
                 Do ' Block for variable scopes
                     Dim I = 0
                     Dim J = 0
-                    Dim Cur As VTuple(Of Integer, Integer)
+                    Dim Cur As (Integer, Integer)
                     Do
                         Cur = Dyn(I, J)
                         If (Cur.Item2 And 1) = 1 Then
-                            Res.Add(VTuple.Create(I, J))
+                            Res.Add((I, J))
                         End If
                         If (Cur.Item2 And 2) = 2 Then
                             I += 1
@@ -1844,23 +1843,11 @@ Namespace Common
         End Class
 #End Region
 
-        Public Function HslToRgb(ByVal H As Integer, ByVal S As Integer, ByVal L As Integer) As VTuple(Of Byte, Byte, Byte)
-            Verify.True(0 <= H And H < 360)
-            Verify.True(0 <= S And S < 100)
-            Verify.True(0 <= L And L < 100)
-
-            Dim HPart = H \ 60
-
+        Public Function HslToRgb(ByVal H As Double, ByVal S As Double, ByVal L As Double) As (R As Double, G As Double, B As Double)
             Throw New NotImplementedException()
         End Function
 
-        Public Function HsbToRgb(ByVal H As Integer, ByVal S As Integer, ByVal B As Integer) As VTuple(Of Byte, Byte, Byte)
-            Verify.True(0 <= H And H < 360)
-            Verify.True(0 <= S And S < 100)
-            Verify.True(0 <= B And B < 100)
-
-            Dim HPart = H \ 60
-
+        Public Function HsbToRgb(ByVal H As Double, ByVal S As Double, ByVal B As Double) As (R As Double, G As Double, B As Double)
             Throw New NotImplementedException()
         End Function
 

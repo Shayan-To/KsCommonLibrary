@@ -62,7 +62,7 @@
             Try
                 Dim Id = Me.ObjectsCount
                 If IsRefType Then
-                    Dim Tmp As VTuple(Of Integer, Boolean) = Nothing
+                    Dim Tmp As (Integer, Boolean) = Nothing
                     Dim WasInCache = Me.SetCache.TryGetValue(Obj, Tmp)
 
                     Dim IsDone = Tmp.Item2
@@ -78,7 +78,7 @@
                         Exit Sub
                     Else
                         If Not WasInCache Then
-                            Me.SetCache.Add(Obj, VTuple.Create(Id, False))
+                            Me.SetCache.Add(Obj, (Id, False))
                             Me.ObjectsCount += 1
                         End If
                     End If
@@ -99,7 +99,7 @@
 
                 If IsRefType Then
                     Assert.True(Me.SetCache.ContainsKey(Obj))
-                    Me.SetCache.Item(Obj) = VTuple.Create(Id, True)
+                    Me.SetCache.Item(Obj) = (Id, True)
                 End If
             Finally
                 Me.OnSetExitContext(Name)
@@ -230,7 +230,7 @@
         Private ReadOnly SetProxy As FormatterSetProxy = New FormatterSetProxy(Me)
         Private ReadOnly GetProxy As FormatterGetProxy = New FormatterGetProxy(Me)
 
-        Private ReadOnly SetCache As Dictionary(Of Object, VTuple(Of Integer, Boolean)) = New Dictionary(Of Object, VTuple(Of Integer, Boolean))(ReferenceEqualityComparer(Of Object).Instance)
+        Private ReadOnly SetCache As Dictionary(Of Object, (Integer, Boolean)) = New Dictionary(Of Object, (Integer, Boolean))(ReferenceEqualityComparer(Of Object).Instance)
         Private ReadOnly GetCache As Dictionary(Of Integer, Object) = New Dictionary(Of Integer, Object)()
         Private ObjectsCount As Integer
         Private IsRunning As Boolean

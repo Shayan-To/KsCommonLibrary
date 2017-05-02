@@ -59,16 +59,16 @@ Namespace Common
         End Sub
 
         Public Sub DrawFunction(ByVal Color As Color, ByVal Ys As IReadOnlyList(Of Double), ByVal XStart As Double, XStep As Double)
-            Me.DrawFunction(Color, Ys.SelectAsList(Function(Y, I) VTuple.Create(XStart + I * XStep, Y)))
+            Me.DrawFunction(Color, Ys.SelectAsList(Function(Y, I) (XStart + I * XStep, Y)))
         End Sub
 
-        Public Sub DrawFunction(ByVal Color As Color, ByVal Points As IReadOnlyList(Of VTuple(Of Double, Double)))
+        Public Sub DrawFunction(ByVal Color As Color, ByVal Points As IReadOnlyList(Of (X As Double, Y As Double)))
             Dim FIX = Me.Intervals(Orientation.X)
             Dim FPoints = New Point(Points.Count - 1) {}
 
             For I As Integer = 0 To FPoints.Length - 1
                 Dim T = Points.Item(I)
-                Dim P = ConvertPoint(T.Item1, T.Item2, Orientation.X)
+                Dim P = ConvertPoint(T.X, T.Y, Orientation.X)
                 FPoints(I) = P
             Next
 

@@ -302,12 +302,12 @@ Namespace Common
         End Function
 
         <Extension()>
-        Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T) As VTuple(Of Integer, Integer)
+        Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T) As (StartIndex As Integer, Length As Integer)
             Return Self.BinarySearch(Value, Comparer(Of T).Default)
         End Function
 
         <Extension()>
-        Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T, ByVal Comp As IComparer(Of T)) As VTuple(Of Integer, Integer)
+        Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T, ByVal Comp As IComparer(Of T)) As (StartIndex As Integer, Length As Integer)
             Return Self.BinarySearch(Value, AddressOf Comp.Compare)
         End Function
 
@@ -316,12 +316,11 @@ Namespace Common
         ''' </summary>
         ''' <param name="Value">The value to look for.</param>
         ''' <returns>
-        ''' The tuple (start index, length).
         ''' Start index being the index of fist occurrance of Value, and length being the count of its occurrances.
         ''' If no occurrance of Value has been found, start index will be at the first element larger than Value.
         ''' </returns>
         <Extension()>
-        Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T, ByVal Comp As Comparison(Of T)) As VTuple(Of Integer, Integer)
+        Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T, ByVal Comp As Comparison(Of T)) As (StartIndex As Integer, Length As Integer)
             Dim Count = Utilities.Math.LeastPowerOfTwoOnMin(Self.Count + 1) \ 2
             Dim Offset1 = -1
 
@@ -357,7 +356,7 @@ Namespace Common
                 Loop
             End If
 
-            Return VTuple.Create(Offset1 + 1, Offset2 - Offset1)
+            Return (Offset1 + 1, Offset2 - Offset1)
         End Function
 
         <Extension()>
@@ -644,29 +643,29 @@ Namespace Common
 
 #Region "RectangleFitting"
         <Extension>
-        Public Function GetLargestFitOf(ByVal Self As Rect, ByVal Size As Size) As VTuple(Of Rect, Boolean?)
+        Public Function GetLargestFitOf(ByVal Self As Rect, ByVal Size As Size) As (Rect, Boolean?)
             Dim Bl As Boolean?
 
             If Self.IsEmpty Then
-                Return VTuple.Create(Rect.Empty, Bl)
+                Return (Rect.Empty, Bl)
             End If
             If Size.Width = 0 And Size.Height = 0 Then
-                Return VTuple.Create(New Rect(Self.Location + Self.Size.ToVector() / 2, New Size()), Bl)
+                Return (New Rect(Self.Location + Self.Size.ToVector() / 2, New Size()), Bl)
             End If
             If Size.Width = 0 Then
                 If Self.Height = 0 Then
-                    Return VTuple.Create(New Rect(Self.Location + Self.Size.ToVector() / 2, New Size()), Bl)
+                    Return (New Rect(Self.Location + Self.Size.ToVector() / 2, New Size()), Bl)
                 End If
                 Bl = False
             End If
             If Size.Height = 0 Then
                 If Self.Width = 0 Then
-                    Return VTuple.Create(New Rect(Self.Location + Self.Size.ToVector() / 2, New Size()), Bl)
+                    Return (New Rect(Self.Location + Self.Size.ToVector() / 2, New Size()), Bl)
                 End If
                 Bl = True
             End If
             If Self.Width = 0 Or Self.Height = 0 Then
-                Return VTuple.Create(New Rect(Self.Location + Self.Size.ToVector() / 2, New Size()), Bl)
+                Return (New Rect(Self.Location + Self.Size.ToVector() / 2, New Size()), Bl)
             End If
 
             If Not Bl.HasValue Then
@@ -679,38 +678,38 @@ Namespace Common
             If Bl.Value Then
                 Dim Sz = New Size(Self.Width, Self.Width / Size.Width * Size.Height)
                 Loc += New Vector(0, (Self.Height - Sz.Height) / 2)
-                Return VTuple.Create(New Rect(Loc, Sz), Bl)
+                Return (New Rect(Loc, Sz), Bl)
             Else
                 Dim Sz = New Size(Self.Height / Size.Height * Size.Width, Self.Height)
                 Loc += New Vector((Self.Width - Sz.Width) / 2, 0)
-                Return VTuple.Create(New Rect(Loc, Sz), Bl)
+                Return (New Rect(Loc, Sz), Bl)
             End If
         End Function
 
         <Extension()>
-        Public Function GetSmallestBoundOf(ByVal Self As Rect, ByVal Size As Size) As VTuple(Of Rect, Boolean?)
+        Public Function GetSmallestBoundOf(ByVal Self As Rect, ByVal Size As Size) As (Rect, Boolean?)
             Dim Bl As Boolean?
 
             If Self.IsEmpty Then
-                Return VTuple.Create(Rect.Empty, Bl)
+                Return (Rect.Empty, Bl)
             End If
             If Self.Size = New Size() Then
-                Return VTuple.Create(New Rect(Self.Location, New Size()), Bl)
+                Return (New Rect(Self.Location, New Size()), Bl)
             End If
             If Self.Width = 0 Then
                 If Size.Height = 0 Then
-                    Return VTuple.Create(Rect.Empty, Bl)
+                    Return (Rect.Empty, Bl)
                 End If
                 Bl = False
             End If
             If Self.Height = 0 Then
                 If Size.Width = 0 Then
-                    Return VTuple.Create(Rect.Empty, Bl)
+                    Return (Rect.Empty, Bl)
                 End If
                 Bl = True
             End If
             If Size.Width = 0 Or Size.Height = 0 Then
-                Return VTuple.Create(Rect.Empty, Bl)
+                Return (Rect.Empty, Bl)
             End If
 
             If Not Bl.HasValue Then
@@ -723,11 +722,11 @@ Namespace Common
             If Bl.Value Then
                 Dim Sz = New Size(Self.Width, Self.Width / Size.Width * Size.Height)
                 Loc += New Vector(0, (Self.Height - Sz.Height) / 2)
-                Return VTuple.Create(New Rect(Loc, Sz), Bl)
+                Return (New Rect(Loc, Sz), Bl)
             Else
                 Dim Sz = New Size(Self.Height / Size.Height * Size.Width, Self.Height)
                 Loc += New Vector((Self.Width - Sz.Width) / 2, 0)
-                Return VTuple.Create(New Rect(Loc, Sz), Bl)
+                Return (New Rect(Loc, Sz), Bl)
             End If
         End Function
 
@@ -951,7 +950,7 @@ Namespace Common
         End Function
 
         <Extension()>
-        Public Iterator Function WithCustomAttribute(Of TAttribute As Attribute)(ByVal Types As IEnumerable(Of Type)) As IEnumerable(Of VTuple(Of Type, TAttribute))
+        Public Iterator Function WithCustomAttribute(Of TAttribute As Attribute)(ByVal Types As IEnumerable(Of Type)) As IEnumerable(Of (Type As Type, Attribute As TAttribute))
             Dim Type = GetType(TAttribute)
 
             Dim Usage = Type.GetCustomAttributeInternal(Of AttributeUsageAttribute)()
@@ -967,13 +966,13 @@ Namespace Common
             For Each T In Types
                 Dim Attribute = T.GetCustomAttributeInternal(Of TAttribute)()
                 If Attribute IsNot Nothing Then
-                    Yield VTuple.Create(T, Attribute)
+                    Yield (T, Attribute)
                 End If
             Next
         End Function
 
         <Extension()>
-        Public Iterator Function WithCustomAttribute(Of TAttribute As Attribute)(ByVal Methods As IEnumerable(Of Reflection.MethodInfo)) As IEnumerable(Of VTuple(Of Reflection.MethodInfo, TAttribute))
+        Public Iterator Function WithCustomAttribute(Of TAttribute As Attribute)(ByVal Methods As IEnumerable(Of Reflection.MethodInfo)) As IEnumerable(Of (Method As Reflection.MethodInfo, Attribute As TAttribute))
             Dim Type = GetType(TAttribute)
 
             Dim Usage = Type.GetCustomAttributeInternal(Of AttributeUsageAttribute)()
@@ -989,7 +988,7 @@ Namespace Common
             For Each M In Methods
                 Dim Attribute = M.GetCustomAttributeInternal(Of TAttribute)()
                 If Attribute IsNot Nothing Then
-                    Yield VTuple.Create(M, Attribute)
+                    Yield (M, Attribute)
                 End If
             Next
         End Function
