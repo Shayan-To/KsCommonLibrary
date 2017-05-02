@@ -1,13 +1,13 @@
 ﻿Namespace Common
 
     Public Class ReferenceEqualityComparer(Of T As Class)
-        Implements IEqualityComparer(Of T)
+        Inherits EqualityComparer(Of T)
 
-        Public Overloads Function Equals(x As T, y As T) As Boolean Implements IEqualityComparer(Of T).Equals
+        Public Overrides Function Equals(x As T, y As T) As Boolean
             Return x Is y
         End Function
 
-        Public Overloads Function GetHashCode(obj As T) As Integer Implements IEqualityComparer(Of T).GetHashCode
+        Public Overrides Function GetHashCode(obj As T) As Integer
             Return Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj)
         End Function
 
