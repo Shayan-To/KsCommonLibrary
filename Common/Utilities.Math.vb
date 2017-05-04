@@ -181,7 +181,10 @@ Namespace Common
             End Function
 
             Public Shared Function FloorDiv(ByVal A As Integer, ByVal B As Integer) As Integer
-                ' ToDo What if B is negative?
+                If B < 0 Then
+                    A = -A
+                    B = -B
+                End If
                 If A >= 0 Or A Mod B = 0 Then
                     Return A \ B
                 End If
@@ -189,11 +192,36 @@ Namespace Common
             End Function
 
             Public Shared Function FloorDiv(ByVal A As Long, ByVal B As Long) As Long
-                ' ToDo What if B is negative?
+                If B < 0 Then
+                    A = -A
+                    B = -B
+                End If
                 If A >= 0 Or A Mod B = 0 Then
                     Return A \ B
                 End If
                 Return A \ B - 1
+            End Function
+
+            Public Shared Function CeilDiv(ByVal A As Integer, ByVal B As Integer) As Integer
+                If B < 0 Then
+                    A = -A
+                    B = -B
+                End If
+                If A < 0 Or A Mod B = 0 Then
+                    Return A \ B
+                End If
+                Return A \ B + 1
+            End Function
+
+            Public Shared Function CeilDiv(ByVal A As Long, ByVal B As Long) As Long
+                If B < 0 Then
+                    A = -A
+                    B = -B
+                End If
+                If A < 0 Or A Mod B = 0 Then
+                    Return A \ B
+                End If
+                Return A \ B + 1
             End Function
 
             Public Shared Function GreatestCommonDivisor(ByVal A As Integer, ByVal B As Integer) As Integer
