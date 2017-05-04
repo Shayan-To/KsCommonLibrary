@@ -356,12 +356,6 @@ Namespace Common
                 Return Res
             End Function
 
-            Private Shared ReadOnly Digits As Char()() =
-                (Function()
-                     Dim D = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                     Return Collections.Range(2, D.Length - 2).Select(Function(I) D.Substring(0, I).ToCharArray()).ToArray()
-                 End Function).Invoke()
-
             Public Shared Function ConvertToBase(ByVal N As Long, ByVal Base As Integer) As String
                 Return ConvertToBase(N, Digits(Base))
             End Function
@@ -377,6 +371,111 @@ Namespace Common
             Public Shared Function ConvertFromBaseU(ByVal N As String, ByVal Base As Integer) As ULong
                 Return ConvertFromBaseU(N, Digits(Base))
             End Function
+
+            Public Shared Function ConvertToBaseB(ByVal N As Byte(), ByVal Digits As Char()) As String
+                Dim Base = Digits.Length
+                Dim LogRem = LogarithmIntegral(Base, 2)
+                Dim DigitBits = LogRem.Log
+                Const ByteBits = 8
+
+                Verify.TrueArg(LogRem.Reminder = 0, NameOf(Digits), "Base must be a power of two.")
+
+                Dim BlockSize = DigitBits \ GreatestCommonDivisor(DigitBits, ByteBits)
+                Dim Offset = (BlockSize - N.Length Mod BlockSize) * ByteBits Mod DigitBits
+
+                Dim Res = New Char(CeilDiv(N.Length, BlockSize) * (BlockSize * ByteBits \ DigitBits)) {}
+                Dim Index = 0
+
+                Dim J = 0
+                Dim T = 0
+                For I = 0 To N.Length - 1
+                    Dim Cur As Integer = N(I)
+
+                    J = 0
+                    Dim Size = DigitBits - Offset
+                    Do While J + Size <= ByteBits
+                        J += Size
+                        Dim C = Cur >> (ByteBits - J)
+                        C = C And ((1 << Size) - 1)
+                        T = (T << Size) Or C
+
+                        Res(Index) = Digits(T)
+
+                        T = 0
+                        Offset = 0
+                    Loop
+
+                    Size = ByteBits - J
+                    T = (T << Size) Or (Cur And ((1 << Size) - 1))
+                    Offset = (Offset + Size) Mod DigitBits
+                Next
+
+                Assert.True(J = ByteBits)
+
+                Return New String(Res)
+            End Function
+
+            Public Shared Function ConvertFromBaseB(ByVal N As String, ByVal Digits As Char()) As Byte()
+                Dim Base = Digits.Length
+                Dim LogRem = LogarithmIntegral(Base, 2)
+                Dim DigitBits = LogRem.Log
+                Const ByteBits = 8
+
+                Verify.TrueArg(LogRem.Reminder = 0, NameOf(Digits), "Base must be a power of two.")
+
+                Dim BlockSize = ByteBits \ GreatestCommonDivisor(DigitBits, ByteBits)
+                Dim Offset = (BlockSize - N.Length Mod BlockSize) * DigitBits Mod ByteBits
+
+                Dim Res = New Byte(CeilDiv(N.Length, BlockSize) * (BlockSize * DigitBits \ ByteBits)) {}
+                Dim Index = 0
+
+                Dim J = 0
+                Dim T = 0
+                For I = 0 To N.Length - 1
+                    Dim Cur = Array.IndexOf(Digits, N.Chars(I))
+                    Verify.False(Cur = -1, $"Invalid digit at index {I}.")
+
+                    J = 0
+                    Dim Size = ByteBits - Offset
+                    Do While J + Size <= DigitBits
+                        J += Size
+                        Dim C = Cur >> (DigitBits - J)
+                        C = C And ((1 << Size) - 1)
+                        T = (T << Size) Or C
+
+                        Res(Index) = CByte(T)
+
+                        T = 0
+                        Offset = 0
+                    Loop
+
+                    Size = DigitBits - J
+                    T = (T << Size) Or (Cur And ((1 << Size) - 1))
+                    Offset = (Offset + Size) Mod ByteBits
+                Next
+
+                Assert.True(J = DigitBits)
+
+                Return Res
+            End Function
+
+            Public Shared Function ConvertToBaseB(ByVal N As Byte(), ByVal Base As Integer) As String
+                Return ConvertToBaseB(N, Digits(Base))
+            End Function
+
+            Public Shared Function ConvertFromBaseB(ByVal N As String, ByVal Base As Integer) As Byte()
+                Return ConvertFromBaseB(N, Digits(Base))
+            End Function
+
+            Private Shared ReadOnly Digits As Char()() =
+                (Function()
+                     Dim D = Collections.Concat(Collections.Range(10).Select(Function(I) Strings.ChrW(Strings.AscW("0"c) + I)),
+                                                Collections.Range(26).Select(Function(I) Strings.ChrW(Strings.AscW("a"c) + I))) _
+                                        .ToArray()
+                     Return Collections.Range(2, D.Length - 2).Select(Function(I) D.Subarray(0, I)).ToArray()
+                 End Function).Invoke()
+            ' The last one is the padding character.
+            Private Shared ReadOnly Base64Digits As Char() = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".ToCharArray()
 
         End Class
 
