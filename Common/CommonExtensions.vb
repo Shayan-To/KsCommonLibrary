@@ -302,6 +302,13 @@ Namespace Common
         End Function
 
         <Extension()>
+        Public Function Subarray(Of T)(ByVal Self As T(), ByVal Start As Integer, ByVal Count As Integer) As T()
+            Dim Res = New T(Count - 1) {}
+            Array.Copy(Self, Start, Res, 0, Count)
+            Return Res
+        End Function
+
+        <Extension()>
         Public Function BinarySearch(Of T)(ByVal Self As IReadOnlyList(Of T), ByVal Value As T) As (StartIndex As Integer, Length As Integer)
             Return Self.BinarySearch(Value, Comparer(Of T).Default)
         End Function
