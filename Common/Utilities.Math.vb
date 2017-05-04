@@ -262,6 +262,19 @@ Namespace Common
                 Return (A \ GreatestCommonDivisor(A, B)) * B
             End Function
 
+            Public Shared Function LogarithmIntegral(ByVal N As Long, ByVal Base As Long) As (Log As Integer, Reminder As Long)
+                Dim Reminder = 0L
+                Dim Power = 1L
+                Dim Log = 0
+                Do Until N = 0
+                    Reminder += (N Mod Base) * Power
+                    N = N \ Base
+                    Power *= Base
+                    Log += 1
+                Loop
+                Return (Log, Reminder)
+            End Function
+
             Public Shared Function IsOfIntegralType(O As Object) As Boolean
                 Return TypeOf O Is Byte Or TypeOf O Is UShort Or TypeOf O Is UInteger Or TypeOf O Is ULong Or
                        TypeOf O Is SByte Or TypeOf O Is Short Or TypeOf O Is Integer Or TypeOf O Is Long Or
