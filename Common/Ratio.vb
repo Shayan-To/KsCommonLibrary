@@ -24,6 +24,13 @@
 
         Public Shared Operator +(ByVal Left As Ratio, ByVal Right As Ratio) As Ratio
             Dim GCD = Utilities.Math.GreatestCommonDivisor(Left.Denumenator, Right.Denumenator)
+            If GCD = 0 Then
+                If Left = Zero Then
+                    Return Right
+                Else
+                    Return Left
+                End If
+            End If
             Return New Ratio(Left.Numerator * (Right.Denumenator \ GCD) + Right.Numerator * (Left.Denumenator \ GCD),
                              (Left.Denumenator \ GCD) * Right.Denumenator)
         End Operator
@@ -39,6 +46,9 @@
         Public Shared Operator *(ByVal Left As Ratio, ByVal Right As Ratio) As Ratio
             Dim GCD1 = Utilities.Math.GreatestCommonDivisor(Left.Numerator, Right.Denumenator)
             Dim GCD2 = Utilities.Math.GreatestCommonDivisor(Left.Denumenator, Right.Numerator)
+            If GCD1 = 0 Or GCD2 = 0 Then
+                Return Zero
+            End If
             Return New Ratio((Left.Numerator \ GCD1) * (Right.Numerator \ GCD2),
                              (Left.Denumenator \ GCD2) * (Right.Denumenator \ GCD1),
                              Nothing)
@@ -46,10 +56,17 @@
 
         Public Shared Operator /(ByVal Left As Ratio, ByVal Right As Ratio) As Ratio
             Verify.False(Right.Numerator = 0, "Division by zero.")
-            Return Left * New Ratio(Right.Denumenator, Right.Numerator, Nothing)
+            If Right.Numerator < 0 Then
+                Return Left * New Ratio(-Right.Denumenator, -Right.Numerator, Nothing)
+            Else
+                Return Left * New Ratio(Right.Denumenator, Right.Numerator, Nothing)
+            End If
         End Operator
 
         Public Shared Operator <(ByVal Left As Ratio, ByVal Right As Ratio) As Boolean
+            If Left.Denumenator = Zero Or Right.Denumenator = Zero Then
+                Return Left.Numerator < Right.Numerator
+            End If
             Return Left.Numerator * Right.Denumenator < Right.Numerator * Left.Denumenator
         End Operator
 
@@ -66,6 +83,9 @@
         End Operator
 
         Public Shared Operator =(ByVal Left As Ratio, ByVal Right As Ratio) As Boolean
+            If Left.Denumenator = Zero Or Right.Denumenator = Zero Then
+                Return Left.Numerator = Right.Numerator
+            End If
             Return Left.Numerator = Right.Numerator And Right.Denumenator = Left.Denumenator
         End Operator
 
@@ -165,6 +185,10 @@
         Public Shared Widening Operator CType(ByVal Value As Integer) As Ratio
             Return New Ratio(Value)
         End Operator
+
+        Public Function Floor() As Integer
+            Return Me.Numerator \ Me.Denumenator
+        End Function
 
         Public Overrides Function ToString() As String
             Return Me.Numerator & If(Me.Denumenator <> 1, "/" & Me.Denumenator, "")
