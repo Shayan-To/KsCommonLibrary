@@ -180,6 +180,15 @@
     <Compile Include="Common\DebugTextWriter.vb" />
     <Compile Include="Common\TextWriterWrapperTemplate.vb" />
     <Compile Include="Common\TextWriterTimeStampAdder.vb" />
+    <Compile Include="Common\Utilities.Math.vb" />
+    <Compile Include="Common\Utilities.Debug.vb" />
+    <Compile Include="Common\Utilities.Reflection.vb" />
+    <Compile Include="Common\Utilities.IO.vb" />
+    <Compile Include="Common\Utilities.Serialization.vb" />
+    <Compile Include="Common\Utilities.Collections.vb" />
+    <Compile Include="Common\Utilities.Time.vb" />
+    <Compile Include="Common\Utilities.Algorithm.vb" />
+    <Compile Include="Common\Utilities.Text.vb" />
     <Compile Include="Common\Void.vb" />
     <Compile Include="Common\WordReader.vb" />
     <Compile Include="TestingVisualizer.vb" />
