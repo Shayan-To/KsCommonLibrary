@@ -188,14 +188,14 @@ Namespace Common
          Extension()>
         Public Sub Reverse(Of T)(ByVal Self As IList(Of T), ByVal Index As Integer, Optional ByVal Count As Integer = -1)
             If Count = -1 Then
-                Count = Self.Count + Index
-            Else
-                Count += 2 * Index
+                Count = Self.Count
             End If
-            For I As Integer = Index To Index + (Count - 2 * Index) \ 2 - 1
+
+            Dim Complement = Count + 2 * Index - 1
+            For I = Index To Index + Count - 1
                 Dim C = Self.Item(I)
-                Self.Item(I) = Self.Item(Count - 1 - I)
-                Self.Item(Count - 1 - I) = Self.Item(I)
+                Self.Item(I) = Self.Item(Complement - I)
+                Self.Item(Complement - I) = Self.Item(I)
             Next
         End Sub
 
