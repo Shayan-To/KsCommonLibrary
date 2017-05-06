@@ -178,6 +178,7 @@
     <Compile Include="Common\Serialization\SerializerCollection.vb" />
     <Compile Include="Common\Serialization\XmlFormatter.vb" />
     <Compile Include="Common\DebugTextWriter.vb" />
+    <Compile Include="Common\TaskDeduplicator.vb" />
     <Compile Include="Common\TextWriterWrapperTemplate.vb" />
     <Compile Include="Common\TextWriterTimeStampAdder.vb" />
     <Compile Include="Common\Utilities.Math.vb" />

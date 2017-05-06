@@ -2,8 +2,6 @@
 
 Namespace Common
 
-    ' ToDo Change this to use StopWatch.
-
     Public Class TaskDelayer
         Implements IDisposable
 
