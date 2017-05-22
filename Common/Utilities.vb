@@ -86,11 +86,28 @@ Namespace Common
         End Class
 #End Region
 
-        Public Function HslToRgb(ByVal H As Double, ByVal S As Double, ByVal L As Double) As (R As Double, G As Double, B As Double)
+        Public Shared Function GetHash(ByVal Hasher As Security.Cryptography.HashAlgorithm, ByVal Data As Byte(), ByVal Index As Integer, ByVal Length As Integer, Optional ByVal Result As Byte() = Nothing) As Byte()
+            Using Stream = If(Result Is Nothing, New SIO.MemoryStream(), New SIO.MemoryStream(Result))
+                Using CryptoStream = New Security.Cryptography.CryptoStream(Stream, Hasher, Security.Cryptography.CryptoStreamMode.Write)
+                    CryptoStream.Write(Data, Index, Length)
+                End Using
+                Return Stream.ToArray()
+            End Using
+        End Function
+
+        Public Shared Function GetHash(ByVal Hasher As Security.Cryptography.HashAlgorithm, ByVal Data As Byte(), Optional ByVal Result As Byte() = Nothing) As Byte()
+            Return GetHash(Hasher, Data, 0, Data.Length, Result)
+        End Function
+
+        Public Shared Function GetHash(ByVal Hasher As Security.Cryptography.HashAlgorithm, ByVal Data As String, Optional ByVal Result As Byte() = Nothing) As Byte()
+            Return GetHash(Hasher, Encoding.UTF8.GetBytes(Data), Result)
+        End Function
+
+        Public Shared Function HslToRgb(ByVal H As Double, ByVal S As Double, ByVal L As Double) As (R As Double, G As Double, B As Double)
             Throw New NotImplementedException()
         End Function
 
-        Public Function HsbToRgb(ByVal H As Double, ByVal S As Double, ByVal B As Double) As (R As Double, G As Double, B As Double)
+        Public Shared Function HsbToRgb(ByVal H As Double, ByVal S As Double, ByVal B As Double) As (R As Double, G As Double, B As Double)
             Throw New NotImplementedException()
         End Function
 
