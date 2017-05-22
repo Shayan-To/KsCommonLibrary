@@ -1077,6 +1077,26 @@ Namespace Common
 #End Region
 
         <Extension()>
+        Public Function ComputeHash(ByVal Self As Security.Cryptography.HashAlgorithm, ByVal Data As Byte(), ByVal Index As Integer, ByVal Length As Integer, Optional ByVal Result As Byte() = Nothing) As Byte()
+            Using Stream = If(Result Is Nothing, New IO.MemoryStream(), New IO.MemoryStream(Result))
+                Using CryptoStream = New Security.Cryptography.CryptoStream(Stream, Self, Security.Cryptography.CryptoStreamMode.Write)
+                    CryptoStream.Write(Data, Index, Length)
+                End Using
+                Return Stream.ToArray()
+            End Using
+        End Function
+
+        <Extension()>
+        Public Function ComputeHash(ByVal Self As Security.Cryptography.HashAlgorithm, ByVal Data As Byte(), Optional ByVal Result As Byte() = Nothing) As Byte()
+            Return Self.ComputeHash(Data, 0, Data.Length, Result)
+        End Function
+
+        <Extension()>
+        Public Function ComputeHash(ByVal Self As Security.Cryptography.HashAlgorithm, ByVal Data As String, Optional ByVal Result As Byte() = Nothing) As Byte()
+            Return Self.ComputeHash(Text.Encoding.UTF8.GetBytes(Data), Result)
+        End Function
+
+        <Extension()>
         Public Function NothingIfEmpty(Of T As ICollection)(ByVal Self As T) As T
             If Self.Count = 0 Then
                 Return Nothing
