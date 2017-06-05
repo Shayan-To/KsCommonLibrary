@@ -2,6 +2,7 @@
 
 Namespace Common.Controls
 
+    <ComponentModel.DesignTimeVisible(False)>
     Public Class NavigationPage
         Inherits Page
         Implements INavigationView
