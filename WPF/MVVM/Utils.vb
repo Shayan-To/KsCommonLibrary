@@ -569,6 +569,48 @@ Namespace Common.MVVM
         End Sub
 #End Region
 
+#Region "Password Property"
+        Public Shared ReadOnly PasswordProperty As DependencyProperty = DependencyProperty.RegisterAttached("Password", GetType(String), GetType(Utils), New PropertyMetadata("", AddressOf Password_Changed, AddressOf Password_Coerce))
+        Private Shared ReadOnly PasswordProperty_Controls As HashSet(Of PasswordBox) = New HashSet(Of PasswordBox)()
+
+        Private Shared Function Password_Coerce(ByVal D As DependencyObject, ByVal BaseValue As Object) As Object
+            Dim Self = TryCast(D, PasswordBox)
+            If Self Is Nothing Then
+                Return PasswordProperty.DefaultMetadata.DefaultValue
+            End If
+
+            Dim Value = DirectCast(BaseValue, String)
+
+            Return BaseValue
+        End Function
+
+        Private Shared Sub Password_Changed(ByVal D As DependencyObject, ByVal E As DependencyPropertyChangedEventArgs)
+            Dim Self = DirectCast(D, PasswordBox)
+
+            Dim OldValue = DirectCast(E.OldValue, String)
+            Dim NewValue = DirectCast(E.NewValue, String)
+
+            If PasswordProperty_Controls.Add(Self) Then
+                AddHandler Self.PasswordChanged, Sub(S2, E2)
+                                                     Dim PB = DirectCast(S2, PasswordBox)
+                                                     SetPassword(PB, PB.Password)
+                                                 End Sub
+            End If
+
+            Self.Password = NewValue
+        End Sub
+
+        Public Shared Function GetPassword(ByVal Element As DependencyObject) As String
+            Verify.NonNullArg(Element, NameOf(Element))
+            Return DirectCast(Element.GetValue(PasswordProperty), String)
+        End Function
+
+        Public Shared Sub SetPassword(ByVal Element As DependencyObject, ByVal Value As String)
+            Verify.NonNullArg(Element, NameOf(Element))
+            Element.SetValue(PasswordProperty, Value)
+        End Sub
+#End Region
+
         Public Const [True] As Boolean = True
         Public Const [False] As Boolean = False
 
