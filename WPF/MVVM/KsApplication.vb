@@ -14,6 +14,7 @@ Namespace Common.MVVM
             Me._Window = New WindowViewModel(Me)
             Me._EmptyNavigationFrame = New NavigationFrame({Me._Window})
             Me._Window.NavigationFrame = Me.EmptyNavigationFrame
+            Me.CurrentNavigationFrame = Me.EmptyNavigationFrame
 
             Me.State = KsApplicationState.NotStarted
         End Sub
@@ -61,8 +62,6 @@ Namespace Common.MVVM
                 Me._Language = Me.Languages.FirstOrDefault().Value
                 Me.Settings.Item(NameOf(Me.Language)) = Me._Language?.Id
             End If
-
-            Me.NavigateTo(Me.EmptyNavigationFrame, False, False)
         End Sub
 
         Protected Overridable Function OnTestConstruct() As KsApplicationTestData
@@ -189,8 +188,6 @@ Namespace Common.MVVM
                 Me.NavigationFrames.Remove(Tip.NavigationFrame)
             End If
 
-            Tip.NavigationFrame = Frame
-
             If ForceToStack Or (AddToStack And Not Frame.IsOpenEnded) Then
                 Me.NavigationFrames.Push(Frame)
             End If
@@ -226,7 +223,7 @@ Namespace Common.MVVM
             Dim I = 0
             For I = I To Math.Min(NewFrame.Count, OldFrame.Count) - 1
                 If NewFrame.Item(I) IsNot OldFrame.Item(I) Then
-                    Exit Sub
+                    Exit For
                 End If
             Next
 
@@ -236,7 +233,7 @@ Namespace Common.MVVM
                 Dim VM = OldFrame.Item(J)
 
                 VM.NavigationFrame = Nothing
-                If I <> OldFrame.Count - 1 Then
+                If VM.IsNavigation() Then
                     VM.SetView(Nothing)
                 End If
 
@@ -246,6 +243,10 @@ Namespace Common.MVVM
             For J = I To NewFrame.Count
                 Dim Parent = TryCast(NewFrame.Item(J - 1), NavigationViewModel)
                 Dim Current = If(J <> NewFrame.Count, NewFrame.Item(J), Nothing)
+
+                If Current IsNot Nothing Then
+                    Current.NavigationFrame = NewFrame.SubFrame(J + 1)
+                End If
 
                 Parent?.SetView(Current)
                 Current?.OnNavigatedTo(NavigationEventArgs)
@@ -293,7 +294,7 @@ Namespace Common.MVVM
         End Property
 #End Region
 
-#Region "DefaultNavigationViewModel Property"
+#Region "DefaultNavigationView Property"
         Public Overridable ReadOnly Property DefaultNavigationView As NavigationViewModel
             Get
                 Return Me._Window

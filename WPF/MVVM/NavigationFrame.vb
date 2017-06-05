@@ -20,6 +20,10 @@
             Return New NavigationFrame(Me.List.Concat(ViewModel))
         End Function
 
+        Public Function SubFrame(ByVal Length As Integer) As NavigationFrame
+            Return New NavigationFrame(Me.List.Take(Length))
+        End Function
+
         Public Function IndexOf(ByVal ViewModel As ViewModel) As Integer
             For I As Integer = 0 To Me.Count - 1
                 If Me.Item(I) Is ViewModel Then

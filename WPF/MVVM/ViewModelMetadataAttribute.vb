@@ -1,4 +1,6 @@
-﻿Namespace Common.MVVM
+﻿Imports Ks.Common.Controls
+
+Namespace Common.MVVM
 
     <AttributeUsage(AttributeTargets.Class, Inherited:=False)>
     Public Class ViewModelMetadataAttribute
