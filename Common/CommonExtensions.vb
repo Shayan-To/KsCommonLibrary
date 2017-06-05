@@ -612,6 +612,14 @@ Namespace Common
             Next
             Return R
         End Function
+
+        <Extension()>
+        Public Function PeekOrDefault(Of T)(ByVal Self As IPushPop(Of T)) As T
+            If Self.CanPop() Then
+                Return Self.Peek()
+            End If
+            Return Nothing
+        End Function
 #End Region
 
 #Region "Geometry Group"
