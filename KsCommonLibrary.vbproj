@@ -304,6 +304,7 @@
     <Compile Include="WPF\MVVM\MvvmExtensions.vb" />
     <Compile Include="WPF\MVVM\Navigation.vb" />
     <Compile Include="WPF\MVVM\NavigationCommand.vb" />
+    <Compile Include="WPF\MVVM\NavigationData.vb" />
     <Compile Include="WPF\MVVM\NavigationEventArgs.vb" />
     <Compile Include="WPF\MVVM\NavigationFrame.vb" />
     <Compile Include="WPF\MVVM\NavigationType.vb" />

@@ -134,7 +134,7 @@ Namespace Common.MVVM
             Return False
         End Function
 
-        Protected Overridable Function OnNavigateToEmpty() As (Frame As NavigationFrame, AddToStack As Boolean, ForceToStack As Boolean)
+        Protected Overridable Function OnNavigateToEmpty() As NavigationData
             Return Nothing
         End Function
 
@@ -175,13 +175,13 @@ Namespace Common.MVVM
             Return R
         End Function
 
-        Friend Sub NavigateTo(ByVal Parent As NavigationViewModel, ByVal ViewModel As ViewModel, ByVal AddToStack As Boolean, ByVal ForceToStack As Boolean)
+        Friend Sub NavigateTo(ByVal Parent As NavigationViewModel, ByVal ViewModel As ViewModel, Optional ByVal AddToStack As Boolean = True, Optional ByVal ForceToStack As Boolean = False)
             Verify.False(Parent.NavigationFrame Is Nothing, "Cannot navigate. The navigation parent is not in the view.")
 
             Me.NavigateTo(Parent.NavigationFrame.AddViewModel(ViewModel), AddToStack, ForceToStack)
         End Sub
 
-        Public Sub NavigateTo(ByVal Frame As NavigationFrame, ByVal AddToStack As Boolean, ByVal ForceToStack As Boolean)
+        Public Sub NavigateTo(ByVal Frame As NavigationFrame, Optional ByVal AddToStack As Boolean = True, Optional ByVal ForceToStack As Boolean = False)
             Dim Tip = Frame.Tip
 
             If Tip.NavigationFrame IsNot Nothing Then
