@@ -5,6 +5,7 @@
         Sub Push(ByVal Item As T)
         Function Pop() As T
         Function Peek() As T
+        Function CanPop() As Boolean
 
     End Interface
 
@@ -25,6 +26,10 @@
 
         Public Function Peek() As T Implements IPushPop(Of T).Peek
             Return Me.Item(Me.Count - 1)
+        End Function
+
+        Public Function CanPop() As Boolean Implements IPushPop(Of T).CanPop
+            Return Me.Count <> 0
         End Function
 
     End Class
