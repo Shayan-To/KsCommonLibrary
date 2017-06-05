@@ -18,12 +18,6 @@
             Me.KsApplicationBase.NavigateTo(Me, ViewModel, AddToStack, ForceToStack)
         End Sub
 
-        Friend ReadOnly Property NavigationView As INavigationView
-            Get
-                Return DirectCast(Me.View, INavigationView)
-            End Get
-        End Property
-
     End Class
 
 End Namespace

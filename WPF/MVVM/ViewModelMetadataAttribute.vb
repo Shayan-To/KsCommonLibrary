@@ -6,6 +6,7 @@
 
         Public Sub New(ByVal ViewType As Type)
             Me._ViewType = ViewType
+            Verify.True(GetType(Window).IsAssignableFrom(ViewType) Or GetType(Page).IsAssignableFrom(ViewType), "ViewType must be a Window or a Page.")
         End Sub
 
 #Region "ViewType Property"

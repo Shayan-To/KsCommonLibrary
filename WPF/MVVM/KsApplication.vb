@@ -9,15 +9,17 @@ Namespace Common.MVVM
 
         Public Sub New(ByVal Name As String, ByVal Application As Application)
             Me._Name = Name
-            Me._Window = New WindowViewModel(Me)
             Me._Application = Application
+
+            Me._Window = New WindowViewModel(Me)
+            Me._EmptyNavigationFrame = New NavigationFrame({Me._Window})
+            Me._Window.NavigationFrame = Me.EmptyNavigationFrame
+
             Me.State = KsApplicationState.NotStarted
         End Sub
 
         Public Sub New()
-            If Not IsInDesignMode Then
-                Throw New InvalidOperationException("Should not call the test constructor from runtime.")
-            End If
+            Verify.True(KsApplication.IsInDesignMode, "Test constructor should not be called from runtime.")
 
             Dim TestData = Me.OnTestConstruct()
             Me._Name = TestData.Name
@@ -59,6 +61,8 @@ Namespace Common.MVVM
                 Me._Language = Me.Languages.FirstOrDefault().Value
                 Me.Settings.Item(NameOf(Me.Language)) = Me._Language?.Id
             End If
+
+            Me.NavigateTo(Me.EmptyNavigationFrame, False, False)
         End Sub
 
         Protected Overridable Function OnTestConstruct() As KsApplicationTestData
@@ -69,7 +73,7 @@ Namespace Common.MVVM
 
         End Sub
 
-        Protected Overridable Sub OnNavigated(ByVal Parent As NavigationViewModel, ByVal ViewModel As ViewModel)
+        Protected Overridable Sub OnNavigated(ByVal OldFrame As NavigationFrame, ByVal NewFrame As NavigationFrame)
 
         End Sub
 
@@ -114,9 +118,7 @@ Namespace Common.MVVM
         End Sub
 
         Public Sub ShutDown(Optional ByVal ExitCode As Integer = 0)
-            If Me.State <> KsApplicationState.Started Then
-                Throw New InvalidOperationException("The KsApplication has to be started to be able to be shut down.")
-            End If
+            Verify.True(Me.State = KsApplicationState.Started, "The KsApplication has to be started to be able to be shut down.")
 
             If _Current Is Me Then
                 _Current = Nothing
@@ -129,13 +131,13 @@ Namespace Common.MVVM
         End Sub
 
 #Region "Navigation Logic"
-        Protected Overridable Function CanNavigateToEmpty(ByVal ViewModel As ViewModel) As Boolean
+        Protected Overridable Function CanNavigateBackToEmpty() As Boolean
             Return False
         End Function
 
-        Protected Overridable Sub OnNavigateToEmpty()
-
-        End Sub
+        Protected Overridable Function OnNavigateToEmpty() As (Frame As NavigationFrame, AddToStack As Boolean, ForceToStack As Boolean)
+            Return Nothing
+        End Function
 
         Public Function GetViewModel(Of TViewModel As ViewModel)() As TViewModel
             Return DirectCast(Me.GetViewModel(GetType(TViewModel)), TViewModel)
@@ -143,9 +145,7 @@ Namespace Common.MVVM
 
         Public Function GetViewModel(ByVal ViewModelType As Type) As ViewModel
             Dim Metadata = ViewModelType.GetCustomAttribute(Of ViewModelMetadataAttribute)()
-            If Metadata Is Nothing Then
-                Throw New InvalidOperationException("No metadata available.")
-            End If
+            Verify.False(Metadata Is Nothing, "No metadata available.")
 
             If Metadata.IsSingleInstance Then
                 Dim T As ViewModel = Nothing
@@ -165,9 +165,7 @@ Namespace Common.MVVM
                 End If
             Next
 
-            If Constructor Is Nothing Then
-                Throw New InvalidOperationException("No valid constructor available. Every viewmodel has to have a contructor getting one single argument, the KsApplication of that WPF project.")
-            End If
+            Verify.False(Constructor Is Nothing, "No valid constructor available. Every view-model has to have a contructor getting one single argument, the KsApplication of that WPF application.")
 
             Dim R = DirectCast(Constructor.Invoke({Me}), ViewModel)
 
@@ -178,91 +176,102 @@ Namespace Common.MVVM
             Return R
         End Function
 
-        Private Shared Sub SetViewOnContent(ByVal NavigationView As INavigationView, ByVal View As Page)
-            Dim Prev = NavigationView.Content
-            If Prev Is View Then
+        Friend Sub NavigateTo(ByVal Parent As NavigationViewModel, ByVal ViewModel As ViewModel, ByVal AddToStack As Boolean, ByVal ForceToStack As Boolean)
+            Verify.False(Parent.NavigationFrame Is Nothing, "Cannot navigate. The navigation parent is not in the view.")
+
+            Me.NavigateTo(Parent.NavigationFrame.AddViewModel(ViewModel), AddToStack, ForceToStack)
+        End Sub
+
+        Public Sub NavigateTo(ByVal Frame As NavigationFrame, ByVal AddToStack As Boolean, ByVal ForceToStack As Boolean)
+            Dim Tip = Frame.Tip
+
+            If Tip.NavigationFrame IsNot Nothing Then
+                Me.NavigationFrames.Remove(Tip.NavigationFrame)
+            End If
+
+            Tip.NavigationFrame = Frame
+
+            If ForceToStack Or (AddToStack And Not Frame.IsOpenEnded) Then
+                Me.NavigationFrames.Push(Frame)
+            End If
+
+            Me.DoNavigation(Frame, NavigationType.NewNavigation)
+        End Sub
+
+        Public Sub NavigateBack()
+            ' See UpdateCanNavigateBack.
+            If Not Me.CanNavigateBack Then
                 Exit Sub
             End If
 
-            If Prev IsNot Nothing Then
-                Prev.ParentView = Nothing
+            If Me.NavigationFrames.PeekOrDefault() = Me.CurrentNavigationFrame Then
+                Me.NavigationFrames.Pop()
             End If
 
-            If View IsNot Nothing Then
-                If View.ParentView IsNot Nothing Then
-                    View.ParentView.Content = Nothing
-                End If
-                View.ParentView = NavigationView
+            If Not Me.NavigationFrames.CanPop() Then
+                Dim Data = Me.OnNavigateToEmpty()
+                Me.NavigateTo(Data.Frame, Data.AddToStack, Data.ForceToStack)
+                Exit Sub
             End If
 
-            NavigationView.Content = View
+            Me.DoNavigation(Me.NavigationFrames.Peek(), NavigationType.BackNavigation)
         End Sub
 
-        Private Function CreateFrame(Navigation As NavigationViewModel, Navigated As ViewModel) As NavigationFrame
-            Dim Frame = New List(Of ViewModel)()
+        Private Sub DoNavigation(ByVal NewFrame As NavigationFrame, ByVal NavigationType As NavigationType)
+            Dim OldFrame = Me.CurrentNavigationFrame
+            Me.CurrentNavigationFrame = NewFrame
 
-            Frame.Add(Navigated)
-
-            Dim V As ViewModel = Navigation
-            Do
-                Frame.Add(V)
-                If V.NavigationFrame.Count < 2 Then
-                    Assert.True(V.NavigationFrame.Count = 1)
-                    Assert.True(V Is Me.Window)
-                    Exit Do
-                End If
-                V = V.NavigationFrame.Item(1)
-            Loop
-
-            Return New NavigationFrame(Frame)
-        End Function
-
-        Friend Sub NavigateTo(ByVal Navigation As NavigationViewModel, ByVal Navigated As ViewModel, ByVal AddToStack As Boolean, ByVal ForceToStack As Boolean)
-            If Navigated.NavigationFrame IsNot Nothing Then
-                Me.NavigationFrames.Remove(Navigated.NavigationFrame)
-            End If
-
-            Navigated.NavigationFrame = CreateFrame(Navigation, Navigated)
-
-            If ForceToStack Or (AddToStack And Not GetType(NavigationViewModel).IsAssignableFrom(Navigated.GetType())) Then
-                Me.NavigationFrames.Push(Navigated.NavigationFrame)
-            End If
-
-            Me.CurrentNavigationFrame = Navigated.NavigationFrame
-            Me.DoNavigation()
             Me.UpdateCanNavigateBack()
 
-            Me.OnNavigated(Navigation, Navigated)
+            Dim I = 0
+            For I = I To Math.Min(NewFrame.Count, OldFrame.Count) - 1
+                If NewFrame.Item(I) IsNot OldFrame.Item(I) Then
+                    Exit Sub
+                End If
+            Next
+
+            Dim NavigationEventArgs = New NavigationEventArgs(NavigationType)
+
+            For J = OldFrame.Count - 1 To I Step -1
+                Dim VM = OldFrame.Item(J)
+
+                VM.NavigationFrame = Nothing
+                If I <> OldFrame.Count - 1 Then
+                    VM.SetView(Nothing)
+                End If
+
+                VM.OnNavigatedFrom(NavigationEventArgs)
+            Next
+
+            For J = I To NewFrame.Count
+                Dim Parent = TryCast(NewFrame.Item(J - 1), NavigationViewModel)
+                Dim Current = If(J <> NewFrame.Count, NewFrame.Item(J), Nothing)
+
+                Parent?.SetView(Current)
+                Current?.OnNavigatedTo(NavigationEventArgs)
+            Next
+
+            Me.OnNavigated(OldFrame, NewFrame)
+        End Sub
+
+        Private Sub UpdateCanNavigateBack()
+            Dim Count = Me.NavigationFrames.Count
+
+            ' If the top of stack is not the current frame, we can go back from the current frame to it.
+            Count += If(Me.NavigationFrames.PeekOrDefault() = Me.CurrentNavigationFrame, 0, 1)
+
+            Select Case Count
+                Case 0
+                    Me.CanNavigateBack = False
+                Case 1
+                    Me.CanNavigateBack = Me.CanNavigateBackToEmpty()
+                Case Else
+                    Me.CanNavigateBack = True
+            End Select
         End Sub
 
 #Region "NavigateBack Command"
         Private _NavigateBackCommand As DelegateCommand = New DelegateCommand(AddressOf Me.NavigateBack)
-
-        Public Sub NavigateBack()
-            If Me.NavigationFrames.Count <> 0 AndAlso Me.NavigationFrames.Peek() = Me.CurrentNavigationFrame Then
-                If Me.NavigationFrames.Count = 1 Then
-                    If Me.CanNavigateToEmpty(Me.CurrentNavigationFrame.Item(0)) Then
-                        Me.NavigationFrames.Pop()
-                    End If
-                Else
-                    Me.NavigationFrames.Pop()
-                End If
-            End If
-
-            If Me.NavigationFrames.Count = 0 Then
-                Me.CurrentNavigationFrame = Nothing
-                Me.OnNavigateToEmpty()
-                Me.UpdateCanNavigateBack()
-                Exit Sub
-            End If
-
-            Me.CurrentNavigationFrame = Me.NavigationFrames.Peek()
-            Me.DoNavigation()
-            Me.UpdateCanNavigateBack()
-
-            Me.OnNavigated(DirectCast(Me.CurrentNavigationFrame.Item(1), NavigationViewModel),
-                            Me.CurrentNavigationFrame.Item(0))
-        End Sub
 
         Public ReadOnly Property NavigateBackCommand As DelegateCommand
             Get
@@ -270,33 +279,6 @@ Namespace Common.MVVM
             End Get
         End Property
 #End Region
-
-        Private Sub UpdateCanNavigateBack()
-            If Me.NavigationFrames.Count > 1 Then
-                Me.CanNavigateBack = True
-                Exit Sub
-            End If
-            If Me.NavigationFrames.Count = 0 Then
-                Me.CanNavigateBack = False
-                Exit Sub
-            End If
-            Me.CanNavigateBack = Me.CanNavigateToEmpty(Me.CurrentNavigationFrame.Item(0))
-        End Sub
-
-        Private Sub DoNavigation()
-            Dim Frame = Me.CurrentNavigationFrame
-            Dim Cur = Frame.Item(Frame.Count - 1)
-            For I As Integer = Frame.Count - 2 To 0 Step -1
-                Dim Prev = DirectCast(Cur, NavigationViewModel)
-                Cur = Frame.Item(I)
-                SetViewOnContent(Prev.NavigationView, DirectCast(Cur.View, Page))
-            Next
-
-            Dim CurN = TryCast(Cur, NavigationViewModel)
-            If CurN IsNot Nothing Then
-                SetViewOnContent(CurN.NavigationView, Nothing)
-            End If
-        End Sub
 
 #Region "CanNavigateBack Property"
         Private _CanNavigateBack As Boolean
@@ -318,8 +300,44 @@ Namespace Common.MVVM
             End Get
         End Property
 #End Region
+
+#Region "CurrentNavigationFrame Property"
+        Private _CurrentNavigationFrame As NavigationFrame
+
+        Public Property CurrentNavigationFrame As NavigationFrame
+            Get
+                Return Me._CurrentNavigationFrame
+            End Get
+            Private Set(ByVal Value As NavigationFrame)
+                Me.SetProperty(Me._CurrentNavigationFrame, Value)
+            End Set
+        End Property
 #End Region
 
+#Region "NavigationFrames Read-Only Property"
+        Private ReadOnly _NavigationFrames As PushPopList(Of NavigationFrame) = New PushPopList(Of NavigationFrame)()
+
+        Public ReadOnly Property NavigationFrames As PushPopList(Of NavigationFrame)
+            Get
+                Return Me._NavigationFrames
+            End Get
+        End Property
+#End Region
+
+#Region "EmptyNavigationFrame Read-Only Property"
+        Private ReadOnly _EmptyNavigationFrame As NavigationFrame
+
+        Public ReadOnly Property EmptyNavigationFrame As NavigationFrame
+            Get
+                Return Me._EmptyNavigationFrame
+            End Get
+        End Property
+#End Region
+
+        Private ReadOnly SingleInstanceViewModels As Dictionary(Of Type, ViewModel) = New Dictionary(Of Type, ViewModel)()
+#End Region
+
+#Region "IsInDesignMode Shared Read-Only Property"
         Public Shared ReadOnly Property IsInDesignMode As Boolean
             Get
 #If SimulateDesign Then
@@ -330,6 +348,7 @@ Namespace Common.MVVM
 #End If
             End Get
         End Property
+#End Region
 
 #Region "Name Property"
         Private ReadOnly _Name As String
@@ -379,7 +398,7 @@ Namespace Common.MVVM
                 Return Me._State
             End Get
             Private Set(ByVal Value As KsApplicationState)
-                Me._State = Value
+                Me.SetProperty(Me._State, Value)
             End Set
         End Property
 #End Region
@@ -440,10 +459,6 @@ Namespace Common.MVVM
             End Get
         End Property
 #End Region
-
-        Private ReadOnly SingleInstanceViewModels As Dictionary(Of Type, ViewModel) = New Dictionary(Of Type, ViewModel)()
-        Private ReadOnly NavigationFrames As PushPopList(Of NavigationFrame) = New PushPopList(Of NavigationFrame)()
-        Private CurrentNavigationFrame As NavigationFrame = Nothing
 
     End Class
 

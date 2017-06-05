@@ -301,9 +301,12 @@
     <Compile Include="WPF\MVVM\Converters\ThicknessConverter.vb" />
     <Compile Include="WPF\MVVM\DelegateCommand.vb" />
     <Compile Include="WPF\Controls\PopupHolder.vb" />
+    <Compile Include="WPF\MVVM\MvvmExtensions.vb" />
     <Compile Include="WPF\MVVM\Navigation.vb" />
     <Compile Include="WPF\MVVM\NavigationCommand.vb" />
+    <Compile Include="WPF\MVVM\NavigationEventArgs.vb" />
     <Compile Include="WPF\MVVM\NavigationFrame.vb" />
+    <Compile Include="WPF\MVVM\NavigationType.vb" />
     <Compile Include="WPF\MVVM\NavigationViewModel.vb" />
     <Compile Include="WPF\MVVM\TranslationConverter.vb" />
     <Compile Include="WPF\MVVM\Utils.vb" />

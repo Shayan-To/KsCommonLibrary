@@ -11,26 +11,35 @@ Namespace Common.MVVM
         End Sub
 
         Public Sub New()
-            If Not KsApplication.IsInDesignMode Then
-                Throw New InvalidOperationException("Should not call the test constructor from runtime.")
-            End If
+            Verify.True(KsApplication.IsInDesignMode, "Test constructor should not be called from runtime.")
 
             Me._Metadata = Me.GetMetadata()
             If Me._Metadata.KsApplicationType IsNot Nothing Then
-                Me._KsApplicationBase = DirectCast(Me.Metadata.KsApplicationType.GetConstructor(Utilities.Typed(Of Type).EmptyArray).Invoke(Utilities.Typed(Of Object).EmptyArray), KsApplication)
+                Me._KsApplicationBase = DirectCast(Me.Metadata.KsApplicationType.CreateInstance(), KsApplication)
             End If
         End Sub
 
         Private Function GetMetadata() As ViewModelMetadataAttribute
-            Dim R = Me.GetType().GetCustomAttribute(Of ViewModelMetadataAttribute)()
-            If R Is Nothing Then
-                Throw New InvalidOperationException("Every viewmodel that can be instantiated should have a ViewModelMetadata attribute set to it.")
-            End If
-            If Not (GetType(Window).IsAssignableFrom(R.ViewType) Or GetType(Page).IsAssignableFrom(R.ViewType)) Then
-                Throw New ArgumentException("ViewType must be a Window or a Page.")
-            End If
+            Dim R = Me.GetType().GetCustomAttribute(Of ViewModelMetadataAttribute)(False)
+            Verify.False(R Is Nothing, "Every view-model that could be instantiated must have a ViewModelMetadata attribute set to it.")
             Return R
         End Function
+
+#Region "NavigatedTo Event"
+        Public Event NavigatedTo As EventHandler(Of NavigationEventArgs)
+
+        Protected Friend Overridable Sub OnNavigatedTo(ByVal E As NavigationEventArgs)
+            RaiseEvent NavigatedTo(Me, E)
+        End Sub
+#End Region
+
+#Region "NavigatedFrom Event"
+        Public Event NavigatedFrom As EventHandler(Of NavigationEventArgs)
+
+        Protected Friend Overridable Sub OnNavigatedFrom(ByVal E As NavigationEventArgs)
+            RaiseEvent NavigatedFrom(Me, E)
+        End Sub
+#End Region
 
 #Region "View Property"
         Private _View As Control = Nothing
@@ -38,16 +47,14 @@ Namespace Common.MVVM
         Public Property View As Control
             Get
                 If Me._View Is Nothing Then
-                    Me._View = DirectCast(Me.Metadata.ViewType.GetConstructor(Utilities.Typed(Of Type).EmptyArray).Invoke(Utilities.Typed(Of Object).EmptyArray), Control)
+                    Me._View = DirectCast(Me.Metadata.ViewType.CreateInstance(), Control)
                     Me._View.DataContext = Me
                     Utils.SetViewModel(Me._View, Me)
                 End If
                 Return Me._View
             End Get
             Friend Set(ByVal Value As Control)
-                If Me._View IsNot Nothing Then
-                    Throw New InvalidOperationException()
-                End If
+                Verify.True(Me._View Is Nothing)
                 Me._View = Value
             End Set
         End Property

@@ -30,11 +30,7 @@ Namespace Common.MVVM
         End Function
 
         Private Function GetKsApplication() As KsApplication
-            Dim T = Me.KsApplication
-            If T IsNot Nothing Then
-                Return T
-            End If
-            Return KsApplication.Current
+            Return If(Me.KsApplication, KsApplication.Current)
         End Function
 
 #Region "AddToStack Property"
