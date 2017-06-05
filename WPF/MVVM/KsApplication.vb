@@ -69,7 +69,7 @@ Namespace Common.MVVM
         End Function
 
         Protected Overridable Sub OnStart()
-
+            Me.NavigateTo(Me.DefaultNavigationFrame)
         End Sub
 
         Protected Overridable Sub OnNavigated(ByVal OldFrame As NavigationFrame, ByVal NewFrame As NavigationFrame)
@@ -298,6 +298,22 @@ Namespace Common.MVVM
         Public Overridable ReadOnly Property DefaultNavigationView As NavigationViewModel
             Get
                 Return Me._Window
+            End Get
+        End Property
+#End Region
+
+#Region "DefaultNavigationFrame Read-Only Property"
+        Private _DefaultNavigationFrame As NavigationFrame
+
+        Public ReadOnly Property DefaultNavigationFrame As NavigationFrame
+            Get
+                If Me.DefaultNavigationView Is Me.Window Then
+                    Return Me.EmptyNavigationFrame
+                End If
+                If Me._DefaultNavigationFrame?.Tip IsNot Me.DefaultNavigationView Then
+                    Me._DefaultNavigationFrame = Me.EmptyNavigationFrame.AddViewModel(Me.DefaultNavigationView)
+                End If
+                Return Me._DefaultNavigationFrame
             End Get
         End Property
 #End Region
