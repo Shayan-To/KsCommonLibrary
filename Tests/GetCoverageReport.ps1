@@ -14,13 +14,13 @@ If ((Test-Path $OutputDirectory))
 {
 	Remove-Item -Recurse -Force $OutputDirectory
 }
-New-Item -ItemType Directory -Path $OutputDirectory
+New-Item -ItemType Directory -Path $OutputDirectory | Out-Null
 
 $OutputXmlFile = "$OutputDirectory\TestsCoverageOutput.xml"
 $OutputReportsDirectory = "$OutputDirectory\TestsCoverageReports"
 
 $JunctionDirectory = "D:\Temp\XUnitTemp"
-New-Item -ItemType Junction -Path $JunctionDirectory -Value $TestsAssemblyDirectory
+New-Item -ItemType Junction -Path $JunctionDirectory -Value $TestsAssemblyDirectory | Out-Null
 $TestsAssemblyDirectory = $JunctionDirectory
 $TestsAssembly = Resolve-Path "$TestsAssemblyDirectory\$TestsAssemblyName"
 
