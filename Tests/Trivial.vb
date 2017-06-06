@@ -2,7 +2,7 @@
 
     <Fact()>
     Public Sub IsTrue()
-        Assert.False(False)
+        Assert.True(True)
     End Sub
 
     <Fact()>
