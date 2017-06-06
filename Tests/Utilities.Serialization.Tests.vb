@@ -15,16 +15,16 @@
         <Fact>
         Public Sub ListFromString()
             Assert.Equal(New String() {}, Utilities.Serialization.ListFromString("{}"))
-            Assert.Equal(New String() {"AA", "BB"}, Utilities.Serialization.ListFromString("{AA,BB}"))
+            Assert.Equal(New String() {"AA", "BB"}, Utilities.Serialization.ListFromString("{AA,BB,}"))
             Assert.Equal(New String() {"{,}", "{" & ControlChars.Cr & "}" & ControlChars.Lf},
-                         Utilities.Serialization.ListFromString("{\{\,\},\{\r\}\n}"))
+                         Utilities.Serialization.ListFromString("{\{\,\},\{\r\}\n,}"))
         End Sub
 
         <Fact>
         Public Sub ListToString()
             Assert.Equal("{}", Utilities.Serialization.ListToString({}))
-            Assert.Equal("{AA,BB}", Utilities.Serialization.ListToString({"AA", "BB"}))
-            Assert.Equal("{\{\,\},\{\r\}\n}",
+            Assert.Equal("{AA,BB,}", Utilities.Serialization.ListToString({"AA", "BB"}))
+            Assert.Equal("{\{\,\},\{\r\}\n,}",
                          Utilities.Serialization.ListToString({"{,}", "{" & ControlChars.Cr & "}" & ControlChars.Lf}))
         End Sub
 

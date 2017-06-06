@@ -71,18 +71,16 @@ Namespace Common
 
             Public Shared Function ListToString(ByVal List As IEnumerable(Of String)) As String
                 Dim Res = New StringBuilder("{")
-                Dim Bl = True
 
                 For Each Str As String In List
-                    If Bl Then
-                        Bl = False
-                    Else
-                        Res.Append(",")
-                    End If
-
                     For Each Ch In Str
                         Res.Append(EscapeChar(Ch, ",\{}"))
                     Next
+
+                    ' We always append a comma to the end of a list.
+                    ' This Is to distinguish {} from {""}.
+
+                    Res.Append(",")
                 Next
 
                 Return Res.Append("}").ToString()
@@ -113,8 +111,12 @@ Namespace Common
                     End If
 
                     If Ch = ","c Or Ch = "}"c Then
-                        Res.Add(R.ToString())
-                        R.Clear()
+                        ' We have to ignore the last comma. See ListToString.
+                        ' But for backward compatibility, we add the non-empty strings to the list.
+                        If Not (Ch = "}"c And R.Length = 0) Then
+                            Res.Add(R.ToString())
+                            R.Clear()
+                        End If
 
                         If Ch = "}"c And I <> Str.Length - 1 Then
                             Throw New Exception("Invalid list string.")
@@ -245,9 +247,9 @@ Namespace Common
                         If Key Is Nothing Then
                             Throw New Exception("Invalid dictionary string.")
                         End If
-                        Res.Add(Key, R.ToString())
-                        R.Clear()
-                        Key = Nothing
+                            Res.Add(Key, R.ToString())
+                            R.Clear()
+                            Key = Nothing
 
                         If Ch = "}"c And I <> Str.Length - 1 Then
                             Throw New Exception("Invalid dictionary string.")
