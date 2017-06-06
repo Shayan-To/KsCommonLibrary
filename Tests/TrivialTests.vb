@@ -1,4 +1,4 @@
-﻿Public Class Trivial
+﻿Public Class TrivialTests
 
     <Fact()>
     Public Sub IsTrue()
