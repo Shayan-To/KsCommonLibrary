@@ -10,4 +10,9 @@
         Assert.False(False)
     End Sub
 
+    <Fact()>
+    Public Sub DoNothing()
+        Utilities.DoNothing()
+    End Sub
+
 End Class
