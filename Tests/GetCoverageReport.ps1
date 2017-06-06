@@ -28,7 +28,7 @@ $TestsAssembly = Resolve-Path "$TestsAssemblyDirectory\$TestsAssemblyName"
 	-register:user `
 	-target:"$xUnitConsole" `
 	"-targetargs:""$TestsAssembly"" -noshadow" `
-	-filter:"+[*]* -[Tests]Ks.Tests.*" `
+	-filter:"+[*]* -[Tests]Ks.Tests.* -[FsCheck*]*" `
 	-mergebyhash `
 	-skipautoprops `
 	-output:"""$OutputXmlFile"""
