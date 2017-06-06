@@ -325,6 +325,10 @@ Namespace Common
                     R.Append(Ch)
                 Next
 
+                If Str.Length = 0 Then
+                    Return Res
+                End If
+
                 Verify.Fail("Invalid dictionary string.")
                 Return Nothing
             End Function
