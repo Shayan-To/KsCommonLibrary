@@ -244,12 +244,14 @@ Namespace Common
                     End If
 
                     If Ch = ","c Or Ch = "}"c Then
-                        If Key Is Nothing Then
-                            Throw New Exception("Invalid dictionary string.")
-                        End If
+                        ' If Key is nothing, then the collection must be empty.
+                        Verify.True((Key Is Nothing).Implies(Res.Count = 0 And R.Length = 0), "Invalid dictionary string.")
+
+                        If Key IsNot Nothing Then
                             Res.Add(Key, R.ToString())
                             R.Clear()
                             Key = Nothing
+                        End If
 
                         If Ch = "}"c And I <> Str.Length - 1 Then
                             Throw New Exception("Invalid dictionary string.")
