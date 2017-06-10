@@ -5,7 +5,7 @@
 
         Public Sub New(ByVal KsApplication As KsApplication)
             MyBase.New(KsApplication)
-            If Not GetType(INavigationView).IsAssignableFrom(Metadata.ViewType) Then
+            If Not GetType(INavigationView).IsAssignableFrom(Me.Metadata.ViewType) Then
                 Throw New InvalidOperationException("Navigation views must implement INavigationView.")
             End If
         End Sub
