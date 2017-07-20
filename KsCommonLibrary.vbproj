@@ -249,7 +249,7 @@
     <Compile Include="Common\CommonExtensions.vb" />
     <Compile Include="Collections\ComparableCollection.vb" />
     <Compile Include="Collections\ComplementCollection.vb" />
-    <Compile Include="Common\ConsoleTestMethodAttribute.vb" />
+    <Compile Include="Common\InteractiveRunnableAttribute.vb" />
     <Compile Include="Collections\CreateInstanceDictionary.vb" />
     <Compile Include="Collections\INotifyingCollection.vb" />
     <Compile Include="Collections\IntegerList.vb" />

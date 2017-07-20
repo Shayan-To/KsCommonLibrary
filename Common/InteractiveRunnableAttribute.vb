@@ -3,7 +3,7 @@
 Namespace Common
 
     <AttributeUsage(AttributeTargets.Method)>
-    Public Class ConsoleTestMethodAttribute
+    Public Class InteractiveRunnableAttribute
         Inherits Attribute
 
         Public Sub New(Optional ByVal ShouldBeRun As Boolean = False)
@@ -12,7 +12,7 @@ Namespace Common
 
         <DebuggerHidden()>
         Public Shared Sub RunTestMethods(ByVal Methods As IEnumerable(Of MethodInfo), ByVal Optional JustTrue As Boolean = True)
-            For Each MA In Methods.WithCustomAttribute(Of ConsoleTestMethodAttribute)()
+            For Each MA In Methods.WithCustomAttribute(Of InteractiveRunnableAttribute)()
                 Dim M = MA.Method
                 Dim Attribute = MA.Attribute
 
@@ -24,12 +24,6 @@ Namespace Common
                     Console.WriteLine()
 
                     Continue For
-                End If
-
-                If Attribute.CheckVisibility And
-                   (M.IsPublic Or M.IsFamily Or M.IsFamilyOrAssembly) Then
-                    ConsoleUtilities.WriteColored($"Warning, {FullMethodName} is visible.", ConsoleColor.Yellow)
-                    Console.WriteLine()
                 End If
 
                 If M.GetParameters().Length <> 0 Then
@@ -56,7 +50,7 @@ Namespace Common
         <Sample()>
         Private Shared Sub CecilRunTestMethods(Optional ByVal JustTrue As Boolean = True)
             Dim Helper = CecilHelper.Instance
-            Dim AttributeType = Helper.Convert(GetType(ConsoleTestMethodAttribute))
+            Dim AttributeType = Helper.Convert(GetType(InteractiveRunnableAttribute))
             For Each A In Helper.GetReferencedAssemblies(Helper.Convert(Reflection.Assembly.GetEntryAssembly()))
                 For Each M In A.Modules
                     For Each T In M.Types
@@ -70,7 +64,7 @@ Namespace Common
                                     Continue For
                                 End If
 
-                                Dim Att = New ConsoleTestMethodAttribute(DirectCast(CA.ConstructorArguments.Item(0).Value, Boolean))
+                                Dim Att = New InteractiveRunnableAttribute(DirectCast(CA.ConstructorArguments.Item(0).Value, Boolean))
                                 If Not JustTrue Or Att.ShouldBeRun Then
                                     If ConsoleUtilities.ReadYesNo($"Run {T.FullName}.{M.Name}? (Y/N)") Then
                                         Helper.Convert(Mth).Invoke(Nothing, Utilities.Typed(Of Object).EmptyArray)
@@ -100,19 +94,6 @@ Namespace Common
             Get
                 Return Me._ShouldBeRun
             End Get
-        End Property
-#End Region
-
-#Region "CheckVisibility Property"
-        Private _CheckVisibility As Boolean = True
-
-        Public Property CheckVisibility As Boolean
-            Get
-                Return Me._CheckVisibility
-            End Get
-            Set(ByVal Value As Boolean)
-                Me._CheckVisibility = Value
-            End Set
         End Property
 #End Region
 
