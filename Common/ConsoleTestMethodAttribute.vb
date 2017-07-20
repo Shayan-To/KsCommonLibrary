@@ -12,78 +12,44 @@ Namespace Common
 
         <DebuggerHidden()>
         Public Shared Sub RunTestMethods(ByVal Methods As IEnumerable(Of MethodInfo), ByVal Optional JustTrue As Boolean = True)
-            ConsoleUtilities.Initialize()
-
             For Each MA In Methods.WithCustomAttribute(Of ConsoleTestMethodAttribute)()
-                Dim M = MA.Item1
-                Dim Attribute = MA.Item2
+                Dim M = MA.Method
+                Dim Attribute = MA.Attribute
 
-                Dim FullMethodName = String.Concat(M.DeclaringType.FullName, ".", M.Name)
+                Dim FullMethodName = $"{M.DeclaringType.FullName}.{M.Name}"
 
-                If (M.Attributes And MethodAttributes.Static) = MethodAttributes.Static Then
-                    'Console.WriteLine(String.Concat(T.FullName, ".", M.Name))
-                    'Console.WriteLine(HMA)
-                    'Console.WriteLine(HMA.ShouldBeRun)
-                    'Console.WriteLine(M.GetParameters().Length)
-
-                    If Attribute.CheckVisibility And
-                   ((M.Attributes And MethodAttributes.Public) = MethodAttributes.Public Or
-                    (M.Attributes And MethodAttributes.Family) = MethodAttributes.Family Or
-                    (M.Attributes And MethodAttributes.FamORAssem) = MethodAttributes.FamORAssem) Then
-                        Console.BackgroundColor = ConsoleColor.Yellow
-                        Console.Write(String.Concat("Warning, ", FullMethodName, " is visible."))
-                        Console.BackgroundColor = ConsoleColor.White
-                        Console.WriteLine()
-                    End If
-
-                    If M.GetParameters().Length = 0 Then
-                        ' JustTrue => Attribute.ShouldBeRun   ===   ~JustTrue | Attribute.ShouldBeRun
-                        If Not JustTrue Or Attribute.ShouldBeRun Then
-                            Console.BackgroundColor = ConsoleColor.Green
-                            Console.Write(String.Concat("Run ", FullMethodName, "? (Y/N)"))
-                            Console.BackgroundColor = ConsoleColor.White
-
-                            Dim K As ConsoleKey
-                            Do
-                                K = Console.ReadKey(True).Key
-                            Loop Until K = ConsoleKey.Y Or K = ConsoleKey.N
-
-                            Console.WriteLine(If(K = ConsoleKey.Y, " Y", " N"))
-
-                            If K = ConsoleKey.Y Then
-                                Do
-                                    M.Invoke(Nothing, Utilities.Typed(Of Object).EmptyArray)
-
-                                    Console.BackgroundColor = ConsoleColor.Green
-                                    Console.Write(String.Concat("Rerun? (Y/N)"))
-                                    Console.BackgroundColor = ConsoleColor.White
-
-                                    Do
-                                        K = Console.ReadKey(True).Key
-                                    Loop Until K = ConsoleKey.Y Or K = ConsoleKey.N
-
-                                    Console.WriteLine(If(K = ConsoleKey.Y, " Y", " N"))
-                                Loop While K = ConsoleKey.Y
-                            End If
-                        End If
-                    Else
-                        Console.BackgroundColor = ConsoleColor.Red
-                        Console.Write(String.Concat("Skipping ", FullMethodName, "... Accepts arguments."))
-                        Console.BackgroundColor = ConsoleColor.White
-                        Console.ReadKey(True)
-                        Console.WriteLine()
-                    End If
-                Else ' If M is Instance
-                    Console.BackgroundColor = ConsoleColor.Red
-                    Console.Write(String.Concat("Skipping ", FullMethodName, "... Instance method."))
-                    Console.BackgroundColor = ConsoleColor.White
+                If Not M.IsStatic Then
+                    ConsoleUtilities.WriteColored($"Skipping {FullMethodName}... Instance method.", ConsoleColor.Red)
                     Console.ReadKey(True)
                     Console.WriteLine()
+
+                    Continue For
+                End If
+
+                If Attribute.CheckVisibility And
+                   (M.IsPublic Or M.IsFamily Or M.IsFamilyOrAssembly) Then
+                    ConsoleUtilities.WriteColored($"Warning, {FullMethodName} is visible.", ConsoleColor.Yellow)
+                    Console.WriteLine()
+                End If
+
+                If M.GetParameters().Length <> 0 Then
+                    ConsoleUtilities.WriteColored($"Skipping {FullMethodName}... Accepts arguments.", ConsoleColor.Red)
+                    Console.ReadKey(True)
+                    Console.WriteLine()
+
+                    Continue For
+                End If
+
+                If JustTrue.Implies(Attribute.ShouldBeRun) Then
+                    If ConsoleUtilities.ReadYesNo($"Run {FullMethodName}? (Y/N)") Then
+                        Do
+                            M.Invoke(Nothing, Utilities.Typed(Of Object).EmptyArray)
+                        Loop While ConsoleUtilities.ReadYesNo("Rerun? (Y/N)")
+                    End If
                 End If
             Next
-            Console.BackgroundColor = ConsoleColor.Green
-            Console.Write("Done.")
-            Console.BackgroundColor = ConsoleColor.White
+
+            ConsoleUtilities.WriteColored("Done.", ConsoleColor.Green)
             Console.WriteLine()
         End Sub
 
@@ -96,30 +62,19 @@ Namespace Common
                     For Each T In M.Types
                         For Each Mth In T.Methods
                             For Each CA In Mth.CustomAttributes.Where(Function(Att) Helper.Equals(Att.AttributeType.Resolve(), AttributeType))
-                                If Mth.Parameters.Count = 0 Then
-                                    Dim Att = New ConsoleTestMethodAttribute(DirectCast(CA.ConstructorArguments.Item(0).Value, Boolean))
-                                    If Not JustTrue Or Att.ShouldBeRun Then
-                                        Console.BackgroundColor = ConsoleColor.Green
-                                        Console.Write(String.Concat("Run ", T.FullName, ".", M.Name, "? (Y/N)"))
-                                        Console.BackgroundColor = ConsoleColor.White
-
-                                        Dim K As ConsoleKey
-                                        Do
-                                            K = Console.ReadKey(True).Key
-                                        Loop Until K = ConsoleKey.Y Or K = ConsoleKey.N
-
-                                        Console.WriteLine(If(K = ConsoleKey.Y, " Y", " N"))
-
-                                        If K = ConsoleKey.Y Then
-                                            Helper.Convert(Mth).Invoke(Nothing, Utilities.Typed(Of Object).EmptyArray)
-                                        End If
-                                    End If
-                                Else
-                                    Console.BackgroundColor = ConsoleColor.Red
-                                    Console.Write(String.Concat("Skipping ", T.FullName, ".", M.Name, "... Accepts arguments."))
-                                    Console.BackgroundColor = ConsoleColor.White
+                                If Mth.Parameters.Count <> 0 Then
+                                    ConsoleUtilities.WriteColored($"Skipping {T.FullName}.{M.Name}... Accepts arguments.", ConsoleColor.Red)
                                     Console.ReadKey(True)
                                     Console.WriteLine()
+
+                                    Continue For
+                                End If
+
+                                Dim Att = New ConsoleTestMethodAttribute(DirectCast(CA.ConstructorArguments.Item(0).Value, Boolean))
+                                If Not JustTrue Or Att.ShouldBeRun Then
+                                    If ConsoleUtilities.ReadYesNo($"Run {T.FullName}.{M.Name}? (Y/N)") Then
+                                        Helper.Convert(Mth).Invoke(Nothing, Utilities.Typed(Of Object).EmptyArray)
+                                    End If
                                 End If
                             Next
                         Next
