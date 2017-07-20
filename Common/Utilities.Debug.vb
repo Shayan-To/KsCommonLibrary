@@ -31,7 +31,7 @@ Namespace Common
                     If I > 1 Then
                         R.Append(">"c)
                     End If
-                    Dim M = F(I).GetMethod
+                    Dim M = F(I).GetMethod()
                     R.Append(M.DeclaringType.Name) _
                      .Append("."c) _
                      .Append(M.Name) _
