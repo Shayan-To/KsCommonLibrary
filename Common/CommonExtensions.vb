@@ -620,6 +620,11 @@ Namespace Common
             End If
             Return Nothing
         End Function
+
+        <Extension()>
+        Public Function AsCachedList(Of T)(ByVal Self As IEnumerable(Of T)) As EnumerableCacher(Of T)
+            Return New EnumerableCacher(Of T)(Self)
+        End Function
 #End Region
 
 #Region "Geometry Group"

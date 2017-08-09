@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\BitArray.vb" />
+    <Compile Include="Collections\EnumerableCacher.vb" />
     <Compile Include="Common\DelegateEqualityComparer.vb" />
     <Compile Include="Common\EventBasedTask.vb" />
     <Compile Include="Common\HashRandom.vb" />
