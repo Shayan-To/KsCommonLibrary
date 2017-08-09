@@ -12,37 +12,37 @@ Namespace Common
 
         <DebuggerHidden()>
         Public Shared Sub RunTestMethods(ByVal Methods As IEnumerable(Of MethodInfo), ByVal Optional JustTrue As Boolean = True)
-            For Each MA In Methods.WithCustomAttribute(Of InteractiveRunnableAttribute)()
-                Dim M = MA.Method
-                Dim Attribute = MA.Attribute
+            Dim FullNameSelector = Function(M As MethodInfo) $"{M.DeclaringType.FullName}.{M.Name}"
+            Dim List = Methods.WithCustomAttribute(Of InteractiveRunnableAttribute)() _
+                    .Where(Function(MA)
+                               Dim M = MA.Method
 
-                Dim FullMethodName = $"{M.DeclaringType.FullName}.{M.Name}"
+                               If Not M.IsStatic Then
+                                   ConsoleUtilities.WriteColored($"Skipping {FullNameSelector.Invoke(M)}... Instance method.", ConsoleColor.Red)
+                                   Console.WriteLine()
+                                   Return False
+                               End If
 
-                If Not M.IsStatic Then
-                    ConsoleUtilities.WriteColored($"Skipping {FullMethodName}... Instance method.", ConsoleColor.Red)
-                    Console.ReadKey(True)
-                    Console.WriteLine()
+                               If M.GetParameters().Length <> 0 Then
+                                   ConsoleUtilities.WriteColored($"Skipping {FullNameSelector.Invoke(M)}... Accepts arguments.", ConsoleColor.Red)
+                                   Console.WriteLine()
+                                   Return False
+                               End If
 
-                    Continue For
+                               Return JustTrue.Implies(MA.Attribute.ShouldBeRun)
+                           End Function) _
+                    .Select(Function(MA) MA.Method)
+            Dim ChoiceReader = New ConsoleListChoiceReader(Of MethodInfo)(List, FullNameSelector)
+
+            Do
+                Dim M = ChoiceReader.ReadChoice()
+                If M Is Nothing Then
+                    Exit Do
                 End If
+                M.Invoke(Nothing, Utilities.Typed(Of Object).EmptyArray)
+            Loop
 
-                If M.GetParameters().Length <> 0 Then
-                    ConsoleUtilities.WriteColored($"Skipping {FullMethodName}... Accepts arguments.", ConsoleColor.Red)
-                    Console.ReadKey(True)
-                    Console.WriteLine()
-
-                    Continue For
-                End If
-
-                If JustTrue.Implies(Attribute.ShouldBeRun) Then
-                    If ConsoleUtilities.ReadYesNo($"Run {FullMethodName}? (Y/N)") Then
-                        Do
-                            M.Invoke(Nothing, Utilities.Typed(Of Object).EmptyArray)
-                        Loop While ConsoleUtilities.ReadYesNo("Rerun? (Y/N)")
-                    End If
-                End If
-            Next
-
+            Console.WriteLine()
             ConsoleUtilities.WriteColored("Done.", ConsoleColor.Green)
             Console.WriteLine()
         End Sub
