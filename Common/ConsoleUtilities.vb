@@ -6,17 +6,23 @@
             Throw New NotSupportedException
         End Sub
 
+        Public Const DefaultBackColor As ConsoleColor = ConsoleColor.White
+        Public Const DefaultForeColor As ConsoleColor = ConsoleColor.Black
+
         Public Shared Sub Initialize()
-            Console.ForegroundColor = ConsoleColor.Black
-            Console.BackgroundColor = ConsoleColor.White
+            Console.ForegroundColor = DefaultForeColor
+            Console.BackgroundColor = DefaultBackColor
             Console.Clear()
         End Sub
 
-        Public Shared Sub WriteColored(ByVal Value As String, ByVal Color As ConsoleColor)
-            Dim PrevColor = Console.BackgroundColor
-            Console.BackgroundColor = Color
+        Public Shared Sub WriteColored(ByVal Value As String, Optional ByVal BackColor As ConsoleColor = DefaultBackColor, Optional ByVal ForeColor As ConsoleColor = DefaultForeColor)
+            Dim PBackColor = Console.BackgroundColor
+            Dim PForeColor = Console.ForegroundColor
+            Console.BackgroundColor = BackColor
+            Console.ForegroundColor = ForeColor
             Console.Write(Value)
-            Console.BackgroundColor = PrevColor
+            Console.BackgroundColor = PBackColor
+            Console.ForegroundColor = PForeColor
         End Sub
 
         Public Shared Function ReadYesNo(ByVal Prompt As String) As Boolean
@@ -29,18 +35,21 @@
 
             Dim Res = K = ConsoleKey.Y
 
-            Console.WriteLine(If(Res, " Y", " N"))
+            WriteColored(If(Res, " Y", " N"))
+            Console.WriteLine()
 
             Return Res
         End Function
 
         Public Shared Sub WriteExceptionData(ByVal Ex As Exception)
+            Dim Bl = True
             Do
-                WriteColored("Exception: --------------------------------------------------", ConsoleColor.Yellow)
+                WriteColored($"{If(Bl, "Exception", "Inner exception")}: ".PadRight(0, "-"c), ConsoleColor.Yellow)
+                Bl = False
                 Console.WriteLine()
-                Console.WriteLine("Type: " & Ex.GetType().FullName)
-                Console.WriteLine("Message: " & Ex.Message)
-                Console.WriteLine("StackTrace: " & Ex.StackTrace)
+                WriteColored($"Type: {Ex.GetType().FullName}")
+                WriteColored($"Message: {Ex.Message}")
+                WriteColored($"StackTrace: {Ex.StackTrace}")
                 Console.WriteLine()
                 Ex = Ex.InnerException
             Loop Until Ex Is Nothing
