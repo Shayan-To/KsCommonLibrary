@@ -522,7 +522,7 @@ Namespace Common
         End Function
 
         <Extension()>
-        Public Iterator Function Concat(Of T)(ByVal Self As IEnumerable(Of T), ByVal Element As T) As IEnumerable(Of T)
+        Public Iterator Function Append(Of T)(ByVal Self As IEnumerable(Of T), ByVal Element As T) As IEnumerable(Of T)
             For Each I In Self
                 Yield I
             Next
@@ -530,7 +530,7 @@ Namespace Common
         End Function
 
         <Extension()>
-        Public Iterator Function ConcatBacked(Of T)(ByVal Self As IEnumerable(Of T), ByVal Element As T) As IEnumerable(Of T)
+        Public Iterator Function Prepend(Of T)(ByVal Self As IEnumerable(Of T), ByVal Element As T) As IEnumerable(Of T)
             Yield Element
             For Each I In Self
                 Yield I

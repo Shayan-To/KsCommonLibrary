@@ -17,7 +17,7 @@
 
         Public Function AddViewModel(ByVal ViewModel As ViewModel) As NavigationFrame
             Verify.True(Me.IsOpenEnded, "Cannot add a view-model to a non-open-ended frame.")
-            Return New NavigationFrame(Me.List.Concat(ViewModel))
+            Return New NavigationFrame(Me.List.Append(ViewModel))
         End Function
 
         Public Function SubFrame(ByVal Length As Integer) As NavigationFrame
