@@ -1,11 +1,12 @@
-﻿$MyDir = Split-Path $Script:MyInvocation.MyCommand.Path -Parent
+﻿$MyDir = Split-Path -Parent $Script:MyInvocation.MyCommand.Path
 
 $OpenCover = Resolve-Path "$MyDir\..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe"
 $ReportGenerator = Resolve-Path "$MyDir\..\packages\ReportGenerator.2.5.8\tools\ReportGenerator.exe"
 $xUnitConsole = Resolve-Path "$MyDir\..\packages\xunit.runner.console.2.2.0\tools\xunit.console.exe"
 
+$ProjectName = Split-Path -Leaf (Split-Path -Parent $MyDir)
 $TestsAssemblyDirectory = Resolve-Path "$MyDir\bin\Debug"
-$TestsAssemblyName = "Tests.dll"
+$TestsAssemblyName = "$ProjectName.Tests.dll"
 $TestsAssembly = Resolve-Path "$TestsAssemblyDirectory\$TestsAssemblyName"
 
 $OutputDirectory = "$MyDir\TestResults"
