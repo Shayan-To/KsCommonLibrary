@@ -1,4 +1,6 @@
-﻿$MyDir = Split-Path -Parent $Script:MyInvocation.MyCommand.Path
+﻿$ErrorActionPreference = [System.Management.Automation.ActionPreference]::Stop
+
+$MyDir = Split-Path -Parent $Script:MyInvocation.MyCommand.Path
 
 $OpenCover = Resolve-Path "$MyDir\..\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe"
 $ReportGenerator = Resolve-Path "$MyDir\..\packages\ReportGenerator.2.5.8\tools\ReportGenerator.exe"
