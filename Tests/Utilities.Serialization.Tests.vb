@@ -2,7 +2,7 @@
 
     Public Class Serialization
 
-        <[Property]>
+        <[Property]()>
         Public Sub ListToString_ListFromString_Consistency(ByVal List As String())
             If List.Contains(Nothing) Then
                 Exit Sub
@@ -12,7 +12,7 @@
             Assert.Equal(List, Deserialized)
         End Sub
 
-        <Fact>
+        <Fact()>
         Public Sub ListFromString()
             Assert.Equal(New String() {}, Utilities.Serialization.ListFromString("{}"))
             Assert.Equal(New String() {""}, Utilities.Serialization.ListFromString("{,}"))
@@ -21,7 +21,7 @@
                          Utilities.Serialization.ListFromString("{\{\,\},\{\r\}\n,}"))
         End Sub
 
-        <Fact>
+        <Fact()>
         Public Sub ListToString()
             Assert.Equal("{}", Utilities.Serialization.ListToString({}))
             Assert.Equal("{,}", Utilities.Serialization.ListToString({""}))
@@ -30,7 +30,7 @@
                          Utilities.Serialization.ListToString({"{,}", "{" & ControlChars.Cr & "}" & ControlChars.Lf}))
         End Sub
 
-        <[Property]>
+        <[Property]()>
         Public Sub ListToStringMultiline_ListFromStringMultiline_Consistency(ByVal List As String())
             If List.Contains(Nothing) Then
                 Exit Sub
