@@ -152,6 +152,7 @@
     <Compile Include="Common\Json\JsonValueObject.vb" />
     <Compile Include="Common\Json\JsonWriter.vb" />
     <Compile Include="Common\ListEqualityComparer.vb" />
+    <Compile Include="Common\Interval.vb" />
     <Compile Include="Common\Ratio.vb" />
     <Compile Include="Common\Serialization\FormatterGetProxy.vb" />
     <Compile Include="Common\Serialization\FormatterSetProxy.vb" />
