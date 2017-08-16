@@ -1106,6 +1106,27 @@ Namespace Common
 
             Return TotalN
         End Function
+
+        <Extension()>
+        Public Function GetRegexMatch(ByVal Self As IO.TextReader, ByVal Regex As Regex) As String
+            Dim Text = New Text.StringBuilder()
+            Dim Buffer As Char() = New Char(255) {}
+
+            Do Until Regex.IsMatch(Text.ToString())
+                Dim N = Self.Read(Buffer, 0, Buffer.Length)
+                If N = 0 Then
+                    Exit Do
+                End If
+                Text.Append(Buffer, 0, N)
+            Loop
+
+            Return If(Regex.Match(Text.ToString())?.Value, Nothing)
+        End Function
+
+        <Extension()>
+        Public Function GetRegexMatch(ByVal Self As IO.TextReader, ByVal RegexPattern As String) As String
+            Return Self.GetRegexMatch(New Regex(RegexPattern, RegexOptions.Singleline))
+        End Function
 #End Region
 
         <Extension()>
