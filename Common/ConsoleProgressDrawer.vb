@@ -2,6 +2,8 @@
 
     Public Class ConsoleProgressDrawer
 
+        ' ToDo Add ability to draw every second or so.
+        ' ToDo Add instantaneous speed (current is average speed).
 
         Public Sub New(Optional ByVal SpeedSupported As Boolean = True)
             If SpeedSupported Then
@@ -18,7 +20,7 @@
             Console.Write(TextBefore)
 
             Console.Write("["c)
-            If Total = -1 Then
+            If Me.Total = -1 Then
                 Console.Write("...")
             Else
                 Dim Width = Console.WindowWidth - 1
@@ -36,11 +38,11 @@
 
         Private Function GetString(ByVal Value As Double) As String
             If Double.IsNaN(Value) Then
-                Return "   ???  "
+                Return String.Format("{0,6} {1,1}", "???", "")
             End If
 
             If Not Me.AddMultiplier Then
-                Return Value.ToString("F2").PadLeft(6) + "  "
+                Return String.Format("{0,6:F2} {1,1}", Value, "")
             End If
 
             Dim Rep = Utilities.Representation.GetPrefixedRepresentation(Value, Utilities.Representation.BinaryPrefixes)
@@ -204,9 +206,7 @@
                 Return Me._ShowProgressBar
             End Get
             Set(ByVal Value As Boolean)
-                If Not Me.IsSingleLine Then
-                    Value = False
-                End If
+                Value = Value And Me.IsSingleLine
                 Me._ShowProgressBar = Value
                 Me.Draw()
             End Set
