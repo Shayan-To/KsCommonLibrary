@@ -105,6 +105,11 @@ Namespace Common
         Public Function RegexUnescape(str As String) As String
             Return Regex.Unescape(str)
         End Function
+
+        <Extension()>
+        Public Function CorrectLineEndings(ByVal S As String) As String
+            Return S.RegexReplace("\r\n|\r|\n", Environment.NewLine)
+        End Function
 #End Region
 
 #Region "Math Group"
