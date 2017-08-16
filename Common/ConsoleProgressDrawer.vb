@@ -37,8 +37,6 @@
         End Sub
 
         Private Function GetString(ByVal Value As Double) As String
-            Static Prefixes As Char() = {" "c, "K"c, "M"c, "G"c, "T"c, "P"c, "E"c} ', "Z"c, "Y"c}
-
             If Double.IsNaN(Value) Then
                 Return "   ???  "
             End If
@@ -47,15 +45,9 @@
                 Return Value.ToString("F2").PadLeft(6) + "  "
             End If
 
-            Dim V As Double = Value
-            Dim PrefixIndex = 0
+            Dim Rep = Utilities.Representation.GetPrefixedRepresentation(Value, Utilities.Representation.BinaryPrefixes)
 
-            Do Until V < 1000
-                V /= 1024
-                PrefixIndex += 1
-            Loop
-
-            Return String.Format("{0,6:F2} {1}", V, Prefixes(PrefixIndex))
+            Return String.Format("{0,6:F2} {1,1}", Rep.Value, Rep.Prefix)
         End Function
 
         Private Sub Draw()
