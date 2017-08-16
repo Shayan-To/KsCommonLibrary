@@ -1021,7 +1021,7 @@ Namespace Common
         End Function
 
         <Extension()>
-        Public Function ReadToEnd(ByVal Self As IO.Stream) As Byte()
+        Public Function ReadToEnd(ByVal Self As IO.Stream, Optional ByVal ProgressCallback As Action(Of Integer) = Nothing) As Byte()
             'Dim Length = -1
             'If Self.CanSeek Then
             '    Length = Self.Length - Self.Position
@@ -1032,19 +1032,34 @@ Namespace Common
 
             Dim BufLength = 8192
 
-            Dim N As Integer
+            Dim TotalN = 0
+            Dim N = 0
             Dim Buf As Byte()
 
             Do
                 Buf = New Byte(BufLength - 1) {}
-                N = Self.ReadAll(Buf, 0, Buf.Length)
-                If N < Buf.Length Then
+
+                N = 0
+                Do
+                    Dim T = Self.Read(Buf, N, Buf.Length - N)
+
+                    If T = 0 Then
+                        Exit Do
+                    End If
+
+                    TotalN += T
+                    N += T
+
+                    ProgressCallback?.Invoke(TotalN)
+                Loop
+
+                If N <> BufLength Then
                     Exit Do
                 End If
                 Arrs.Add(Buf)
             Loop
 
-            Dim Res = New Byte(Arrs.Count * BufLength + N - 1) {}
+            Dim Res = New Byte(TotalN - 1) {}
             Dim Offset = 0
             For Each A In Arrs
                 A.CopyTo(Res, Offset)
@@ -1056,18 +1071,20 @@ Namespace Common
         End Function
 
         <Extension()>
-        Public Function Write(ByVal Self As IO.Stream, ByVal Stream As IO.Stream, Optional ByVal Length As Integer = -1) As Integer
-            Dim Buffer As Byte()
+        Public Function Write(ByVal Self As IO.Stream, ByVal Stream As IO.Stream, Optional ByVal Start As Long = -1, Optional ByVal Length As Long = -1, Optional ByVal ProgressCallback As Action(Of Integer) = Nothing) As Integer
+            Dim Buffer = New Byte(65535) {}
 
-            Buffer = New Byte(65535) {}
+            If Start <> -1 Then
+                Stream.Seek(Start, IO.SeekOrigin.Begin)
+            End If
 
-            Dim N As Integer
-            Dim Total = 0
+            Dim TotalN = 0
             Do
+                Dim N = 0
                 If Length = -1 Then
                     N = Stream.Read(Buffer, 0, Buffer.Length)
                 Else
-                    N = Stream.Read(Buffer, 0, Math.Min(Length, Buffer.Length))
+                    N = Stream.Read(Buffer, 0, CInt(Math.Min(Length, Buffer.Length)))
                 End If
 
                 If N = 0 Then
@@ -1075,7 +1092,9 @@ Namespace Common
                 End If
 
                 Self.Write(Buffer, 0, N)
-                Total += N
+                TotalN += N
+
+                ProgressCallback?.Invoke(TotalN)
 
                 If Length <> -1 Then
                     Length -= N
@@ -1085,7 +1104,7 @@ Namespace Common
                 End If
             Loop
 
-            Return Total
+            Return TotalN
         End Function
 #End Region
 
