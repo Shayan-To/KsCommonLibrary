@@ -89,36 +89,40 @@ Namespace Common
                 Return Res.ToString()
             End Function
 
-            Public Shared Function GetTimeStamp(ByVal Compact As Boolean) As String
+            Public Shared Function GetTimeStamp(Optional ByVal Time As DateTime? = Nothing, Optional ByVal Compact As Boolean = False) As String
                 Static Builder As StringBuilder = New StringBuilder()
 
-                Dim Now = DateTime.Now
-                Dim IC = Globalization.CultureInfo.InvariantCulture
+                Dim Now As DateTime
+                If Time.HasValue Then
+                    Now = Time.Value
+                Else
+                    Now = DateTime.Now
+                End If
 
                 If Compact Then
                     Builder.Clear() _
-                      .Append(Now.Year.ToString(IC).PadLeft(4, "0"c)) _
-                      .Append(Now.Month.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(Now.Day.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(Now.Hour.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(Now.Minute.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(Now.Second.ToString(IC).PadLeft(2, "0"c)) _
-                      .Append(Now.Millisecond.ToString(IC).PadLeft(3, "0"c))
+                      .Append(Now.Year.ToStringInv().PadLeft(4, "0"c)) _
+                      .Append(Now.Month.ToStringInv().PadLeft(2, "0"c)) _
+                      .Append(Now.Day.ToStringInv().PadLeft(2, "0"c)) _
+                      .Append(Now.Hour.ToStringInv().PadLeft(2, "0"c)) _
+                      .Append(Now.Minute.ToStringInv().PadLeft(2, "0"c)) _
+                      .Append(Now.Second.ToStringInv().PadLeft(2, "0"c)) _
+                      .Append(Now.Millisecond.ToStringInv().PadLeft(3, "0"c))
                 Else
                     Builder.Clear() _
-                      .Append(Now.Year.ToString(IC).PadLeft(4, "0"c)) _
+                      .Append(Now.Year.ToStringInv().PadLeft(4, "0"c)) _
                       .Append("-"c) _
-                      .Append(Now.Month.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(Now.Month.ToStringInv().PadLeft(2, "0"c)) _
                       .Append("-"c) _
-                      .Append(Now.Day.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(Now.Day.ToStringInv().PadLeft(2, "0"c)) _
                       .Append(" "c) _
-                      .Append(Now.Hour.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(Now.Hour.ToStringInv().PadLeft(2, "0"c)) _
                       .Append(":"c) _
-                      .Append(Now.Minute.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(Now.Minute.ToStringInv().PadLeft(2, "0"c)) _
                       .Append(":"c) _
-                      .Append(Now.Second.ToString(IC).PadLeft(2, "0"c)) _
+                      .Append(Now.Second.ToStringInv().PadLeft(2, "0"c)) _
                       .Append("."c) _
-                      .Append(Now.Millisecond.ToString(IC).PadLeft(3, "0"c))
+                      .Append(Now.Millisecond.ToStringInv().PadLeft(3, "0"c))
                 End If
 
                 Dim Stamp = Builder.ToString()

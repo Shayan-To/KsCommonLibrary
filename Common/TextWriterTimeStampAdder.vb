@@ -8,7 +8,7 @@
         End Sub
 
         Private Function GetTimeStamp() As String
-            Return Utilities.Representation.GetTimeStamp(False) & " :: "
+            Return Utilities.Representation.GetTimeStamp() & " :: "
         End Function
 
 #Region "Writes Group"
