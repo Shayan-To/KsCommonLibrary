@@ -2,7 +2,6 @@
 
     Public Class ConsoleProgressDrawer
 
-        ' ToDo Add support for unavailable total.
 
         Public Sub New(Optional ByVal SpeedSupported As Boolean = True)
             If SpeedSupported Then
@@ -56,14 +55,16 @@
 
             Dim T = New Text.StringBuilder(Me.Text)
 
-            If Me.ShowAmount Or Me.ShowTotal Then
+            Dim ShowTotal = Me.ShowTotal And Me.Total <> -1
+
+            If Me.ShowAmount Or ShowTotal Then
                 If T.Length <> 0 Then
                     T.Append(" ")
                 End If
                 T.Append("(")
                 If Me.ShowAmount Then
                     T.Append(Me.GetString(Me.Amount))
-                    If Me.ShowTotal Then
+                    If ShowTotal Then
                         T.Append(" / ").Append(Me.GetString(Me.Total))
                     End If
                 Else
@@ -84,7 +85,7 @@
                 T.Append(" ")
             End If
 
-            If Me.ShowPercentage Then
+            If Me.ShowPercentage And Me.Total <> -1 Then
                 Dim Per = Me.Amount / Me.Total * 100
                 Dim Tmp = Per.ToString("F2").PadLeft(5)
                 If Tmp.Length > 5 Then
