@@ -190,7 +190,7 @@
     <Compile Include="Common\Utilities.IO.vb" />
     <Compile Include="Common\Utilities.Serialization.vb" />
     <Compile Include="Common\Utilities.Collections.vb" />
-    <Compile Include="Common\Utilities.Time.vb" />
+    <Compile Include="Common\Utilities.Representation.vb" />
     <Compile Include="Common\Utilities.Algorithm.vb" />
     <Compile Include="Common\Utilities.Text.vb" />
     <Compile Include="Common\Void.vb" />

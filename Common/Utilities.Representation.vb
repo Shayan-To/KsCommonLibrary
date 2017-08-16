@@ -8,9 +8,9 @@ Namespace Common
 
     Partial Class Utilities
 
-        Public Class Time
+        Public Class Representation
 
-            Public Shared Function GetFriendlyRepresentation(ByVal Time As TimeSpan, ByVal MaxError As TimeSpan) As String
+            Public Shared Function GetFriendlyTimeSpan(ByVal Time As TimeSpan, ByVal MaxError As TimeSpan) As String
                 Dim Units = {("ms", TimeSpan.FromMilliseconds(1)),
                              ("s", TimeSpan.FromSeconds(1)),
                              ("min", TimeSpan.FromMinutes(1)),

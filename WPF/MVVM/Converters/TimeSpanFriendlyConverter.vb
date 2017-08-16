@@ -7,7 +7,7 @@ Namespace Common.MVVM.Converters
         Implements IValueConverter
 
         Public Function Convert(ByVal Value As Object, ByVal TargetType As Type, ByVal Parameter As Object, ByVal Culture As CultureInfo) As Object Implements IValueConverter.Convert
-            Return Utilities.Time.GetFriendlyRepresentation(CType(Value, TimeSpan), TimeSpan.FromMinutes(CType(Parameter, Double)))
+            Return Utilities.Representation.GetFriendlyTimeSpan(CType(Value, TimeSpan), TimeSpan.FromMinutes(CType(Parameter, Double)))
         End Function
 
         Public Function ConvertBack(ByVal Value As Object, ByVal TargetType As Type, ByVal Parameter As Object, ByVal Culture As CultureInfo) As Object Implements IValueConverter.ConvertBack
