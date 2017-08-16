@@ -3,7 +3,6 @@
     Public Class ConsoleProgressDrawer
 
         ' ToDo Add support for unavailable total.
-        ' ToDo Add Reset method.
 
         Public Sub New(Optional ByVal SpeedSupported As Boolean = True)
             If SpeedSupported Then
@@ -110,6 +109,11 @@
 
         Public Sub ReportProgress(ByVal Amount As Long)
             Me.Amount = Amount
+        End Sub
+
+        Public Sub Reset()
+            Me.Amount = 0
+            Me.StopWatch?.Reset()
         End Sub
 
         Public Sub StartDrawing()
