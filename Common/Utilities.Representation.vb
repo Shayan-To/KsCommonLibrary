@@ -10,6 +10,62 @@ Namespace Common
 
         Public Class Representation
 
+            Public Shared ReadOnly BinaryPrefixes As IReadOnlyList(Of (Prefix As String, Multiplier As Integer, AcceptInterval As Interval)) =
+                {("", 1024, New Interval(0, True, 1000, False)),
+                 ("K", 1024, New Interval(0.9, True, 1000, False)),
+                 ("M", 1024, New Interval(0.9, True, 1000, False)),
+                 ("G", 1024, New Interval(0.9, True, 1000, False)),
+                 ("T", 1024, New Interval(0.9, True, 1000, False)),
+                 ("P", 1024, New Interval(0.9, True, 1000, False)),
+                 ("E", 1024, New Interval(0.9, True, 1000, False)),
+                 ("Z", 1024, New Interval(0.9, True, Double.PositiveInfinity, True))}.AsReadOnly()
+
+            Public Shared ReadOnly MetricPrefixes As IReadOnlyList(Of (Prefix As String, Multiplier As Integer, AcceptInterval As Interval)) =
+                {("a", 1000, New Interval(0, True, 1000, False)),
+                 ("f", 1000, New Interval(1, True, 1000, False)),
+                 ("p", 1000, New Interval(1, True, 1000, False)),
+                 ("n", 1000, New Interval(1, True, 1000, False)),
+                 ("μ", 1000, New Interval(1, True, 1000, False)),
+                 ("m", 1000, New Interval(1, True, 10, False)),
+                 ("c", 10, New Interval(1, True, 10, False)),
+                 ("d", 10, New Interval(1, True, 10, False)),
+                 ("", 10, New Interval(1, True, 10, False)),
+                 ("da", 10, New Interval(1, True, 10, False)),
+                 ("h", 10, New Interval(1, True, 10, False)),
+                 ("k", 10, New Interval(1, True, 1000, False)),
+                 ("M", 1000, New Interval(1, True, 1000, False)),
+                 ("G", 1000, New Interval(1, True, 1000, False)),
+                 ("T", 1000, New Interval(1, True, 1000, False)),
+                 ("P", 1000, New Interval(1, True, 1000, False)),
+                 ("E", 1000, New Interval(1, True, Double.PositiveInfinity, True))}.AsReadOnly()
+
+            Public Shared Function GetPrefixedRepresentation(ByVal Value As Double,
+                                                             ByVal Prefixes As IReadOnlyList(Of (Prefix As String, Multiplier As Integer, AcceptInterval As Interval))) As (Value As Double, Prefix As String)
+                Dim I = 0
+                For I = 0 To Prefixes.Count - 1
+                    If Prefixes.Item(I).Prefix = "" Then
+                        Exit For
+                    End If
+                Next
+
+                Do
+                    Dim Prefix = Prefixes.Item(I)
+                    Dim C = Prefix.AcceptInterval.Compare(System.Math.Abs(Value))
+                    If C < 0 Then
+                        I -= 1
+                        Value *= Prefix.Multiplier
+                    ElseIf C > 0 Then
+                        I += 1
+                        Prefix = Prefixes.Item(I)
+                        Value /= Prefix.Multiplier
+                    Else
+                        Exit Do
+                    End If
+                Loop
+
+                Return (Value, Prefixes.Item(I).Prefix)
+            End Function
+
             Public Shared Function GetFriendlyTimeSpan(ByVal Time As TimeSpan, ByVal MaxError As TimeSpan) As String
                 Dim Units = {("ms", TimeSpan.FromMilliseconds(1)),
                              ("s", TimeSpan.FromSeconds(1)),
