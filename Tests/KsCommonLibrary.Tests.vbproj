@@ -113,6 +113,7 @@
     <Import Include="Xunit" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Sorters_Tests.vb" />
     <Compile Include="TrivialTests.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
