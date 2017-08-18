@@ -129,8 +129,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Utilities.Serialization.Tests.vb" />
-    <Compile Include="Utilities.Tests.vb" />
+    <Compile Include="Common\Utilities.Serialization.Tests.vb" />
+    <Compile Include="Common\Utilities.Tests.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
