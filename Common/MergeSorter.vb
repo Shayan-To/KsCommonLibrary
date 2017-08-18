@@ -91,11 +91,9 @@
         End Sub
 
 #Region "Instance Property"
-        Private Shared ReadOnly _Instance As MergeSorter(Of T) = New MergeSorter(Of T)()
-
         Public Shared ReadOnly Property Instance As MergeSorter(Of T)
             Get
-                Return _Instance
+                Return DefaultCacher(Of MergeSorter(Of T)).Value
             End Get
         End Property
 #End Region
