@@ -12,13 +12,13 @@
 
         Public Sub Heapify(ByVal List As IList(Of T), ByVal Count As Integer, ByVal Index As Integer)
             Do
-                Dim MinIndex = LeftChildren(Index)
+                Dim MinIndex = LeftChild(Index)
                 If MinIndex >= Count Then
                     Exit Do
                 End If
 
                 Dim Min = List.Item(MinIndex)
-                Dim I = RightChildren(Index)
+                Dim I = RightChild(Index)
                 Dim T As T
                 If I < Count Then
                     T = List.Item(I)
@@ -70,11 +70,11 @@
             Return (Index - 1) \ 2
         End Function
 
-        Public Shared Function LeftChildren(ByVal Index As Integer) As Integer
+        Public Shared Function LeftChild(ByVal Index As Integer) As Integer
             Return 2 * Index + 1
         End Function
 
-        Public Shared Function RightChildren(ByVal Index As Integer) As Integer
+        Public Shared Function RightChild(ByVal Index As Integer) As Integer
             Return 2 * Index + 2
         End Function
 
