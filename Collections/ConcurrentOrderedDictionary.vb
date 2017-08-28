@@ -65,7 +65,7 @@ Namespace Common
         Public ReadOnly Property ValuesList As IReadOnlyList(Of TValue)
             Get
                 SyncLock Me.LockObject
-                    Static R As IReadOnlyList(Of TValue) = Me.KeysList.SelectAsList(Function(K) Me.BaseDic.Item(K))
+                    Static R As IReadOnlyList(Of TValue) = Me.KeysList.SelectAsList(Function(K) Me.Item(K))
                     Return R
                 End SyncLock
             End Get
