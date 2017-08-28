@@ -141,8 +141,10 @@
     <Compile Include="Common\Closable.vb" />
     <Compile Include="Common\ConsoleListChoiceReader.vb" />
     <Compile Include="Common\DelegateEqualityComparer.vb" />
+    <Compile Include="Common\Dispatcher.vb" />
     <Compile Include="Common\EventBasedTask.vb" />
     <Compile Include="Common\HashRandom.vb" />
+    <Compile Include="Common\InvocationException.vb" />
     <Compile Include="Common\JoinDirection.vb" />
     <Compile Include="Common\JoinElement.vb" />
     <Compile Include="Common\Json\JsonExtensions.vb" />
