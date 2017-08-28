@@ -220,7 +220,7 @@
     <Compile Include="Collections\CreateInstanceList.vb" />
     <Compile Include="Collections\DictionaryEnumerator.vb" />
     <Compile Include="Collections\HeapOperations.vb" />
-    <Compile Include="Collections\InserstionSorter.vb" />
+    <Compile Include="Collections\InsertionSortList.vb" />
     <Compile Include="Collections\IOrderedDictionary.vb" />
     <Compile Include="Collections\MergedCollection.vb" />
     <Compile Include="Collections\MultiDictionary.vb" />
