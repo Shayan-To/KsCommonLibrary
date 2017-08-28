@@ -6,9 +6,11 @@
 
             <[Property]()>
             Public Sub ListToString_ListFromString_Consistency(ByVal List As String())
-                If List.Contains(Nothing) Then
-                    Exit Sub
-                End If
+                For I = 0 To List.Length - 1
+                    If List(I) Is Nothing Then
+                        List(I) = ""
+                    End If
+                Next
                 Dim Serialized = Utilities.Serialization.ListToString(List)
                 Dim Deserialized = Utilities.Serialization.ListFromString(Serialized)
                 Assert.Equal(List, Deserialized)
@@ -34,9 +36,11 @@
 
             <[Property]()>
             Public Sub ListToStringMultiline_ListFromStringMultiline_Consistency(ByVal List As String())
-                If List.Contains(Nothing) Then
-                    Exit Sub
-                End If
+                For I = 0 To List.Length - 1
+                    If List(I) Is Nothing Then
+                        List(I) = ""
+                    End If
+                Next
                 Dim Serialized = Utilities.Serialization.ListToStringMultiline(List)
                 Dim Deserialized = Utilities.Serialization.ListFromStringMultiline(Serialized)
                 Assert.Equal(List, Deserialized)
