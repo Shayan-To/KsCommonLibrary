@@ -61,16 +61,12 @@
 
         Default Public Property Item(ByVal Index As Integer) As T Implements IList(Of T).Item
             Get
-                Dim V As T
-                If Index > Me.List.Count Then
-                    Throw New ArgumentOutOfRangeException("Index has to be inside the list range or immidiately after the end of it.")
-                ElseIf Index = Me.List.Count Then
-                    V = New T()
+                If Index = Me.List.Count Then
+                    Dim V = New T()
                     Me.List.Add(V)
-                Else
-                    V = Me.List.Item(Index)
+                    Return V
                 End If
-                Return V
+                Return Me.List.Item(Index)
             End Get
             Set(ByVal Value As T)
                 If Index = Me.List.Count Then
