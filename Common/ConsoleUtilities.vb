@@ -9,7 +9,12 @@
         Public Const DefaultBackColor As ConsoleColor = ConsoleColor.White
         Public Const DefaultForeColor As ConsoleColor = ConsoleColor.Black
 
-        Public Shared Sub Initialize()
+        Public Shared Sub Initialize(Optional ByVal SetInvariantCulture As Boolean = True)
+            If SetInvariantCulture Then
+                Threading.Thread.CurrentThread.CurrentCulture = Globalization.CultureInfo.InvariantCulture
+                Threading.Thread.CurrentThread.CurrentUICulture = Globalization.CultureInfo.InvariantCulture
+            End If
+
             Console.ForegroundColor = DefaultForeColor
             Console.BackgroundColor = DefaultBackColor
             Console.Clear()
