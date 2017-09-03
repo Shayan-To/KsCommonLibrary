@@ -3,7 +3,7 @@ Imports System.Runtime.InteropServices
 
 Namespace Common.Win32
 
-    Public NotInheritable Class Files
+    Public MustInherit Class Files
 
         Private Sub New()
             Throw New NotSupportedException()
@@ -16,19 +16,8 @@ Namespace Common.Win32
         Public Shared Sub CreateHardLink(ByVal FileName As String, ByVal ExistingFileName As String)
             Dim R = CreateHardLinkW(FileName, ExistingFileName, IntPtr.Zero)
             If Not R Then
-                ThrowError()
+                Common.ThrowError()
             End If
-        End Sub
-
-        Private Shared Sub VerifyError()
-            Dim ErrorCode = Marshal.GetLastWin32Error()
-            If ErrorCode <> 0 Then
-                Throw New Win32Exception(ErrorCode)
-            End If
-        End Sub
-
-        Private Shared Sub ThrowError()
-            Throw New Win32Exception()
         End Sub
 
     End Class

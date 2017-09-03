@@ -201,6 +201,7 @@
     <Compile Include="Common\Void.vb" />
     <Compile Include="Common\WordReader.vb" />
     <Compile Include="TestingVisualizer.vb" />
+    <Compile Include="Win32\Common.vb" />
     <Compile Include="Win32\Files.vb" />
     <Compile Include="WPF\Controls\NumericUpDown.vb" />
     <Compile Include="WPF\Controls\Obj.vb" />
