@@ -111,7 +111,8 @@ Namespace Common.MVVM
         End Property
 #End Region
 
-        Private Shared ReadOnly MetadataDic As CreateInstanceDictionary(Of Type, Dictionary(Of String, PropertyMetadata)) = New CreateInstanceDictionary(Of Type, Dictionary(Of String, PropertyMetadata))()
+        Private Shared ReadOnly MetadataDic As CreateInstanceDictionary(Of Type, Dictionary(Of String, PropertyMetadata)) =
+            CreateInstanceDictionary.Create(Of Type, Dictionary(Of String, PropertyMetadata))()
 
         Private Structure PropertyMetadata
 

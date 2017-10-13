@@ -7,20 +7,33 @@
         End Sub
 
         Public Shared Function Create(Of TKey, TValue As New)(ByVal Dic As IDictionary(Of TKey, TValue)) As CreateInstanceDictionary(Of TKey, TValue)
-            Return New CreateInstanceDictionary(Of TKey, TValue)(Dic)
+            Return New CreateInstanceDictionary(Of TKey, TValue)(Dic, Function() New TValue())
+        End Function
+
+        Public Shared Function Create(Of TKey, TValue)(ByVal Dic As IDictionary(Of TKey, TValue), ByVal Creator As Func(Of TValue)) As CreateInstanceDictionary(Of TKey, TValue)
+            Return New CreateInstanceDictionary(Of TKey, TValue)(Dic, Creator)
+        End Function
+
+        Public Shared Function Create(Of TKey, TValue As New)() As CreateInstanceDictionary(Of TKey, TValue)
+            Return New CreateInstanceDictionary(Of TKey, TValue)(Function() New TValue())
+        End Function
+
+        Public Shared Function Create(Of TKey, TValue)(ByVal Creator As Func(Of TValue)) As CreateInstanceDictionary(Of TKey, TValue)
+            Return New CreateInstanceDictionary(Of TKey, TValue)(Creator)
         End Function
 
     End Class
 
-    Public Class CreateInstanceDictionary(Of TKey, TValue As New)
+    Public Class CreateInstanceDictionary(Of TKey, TValue)
         Implements IDictionary(Of TKey, TValue)
 
-        Public Sub New(ByVal Dic As IDictionary(Of TKey, TValue))
+        Public Sub New(ByVal Dic As IDictionary(Of TKey, TValue), ByVal Creator As Func(Of TValue))
             Me.Dic = Dic
+            Me.Creator = Creator
         End Sub
 
-        Public Sub New()
-            Me.New(New Dictionary(Of TKey, TValue)())
+        Public Sub New(ByVal Creator As Func(Of TValue))
+            Me.New(New Dictionary(Of TKey, TValue)(), Creator)
         End Sub
 
         Public Sub Add(ByVal item As KeyValuePair(Of TKey, TValue)) Implements ICollection(Of KeyValuePair(Of TKey, TValue)).Add
@@ -67,7 +80,7 @@
             Get
                 Dim V As TValue
                 If Not Me.Dic.TryGetValue(key, V) Then
-                    V = New TValue()
+                    V = Me.Creator.Invoke()
                     Me.Dic.Add(key, V)
                 End If
                 Return V
@@ -105,6 +118,7 @@
             Return Me.GetEnumerator()
         End Function
 
+        Private ReadOnly Creator As Func(Of TValue)
         Private ReadOnly Dic As IDictionary(Of TKey, TValue)
 
     End Class
