@@ -6,17 +6,34 @@
             Throw New NotSupportedException()
         End Sub
 
+        Public Shared Function Create(Of T)(ByVal List As IList(Of T), ByVal Creator As Func(Of Integer, T)) As CreateInstanceList(Of T)
+            Return New CreateInstanceList(Of T)(List, Creator)
+        End Function
+
+        Public Shared Function Create(Of T)(ByVal Creator As Func(Of Integer, T)) As CreateInstanceList(Of T)
+            Return New CreateInstanceList(Of T)(Creator)
+        End Function
+
         Public Shared Function Create(Of T As New)(ByVal List As IList(Of T)) As CreateInstanceList(Of T)
-            Return New CreateInstanceList(Of T)(List)
+            Return New CreateInstanceList(Of T)(List, Function(I) New T())
+        End Function
+
+        Public Shared Function Create(Of T As New)() As CreateInstanceList(Of T)
+            Return New CreateInstanceList(Of T)(Function(I) New T())
         End Function
 
     End Class
 
-    Public Class CreateInstanceList(Of T As New)
+    Public Class CreateInstanceList(Of T)
         Implements IList(Of T)
 
-        Public Sub New(ByVal List As IList(Of T))
+        Public Sub New(ByVal List As IList(Of T), ByVal Creator As Func(Of Integer, T))
             Me.List = List
+            Me.Creator = Creator
+        End Sub
+
+        Public Sub New(ByVal Creator As Func(Of Integer, T))
+            Me.New(New List(Of T)(), Creator)
         End Sub
 
         Public Sub Add(ByVal item As T) Implements ICollection(Of T).Add
@@ -56,13 +73,13 @@
         End Sub
 
         Public Sub Insert(ByVal Index As Integer)
-            Me.List.Insert(Index, New T())
+            Me.List.Insert(Index, Me.Creator.Invoke(Index))
         End Sub
 
         Default Public Property Item(ByVal Index As Integer) As T Implements IList(Of T).Item
             Get
                 If Index = Me.List.Count Then
-                    Dim V = New T()
+                    Dim V = Me.Creator.Invoke(Index)
                     Me.List.Add(V)
                     Return V
                 End If
@@ -93,6 +110,7 @@
             Return Me.List.IndexOf(Item)
         End Function
 
+        Private ReadOnly Creator As Func(Of Integer, T)
         Private ReadOnly List As IList(Of T)
 
     End Class
