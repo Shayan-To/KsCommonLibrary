@@ -3,7 +3,7 @@
     Public Class MergeSorter(Of T)
 
         Private Sub Merge(ByVal Start As Integer, ByVal Mid As Integer, ByVal [End] As Integer)
-            If Me.Comparer.Compare(Me.List.Item(Mid - 1), Me.List.Item(Mid)) <= 0 Then
+            If Start = Mid OrElse Me.Comparer.Compare(Me.List.Item(Mid - 1), Me.List.Item(Mid)) <= 0 Then
                 Exit Sub
             End If
 
@@ -62,24 +62,25 @@
         End Sub
 
         Public Sub Sort(ByVal List As IList(Of T), ByVal Comparer As IComparer(Of T))
-            Dim Length, Size, I As Integer
-
             Me.List = List
             Me.Temp = New T(List.Count) {}
             Me.Comparer = Comparer
 
-            Length = 1
-            Size = List.Count
+            Dim Length = 1
+            Dim Size = List.Count
             Do While Length < Size
-                For I = 0 To Size - 2 * Length Step Length * 2
-                    Me.Merge(I, I + Length, I + Length * 2)
+                Dim Length2 = Length * 2
+
+                Dim I = 0
+                For I = 0 To Size - Length2 Step Length2
+                    Me.Merge(I, I + Length, I + Length2)
                 Next
 
                 If I + Length < Size Then
                     Me.Merge(I, I + Length, Size)
                 End If
 
-                Length *= 2
+                Length = Length2
             Loop
 
             Me.Temp = Nothing
