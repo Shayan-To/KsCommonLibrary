@@ -9,6 +9,8 @@ Namespace Common.Win32
             Throw New NotSupportedException()
         End Sub
 
+        ' Windows Data Types: https://msdn.microsoft.com/en-us/library/windows/desktop/aa383751(v=vs.85).aspx
+
         Friend Shared Sub VerifyError()
             Dim ErrorCode = Marshal.GetLastWin32Error()
             If ErrorCode <> 0 Then

@@ -203,6 +203,8 @@
     <Compile Include="TestingVisualizer.vb" />
     <Compile Include="Win32\Common.vb" />
     <Compile Include="Win32\Files.vb" />
+    <Compile Include="Win32\Windows.Unsafe.vb" />
+    <Compile Include="Win32\Windows.vb" />
     <Compile Include="WPF\Controls\NumericUpDown.vb" />
     <Compile Include="WPF\Controls\Obj.vb" />
     <Compile Include="WPF\Controls\ObjList.vb" />
