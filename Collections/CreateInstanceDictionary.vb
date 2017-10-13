@@ -6,20 +6,30 @@
             Throw New NotSupportedException()
         End Sub
 
+        Public Shared Function Create(Of TKey, TValue)(ByVal Dic As IDictionary(Of TKey, TValue), ByVal Creator As Func(Of TKey, TValue)) As CreateInstanceDictionary(Of TKey, TValue)
+            Return New CreateInstanceDictionary(Of TKey, TValue)(Dic, Creator)
+        End Function
+
+        Public Shared Function Create(Of TKey, TValue)(ByVal Creator As Func(Of TKey, TValue)) As CreateInstanceDictionary(Of TKey, TValue)
+            Return New CreateInstanceDictionary(Of TKey, TValue)(Creator)
+        End Function
+
+        <Obsolete("Use other overloads.", True)>
+        Public Shared Function Create(Of TKey, TValue)(ByVal Dic As IDictionary(Of TKey, TValue), ByVal Creator As Func(Of TValue)) As CreateInstanceDictionary(Of TKey, TValue)
+            Return New CreateInstanceDictionary(Of TKey, TValue)(Dic, Function(K) Creator.Invoke())
+        End Function
+
+        <Obsolete("Use other overloads.", True)>
+        Public Shared Function Create(Of TKey, TValue)(ByVal Creator As Func(Of TValue)) As CreateInstanceDictionary(Of TKey, TValue)
+            Return New CreateInstanceDictionary(Of TKey, TValue)(Function(K) Creator.Invoke())
+        End Function
+
         Public Shared Function Create(Of TKey, TValue As New)(ByVal Dic As IDictionary(Of TKey, TValue)) As CreateInstanceDictionary(Of TKey, TValue)
             Return New CreateInstanceDictionary(Of TKey, TValue)(Dic, Function() New TValue())
         End Function
 
-        Public Shared Function Create(Of TKey, TValue)(ByVal Dic As IDictionary(Of TKey, TValue), ByVal Creator As Func(Of TValue)) As CreateInstanceDictionary(Of TKey, TValue)
-            Return New CreateInstanceDictionary(Of TKey, TValue)(Dic, Creator)
-        End Function
-
         Public Shared Function Create(Of TKey, TValue As New)() As CreateInstanceDictionary(Of TKey, TValue)
             Return New CreateInstanceDictionary(Of TKey, TValue)(Function() New TValue())
-        End Function
-
-        Public Shared Function Create(Of TKey, TValue)(ByVal Creator As Func(Of TValue)) As CreateInstanceDictionary(Of TKey, TValue)
-            Return New CreateInstanceDictionary(Of TKey, TValue)(Creator)
         End Function
 
     End Class
@@ -27,12 +37,12 @@
     Public Class CreateInstanceDictionary(Of TKey, TValue)
         Implements IDictionary(Of TKey, TValue)
 
-        Public Sub New(ByVal Dic As IDictionary(Of TKey, TValue), ByVal Creator As Func(Of TValue))
+        Public Sub New(ByVal Dic As IDictionary(Of TKey, TValue), ByVal Creator As Func(Of TKey, TValue))
             Me.Dic = Dic
             Me.Creator = Creator
         End Sub
 
-        Public Sub New(ByVal Creator As Func(Of TValue))
+        Public Sub New(ByVal Creator As Func(Of TKey, TValue))
             Me.New(New Dictionary(Of TKey, TValue)(), Creator)
         End Sub
 
@@ -80,7 +90,7 @@
             Get
                 Dim V As TValue
                 If Not Me.Dic.TryGetValue(key, V) Then
-                    V = Me.Creator.Invoke()
+                    V = Me.Creator.Invoke(key)
                     Me.Dic.Add(key, V)
                 End If
                 Return V
@@ -118,7 +128,7 @@
             Return Me.GetEnumerator()
         End Function
 
-        Private ReadOnly Creator As Func(Of TValue)
+        Private ReadOnly Creator As Func(Of TKey, TValue)
         Private ReadOnly Dic As IDictionary(Of TKey, TValue)
 
     End Class
