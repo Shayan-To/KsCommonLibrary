@@ -25,7 +25,7 @@
     End Class
 
     Public Class CreateInstanceList(Of T)
-        Implements IList(Of T)
+        Inherits BaseList(Of T)
 
         Public Sub New(ByVal List As IList(Of T), ByVal Creator As Func(Of Integer, T))
             Me.List = List
@@ -36,47 +36,25 @@
             Me.New(New List(Of T)(), Creator)
         End Sub
 
-        Public Sub Add(ByVal item As T) Implements ICollection(Of T).Add
-            Me.List.Add(item)
-        End Sub
-
-        Public Sub Clear() Implements ICollection(Of T).Clear
+        Public Overrides Sub Clear()
             Me.List.Clear()
         End Sub
 
-        Public Function Contains(ByVal item As T) As Boolean Implements ICollection(Of T).Contains
-            Return Me.List.Contains(item)
-        End Function
-
-        Public Sub CopyTo(ByVal array() As T, ByVal arrayIndex As Integer) Implements ICollection(Of T).CopyTo
-            Me.List.CopyTo(array, arrayIndex)
-        End Sub
-
-        Public ReadOnly Property Count As Integer Implements ICollection(Of T).Count
+        Public Overrides ReadOnly Property Count As Integer
             Get
                 Return Me.List.Count
             End Get
         End Property
 
-        Public ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of T).IsReadOnly
-            Get
-                Return False
-            End Get
-        End Property
-
-        Public Function Remove(ByVal Item As T) As Boolean Implements ICollection(Of T).Remove
-            Return Me.List.Remove(Item)
-        End Function
-
-        Public Sub Insert(ByVal Index As Integer, ByVal Value As T) Implements IList(Of T).Insert
-            Me.List.Insert(Index, Value)
+        Public Overrides Sub Insert(ByVal Index As Integer, ByVal Item As T)
+            Me.List.Insert(Index, Item)
         End Sub
 
-        Public Sub Insert(ByVal Index As Integer)
-            Me.List.Insert(Index, Me.Creator.Invoke(Index))
+        Public Overloads Sub Insert(ByVal Index As Integer)
+            Me.Insert(Index, Me.Creator.Invoke(Index))
         End Sub
 
-        Default Public Property Item(ByVal Index As Integer) As T Implements IList(Of T).Item
+        Default Public Overrides Property Item(ByVal Index As Integer) As T
             Get
                 If Index = Me.List.Count Then
                     Dim V = Me.Creator.Invoke(Index)
@@ -94,20 +72,16 @@
             End Set
         End Property
 
-        Public Sub RemoveAt(ByVal Index As Integer) Implements IList(Of T).RemoveAt
+        Public Overrides Sub RemoveAt(ByVal Index As Integer)
             Me.List.RemoveAt(Index)
         End Sub
 
-        Public Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+        Public Function GetEnumerator() As IEnumerator(Of T)
             Return Me.List.GetEnumerator()
         End Function
 
-        Private Function GetEnumerator_NonGeneric() As IEnumerator Implements IEnumerable.GetEnumerator
+        Protected Overrides Function IEnumerable_1_GetEnumerator() As IEnumerator(Of T)
             Return Me.GetEnumerator()
-        End Function
-
-        Public Function IndexOf(Item As T) As Integer Implements IList(Of T).IndexOf
-            Return Me.List.IndexOf(Item)
         End Function
 
         Private ReadOnly Creator As Func(Of Integer, T)
