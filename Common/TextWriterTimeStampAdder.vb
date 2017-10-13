@@ -3,12 +3,17 @@
     Public Class TextWriterTimeStampAdder
         Inherits IO.TextWriter
 
-        Public Sub New(ByVal TextWriter As IO.TextWriter)
+        Public Sub New(ByVal TextWriter As IO.TextWriter, ByVal GetTimeStampDelegate As Func(Of String))
             Me.Base = TextWriter
+            Me.GetTimeStampDelegate = GetTimeStampDelegate
+        End Sub
+
+        Public Sub New(ByVal TextWriter As IO.TextWriter)
+            Me.New(TextWriter, Function() Utilities.Representation.GetTimeStamp())
         End Sub
 
         Private Function GetTimeStamp() As String
-            Return Utilities.Representation.GetTimeStamp() & " :: "
+            Return Me.GetTimeStampDelegate.Invoke() & " :: "
         End Function
 
 #Region "Writes Group"
@@ -329,6 +334,7 @@
 #End Region
 
         Private ReadOnly Base As IO.TextWriter
+        Private ReadOnly GetTimeStampDelegate As Func(Of String)
 
     End Class
 
