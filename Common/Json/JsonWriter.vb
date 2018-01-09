@@ -61,6 +61,7 @@
 
         Public Function OpenList() As Opening
             Verify.False(Me.State = WriterState.End, "Cannot write after write is finished.")
+            Verify.True((Me.State = WriterState.Dictionary).Implies(Me.HasKeyBefore), $"Cannot write a value in place of a key in a dictionary. Use {NameOf(Me.WriteKey)} instead.")
 
             Me.WriteComma()
             Me.Builder.Append("["c)
@@ -68,6 +69,7 @@
             Dim R = New Opening(Me, "]"c, If(Me.State = WriterState.Begin, WriterState.End, Me.State))
 
             Me.HasValueBefore = False
+            Me.HasKeyBefore = False
             Me.State = WriterState.List
 
             Return R
@@ -75,6 +77,7 @@
 
         Public Function OpenDictionary() As Opening
             Verify.False(Me.State = WriterState.End, "Cannot write after write is finished.")
+            Verify.True((Me.State = WriterState.Dictionary).Implies(Me.HasKeyBefore), $"Cannot write a value in place of a key in a dictionary. Use {NameOf(Me.WriteKey)} instead.")
 
             Me.WriteComma()
             Me.Builder.Append("{"c)
@@ -82,6 +85,7 @@
             Dim R = New Opening(Me, "}"c, If(Me.State = WriterState.Begin, WriterState.End, Me.State))
 
             Me.HasValueBefore = False
+            Me.HasKeyBefore = False
             Me.State = WriterState.Dictionary
 
             Return R
@@ -133,7 +137,7 @@
                 Me.ClosingState = ClosingState
             End Sub
 
-            Friend Sub Dispose() Implements IDisposable.Dispose
+            Private Sub Dispose() Implements IDisposable.Dispose
                 Me.Writer.CloseOpening(Me.ClosingChar, Me.ClosingState)
             End Sub
 
