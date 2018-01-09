@@ -143,6 +143,7 @@
     <Compile Include="Common\DelegateEqualityComparer.vb" />
     <Compile Include="Common\Dispatcher.vb" />
     <Compile Include="Common\EventBasedTask.vb" />
+    <Compile Include="Common\HashCodeComparer.vb" />
     <Compile Include="Common\HashRandom.vb" />
     <Compile Include="Common\InvocationException.vb" />
     <Compile Include="Common\JoinDirection.vb" />
