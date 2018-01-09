@@ -20,9 +20,28 @@
             Me.Builder.Append(S, PrevStart, I - PrevStart)
         End Sub
 
-        Private Sub WriteComma()
+        Private Sub WriteNewLine()
+            Me.Builder.AppendLine()
+            For I = 0 To Me.CurrentIndent - 1
+                Me.Builder.Append(Me.IndentString)
+            Next
+        End Sub
+
+        Private Sub WriteSeparator(Optional ByVal NewLineRequired As Boolean = False)
             If Me.HasValueBefore Then
                 Me.Builder.Append(","c)
+                If Not NewLineRequired And Not Me.MultiLine And Me.AddSpaces Then
+                    Me.Builder.Append(" "c)
+                End If
+            End If
+            If Me.HasKeyBefore And Me.AddSpaces Then
+                Me.Builder.Append(" "c)
+            End If
+
+            If (Me.MultiLine And Not Me.HasKeyBefore) Or NewLineRequired Then
+                If Me.State <> WriterState.Begin Then
+                    Me.WriteNewLine()
+                End If
             End If
         End Sub
 
@@ -30,7 +49,8 @@
             Verify.False(Me.State = WriterState.End, "Cannot write after write is finished.")
             Verify.True((Me.State = WriterState.Dictionary).Implies(Me.HasKeyBefore), $"Cannot write a value in place of a key in a dictionary. Use {NameOf(Me.WriteKey)} instead.")
 
-            Me.WriteComma()
+            Me.WriteSeparator()
+
             If Quoted Then
                 Me.Builder.Append(""""c)
                 Me.WriteEscaped(Value)
@@ -51,51 +71,70 @@
             Verify.True(Me.State = WriterState.Dictionary, "Cannot write a key outside a dictionary.")
             Verify.False(Me.HasKeyBefore, "Cannot write a key immediately after another.")
 
-            Me.WriteComma()
+            Me.WriteSeparator()
+
             Me.Builder.Append(""""c)
             Me.WriteEscaped(Name)
             Me.Builder.Append(""":")
+
             Me.HasValueBefore = False
             Me.HasKeyBefore = True
         End Sub
 
-        Public Function OpenList() As Opening
+        Public Function OpenList(Optional ByVal MultiLine As Boolean = False) As Opening
             Verify.False(Me.State = WriterState.End, "Cannot write after write is finished.")
             Verify.True((Me.State = WriterState.Dictionary).Implies(Me.HasKeyBefore), $"Cannot write a value in place of a key in a dictionary. Use {NameOf(Me.WriteKey)} instead.")
 
-            Me.WriteComma()
+            Dim R = New Opening(Me, "]"c, If(Me.State = WriterState.Begin, WriterState.End, Me.State), Me.MultiLine)
+
+            Me.WriteSeparator(Me.OpeningBraceOnNewLine And MultiLine)
             Me.Builder.Append("["c)
 
-            Dim R = New Opening(Me, "]"c, If(Me.State = WriterState.Begin, WriterState.End, Me.State))
-
+            Me.MultiLine = MultiLine
             Me.HasValueBefore = False
             Me.HasKeyBefore = False
             Me.State = WriterState.List
 
+            If MultiLine Then
+                Me.CurrentIndent += 1
+            End If
+
             Return R
         End Function
 
-        Public Function OpenDictionary() As Opening
+        Public Function OpenDictionary(Optional ByVal MultiLine As Boolean = False) As Opening
             Verify.False(Me.State = WriterState.End, "Cannot write after write is finished.")
             Verify.True((Me.State = WriterState.Dictionary).Implies(Me.HasKeyBefore), $"Cannot write a value in place of a key in a dictionary. Use {NameOf(Me.WriteKey)} instead.")
 
-            Me.WriteComma()
+            Dim R = New Opening(Me, "}"c, If(Me.State = WriterState.Begin, WriterState.End, Me.State), Me.MultiLine)
+
+            Me.WriteSeparator(Me.OpeningBraceOnNewLine And MultiLine)
             Me.Builder.Append("{"c)
 
-            Dim R = New Opening(Me, "}"c, If(Me.State = WriterState.Begin, WriterState.End, Me.State))
-
+            Me.MultiLine = MultiLine
             Me.HasValueBefore = False
             Me.HasKeyBefore = False
             Me.State = WriterState.Dictionary
 
+            If MultiLine Then
+                Me.CurrentIndent += 1
+            End If
+
             Return R
         End Function
 
-        Private Sub CloseOpening(ByVal ClosingChar As Char, ByVal ClosingState As WriterState)
+        Private Sub CloseOpening(ByVal ClosingChar As Char, ByVal PreviousState As WriterState, ByVal PreviousMultiline As Boolean)
             Verify.False(Me.HasKeyBefore, "Cannot close while a key is pending its value.")
 
+            If Me.MultiLine Then
+                Me.CurrentIndent -= 1
+                Me.WriteNewLine()
+            End If
+
             Me.Builder.Append(ClosingChar)
-            Me.State = ClosingState
+
+            Me.MultiLine = PreviousMultiline
+            Me.State = PreviousState
             Me.HasValueBefore = True
         End Sub
 
@@ -104,6 +143,8 @@
             Me.State = WriterState.Begin
             Me.HasValueBefore = False
             Me.HasKeyBefore = False
+            Me.MultiLine = False
+            Me.CurrentIndent = 0
         End Sub
 
         Public Overrides Function ToString() As String
@@ -126,27 +167,70 @@
         Private ReadOnly Builder As Text.StringBuilder = New Text.StringBuilder()
         Private HasValueBefore As Boolean
         Private HasKeyBefore As Boolean
+        Private MultiLine As Boolean
+        Private CurrentIndent As Integer
         Private State As WriterState = WriterState.Begin
+
+#Region "IndentString Property"
+        Private _IndentString As String = "  "
+
+        Public Property IndentString As String
+            Get
+                Return Me._IndentString
+            End Get
+            Set(ByVal Value As String)
+                Me._IndentString = Value
+            End Set
+        End Property
+#End Region
+
+#Region "OpeningBraceOnNewLine Property"
+        Private _OpeningBraceOnNewLine As Boolean = False
+
+        Public Property OpeningBraceOnNewLine As Boolean
+            Get
+                Return Me._OpeningBraceOnNewLine
+            End Get
+            Set(ByVal Value As Boolean)
+                Me._OpeningBraceOnNewLine = Value
+            End Set
+        End Property
+#End Region
+
+#Region "AddSpaces Property"
+        Private _AddSpaces As Boolean = True
+
+        Public Property AddSpaces As Boolean
+            Get
+                Return Me._AddSpaces
+            End Get
+            Set(ByVal Value As Boolean)
+                Me._AddSpaces = Value
+            End Set
+        End Property
+#End Region
 
         Public Structure Opening
             Implements IDisposable
 
-            Friend Sub New(ByVal Writer As JsonWriter, ByVal ClosingChar As Char, ByVal ClosingState As WriterState)
+            Friend Sub New(ByVal Writer As JsonWriter, ByVal ClosingChar As Char, ByVal PreviousState As WriterState, ByVal PreviousMultiline As Boolean)
                 Me.Writer = Writer
                 Me.ClosingChar = ClosingChar
-                Me.ClosingState = ClosingState
+                Me.PreviousState = PreviousState
+                Me.PreviousMultiline = PreviousMultiline
             End Sub
 
             Private Sub Dispose() Implements IDisposable.Dispose
-                Me.Writer.CloseOpening(Me.ClosingChar, Me.ClosingState)
+                Me.Writer.CloseOpening(Me.ClosingChar, Me.PreviousState, Me.PreviousMultiline)
             End Sub
 
             Public Sub Close()
                 Me.Dispose()
             End Sub
 
-            Private ReadOnly ClosingState As WriterState
             Private ReadOnly ClosingChar As Char
+            Private ReadOnly PreviousState As WriterState
+            Private ReadOnly PreviousMultiline As Boolean
             Private ReadOnly Writer As JsonWriter
 
         End Structure
