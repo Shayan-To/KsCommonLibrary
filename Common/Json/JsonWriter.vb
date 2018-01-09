@@ -1,41 +1,56 @@
 ﻿Namespace Common
 
     Public Class JsonWriter
+        Implements IDisposable
+
+        Public Sub New(ByVal Output As IO.TextWriter, Optional ByVal LeaveOpen As Boolean = False)
+            Me.Out = Output
+            Me.LeaveOpen = LeaveOpen
+            Me.Reset()
+        End Sub
+
+        Public Sub New(ByVal StringBuilder As Text.StringBuilder)
+            Me.New(New IO.StringWriter(StringBuilder))
+        End Sub
 
         Private Sub WriteEscaped(ByVal S As String)
+            Assert.True(Me.TempBuilder.Length = 0)
+
             Dim PrevStart = 0
             Dim I = 0
             For I = 0 To S.Length - 1
                 Dim Ch = S.Chars(I)
                 Dim ECh = Ch
                 If EscapeDic.TryGetValue(Ch, ECh) Then
-                    Me.Builder.Append(S, PrevStart, I - PrevStart).Append("\"c).Append(ECh)
+                    Me.TempBuilder.Append(S, PrevStart, I - PrevStart).Append("\"c).Append(ECh)
                     PrevStart = I + 1
                 ElseIf Char.IsControl(Ch) Then
-                    Me.Builder.Append(S, PrevStart, I - PrevStart).Append("\u").Append(Convert.ToString(Strings.AscW(Ch), 16).PadLeft(4, "0"c))
+                    Me.TempBuilder.Append(S, PrevStart, I - PrevStart).Append("\u").Append(Convert.ToString(Strings.AscW(Ch), 16).PadLeft(4, "0"c))
                     PrevStart = I + 1
                 End If
             Next
+            Me.TempBuilder.Append(S, PrevStart, I - PrevStart)
 
-            Me.Builder.Append(S, PrevStart, I - PrevStart)
+            Me.Out.Write(Me.TempBuilder.ToString())
+            Me.TempBuilder.Clear()
         End Sub
 
         Private Sub WriteNewLine()
-            Me.Builder.AppendLine()
+            Me.Out.WriteLine()
             For I = 0 To Me.CurrentIndent - 1
-                Me.Builder.Append(Me.IndentString)
+                Me.Out.Write(Me.IndentString)
             Next
         End Sub
 
         Private Sub WriteSeparator(Optional ByVal NewLineRequired As Boolean = False)
             If Me.HasValueBefore Then
-                Me.Builder.Append(","c)
+                Me.Out.Write(","c)
                 If Not NewLineRequired And Not Me.MultiLine And Me.AddSpaces Then
-                    Me.Builder.Append(" "c)
+                    Me.Out.Write(" "c)
                 End If
             End If
             If Me.HasKeyBefore And Me.AddSpaces Then
-                Me.Builder.Append(" "c)
+                Me.Out.Write(" "c)
             End If
 
             If (Me.MultiLine And Not Me.HasKeyBefore) Or NewLineRequired Then
@@ -52,11 +67,11 @@
             Me.WriteSeparator()
 
             If Quoted Then
-                Me.Builder.Append(""""c)
+                Me.Out.Write(""""c)
                 Me.WriteEscaped(Value)
-                Me.Builder.Append(""""c)
+                Me.Out.Write(""""c)
             Else
-                Me.Builder.Append(Value)
+                Me.Out.Write(Value)
             End If
 
             If Me.State = WriterState.Begin Then
@@ -73,9 +88,9 @@
 
             Me.WriteSeparator()
 
-            Me.Builder.Append(""""c)
+            Me.Out.Write(""""c)
             Me.WriteEscaped(Name)
-            Me.Builder.Append(""":")
+            Me.Out.Write(""":")
 
             Me.HasValueBefore = False
             Me.HasKeyBefore = True
@@ -88,7 +103,7 @@
             Dim R = New Opening(Me, "]"c, If(Me.State = WriterState.Begin, WriterState.End, Me.State), Me.MultiLine)
 
             Me.WriteSeparator(Me.OpeningBraceOnNewLine And MultiLine)
-            Me.Builder.Append("["c)
+            Me.Out.Write("["c)
 
             Me.MultiLine = MultiLine
             Me.HasValueBefore = False
@@ -109,7 +124,7 @@
             Dim R = New Opening(Me, "}"c, If(Me.State = WriterState.Begin, WriterState.End, Me.State), Me.MultiLine)
 
             Me.WriteSeparator(Me.OpeningBraceOnNewLine And MultiLine)
-            Me.Builder.Append("{"c)
+            Me.Out.Write("{"c)
 
             Me.MultiLine = MultiLine
             Me.HasValueBefore = False
@@ -131,26 +146,20 @@
                 Me.WriteNewLine()
             End If
 
-            Me.Builder.Append(ClosingChar)
+            Me.Out.Write(ClosingChar)
 
             Me.MultiLine = PreviousMultiline
             Me.State = PreviousState
             Me.HasValueBefore = True
         End Sub
 
-        Public Sub Reset()
-            Me.Builder.Clear()
+        Private Sub Reset()
             Me.State = WriterState.Begin
             Me.HasValueBefore = False
             Me.HasKeyBefore = False
             Me.MultiLine = False
             Me.CurrentIndent = 0
         End Sub
-
-        Public Overrides Function ToString() As String
-            Verify.True(Me.State = WriterState.End, "Write must be finished before JSON string can be got.")
-            Return Me.Builder.ToString()
-        End Function
 
         Private Shared ReadOnly EscapeDic As Dictionary(Of Char, Char) =
                 (Function() New Dictionary(Of Char, Char) From {
@@ -164,12 +173,43 @@
                          {Strings.ChrW(&H9), "t"c}
                      }).Invoke()
 
-        Private ReadOnly Builder As Text.StringBuilder = New Text.StringBuilder()
+        Private ReadOnly TempBuilder As Text.StringBuilder = New Text.StringBuilder()
+        Private ReadOnly Out As IO.TextWriter
+        Private ReadOnly LeaveOpen As Boolean
+
         Private HasValueBefore As Boolean
         Private HasKeyBefore As Boolean
         Private MultiLine As Boolean
         Private CurrentIndent As Integer
         Private State As WriterState = WriterState.Begin
+
+#Region "IDisposable Support"
+        Protected Overridable Sub Dispose(Disposing As Boolean)
+            If Not Me.IsDisposed Then
+                If Disposing Then
+                    If Not Me.LeaveOpen Then
+                        Me.Out.Dispose()
+                    End If
+                End If
+            End If
+            Me._IsDisposed = True
+        End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            Me.Dispose(True)
+        End Sub
+
+#Region "IsDisposed Read-Only Property"
+        Private _IsDisposed As Boolean
+
+        <ComponentModel.EditorBrowsable(ComponentModel.EditorBrowsableState.Advanced)>
+        Public ReadOnly Property IsDisposed As Boolean
+            Get
+                Return Me._IsDisposed
+            End Get
+        End Property
+#End Region
+#End Region
 
 #Region "IndentString Property"
         Private _IndentString As String = "  "
