@@ -1,4 +1,6 @@
-﻿Namespace Common
+﻿'#Const RelaxedStrings = True
+
+Namespace Common
 
     Public Class JsonParser
 

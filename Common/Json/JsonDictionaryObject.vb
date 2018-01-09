@@ -57,7 +57,7 @@
 
         Public Function TryGetValue(Key As String, ByRef Value As JsonObject) As Boolean Implements IReadOnlyDictionary(Of String, JsonObject).TryGetValue
             Dim T = Me.List.BinarySearch(New KeyValuePair(Of String, JsonObject)(Key, Nothing), CompareKeyHash)
-            For I = T.Item1 To T.Item1 + T.Item2 - 1
+            For I = T.StartIndex To T.StartIndex + T.Length - 1
                 If Me.List(I).Key = Key Then
                     Value = Me.List(I).Value
                     Return True

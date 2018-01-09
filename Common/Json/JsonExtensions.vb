@@ -1,4 +1,6 @@
-﻿Imports System.Runtime.CompilerServices
+﻿'#Const RelaxedStrings = True
+
+Imports System.Runtime.CompilerServices
 
 Namespace Common
 
@@ -27,7 +29,7 @@ Namespace Common
 
         <Extension()>
         Public Function GetString(ByVal Self As JsonObject) As String
-            Assert.False(Self Is Nothing)
+            Verify.NonNull(Self)
             Dim V = Self.AsValue("A string value was expected, not a list or dictionary.")
 
 #If Not RelaxedStrings Then
@@ -39,7 +41,7 @@ Namespace Common
 
         <Extension()>
         Public Function GetBoolean(ByVal Self As JsonObject) As Boolean
-            Assert.False(Self Is Nothing)
+            Verify.NonNull(Self)
             Dim V = Self.AsValue("A boolean value was expected, not a list or dictionary.")
 
 #If Not RelaxedStrings Then
@@ -52,7 +54,7 @@ Namespace Common
 
         <Extension()>
         Public Function GetInteger(ByVal Self As JsonObject) As Integer
-            Assert.False(Self Is Nothing)
+            Verify.NonNull(Self)
             Dim V = Self.AsValue("An integer value was expected, not a list or dictionary.")
 
 #If Not RelaxedStrings Then
@@ -66,7 +68,7 @@ Namespace Common
 
         <Extension()>
         Public Function GetDouble(ByVal Self As JsonObject) As Double
-            Assert.False(Self Is Nothing)
+            Verify.NonNull(Self)
             Dim V = Self.AsValue("A number value was expected, not a list or dictionary.")
 
 #If Not RelaxedStrings Then
