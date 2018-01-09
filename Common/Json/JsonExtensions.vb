@@ -7,6 +7,60 @@ Namespace Common
     Public Module JsonExtensions
 
         <Extension()>
+        Public Sub WriteValue(ByVal Writer As JsonWriter, ByVal Obj As JsonObject, Optional ByVal MultiLine As Boolean? = Nothing)
+            If TypeOf Obj Is JsonDictionaryObject Then
+                Dim T = DirectCast(Obj, JsonDictionaryObject)
+
+                Dim ML As Boolean
+                If MultiLine.HasValue Then
+                    ML = MultiLine.Value
+                Else
+                    ML = T.Count > 1
+                    ML = ML OrElse T.Values.Any(Function(I) TypeOf I IsNot JsonValueObject)
+                End If
+
+                Using Writer.OpenDictionary(ML)
+                    For Each I In T.OrderBy(Function(KV) KV.Key)
+                        Writer.WriteKey(I.Key)
+                        Writer.WriteValue(I.Value, MultiLine)
+                    Next
+                End Using
+
+                Exit Sub
+            End If
+
+            If TypeOf Obj Is JsonListObject Then
+                Dim T = DirectCast(Obj, JsonListObject)
+
+                Dim ML As Boolean
+                If MultiLine.HasValue Then
+                    ML = MultiLine.Value
+                Else
+                    ML = T.Count > 10
+                    ML = ML OrElse T.Any(Function(I) TypeOf I IsNot JsonValueObject)
+                    ML = ML OrElse T.Cast(Of JsonValueObject).Sum(Function(I) I.Value.Length) > 150
+                End If
+
+                Using Writer.OpenList(ML)
+                    For Each I In T
+                        Writer.WriteValue(I, MultiLine)
+                    Next
+                End Using
+
+                Exit Sub
+            End If
+
+            If TypeOf Obj Is JsonValueObject Then
+                Dim T = DirectCast(Obj, JsonValueObject)
+                Writer.WriteValue(T.Value, T.IsString)
+
+                Exit Sub
+            End If
+
+            Verify.Fail("Invalid object type.")
+        End Sub
+
+        <Extension()>
         Public Function AsDictionary(ByVal Self As JsonObject) As JsonDictionaryObject
             Dim R = TryCast(Self, JsonDictionaryObject)
             Verify.False(R Is Nothing, "Item has to be a dictionary.")
