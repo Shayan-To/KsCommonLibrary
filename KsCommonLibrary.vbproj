@@ -148,6 +148,11 @@
     <Compile Include="Common\InvocationException.vb" />
     <Compile Include="Common\JoinDirection.vb" />
     <Compile Include="Common\JoinElement.vb" />
+    <Compile Include="Common\Json\Dynamic\JsonDynamicBase.vb" />
+    <Compile Include="Common\Json\Dynamic\JsonDynamicValue.vb" />
+    <Compile Include="Common\Json\Dynamic\JsonDynamicExtensions.vb" />
+    <Compile Include="Common\Json\Dynamic\JsonDynamicDictionary.vb" />
+    <Compile Include="Common\Json\Dynamic\JsonDynamicList.vb" />
     <Compile Include="Common\Json\JsonExtensions.vb" />
     <Compile Include="Common\Json\JsonDictionaryObject.vb" />
     <Compile Include="Common\Json\JsonListObject.vb" />
