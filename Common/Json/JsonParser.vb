@@ -29,6 +29,13 @@ Namespace Common
             If Token.Value = "{" Then
                 Dim List = New List(Of KeyValuePair(Of String, JsonObject))()
 
+                Token = Me.PeekToken()
+
+                If Token.Type = TokenType.Operator And Token.Value = "}" Then
+                    Me.ReadToken()
+                    Return New JsonDictionaryObject(List)
+                End If
+
                 Do
                     Token = Me.ReadToken()
 #If RelaxedStrings Then
@@ -36,6 +43,7 @@ Namespace Common
 #Else
                     Verify.True(Token.Type = TokenType.QuotedValue, "Invalid JSON format. Key must be a string.")
 #End If
+
                     Dim Key = Token.Value
 
                     Token = Me.ReadToken()
@@ -55,6 +63,13 @@ Namespace Common
             Else
                 Dim List = New List(Of JsonObject)()
 
+                Token = Me.PeekToken()
+
+                If Token.Type = TokenType.Operator And Token.Value = "]" Then
+                    Me.ReadToken()
+                    Return New JsonListObject(List)
+                End If
+
                 Do
                     List.Add(Me.Parse())
 
@@ -70,7 +85,20 @@ Namespace Common
             End If
         End Function
 
+        Private Function PeekToken() As Token
+            If Not Me._PeekedToken.HasValue Then
+                Me._PeekedToken = Me.ReadToken()
+            End If
+            Return Me._PeekedToken.Value
+        End Function
+
         Private Function ReadToken() As Token
+            If Me._PeekedToken.HasValue Then
+                Dim R = Me._PeekedToken.Value
+                Me._PeekedToken = Nothing
+                Return R
+            End If
+
             Me.SkipWhiteSpace()
 
             If Me.Index = Me.Input.Length Then
@@ -185,6 +213,8 @@ Namespace Common
         Private Shared ReadOnly Operators As Char() = "{}[],:".ToCharArray()
 
         Private ReadOnly StringBuilder As Text.StringBuilder = New Text.StringBuilder()
+
+        Private _PeekedToken As Token?
 
         Private Input As Char()
         Private Index As Integer
