@@ -445,6 +445,50 @@ Namespace Common
         End Function
 
         <Extension()>
+        Public Function RandomElements(Of T)(ByVal Self As IEnumerable(Of T), ByVal Count As Integer) As T()
+            Dim Res = New T(Count - 1) {}
+            Dim Cnt = 0
+
+            Dim Rand = DefaultCacher(Of Random).Value
+
+            For Each I In Self
+                Cnt += 1
+                If Cnt <= Count Then
+                    Res(Cnt - 1) = I
+                    If Cnt = Count Then
+                        Res.RandomizeOrder()
+                    End If
+                Else
+                    If Rand.Next(Cnt) < Count Then
+                        Res(Rand.Next(Count)) = I
+                    End If
+                End If
+            Next
+
+            Return Res
+        End Function
+
+        <Extension()>
+        Public Iterator Function RandomPick(Of T)(ByVal Self As IEnumerable(Of T), ByVal Ratio As Ratio) As IEnumerable(Of T)
+            Dim Rand = DefaultCacher(Of Random).Value
+
+            For Each I In Self
+                If Rand.Next(Ratio.Denumenator) < Ratio.Numerator Then
+                    Yield I
+                End If
+            Next
+        End Function
+
+        <Extension()>
+        Public Sub RandomizeOrder(Of T)(ByVal Self As IList(Of T))
+            Dim Rand = DefaultCacher(Of Random).Value
+            For I = 1 To Self.Count - 1
+                Dim J = Rand.Next(I + 1)
+                Self.Move(I, J)
+            Next
+        End Sub
+
+        <Extension()>
         Public Sub CopyTo(Of T)(ByVal Self As IEnumerable(Of T), ByVal Destination As IList(Of T), Optional ByVal Index As Integer = 0, Optional ByVal Count As Integer = -1)
             'If Destination.Count - Index < Self.Count() Then
             '    Throw New ArgumentException("There is not enough space on the destination to copy the collection.")
