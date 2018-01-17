@@ -427,7 +427,7 @@ Namespace Common
             Next
         End Function
 
-        <Extension>
+        <Extension()>
         Public Function RandomElement(Of T)(ByVal Self As IEnumerable(Of T)) As T
             Dim Rnd = DefaultCacher(Of Random).Value
 
@@ -444,7 +444,7 @@ Namespace Common
             Return Self.ElementAt(Rnd.Next(Self.Count()))
         End Function
 
-        <Extension>
+        <Extension()>
         Public Sub CopyTo(Of T)(ByVal Self As IEnumerable(Of T), ByVal Destination As IList(Of T), Optional ByVal Index As Integer = 0, Optional ByVal Count As Integer = -1)
             'If Destination.Count - Index < Self.Count() Then
             '    Throw New ArgumentException("There is not enough space on the destination to copy the collection.")
@@ -470,26 +470,26 @@ Namespace Common
             End If
         End Sub
 
-        <Extension>
+        <Extension()>
         Public Sub AddRange(Of T)(ByVal Self As IList(Of T), ByVal Items As IEnumerable(Of T))
             For Each I As T In Items
                 Self.Add(I)
             Next
         End Sub
 
-        <Extension>
+        <Extension()>
         Public Sub AddRange(ByVal Self As IList, ByVal Items As IEnumerable)
             For Each I In Items
                 Self.Add(I)
             Next
         End Sub
 
-        <Extension>
+        <Extension()>
         Public Sub Sort(Of T)(ByVal Self As IList(Of T))
             DefaultCacher(Of MergeSorter(Of T)).Value.Sort(Self)
         End Sub
 
-        <Extension>
+        <Extension()>
         Public Sub Sort(Of T)(ByVal Self As IList(Of T), ByVal Comparer As IComparer(Of T))
             DefaultCacher(Of MergeSorter(Of T)).Value.Sort(Self, Comparer)
         End Sub
@@ -634,22 +634,22 @@ Namespace Common
 
 #Region "Geometry Group"
 #Region "Elementary"
-        <Extension>
+        <Extension()>
         Public Function ToVector(ByVal Self As Size) As Vector
             Return New Vector(Self.Width, Self.Height)
         End Function
 
-        <Extension>
+        <Extension()>
         Public Function ToVector(ByVal Self As Point) As Vector
             Return New Vector(Self.X, Self.Y)
         End Function
 
-        <Extension>
+        <Extension()>
         Public Function ToSize(ByVal Self As Vector) As Size
             Return New Size(Self.X, Self.Y)
         End Function
 
-        <Extension>
+        <Extension()>
         Public Function ToSizeSafe(ByVal Self As Vector) As Size
             If Self.X < 0 Then
                 Self.X = 0
@@ -660,14 +660,14 @@ Namespace Common
             Return New Size(Self.X, Self.Y)
         End Function
 
-        <Extension>
+        <Extension()>
         Public Function ToPoint(ByVal Self As Vector) As Point
             Return New Point(Self.X, Self.Y)
         End Function
 #End Region
 
 #Region "RectangleFitting"
-        <Extension>
+        <Extension()>
         Public Function GetLargestFitOf(ByVal Self As Rect, ByVal Size As Size) As (Rect, Boolean?)
             Dim Bl As Boolean?
 
@@ -755,36 +755,36 @@ Namespace Common
             End If
         End Function
 
-        <Extension>
+        <Extension()>
         Public Function GetInnerBoundedSquare(ByVal Self As Rect) As Rect
             Throw New NotImplementedException()
         End Function
 
-        <Extension>
+        <Extension()>
         Public Function GetOuterBoundingSquare(ByVal Self As Rect) As Rect
             Throw New NotImplementedException()
         End Function
 #End Region
 
 #Region "ChangeCoordinateSystem Logic"
-        <Extension>
+        <Extension()>
         Public Function FromLocal(ByVal Self As Rect, ByVal Point As Point) As Point
             Return Point + Self.Location.ToVector()
         End Function
 
-        <Extension>
+        <Extension()>
         Public Function ToLocal(ByVal Self As Rect, ByVal Point As Point) As Point
             Return Point - Self.Location.ToVector()
         End Function
 
-        <Extension>
+        <Extension()>
         Public Function FromLocal01(ByVal Self As Rect, ByVal Point As Point) As Point
             Point = New Point(Point.X * Self.Width, Point.Y * Self.Height)
             Point += Self.Location.ToVector()
             Return Point
         End Function
 
-        <Extension>
+        <Extension()>
         Public Function ToLocal01(ByVal Self As Rect, ByVal Point As Point) As Point
             Point -= Self.Location.ToVector()
             Point = New Point(Point.X / Self.Width, Point.Y / Self.Height)
@@ -792,12 +792,12 @@ Namespace Common
         End Function
 #End Region
 
-        <Extension>
+        <Extension()>
         Public Function GetCenter(ByVal Self As Rect) As Point
             Return Self.Location + Self.Size.ToVector() / 2
         End Function
 
-        <Extension>
+        <Extension()>
         Public Sub MoveCenter(ByVal Self As Rect, ByVal Center As Point)
             Self.Location = Center - Self.Size.ToVector() / 2
         End Sub
