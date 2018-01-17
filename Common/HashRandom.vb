@@ -2,8 +2,14 @@
 
     Public Class HashRandom
 
+        Private Shared Function GetRandomSeed(ByVal Hasher As Security.Cryptography.HashAlgorithm) As Byte()
+            Dim Seed = New Byte(Hasher.OutputBlockSize - 1) {}
+            DefaultCacher(Of Random).Value.NextBytes(Seed)
+            Return Seed
+        End Function
+
         Public Sub New(ByVal Hasher As Security.Cryptography.HashAlgorithm)
-            Me.New(Hasher, DateTime.Now.Ticks)
+            Me.New(Hasher, GetRandomSeed(Hasher))
         End Sub
 
         Public Sub New(ByVal Hasher As Security.Cryptography.HashAlgorithm, ByVal Seed As Long)
