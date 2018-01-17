@@ -239,7 +239,7 @@ Namespace Common
 
         <Extension()>
         Public Function Aggregate(Of T)(ByVal Self As IEnumerable(Of T), ByVal Func As Func(Of T, T, T), ByVal EmptyValue As T) As T
-            Dim R As T = Nothing
+            Dim R = EmptyValue
             Dim Bl = True
             For Each I In Self
                 If Bl Then
