@@ -97,12 +97,19 @@ Namespace Common
             ''' Returns a list of (I, J) where List1[I] = List2[J] and the list is [one of] the longest possible list[s].
             ''' </summary>
             Public Shared Function GetLongestCommonSubsequence(Of T)(ByVal List1 As IReadOnlyList(Of T), ByVal List2 As IReadOnlyList(Of T), ByVal Comparer As IEqualityComparer(Of T)) As IReadOnlyList(Of (Index1 As Integer, Index2 As Integer))
+                Return GetLongestCommonSubsequence(List1, List2, Function(A, B) If(Comparer.Equals(A, B), 1, 0))
+            End Function
+
+            ''' <summary>
+            ''' Returns a list of (I, J) where List1[I] = List2[J] and the list is [one of] the longest possible list[s].
+            ''' </summary>
+            Public Shared Function GetLongestCommonSubsequence(Of T)(ByVal List1 As IReadOnlyList(Of T), ByVal List2 As IReadOnlyList(Of T), ByVal ValueFunction As Func(Of T, T, Integer)) As IReadOnlyList(Of (Index1 As Integer, Index2 As Integer))
                 ' We use dynamic programming.
 
-                ' The length of longest common subsequence of List1[0..m] and List2[0..n] is max of:
-                ' - If List1[m] = List2[n] Then: 1 + The length of longest common subsequence of List1[0..(m - 1)] and List2[0..(n - 1)].
-                ' - The length of longest common subsequence of List1[0..m] and List2[0..(n - 1)].
-                ' - The length of longest common subsequence of List1[0..(m - 1)] and List2[0..n].
+                ' The value of the most valuable common subsequence of List1[0..m] and List2[0..n] is max of:
+                ' - ValueFunction(List1[m], List2[n]) + The value of the most valuable common subsequence of List1[0..(m - 1)] and List2[0..(n - 1)].
+                ' - The value of the most valuable common subsequence of List1[0..m] and List2[0..(n - 1)].
+                ' - The value of the most valuable common subsequence of List1[0..(m - 1)] and List2[0..n].
 
                 ' We do it from the other end so that we can have the result without reversing it.
 
@@ -119,16 +126,12 @@ Namespace Common
 
                 For I = M - 1 To 0 Step -1
                     For J = N - 1 To 0 Step -1
-                        Dim Length = 0
-                        Dim Mode = 0
+                        Dim Length = ValueFunction.Invoke(List1.Item(I), List2.Item(J))
+                        Dim Mode = 1
 
-                        If Comparer.Equals(List1.Item(I), List2.Item(J)) Then
-                            Length = 1
-                            Mode = 1
-                            If I <> M - 1 And J <> N - 1 Then
-                                Length += Dyn(I + 1, J + 1).Item1
-                                Mode += 2 + 4
-                            End If
+                        If I <> M - 1 And J <> N - 1 Then
+                            Length += Dyn(I + 1, J + 1).Item1
+                            Mode += 2 + 4
                         End If
 
                         If I <> M - 1 Then
