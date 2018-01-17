@@ -180,6 +180,74 @@ Namespace Common
                 Return Res.AsReadOnly()
             End Function
 
+            Public Shared Function GetEditDistance(Of T)(ByVal L1 As IList(Of T), ByVal L2 As IList(Of T)) As Integer
+                Dim Comparer = EqualityComparer(Of T).Default
+                Return GetEditDistance(L1, L2, Function(A, B) Comparer.Equals(A, B))
+            End Function
+
+            Public Shared Function GetEditDistance(Of T)(ByVal L1 As IList(Of T), ByVal L2 As IList(Of T), ByVal EqualityComparer As Func(Of T, T, Boolean)) As Integer
+                ' We use dynamic programming.
+
+                ' The edit distance of L1[0..m] and L2[0..n] is min of:
+                ' - If L1[m] = L2[n] Then: The edit distance of L1[0..(m - 1)] and L2[0..(n - 1)].
+                ' - Remove L1[m] from L1[0..m]: 1 + The edit distance of L1[0..(m - 1)] and L2[0..n].
+                ' - Add L2[n] to the end of L1[0..m]: 1 + The edit distance of L1[0..m] and L2[0..(n - 1)].
+                ' - Replace L1[m] with L2[n]: 1 + The edit distance of L1[0..(m - 1)] and L2[0..(n - 1)].
+
+                ' ToDo If the first case happens, do we need to proceed and check the other 3? Or it is proven to be <= others?
+                ' ToDo Output the operations as well.
+
+                Dim Dyn = New Integer(L1.Count, L2.Count) {}
+
+                For I = 0 To L1.Count
+                    For J = 0 To L2.Count
+                        Dim Cost = Integer.MaxValue
+
+                        ' If the last ones are equal, boh are removed.
+                        If I <> 0 And J <> 0 Then
+                            If EqualityComparer.Invoke(L1.Item(I - 1), L2.Item(J - 1)) Then
+                                Dim C = Dyn(I - 1, J - 1)
+                                If C < Cost Then
+                                    Cost = C
+                                End If
+                            End If
+                        End If
+
+                        ' Remove the last one.
+                        If I <> 0 Then
+                            Dim C = 1 + Dyn(I - 1, J)
+                            If C < Cost Then
+                                Cost = C
+                            End If
+                        End If
+
+                        ' Add the last of second to here. Now the lasts are equal and are both remove.
+                        If J <> 0 Then
+                            Dim C = 1 + Dyn(I, J - 1)
+                            If C < Cost Then
+                                Cost = C
+                            End If
+                        End If
+
+                        ' Replace the last with the last of second. Now the lasts are equal and are both removed.
+                        If I <> 0 And J <> 0 Then
+                            Dim C = 1 + Dyn(I - 1, J - 1)
+                            If C < Cost Then
+                                Cost = C
+                            End If
+                        End If
+
+                        If Cost = Integer.MaxValue Then
+                            Cost = 0
+                        End If
+
+                        Dyn(I, J) = Cost
+                    Next
+                Next
+
+                Return Dyn(L1.Count, L2.Count)
+            End Function
+
         End Class
 
     End Class
