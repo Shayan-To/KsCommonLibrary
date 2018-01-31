@@ -14,25 +14,24 @@
         End Sub
 
         Private Sub WriteEscaped(ByVal S As String)
-            Assert.True(Me.TempBuilder.Length = 0)
-
             Dim PrevStart = 0
             Dim I = 0
             For I = 0 To S.Length - 1
                 Dim Ch = S.Chars(I)
                 Dim ECh = Ch
                 If EscapeDic.TryGetValue(Ch, ECh) Then
-                    Me.TempBuilder.Append(S, PrevStart, I - PrevStart).Append("\"c).Append(ECh)
+                    Me.Out.Write(S.Substring(PrevStart, I - PrevStart))
+                    Me.Out.Write("\"c)
+                    Me.Out.Write(ECh)
                     PrevStart = I + 1
                 ElseIf Char.IsControl(Ch) Then
-                    Me.TempBuilder.Append(S, PrevStart, I - PrevStart).Append("\u").Append(Convert.ToString(Strings.AscW(Ch), 16).PadLeft(4, "0"c))
+                    Me.Out.Write(S.Substring(PrevStart, I - PrevStart))
+                    Me.Out.Write("\u")
+                    Me.Out.Write(Convert.ToString(Strings.AscW(Ch), 16).PadLeft(4, "0"c))
                     PrevStart = I + 1
                 End If
             Next
-            Me.TempBuilder.Append(S, PrevStart, I - PrevStart)
-
-            Me.Out.Write(Me.TempBuilder.ToString())
-            Me.TempBuilder.Clear()
+            Me.Out.Write(S.Substring(PrevStart, I - PrevStart))
         End Sub
 
         Private Sub WriteNewLine()
@@ -173,7 +172,6 @@
                          {Strings.ChrW(&H9), "t"c}
                      }).Invoke()
 
-        Private ReadOnly TempBuilder As Text.StringBuilder = New Text.StringBuilder()
         Private ReadOnly Out As IO.TextWriter
         Private ReadOnly LeaveOpen As Boolean
 
