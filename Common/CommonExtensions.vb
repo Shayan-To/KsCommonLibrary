@@ -653,57 +653,65 @@ Namespace Common
         End Function
 
         <Extension()>
-        Public Function MaxOrDefault(Of T)(ByVal Self As IEnumerable(Of T), ByVal Selector As Func(Of T, Double?)) As T
+        Public Function MaxOrDefault(Of T)(ByVal Self As IEnumerable(Of T), ByVal Selector As Func(Of T, Integer, Double?)) As T
             Dim M As Double? = Nothing
             Dim R As T = Nothing
+            Dim Ind = 0
             For Each I In Self
-                Dim V = Selector.Invoke(I)
-                If V.HasValue And Not M >= V Then
-                    M = V
-                    R = I
-                End If
-            Next
-            Return R
-        End Function
-
-        <Extension()>
-        Public Function MinOrDefault(Of T)(ByVal Self As IEnumerable(Of T), ByVal Selector As Func(Of T, Double?)) As T
-            Dim M As Double? = Nothing
-            Dim R As T = Nothing
-            For Each I In Self
-                Dim V = Selector.Invoke(I)
-                If V.HasValue And Not M <= V Then
-                    M = V
-                    R = I
-                End If
-            Next
-            Return R
-        End Function
-
-        <Extension()>
-        Public Function MaxOrDefault(Of T)(ByVal Self As IEnumerable(Of T), ByVal Selector As Func(Of T, Long?)) As T
-            Dim M As Long? = Nothing
-            Dim R As T = Nothing
-            For Each I In Self
-                Dim V = Selector.Invoke(I)
+                Dim V = Selector.Invoke(I, Ind)
                 If V.HasValue And If(M > V, True) Then
                     M = V
                     R = I
                 End If
+                Ind += 1
             Next
             Return R
         End Function
 
         <Extension()>
-        Public Function MinOrDefault(Of T)(ByVal Self As IEnumerable(Of T), ByVal Selector As Func(Of T, Long?)) As T
-            Dim M As Long? = Nothing
+        Public Function MinOrDefault(Of T)(ByVal Self As IEnumerable(Of T), ByVal Selector As Func(Of T, Integer, Double?)) As T
+            Dim M As Double? = Nothing
             Dim R As T = Nothing
+            Dim Ind = 0
             For Each I In Self
-                Dim V = Selector.Invoke(I)
+                Dim V = Selector.Invoke(I, Ind)
                 If V.HasValue And If(M > V, True) Then
                     M = V
                     R = I
                 End If
+                Ind += 1
+            Next
+            Return R
+        End Function
+
+        <Extension()>
+        Public Function MaxOrDefault(Of T)(ByVal Self As IEnumerable(Of T), ByVal Selector As Func(Of T, Integer, Long?)) As T
+            Dim M As Long? = Nothing
+            Dim R As T = Nothing
+            Dim Ind = 0
+            For Each I In Self
+                Dim V = Selector.Invoke(I, Ind)
+                If V.HasValue And If(M > V, True) Then
+                    M = V
+                    R = I
+                End If
+                Ind += 1
+            Next
+            Return R
+        End Function
+
+        <Extension()>
+        Public Function MinOrDefault(Of T)(ByVal Self As IEnumerable(Of T), ByVal Selector As Func(Of T, Integer, Long?)) As T
+            Dim M As Long? = Nothing
+            Dim R As T = Nothing
+            Dim Ind = 0
+            For Each I In Self
+                Dim V = Selector.Invoke(I, Ind)
+                If V.HasValue And If(M > V, True) Then
+                    M = V
+                    R = I
+                End If
+                Ind += 1
             Next
             Return R
         End Function
