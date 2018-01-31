@@ -285,6 +285,52 @@ Namespace Common
         End Sub
 
         <Extension()>
+        Public Sub RemoveRange(Of T)(ByVal Self As IList(Of T), ByVal StartIndex As Integer, Optional ByVal Length As Integer = -1)
+            If Length = -1 Then
+                Length = Self.Count - StartIndex
+            ElseIf Length = 0 Then
+                Exit Sub
+            End If
+
+            Verify.TrueArg(Length > 0, NameOf(Length), "Length must be a non-negative number.")
+            Verify.True(StartIndex + Length <= Self.Count, "The given range must be inside the list.")
+
+            For I = StartIndex To Self.Count - Length - 1
+                Self.Item(I) = Self.Item(I + Length)
+            Next
+            For I = Self.Count - 1 To Self.Count - Length Step -1
+                Self.RemoveAt(I)
+            Next
+        End Sub
+
+        <Extension()>
+        Public Function RemoveWhere(Of T)(ByVal Self As IList(Of T), ByVal Predicate As Func(Of T, Boolean), Optional ByVal StartIndex As Integer = 0, Optional ByVal Length As Integer = -1) As Integer
+            If Length = -1 Then
+                Length = Self.Count - StartIndex
+            ElseIf Length = 0 Then
+                Return 0
+            End If
+
+            Verify.TrueArg(Length > 0, NameOf(Length), "Length must be a non-negative number.")
+            Verify.True(StartIndex + Length <= Self.Count, "The given range must be inside the list.")
+
+            Dim Count = 0
+            Dim I = StartIndex
+            For J = StartIndex To StartIndex + Length - 1
+                If Not Predicate.Invoke(Self.Item(J)) Then
+                    Self.Item(I) = Self.Item(J)
+                    I += 1
+                Else
+                    Count += 1
+                End If
+            Next
+
+            Self.RemoveRange(I, Count)
+
+            Return Count
+        End Function
+
+        <Extension()>
         Public Function Resize(ByVal Array() As Byte, ByVal Length As Integer) As Byte()
             If Length <> Array.Length Then
                 Dim R = New Byte(Length - 1) {}
