@@ -139,6 +139,7 @@
 
         Private Sub CloseOpening(ByVal ClosingChar As Char, ByVal PreviousState As WriterState, ByVal PreviousMultiline As Boolean)
             Verify.False(Me.HasKeyBefore, "Cannot close while a key is pending its value.")
+            Verify.False(Me.State = WriterState.End, "Cannot write after write is finished.")
 
             If Me.MultiLine Then
                 Me.CurrentIndent -= 1
