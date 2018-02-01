@@ -208,6 +208,7 @@
     <Compile Include="Common\WordReader.vb" />
     <Compile Include="Common\XmlLinqTraverser.vb" />
     <Compile Include="Common\XmlTraverser.vb" />
+    <Compile Include="Common\Xml\XmlWriter.vb" />
     <Compile Include="TestingVisualizer.vb" />
     <Compile Include="Win32\Common.vb" />
     <Compile Include="Win32\Files.vb" />
