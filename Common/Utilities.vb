@@ -15,7 +15,9 @@ Namespace Common
 #Region "CombineHashCodes Logic"
         Public Shared Function CombineHashCodes(ByVal H1 As Integer,
                                                 ByVal H2 As Integer) As Integer
-            ' ToDo Return ((H1 << 5) + H1) Xor H2
+            ' ToDo:
+            ' Dim Rol5 = ((CUInt(H1) << 5) Or (CUInt(H1) >> 27);
+            ' Return (CInt(Rol5) + H1) Xor H2;
             Return ((H1 << 5) Or (H1 >> 27)) Xor H2
         End Function
 
