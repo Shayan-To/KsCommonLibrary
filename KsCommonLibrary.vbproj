@@ -195,6 +195,7 @@
     <Compile Include="Common\TaskDeduplicator.vb" />
     <Compile Include="Common\TextWriterWrapperTemplate.vb" />
     <Compile Include="Common\TextWriterTimeStampAdder.vb" />
+    <Compile Include="Common\Timer.vb" />
     <Compile Include="Common\Utilities.Math.vb" />
     <Compile Include="Common\Utilities.Debug.vb" />
     <Compile Include="Common\Utilities.Reflection.vb" />
