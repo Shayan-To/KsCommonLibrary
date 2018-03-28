@@ -161,6 +161,7 @@
     <Compile Include="Common\Json\JsonWriter.vb" />
     <Compile Include="Common\ListEqualityComparer.vb" />
     <Compile Include="Common\Interval.vb" />
+    <Compile Include="Common\OnScreenDrawer.vb" />
     <Compile Include="Common\QuickSorter.vb" />
     <Compile Include="Common\Ratio.vb" />
     <Compile Include="Common\Serialization\FormatterGetProxy.vb" />
