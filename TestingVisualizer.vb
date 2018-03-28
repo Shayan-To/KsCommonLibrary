@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Windows.Forms
+Imports DColor = System.Drawing.Color
 
 Namespace Common
 
@@ -160,30 +161,30 @@ Namespace Common
             Return CreateSize(ConvertValue(Width, Orientation), ConvertValue(Height, Orientation Xor Orientation.Y), Orientation)
         End Function
 
-        Private Function ConvertColor(ByVal Color As Color) As Drawing.Color
+        Private Function ConvertColor(ByVal Color As Color) As DColor
             Select Case Color
                 Case Color.Transparent
-                    Return Drawing.Color.Transparent
+                    Return DColor.Transparent
                 Case Color.Black
-                    Return Drawing.Color.Black
+                    Return DColor.Black
                 Case Color.White
-                    Return Drawing.Color.White
+                    Return DColor.White
                 Case Color.Red
-                    Return Drawing.Color.Red
+                    Return DColor.Red
                 Case Color.Green
-                    Return Drawing.Color.Green
+                    Return DColor.Green
                 Case Color.Blue
-                    Return Drawing.Color.Blue
+                    Return DColor.Blue
                 Case Color.Cyan
-                    Return Drawing.Color.Cyan
+                    Return DColor.Cyan
                 Case Color.Magenta
-                    Return Drawing.Color.Magenta
+                    Return DColor.Magenta
                 Case Color.Yellow
-                    Return Drawing.Color.Yellow
+                    Return DColor.Yellow
                 Case Color.Gray
-                    Return Drawing.Color.Gray
+                    Return DColor.Gray
                 Case Color.Orange
-                    Return Drawing.Color.Orange
+                    Return DColor.Orange
             End Select
             Verify.Fail()
             Return Nothing
