@@ -97,7 +97,7 @@ Namespace Common
             ''' Returns a list of (I, J) where List1[I] = List2[J] and the list is [one of] the longest possible list[s].
             ''' </summary>
             Public Shared Function GetLongestCommonSubsequence(Of T)(ByVal List1 As IReadOnlyList(Of T), ByVal List2 As IReadOnlyList(Of T), ByVal Comparer As IEqualityComparer(Of T)) As IReadOnlyList(Of (Index1 As Integer, Index2 As Integer))
-                Return GetLongestCommonSubsequence(List1, List2, Function(A, B) If(Comparer.Equals(A, B), 1, 0))
+                Return GetLongestCommonSubsequence(List1, List2, Function(A, B) If(Comparer.Equals(A, B), 1, -1))
             End Function
 
             ''' <summary>
