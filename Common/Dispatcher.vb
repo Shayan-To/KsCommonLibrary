@@ -27,6 +27,8 @@ Namespace Common
         End Sub
 
         Public Sub Invoke(ByVal [Delegate] As Action)
+            Verify.False(Me.IsShuttingDown, "Cannot add an action when the dispatcher is shutting down.")
+
             Dim Id = 0
             SyncLock Me.LockObject
                 Me.CurrentId += 1
@@ -37,6 +39,7 @@ Namespace Common
         End Sub
 
         Public Sub InvokeAndWait(ByVal [Delegate] As Action)
+            Verify.False(Me.IsShuttingDown, "Cannot add an action when the dispatcher is shutting down.")
             Verify.True(Me.IsDispatching, "Cannot wait for invocation when the dispatcher is not running.")
 
             Dim Id = 0
