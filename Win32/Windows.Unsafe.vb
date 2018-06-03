@@ -10,6 +10,35 @@ Namespace Common.Win32
                 Throw New NotSupportedException()
             End Sub
 
+            ''' BOOL WINAPI GetWindowRect(
+            '''   _In_  HWND   hWnd,
+            '''   _Out_ LPRECT lpRect
+            ''' );
+            ''' <summary>
+            ''' Retrieves the dimensions of the bounding rectangle of the specified window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.
+            ''' </summary>
+            ''' <param name="hWnd">
+            ''' hWnd [in]
+            ''' Type: HWND
+            ''' A handle to the window.
+            ''' </param>
+            ''' <param name="lpRect">
+            ''' lpRect [out]
+            ''' Type: LPRECT
+            ''' A pointer to a RECT structure that receives the screen coordinates of the upper-left and lower-right corners of the window.
+            ''' </param>
+            ''' <returns>
+            ''' Type: BOOL
+            ''' If the function succeeds, the return value is nonzero.
+            ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.
+            ''' </returns>
+            ''' <remarks>
+            ''' In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.
+            ''' </remarks>
+            <DllImport("User32.dll", SetLastError:=True)>
+            Public Shared Function GetWindowRect(hWnd As IntPtr, ByRef lpRect As Rect) As Boolean
+            End Function
+
             ''' <summary>
             ''' Retrieves a handle to the foreground window (the window with which the user is currently working). The system assigns a slightly higher priority to the thread that creates the foreground window than it does to other threads.
             ''' </summary>

@@ -20,6 +20,13 @@ Namespace Common.Win32
 
         End Class
 
+        Public Shared Function GetWindowRect(hWnd As IntPtr) As Rect
+            Dim R As Rect = Nothing
+            Unsafe.GetWindowRect(hWnd, R)
+            Common.VerifyError()
+            Return R
+        End Function
+
         Public Shared Function GetForegroundWindow() As IntPtr
             Dim R = Unsafe.GetForegroundWindow()
             Common.VerifyError()
@@ -172,6 +179,39 @@ Namespace Common.Win32
             End Sub
 
             Public X, Y As Integer
+
+        End Structure
+
+        ''' typedef struct _RECT {
+        '''   LONG left;
+        '''   LONG top;
+        '''   LONG right;
+        '''   LONG bottom;
+        ''' } RECT, *PRECT;
+        ''' <summary>
+        ''' The RECT structure defines the coordinates of the upper-left and lower-right corners of a rectangle.
+        ''' </summary>
+        ''' <remarks>
+        ''' By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words, the pixel whose coordinates are ( right, bottom ) lies immediately outside of the rectangle. For example, when RECT is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom row of pixels. This structure is identical to the RECTL structure.
+        ''' </remarks>
+        Public Structure Rect
+
+            ''' <summary>
+            ''' The x-coordinate of the upper-left corner of the rectangle.
+            ''' </summary>
+            Public Left As Integer
+            ''' <summary>
+            ''' The y-coordinate of the upper-left corner of the rectangle.
+            ''' </summary>
+            Public Top As Integer
+            ''' <summary>
+            ''' The x-coordinate of the lower-right corner of the rectangle.
+            ''' </summary>
+            Public Right As Integer
+            ''' <summary>
+            ''' The y-coordinate of the lower-right corner of the rectangle.
+            ''' </summary>
+            Public Bottom As Integer
 
         End Structure
 
