@@ -39,10 +39,10 @@ Namespace Common.Win32
             Public Shared Function GetWindowRect(hWnd As IntPtr, ByRef lpRect As Rect) As Boolean
             End Function
 
+            ''' HWND WINAPI GetForegroundWindow(void);
             ''' <summary>
             ''' Retrieves a handle to the foreground window (the window with which the user is currently working). The system assigns a slightly higher priority to the thread that creates the foreground window than it does to other threads.
             ''' </summary>
-            ''' HWND WINAPI GetForegroundWindow(void);
             ''' <returns>
             ''' Type: HWND
             ''' The return value is a handle to the foreground window. The foreground window can be NULL in certain circumstances, such as when a window is losing activation.

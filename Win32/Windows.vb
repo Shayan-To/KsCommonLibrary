@@ -56,7 +56,6 @@ Namespace Common.Win32
             Dim ThreadId = Unsafe.GetWindowThreadProcessId(hwnd, ProcessId)
             Common.VerifyError()
             Return (ProcessId, ThreadId)
-            Dim a = (a:=1, 2)
         End Function
 
         Public Shared Function GetWindowProcess(hwnd As IntPtr) As Process
