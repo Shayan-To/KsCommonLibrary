@@ -20,6 +20,16 @@ Namespace Common.Win32
 
         End Class
 
+        Public Shared Function GetAllWindows() As IntPtr()
+            Dim L = New List(Of IntPtr)()
+            Unsafe.EnumWindows(Function(hWnd, lParam)
+                                   L.Add(hWnd)
+                                   Return True
+                               End Function, IntPtr.Zero)
+            Common.VerifyError()
+            Return L.ToArray()
+        End Function
+
         Public Shared Function GetWindowRect(hWnd As IntPtr) As Rect
             Dim R As Rect = Nothing
             Unsafe.GetWindowRect(hWnd, R)

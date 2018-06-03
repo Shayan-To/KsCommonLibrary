@@ -10,6 +10,38 @@ Namespace Common.Win32
                 Throw New NotSupportedException()
             End Sub
 
+            ''' BOOL WINAPI EnumWindows(
+            '''   _In_ WNDENUMPROC lpEnumFunc,
+            '''   _In_ LPARAM      lParam
+            ''' );
+            ''' <summary>
+            ''' Enumerates all top-level windows on the screen by passing the handle to each window, in turn, to an application-defined callback function. EnumWindows continues until the last top-level window is enumerated or the callback function returns FALSE.
+            ''' </summary>
+            ''' <param name="lpEnumFunc">
+            ''' lpEnumFunc [in]
+            ''' Type: WNDENUMPROC
+            ''' A pointer to an application-defined callback function. For more information, see EnumWindowsProc.
+            ''' </param>
+            ''' <param name="lParam">
+            ''' lParam [in]
+            ''' Type: LPARAM
+            ''' An application-defined value to be passed to the callback function.
+            ''' </param>
+            ''' <returns>
+            ''' Type: BOOL
+            ''' If the function succeeds, the return value is nonzero.
+            ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.
+            ''' If EnumWindowsProc returns zero, the return value is also zero. In this case, the callback function should call SetLastError to obtain a meaningful error code to be returned to the caller of EnumWindows.
+            ''' </returns>
+            ''' <remarks>
+            ''' The EnumWindows function does not enumerate child windows, with the exception of a few top-level windows owned by the system that have the WS_CHILD style.
+            ''' This function is more reliable than calling the GetWindow function in a loop. An application that calls GetWindow to perform this task risks being caught in an infinite loop or referencing a handle to a window that has been destroyed.
+            ''' Note  For Windows 8 and later, EnumWindows enumerates only top-level windows of desktop apps.
+            ''' </remarks>
+            <DllImport("User32.dll", SetLastError:=True)>
+            Public Shared Function EnumWindows(lpEnumFunc As EnumWindowsProc, lParam As IntPtr) As Boolean
+            End Function
+
             ''' BOOL WINAPI GetWindowRect(
             '''   _In_  HWND   hWnd,
             '''   _Out_ LPRECT lpRect
@@ -389,6 +421,29 @@ Namespace Common.Win32
             <DllImport("User32.dll", SetLastError:=True)>
             Public Shared Function SetWindowPos(hwnd As IntPtr, hWndInsertAfter As IntPtr, X As Integer, Y As Integer, cx As Integer, cy As Integer, uFlags As SetWindowPosFlags) As Boolean
             End Function
+
+            ''' BOOL CALLBACK EnumWindowsProc(
+            '''   _In_ HWND   hwnd,
+            '''   _In_ LPARAM lParam
+            ''' );
+            ''' <summary>
+            ''' An application-defined callback function used with the EnumWindows or EnumDesktopWindows function. It receives top-level window handles. The WNDENUMPROC type defines a pointer to this callback function. EnumWindowsProc is a placeholder for the application-defined function name.
+            ''' </summary>
+            ''' <param name="hwnd">
+            ''' hwnd [in]
+            ''' A handle to a top-level window.
+            ''' </param>
+            ''' <param name="lParam">
+            ''' lParam [in]
+            ''' The application-defined value given in EnumWindows or EnumDesktopWindows.
+            ''' </param>
+            ''' <returns>
+            ''' To continue enumeration, the callback function must return TRUE; to stop enumeration, it must return FALSE.
+            ''' </returns>
+            ''' <remarks>
+            ''' An application must register this callback function by passing its address to EnumWindows or EnumDesktopWindows.
+            ''' </remarks>
+            Public Delegate Function EnumWindowsProc(hwnd As IntPtr, lParam As IntPtr) As Boolean
 
             Public Enum SetWindowPosInsertAfter
 
