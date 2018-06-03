@@ -54,14 +54,21 @@ define|typedef
 \$(?!Dic)[a-zA-Z0-9_]+
 #>
 
-# Recommended settings:
-#$_M_IX86 = $False
-#$_MSC_VER = 1300
-#$WINVER = 0x0500
-#$_WIN64 = $True
-#$UNICODE = $True
+$Dic = [System.Collections.Generic.Dictionary[String, Object]]::New()
 
-$Dic = [System.Collections.Generic.Dictionary[String, String]]::New()
+# Primitive types
+$Dic.Add('char', '[Char8]')
+$Dic.Add('wchar_t', '[Char16]')
+$Dic.Add('short', '[Int16]')
+$Dic.Add('int', '[Int32]')
+$Dic.Add('long', '[Int32]')
+$Dic.Add('__int64', '[Int64]')
+$Dic.Add('float', '[Float32]')
+$Dic.Add('double', '[Float64]')
+$Dic.Add('__ptr32', '[Ptr32]')
+$Dic.Add('__ptr64', '[Ptr64]')
+$Dic.Add('__sptr', '[IntPtr]')
+$Dic.Add('__uptr', '[UIntPtr]')
 
 $Dic.Add('APIENTRY', 'WINAPI')
 
@@ -98,14 +105,10 @@ $Dic.Add('FLOAT', 'float')
 $Dic.Add('HACCEL', 'HANDLE')
 
 # This is a special type, and hopefully is never used anywhere. https://stackoverflow.com/questions/18253260/how-to-map-half-ptr-in-c-sharp
-#If ($_WIN64)
-#{
-# $Dic.Add('HALF_PTR', 'int')
-#}
-#Else
-#{
-# $Dic.Add('HALF_PTR', 'short')
-#}
+$Dic.Add('HALF_PTR', @{
+  '_WIN64' = 'int'
+  '!_WIN64' = 'short'
+})
 
 $Dic.Add('HANDLE', 'PVOID')
 
@@ -159,10 +162,9 @@ $Dic.Add('HMETAFILE', 'HANDLE')
 
 $Dic.Add('HMODULE', 'HINSTANCE')
 
-If ($WINVER -GE 0x0500)
-{
- $Dic.Add('HMONITOR', 'HANDLE')
-}
+$Dic.Add('HMONITOR', @{
+  'WINVER >= 0x0500' = 'HANDLE'
+})
 
 $Dic.Add('HPALETTE', 'HANDLE')
 
@@ -182,14 +184,10 @@ $Dic.Add('HWND', 'HANDLE')
 
 $Dic.Add('INT', 'int')
 
-#If ($_WIN64)
-#{
-# $Dic.Add('INT_PTR', '__int64')
-#}
-#Else
-#{
-# $Dic.Add('INT_PTR', 'int')
-#}
+$Dic.Add('INT_PTR', @{
+  '_WIN64' = '__int64'
+  '!_WIN64' = 'int'
+})
 
 $Dic.Add('INT8', 'signed char')
 
@@ -209,23 +207,15 @@ $Dic.Add('LGRPID', 'DWORD')
 
 $Dic.Add('LONG', 'long')
 
-If (-Not $_M_IX86)
-{
- $Dic.Add('LONGLONG', '__int64')
-}
-Else
-{
- $Dic.Add('LONGLONG', 'double')
-}
+$Dic.Add('LONGLONG', @{
+  '!_M_IX86' = '__int64'
+  '_M_IX86' = 'double'
+})
 
-#If ($_WIN64)
-#{
-# $Dic.Add('LONG_PTR', '__int64')
-#}
-#Else
-#{
-# $Dic.Add('LONG_PTR', 'long')
-#}
+$Dic.Add('LONG_PTR', @{
+  '_WIN64' = '__int64'
+  '!_WIN64' = 'long'
+})
 
 $Dic.Add('LONG32', 'signed int')
 
@@ -241,14 +231,10 @@ $Dic.Add('LPCOLORREF', 'DWORD *')
 
 $Dic.Add('LPCSTR', '__nullterminated CONST CHAR *')
 
-If ($UNICODE)
-{
- $Dic.Add('LPCTSTR', 'LPCWSTR')
-}
-Else
-{
- $Dic.Add('LPCTSTR', 'LPCSTR')
-}
+$Dic.Add('LPCTSTR', @{
+  'UNICODE' = 'LPCWSTR'
+  '!UNICODE' = 'LPCSTR'
+})
 
 $Dic.Add('LPCVOID', 'CONST void *')
 
@@ -264,14 +250,10 @@ $Dic.Add('LPLONG', 'long *')
 
 $Dic.Add('LPSTR', 'CHAR *')
 
-If ($UNICODE)
-{
- $Dic.Add('LPTSTR', 'LPWSTR')
-}
-Else
-{
- $Dic.Add('LPTSTR', 'LPSTR')
-}
+$Dic.Add('LPTSTR', @{
+  'UNICODE' = 'LPWSTR'
+  '!UNICODE' = 'LPSTR'
+})
 
 $Dic.Add('LPVOID', 'void *')
 
@@ -291,14 +273,10 @@ $Dic.Add('PCHAR', 'CHAR *')
 
 $Dic.Add('PCSTR', 'CONST CHAR *')
 
-If ($UNICODE)
-{
- $Dic.Add('PCTSTR', 'LPCWSTR')
-}
-Else
-{
- $Dic.Add('PCTSTR', 'LPCSTR')
-}
+$Dic.Add('PCTSTR', @{
+  'UNICODE' = 'LPCWSTR'
+  '!UNICODE' = 'LPCSTR'
+})
 
 $Dic.Add('PCWSTR', 'CONST WCHAR *')
 
@@ -314,15 +292,7 @@ $Dic.Add('PDWORD64', 'DWORD64 *')
 
 $Dic.Add('PFLOAT', 'FLOAT *')
 
-# Redundant if
-If ($_WIN64)
-{
- $Dic.Add('PHALF_PTR', 'HALF_PTR *')
-}
-Else
-{
- $Dic.Add('PHALF_PTR', 'HALF_PTR *')
-}
+$Dic.Add('PHALF_PTR', 'HALF_PTR *')
 
 $Dic.Add('PHANDLE', 'HANDLE *')
 
@@ -352,23 +322,15 @@ $Dic.Add('PLONG32', 'LONG32 *')
 
 $Dic.Add('PLONG64', 'LONG64 *')
 
-If ($_WIN64)
-{
- $Dic.Add('POINTER_32', '__ptr32')
-}
-Else
-{
- $Dic.Add('POINTER_32', '')
-}
+$Dic.Add('POINTER_32', @{
+  '_WIN64' = '__ptr32'
+  '!_WIN64' = ''
+})
 
-If ($_MSC_VER -GE 1300)
-{
- $Dic.Add('POINTER_64', '__ptr64')
-}
-Else
-{
- $Dic.Add('POINTER_64', '')
-}
+$Dic.Add('POINTER_64', @{
+  '_MSC_VER >= 1300' = '__ptr64'
+  '!_MSC_VER >= 1300' = ''
+})
 
 $Dic.Add('POINTER_SIGNED', '__sptr')
 
@@ -386,26 +348,14 @@ $Dic.Add('PTBYTE', 'TBYTE *')
 
 $Dic.Add('PTCHAR', 'TCHAR *')
 
-If ($UNICODE)
-{
- $Dic.Add('PTSTR', 'LPWSTR')
-}
-Else
-{
- $Dic.Add('PTSTR', 'LPSTR')
-}
+$Dic.Add('PTSTR', @{
+  'UNICODE' = 'LPWSTR'
+  '!UNICODE' = 'LPSTR'
+})
 
 $Dic.Add('PUCHAR', 'UCHAR *')
 
-# Redundant if
-If ($_WIN64)
-{
- $Dic.Add('PUHALF_PTR', 'UHALF_PTR *')
-}
-Else
-{
- $Dic.Add('PUHALF_PTR', 'UHALF_PTR *')
-}
+$Dic.Add('PUHALF_PTR', 'UHALF_PTR *')
 
 $Dic.Add('PUINT', 'UINT *')
 
@@ -453,45 +403,29 @@ $Dic.Add('SIZE_T', 'ULONG_PTR')
 
 $Dic.Add('SSIZE_T', 'LONG_PTR')
 
-If ($UNICODE)
-{
- $Dic.Add('TBYTE', 'WCHAR')
-}
-Else
-{
- $Dic.Add('TBYTE', 'unsigned char')
-}
+$Dic.Add('TBYTE', @{
+  'UNICODE' = 'WCHAR'
+  '!UNICODE' = 'unsigned char'
+})
 
-If ($UNICODE)
-{
- $Dic.Add('TCHAR', 'WCHAR')
-}
-Else
-{
- $Dic.Add('TCHAR', 'char')
-}
+$Dic.Add('TCHAR', @{
+  'UNICODE' = 'WCHAR'
+  '!UNICODE' = 'char'
+})
 
 $Dic.Add('UCHAR', 'unsigned char')
 
-#If ($_WIN64)
-#{
-# $Dic.Add('UHALF_PTR', 'unsigned int')
-#}
-#Else
-#{
-# $Dic.Add('UHALF_PTR', 'unsigned short')
-#}
+$Dic.Add('UHALF_PTR', @{
+  '_WIN64' = 'unsigned int'
+  '!_WIN64' = 'unsigned short'
+})
 
 $Dic.Add('UINT', 'unsigned int')
 
-#If ($_WIN64)
-#{
-# $Dic.Add('UINT_PTR', 'unsigned __int64')
-#}
-#Else
-#{
-# $Dic.Add('UINT_PTR', 'unsigned int')
-#}
+$Dic.Add('UINT_PTR', @{
+  '_WIN64' = 'unsigned __int64'
+  '!_WIN64' = 'unsigned int'
+})
 
 $Dic.Add('UINT8', 'unsigned  char')
 
@@ -503,23 +437,15 @@ $Dic.Add('UINT64', 'usigned __int 64')
 
 $Dic.Add('ULONG', 'unsigned long')
 
-If (-Not $_M_IX86)
-{
- $Dic.Add('ULONGLONG', 'unsigned __int64')
-}
-Else
-{
- $Dic.Add('ULONGLONG', 'double')
-}
+$Dic.Add('ULONGLONG', @{
+  '!_M_IX86' = 'unsigned __int64'
+  '_M_IX86' = 'double'
+})
 
-#If ($_WIN64)
-#{
-# $Dic.Add('ULONG_PTR', 'unsigned __int64')
-#}
-#Else
-#{
-# $Dic.Add('ULONG_PTR', 'unsigned long')
-#}
+$Dic.Add('ULONG_PTR', @{
+  '_WIN64' = 'unsigned __int64'
+  '!_WIN64' = 'unsigned long'
+})
 
 $Dic.Add('ULONG32', 'unsigned int')
 
