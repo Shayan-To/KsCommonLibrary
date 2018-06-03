@@ -2,15 +2,20 @@
 
     Public Class Timer
 
-        Public Sub New(ByVal Callback As Action)
+        Public Sub New(ByVal Callback As Action, ByVal Interval As TimeSpan)
             Me.Callback = Callback
+            Me.Interval = Interval
+        End Sub
+
+        Public Sub New(ByVal Callback As Action, ByVal IntervalMillis As Integer)
+            Me.New(Callback, TimeSpan.FromMilliseconds(IntervalMillis))
         End Sub
 
         Public Async Sub Start()
             Verify.False(Me.IsRunning, "Cannot start an already started timer.")
             Me._IsRunning = True
 
-            If Me.RunAtBeginning Then
+            If Me.RunAtStart Then
                 Me.Callback.Invoke()
             End If
 
@@ -60,14 +65,14 @@
 #End Region
 
 #Region "RunAtBeginning Property"
-        Private _RunAtBeginning As Boolean
+        Private _RunAtStart As Boolean
 
-        Public Property RunAtBeginning As Boolean
+        Public Property RunAtStart As Boolean
             Get
-                Return Me._RunAtBeginning
+                Return Me._RunAtStart
             End Get
             Set(ByVal Value As Boolean)
-                Me._RunAtBeginning = Value
+                Me._RunAtStart = Value
             End Set
         End Property
 #End Region
