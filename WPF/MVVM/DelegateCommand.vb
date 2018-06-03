@@ -32,7 +32,7 @@ Namespace Common.MVVM
         End Sub
 
         Public Function CanExecute(parameter As Object) As Boolean Implements ICommand.CanExecute
-            Return If(Me._CanExecuteFunc Is Nothing, True, Me._CanExecuteFunc.Invoke(parameter))
+            Return If(Me._CanExecuteFunc?.Invoke(parameter), True)
         End Function
 
         Private ReadOnly _ExecuteFunc As Action(Of Object)
