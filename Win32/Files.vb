@@ -37,7 +37,7 @@ Namespace Common.Win32
             ''' This parameter may include the path cannot specify the name of a directory.
             ''' In the ANSI version of this function, the name is limited to MAX_PATH characters. To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path. For more information, see Naming a File.
             ''' Tip  Starting with Windows 10, version 1607, for the unicode version of this function (CopyFileW), you can opt-in to remove the MAX_PATH limitation without prepending "\\?\". See the "Maximum Path Length Limitation" section of Naming Files, Paths, and Namespaces for details.
-            ''' </param> 
+            ''' </param>
             ''' <param name="lpSecurityAttributes">
             ''' lpSecurityAttributes
             ''' Reserved; must be NULL.

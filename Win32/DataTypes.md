@@ -106,7 +106,7 @@ This type is declared in WinDef.h as follows:
 
 ## CONST
 
-A variable whose value is to remain constant during execution. 
+A variable whose value is to remain constant during execution.
 
 This type is declared in WinDef.h as follows:
 
@@ -568,9 +568,9 @@ A signed integer type for pointer precision. Use when casting a pointer to an in
 
 This type is declared in BaseTsd.h as follows:
 
-    #if defined(_WIN64) 
-     typedef __int64 INT_PTR; 
-    #else 
+    #if defined(_WIN64)
+     typedef __int64 INT_PTR;
+    #else
      typedef int INT_PTR;
     #endif
 
@@ -673,7 +673,7 @@ A 64-bit signed integer. The range is –9223372036854775808 through 92233720368
 This type is declared in WinNT.h as follows:
 
     #if !defined(_M_IX86)
-     typedef __int64 LONGLONG; 
+     typedef __int64 LONGLONG;
     #else
      typedef double LONGLONG;
     #endif
@@ -687,7 +687,7 @@ A signed long type for pointer precision. Use when casting a pointer to a long t
 This type is declared in BaseTsd.h as follows:
 
     #if defined(_WIN64)
-     typedef __int64 LONG_PTR; 
+     typedef __int64 LONG_PTR;
     #else
      typedef long LONG_PTR;
     #endif
@@ -771,7 +771,7 @@ An [LPCWSTR](#LPCWSTR) if **UNICODE** is defined, an [LPCSTR](#LPCSTR) otherwise
 This type is declared in WinNT.h as follows:
 
     #ifdef UNICODE
-     typedef LPCWSTR LPCTSTR; 
+     typedef LPCWSTR LPCTSTR;
     #else
      typedef LPCSTR LPCTSTR;
     #endif

@@ -114,7 +114,7 @@ Namespace Common
 
                     ' Just like the units, we have to check whether (0.01 U) is a good unit or not. (Division will move us upwards in the list.)
                     ' We will find units less than or equal to MaxError (the bad ones + equals), and choose the first of them (plus the good ones of course).
-                    ' 
+                    '
                     ' And we cannot optimize it by assuming we can do any number of digits when not at Start.
                     ' A unit is something about 20-100 times smaller than the previous one, so maybe we are forced to use only one digit.
                     Dim Prec = 100

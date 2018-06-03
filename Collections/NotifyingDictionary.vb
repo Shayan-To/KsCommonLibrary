@@ -1,7 +1,7 @@
 ﻿'Namespace Common
 
 'Public Class NotifyingDictionary(Of TKey, TValue)
-'    Implements IDictionary(Of TKey, TValue), 
+'    Implements IDictionary(Of TKey, TValue),
 '               INotifyCollectionChanged(Of KeyValuePair(Of TKey, TValue))
 
 '    Public Sub New(ByVal Dic As IDictionary(Of TKey, TValue))
