@@ -8,16 +8,10 @@ Public Class OnScreenDrawerTest
         Dispatcher.SetSynchronizationContext()
         Dispatcher.Invoke(Sub()
                               Dim Drawer = OnScreenDrawer.ForScreen()
-                              Dim D As OnScreenDrawer.Drawing
-                              Dim P As OnScreenDrawer.DrawingPart
-
-                              Drawer.StartDrawing()
-                              D = New OnScreenDrawer.Drawing()
-                              D.Interval = 200
-                              P = New OnScreenDrawer.DrawingPart(100, 100)
-                              P.Graphics.FillEllipse(Brushes.Red, 0, 0, 100, 100)
-                              D.Parts.Add(P)
+                              Dim D = New OnScreenDrawer.Drawing(200, 100, 100)
+                              D.Graphics.FillEllipse(Brushes.Red, 0, 0, 100, 100)
                               Drawer.Drawings.Add(D)
+                              D.Show()
                           End Sub)
         Dispatcher.Run()
     End Sub

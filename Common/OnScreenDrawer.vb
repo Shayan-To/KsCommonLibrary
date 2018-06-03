@@ -6,6 +6,7 @@ Namespace Common
 
         Private Sub New(ByVal Graphics As Graphics)
             Me.Graphics = Graphics
+            Me._IsDrawing = True
         End Sub
 
         Public Shared Function ForScreen() As OnScreenDrawer
@@ -20,16 +21,71 @@ Namespace Common
             Return New OnScreenDrawer(Graphics)
         End Function
 
-        Public Sub StartDrawing()
+        Private Sub AddToGroup(ByVal Interval As TimeSpan, ByVal Drawing As Drawing)
+            Dim Group As DrawingGroup = Nothing
+            If Not Me.Groups.TryGetValue(Interval, Group) Then
+                Group = New DrawingGroup(Me, Interval)
+                Me.Groups.Item(Interval) = Group
+
+                If Me.IsDrawing Then
+                    Group.StartDrawing()
+                End If
+            End If
+
+            Group.Drawings.Add(Drawing)
+        End Sub
+
+        Private Sub RemoveFromGroup(ByVal Interval As TimeSpan, ByVal Drawing As Drawing)
+            Dim Group = Me.Groups.Item(Interval)
+            Assert.True(Group.Drawings.Remove(Drawing))
+            If Group.Drawings.Count = 0 Then
+                Group.StopDrawing()
+                Me.Groups.Remove(Interval)
+            End If
+        End Sub
+
+        Private Sub ReportIntervalChange(ByVal Drawing As Drawing, ByVal OldInterval As TimeSpan)
+            If Drawing.IsVisible Then
+                Me.RemoveFromGroup(OldInterval, Drawing)
+                Me.AddToGroup(Drawing.Interval, Drawing)
+            End If
+        End Sub
+
+        Private Sub ReportIsVisibleChange(ByVal Drawing As Drawing)
+            If Drawing.IsVisible Then
+                Me.AddToGroup(Drawing.Interval, Drawing)
+            Else
+                Me.RemoveFromGroup(Drawing.Interval, Drawing)
+            End If
+        End Sub
+
+        Private Sub ReportDrawingGotIn(ByVal Drawing As Drawing)
+            Drawing.SetParent(Me)
+            If Drawing.IsVisible Then
+                Me.AddToGroup(Drawing.Interval, Drawing)
+            End If
+        End Sub
+
+        Private Sub ReportDrawingGotOut(ByVal Drawing As Drawing)
+            Drawing.SetParent(Nothing)
+            If Drawing.IsVisible Then
+                Me.RemoveFromGroup(Drawing.Interval, Drawing)
+            End If
+        End Sub
+
+        Private Sub StartDrawing()
             Verify.False(Me.IsDrawing, "Already drawing.")
             Me._IsDrawing = True
-            For Each D In Me.Drawings
+            For Each D In Me.Groups.Values
                 D.StartDrawing()
             Next
         End Sub
 
-        Public Sub StopDrawing()
+        Private Sub StopDrawing()
             Me._IsDrawing = False
+            For Each D In Me.Groups.Values
+                D.StopDrawing()
+            Next
         End Sub
 
 #Region "Drawings Read-Only Property"
@@ -61,6 +117,7 @@ Namespace Common
         End Property
 #End Region
 
+        Private ReadOnly Groups As Dictionary(Of TimeSpan, DrawingGroup) = New Dictionary(Of TimeSpan, DrawingGroup)()
         Private ReadOnly Graphics As Graphics
 
         Private Class DrawingsCollection
@@ -74,15 +131,12 @@ Namespace Common
 
             End Sub
 
-            Private Sub ItemGotOut(ByVal Item As Drawing)
-                Item.SetParent(Nothing)
+            Private Sub ItemGotIn(ByVal Item As Drawing)
+                Me.Parent.ReportDrawingGotIn(Item)
             End Sub
 
-            Private Sub ItemGotIn(ByVal Item As Drawing)
-                Item.SetParent(Me.Parent)
-                If Me.Parent.IsDrawing Then
-                    Item.StartDrawing()
-                End If
+            Private Sub ItemGotOut(ByVal Item As Drawing)
+                Me.Parent.ReportDrawingGotOut(Item)
             End Sub
 
             Public Overrides Sub Clear()
@@ -136,16 +190,14 @@ Namespace Common
 
         End Class
 
-        Public Class Drawing
+        Private Class DrawingGroup
 
-            Friend Sub SetParent(ByVal Parent As OnScreenDrawer)
-                Verify.True(Parent Is Nothing Xor Me.Parent Is Nothing, "You cannot add one drawing to two different OnDisplayDrawer's.")
+            Public Sub New(ByVal Parent As OnScreenDrawer, ByVal Interval As TimeSpan)
                 Me.Parent = Parent
-                Me.IsDrawing = False
+                Me.Interval = Interval
             End Sub
 
-            Friend Async Sub StartDrawing()
-                Assert.True(Me.Parent IsNot Nothing)
+            Public Async Sub StartDrawing()
                 Assert.True(Me.Parent.IsDrawing)
 
                 If Me.IsDrawing Then
@@ -153,63 +205,63 @@ Namespace Common
                 End If
                 Me.IsDrawing = True
 
+                Dim Graphics = Me.Parent.Graphics
+
                 Do
                     Await Task.Delay(Me.Interval)
-                    If Not Me.Parent.IsDrawing Or Not Me.IsDrawing Then
-                        Assert.True((Not Me.IsDrawing).Implies(Me.Parent Is Nothing))
+                    If Not Me.IsDrawing Then
                         Exit Do
                     End If
 
-                    For Each P In Me.Parts
-                        P.Draw(Me.Parent.Graphics)
+                    For Each D In Me.Drawings
+                        Assert.True(D.Interval = Me.Interval)
+                        D.Draw(Graphics)
                     Next
                 Loop
 
                 Me.IsDrawing = False
             End Sub
 
-#Region "Interval Property"
-            Private _Interval As Integer
+            Public Sub StopDrawing()
+                Me.IsDrawing = False
+            End Sub
 
-            Public Property Interval As Integer
+#Region "Drawings Read-Only Property"
+            Private ReadOnly _Drawings As List(Of Drawing) = New List(Of Drawing)()
+
+            Public ReadOnly Property Drawings As List(Of Drawing)
                 Get
-                    Return Me._Interval
-                End Get
-                Set(ByVal Value As Integer)
-                    Me._Interval = Value
-                End Set
-            End Property
-#End Region
-
-#Region "Parts Read-Only Property"
-            Private ReadOnly _Parts As List(Of DrawingPart) = New List(Of DrawingPart)()
-
-            Public ReadOnly Property Parts As List(Of DrawingPart)
-                Get
-                    Return Me._Parts
+                    Return Me._Drawings
                 End Get
             End Property
 #End Region
 
             Private IsDrawing As Boolean
-            Private Parent As OnScreenDrawer
+            Private ReadOnly Parent As OnScreenDrawer
+            Private ReadOnly Interval As TimeSpan
 
         End Class
 
-        Public Class DrawingPart
+        Public Class Drawing
 
-            Public Sub New(ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer)
-                Me.New(New Rectangle(X, Y, Width, Height))
+            Public Sub New(ByVal IntervalMillis As Integer, ByVal Width As Integer, ByVal Height As Integer)
+                Me.New(IntervalMillis, 0, 0, Width, Height)
             End Sub
 
-            Public Sub New(ByVal Width As Integer, ByVal Height As Integer)
-                Me.New(0, 0, Width, Height)
+            Public Sub New(ByVal IntervalMillis As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal Width As Integer, ByVal Height As Integer)
+                Me.New(TimeSpan.FromMilliseconds(IntervalMillis), New Rectangle(X, Y, Width, Height))
             End Sub
 
-            Public Sub New(ByVal Bounds As Rectangle)
+            Public Sub New(ByVal Interval As TimeSpan, ByVal Bounds As Rectangle)
+                Me._Interval = Interval
                 Me._Bounds = Bounds
                 Me.Bitmap = New Bitmap(Bounds.Width, Bounds.Height)
                 Me._Graphics = Graphics.FromImage(Me.Bitmap)
+            End Sub
+
+            Friend Sub SetParent(ByVal Parent As OnScreenDrawer)
+                Verify.True(Parent Is Nothing Xor Me.Parent Is Nothing, "Cannot add a drawing to two drawers.")
+                Me.Parent = Parent
             End Sub
 
             Private Sub RecreateBitmap()
@@ -220,18 +272,33 @@ Namespace Common
             End Sub
 
             Public Sub Show()
-                Me.IsVisible = True
+                Me._IsVisible = True
+                Me.Parent?.ReportIsVisibleChange(Me)
             End Sub
 
             Public Sub Hide()
-                Me.IsVisible = False
+                Me._IsVisible = False
+                Me.Parent?.ReportIsVisibleChange(Me)
             End Sub
 
             Friend Sub Draw(ByVal Graphics As Graphics)
-                If Me.IsVisible Then
-                    Graphics.DrawImageUnscaled(Me.Bitmap, Me.Bounds)
-                End If
+                Graphics.DrawImageUnscaled(Me.Bitmap, Me.Bounds)
             End Sub
+
+#Region "Interval Property"
+            Private _Interval As TimeSpan
+
+            Public Property Interval As TimeSpan
+                Get
+                    Return Me._Interval
+                End Get
+                Set(ByVal Value As TimeSpan)
+                    Dim Old = Me._Interval
+                    Me._Interval = Value
+                    Me.Parent?.ReportIntervalChange(Me, Old)
+                End Set
+            End Property
+#End Region
 
 #Region "Bounds Property"
             Private _Bounds As Rectangle
@@ -268,12 +335,19 @@ Namespace Common
                     Return Me._IsVisible
                 End Get
                 Set(ByVal Value As Boolean)
-                    Me._IsVisible = Value
+                    If Me._IsVisible <> Value Then
+                        If Value Then
+                            Me.Show()
+                        Else
+                            Me.Hide()
+                        End If
+                    End If
                 End Set
             End Property
 #End Region
 
-            Friend Bitmap As Bitmap
+            Private Parent As OnScreenDrawer
+            Private Bitmap As Bitmap
 
         End Class
 
