@@ -39,8 +39,8 @@ Namespace Common.Win32
 
             Dim T = Unsafe.GetWindowText(hWnd, R, R.Capacity)
 
-            Assert.True(T = Length)
             Common.VerifyError()
+            Assert.True(T = Length)
 
             Return R.ToString()
         End Function
