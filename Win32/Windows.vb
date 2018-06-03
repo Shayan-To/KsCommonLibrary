@@ -170,6 +170,13 @@ Namespace Common.Win32
 
         End Enum
 
+        ''' typedef struct tagPOINT {
+        '''   LONG x;
+        '''   LONG y;
+        ''' } POINT, *PPOINT;
+        ''' <summary>
+        ''' The POINT structure defines the x- and y- coordinates of a point.
+        ''' </summary>
         Public Structure Point
 
             Public Sub New(ByVal X As Integer, ByVal Y As Integer)
@@ -177,7 +184,18 @@ Namespace Common.Win32
                 Me.Y = Y
             End Sub
 
-            Public X, Y As Integer
+            Public Sub New(ByVal Point As Drawing.Point)
+                Me.New(Point.X, Point.Y)
+            End Sub
+
+            ''' <summary>
+            ''' The x-coordinate of the point.
+            ''' </summary>
+            Public X As Integer
+            ''' <summary>
+            ''' The y-coordinate of the point.
+            ''' </summary>
+            Public Y As Integer
 
         End Structure
 
