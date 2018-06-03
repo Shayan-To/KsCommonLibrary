@@ -1,0 +1,12 @@
+﻿In the name of God
+
+How to add a new function:
+
+- Open the "Unsafe" class in Notepad++ or VSCode.
+- Copy the documentation from the website, from under the title to the end of remarks. (Root page: https://msdn.microsoft.com/en-us/library/windows/desktop/bg126469(v=vs.85).aspx)
+- Paste it and add three ticks (''') to the beginning of all the lines.
+- Write the method declaration.
+- Use this link to find the correct type to use: https://msdn.microsoft.com/en-us/library/windows/desktop/aa383751(v=vs.85).aspx
+- Reformat the documentation.
+- If adding of an enum was needed, extract its documentation to the enum.
+- If adding of a structure was needed, copy its documentation as well.

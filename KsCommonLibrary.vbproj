@@ -374,9 +374,12 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Win32\DataTypes.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ToDos.txt" />
+    <None Include="Win32\DataTypes.html" />
+    <None Include="Win32\Help.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
