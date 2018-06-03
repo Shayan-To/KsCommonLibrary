@@ -5,7 +5,7 @@
         Public Function IsBaseTypeOf(ByVal Base As Cecil.TypeDefinition, Derived As Cecil.TypeDefinition) As Boolean
             If Base.IsInterface Then
                 For Each I In Derived.Interfaces
-                    Dim ID = I.Resolve()
+                    Dim ID = I.InterfaceType.Resolve()
                     If Me.Equals(Base, ID) Then
                         Return True
                     End If
@@ -22,7 +22,7 @@
         End Function
 
         Public Overloads Function Equals(ByVal Type1 As Cecil.TypeDefinition, ByVal Type2 As Cecil.TypeDefinition) As Boolean
-            Return Type1.FullName = Type2.FullName And Type1.Module.FullyQualifiedName = Type2.Module.FullyQualifiedName
+            Return Type1.FullName = Type2.FullName And Type1.Module.FileName = Type2.Module.FileName
         End Function
 
         Public Function Convert(ByVal Method As Cecil.MethodDefinition) As Reflection.MethodInfo
