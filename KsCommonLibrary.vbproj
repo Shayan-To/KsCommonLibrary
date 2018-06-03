@@ -379,6 +379,8 @@
   <ItemGroup>
     <Content Include="ToDos.txt" />
     <None Include="Win32\DataTypes.html" />
+    <None Include="Win32\DataTypes.ps1" />
+    <None Include="Win32\DataTypesSearch.ps1" />
     <None Include="Win32\Help.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
