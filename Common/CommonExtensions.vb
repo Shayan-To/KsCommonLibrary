@@ -183,6 +183,63 @@ Namespace Common
 
 #Region "CollectionUtils Group"
         <Extension()>
+        Public Function FastCount(Of T)(ByVal Self As IEnumerable(Of T)) As Integer?
+            Dim CollectionT = TryCast(Self, ICollection(Of T))
+            If CollectionT IsNot Nothing Then
+                Return CollectionT.Count
+            End If
+
+            Dim Collection = TryCast(Self, ICollection)
+            If Collection IsNot Nothing Then
+                Return Collection.Count
+            End If
+
+            Return Nothing
+        End Function
+
+        <Extension()>
+        Public Function PadBegin(Of T)(ByVal Self As IEnumerable(Of T), ByVal Count As Integer, Optional ByVal PaddingElement As T = Nothing) As IEnumerable(Of T)
+            Dim Cnt = Self.Count()
+            If Cnt >= Count Then
+                Return Self
+            End If
+            Return Self.PadBeginImpl(Cnt, Count, PaddingElement)
+        End Function
+
+        <Extension()>
+        Private Iterator Function PadBeginImpl(Of T)(ByVal Self As IEnumerable(Of T), ByVal SelfCount As Integer, ByVal Count As Integer, ByVal PaddingElement As T) As IEnumerable(Of T)
+            For SelfCount = SelfCount To Count - 1
+                Yield PaddingElement
+            Next
+            For Each I In Self
+                Yield I
+            Next
+        End Function
+
+        <Extension()>
+        Public Function PadEnd(Of T)(ByVal Self As IEnumerable(Of T), ByVal Count As Integer, Optional ByVal PaddingElement As T = Nothing) As IEnumerable(Of T)
+            Dim Cnt = Self.FastCount()
+            If Cnt.HasValue Then
+                If Cnt.Value >= Count Then
+                    Return Self
+                End If
+            End If
+            Return Self.PadEndImpl(Count, PaddingElement)
+        End Function
+
+        <Extension()>
+        Private Iterator Function PadEndImpl(Of T)(ByVal Self As IEnumerable(Of T), ByVal Count As Integer, Optional ByVal PaddingElement As T = Nothing) As IEnumerable(Of T)
+            Dim Cnt = 0
+            For Each I In Self
+                Yield I
+                Cnt += 1
+            Next
+            For Cnt = Cnt To Count - 1
+                Yield PaddingElement
+            Next
+        End Function
+
+        <Extension()>
         Public Sub Reverse(Of T)(ByVal Self As IList(Of T))
 #Disable Warning BC40008 ' Type or member is obsolete
             Self.Reverse(0)
