@@ -62,6 +62,12 @@ Namespace Common
                 Const N = 32
                 Const NMask = CULng((1UL << N) - 1)
 
+                ' A long has enough space to hold (int * int + 2 * int).
+                ' Proof:
+                ' (2^n - 1) * (2^n - 1) + 2 * (2^n - 1)
+                ' = ((2^n - 1) + 1)^2 - 1
+                ' = 2^2n - 1
+
                 Dim A1 = A And NMask
                 Dim A2 = A >> N
                 Dim B1 = B And NMask
@@ -73,14 +79,12 @@ Namespace Common
                 Dim Mid = Low >> N
                 Low = Low And NMask
 
-                Dim T = A1 * B2
-                Mid += T And NMask
-                High += T >> N
+                Mid += A1 * B2
+                High += Mid >> N
 
-                T = A2 * B1
-                Mid += T And NMask
-                High += T >> N
+                Mid = Mid And NMask
 
+                Mid += A2 * B1
                 High += Mid >> N
                 Low += Mid << N
 
