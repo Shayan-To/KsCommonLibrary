@@ -59,6 +59,7 @@ Namespace Common
 #End Region
 
             Public Shared Function Power(ByVal A As Integer, ByVal B As Integer) As Integer
+                Verify.FalseArg(B < 0, NameOf(B), $"{NameOf(B)} must be non-negative.")
                 Dim R = 1
                 Do Until B = 0
                     If (B And 1) = 1 Then
@@ -70,7 +71,8 @@ Namespace Common
                 Return R
             End Function
 
-            Public Shared Function PowerL(ByVal A As Long, ByVal B As Long) As Long
+            Public Shared Function PowerL(ByVal A As Long, ByVal B As Integer) As Long
+                Verify.FalseArg(B < 0, NameOf(B), $"{NameOf(B)} must be non-negative.")
                 Dim R = 1L
                 Do Until B = 0
                     If (B And 1) = 1 Then
@@ -82,7 +84,9 @@ Namespace Common
                 Return R
             End Function
 
-            Public Shared Function SquareRoot(ByVal A As Integer) As Integer
+            Public Shared Function SquareRoot(ByVal A As Integer) As (Root As Integer, Reminder As Integer)
+                Verify.FalseArg(A < 0, NameOf(A), $"{NameOf(A)} must be non-negative.")
+
                 Dim ARev = 0
                 Dim T = A
                 Do Until T = 0
@@ -107,10 +111,12 @@ Namespace Common
                     End If
                 Loop
 
-                Return Root
+                Return (Root, Reminder)
             End Function
 
-            Public Shared Function SquareRootL(ByVal A As Long) As Long
+            Public Shared Function SquareRootL(ByVal A As Long) As (Root As Long, Reminder As Long)
+                Verify.FalseArg(A < 0, NameOf(A), $"{NameOf(A)} must be non-negative.")
+
                 Dim ARev = 0L
                 Dim T = A
                 Do Until T = 0
@@ -135,7 +141,7 @@ Namespace Common
                     End If
                 Loop
 
-                Return Root
+                Return (Root, Reminder)
             End Function
 
             Public Shared Function LeastPowerOfTwoOnMin(ByVal Min As Integer) As Integer
@@ -474,7 +480,8 @@ Namespace Common
                                         .ToArray()
                      Return Collections.Range(2, D.Length - 2).Select(Function(I) D.Subarray(0, I)).ToArray()
                  End Function).Invoke()
-            ' The last one is the padding character.
+
+            ''' <summary>The last character is the padding character.</summary>
             Private Shared ReadOnly Base64Digits As Char() = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".ToCharArray()
 
         End Class
