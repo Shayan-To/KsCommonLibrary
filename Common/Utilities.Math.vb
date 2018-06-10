@@ -58,6 +58,40 @@ Namespace Common
             End Function
 #End Region
 
+            Public Shared Function MultLongTo128U(ByVal A As ULong, ByVal B As ULong) As (Low As ULong, High As ULong)
+                Const N = 32
+                Const NMask = CULng((1UL << N) - 1)
+
+                Dim A1 = A And NMask
+                Dim A2 = A >> N
+                Dim B1 = B And NMask
+                Dim B2 = B >> N
+
+                Dim Low = A1 * B1
+                Dim High = A2 * B2
+
+                Dim Mid = Low >> N
+                Low = Low And NMask
+
+                Dim T = A1 * B2
+                Mid += T And NMask
+                High += T >> N
+
+                T = A2 * B1
+                Mid += T And NMask
+                High += T >> N
+
+                High += Mid >> N
+                Low += Mid << N
+
+                Return (Low, High)
+            End Function
+
+            Public Shared Function MultLongTo128(ByVal A As Long, ByVal B As Long) As (Low As Long, High As Long)
+                ' ToDo How this can work for negative numbers?
+                Throw New NotImplementedException()
+            End Function
+
             Public Shared Function Power(ByVal A As Integer, ByVal B As Integer) As Integer
                 Verify.FalseArg(B < 0, NameOf(B), $"{NameOf(B)} must be non-negative.")
                 Dim R = 1
