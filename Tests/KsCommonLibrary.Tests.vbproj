@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Sorters.Tests.vb" />
+    <Compile Include="Common\Utilities.Math.Tests.vb" />
     <Compile Include="TrivialTests.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
