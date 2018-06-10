@@ -268,7 +268,7 @@ Namespace Common
                 Return (A \ GreatestCommonDivisor(A, B)) * B
             End Function
 
-            Public Shared Function LogarithmIntegral(ByVal N As Long, ByVal Base As Long) As (Log As Integer, Reminder As Long)
+            Public Shared Function Logarithm(ByVal N As Long, ByVal Base As Long) As (Log As Integer, Reminder As Long)
                 Dim Reminder = 0L
                 Dim Power = 1L
                 Dim Log = 0
@@ -380,7 +380,7 @@ Namespace Common
 
             Public Shared Function ConvertToBaseB(ByVal N As Byte(), ByVal Digits As Char()) As String
                 Dim Base = Digits.Length
-                Dim LogRem = LogarithmIntegral(Base, 2)
+                Dim LogRem = Logarithm(Base, 2)
                 Dim DigitBits = LogRem.Log
                 Const ByteBits = 8
 
@@ -423,7 +423,7 @@ Namespace Common
 
             Public Shared Function ConvertFromBaseB(ByVal N As String, ByVal Digits As Char()) As Byte()
                 Dim Base = Digits.Length
-                Dim LogRem = LogarithmIntegral(Base, 2)
+                Dim LogRem = Logarithm(Base, 2)
                 Dim DigitBits = LogRem.Log
                 Const ByteBits = 8
 
