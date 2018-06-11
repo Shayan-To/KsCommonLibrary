@@ -183,6 +183,13 @@ Namespace Common
 
 #Region "CollectionUtils Group"
         <Extension()>
+        Public Iterator Function ToEnumerable(Of T)(ByVal Self As IEnumerable(Of T)) As IEnumerable(Of T)
+            For Each I In Self
+                Yield I
+            Next
+        End Function
+
+        <Extension()>
         Public Function FastCount(Of T)(ByVal Self As IEnumerable(Of T)) As Integer?
             Dim CollectionT = TryCast(Self, ICollection(Of T))
             If CollectionT IsNot Nothing Then
