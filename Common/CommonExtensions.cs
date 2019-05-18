@@ -745,7 +745,7 @@ namespace Ks
                 foreach (var I in Self)
                 {
                     var V = Selector.Invoke(I, Ind);
-                    if (V.HasValue & (M > V) ?? true)
+                    if (V.HasValue & (!M.HasValue | (M > V)))
                     {
                         M = V;
                         R = I;
@@ -763,7 +763,7 @@ namespace Ks
                 foreach (var I in Self)
                 {
                     var V = Selector.Invoke(I, Ind);
-                    if (V.HasValue & (M > V) ?? true)
+                    if (V.HasValue & (!M.HasValue | (M > V)))
                     {
                         M = V;
                         R = I;
@@ -781,7 +781,7 @@ namespace Ks
                 foreach (var I in Self)
                 {
                     var V = Selector.Invoke(I, Ind);
-                    if (V.HasValue & (M > V) ?? true)
+                    if (V.HasValue & (!M.HasValue | (M > V)))
                     {
                         M = V;
                         R = I;
@@ -799,7 +799,7 @@ namespace Ks
                 foreach (var I in Self)
                 {
                     var V = Selector.Invoke(I, Ind);
-                    if (V.HasValue & (M > V) ?? true)
+                    if (V.HasValue & (!M.HasValue | (M > V)))
                     {
                         M = V;
                         R = I;
