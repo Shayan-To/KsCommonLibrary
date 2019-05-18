@@ -36,12 +36,12 @@ namespace Ks
 
             public static CreateInstanceDictionary<TKey, TValue> Create<TKey, TValue>(IDictionary<TKey, TValue> Dic) where TValue : new()
             {
-                return new CreateInstanceDictionary<TKey, TValue>(Dic, () => new TValue());
+                return new CreateInstanceDictionary<TKey, TValue>(Dic, K => new TValue());
             }
 
             public static CreateInstanceDictionary<TKey, TValue> Create<TKey, TValue>() where TValue : new()
             {
-                return new CreateInstanceDictionary<TKey, TValue>(() => new TValue());
+                return new CreateInstanceDictionary<TKey, TValue>(K => new TValue());
             }
         }
 

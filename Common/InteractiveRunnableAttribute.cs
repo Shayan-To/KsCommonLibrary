@@ -20,7 +20,7 @@ namespace Ks
             [DebuggerHidden()]
             public static void RunTestMethods(IEnumerable<MethodInfo> Methods, bool JustTrue = true)
             {
-                var FullNameSelector = (MethodInfo M) => $"{M.DeclaringType.FullName}.{M.Name}";
+                var FullNameSelector = new Func<MethodInfo, string>(M => $"{M.DeclaringType.FullName}.{M.Name}");
                 var List = Methods.WithCustomAttribute<InteractiveRunnableAttribute>()
                         .Where(MA =>
                         {

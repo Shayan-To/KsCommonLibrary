@@ -55,7 +55,7 @@ namespace Ks
                             {
                                 if (EscapeChars.Contains(Conversions.ToString(Ch)))
                                     return Conversions.ToString('\\') + Conversions.ToString(Ch);
-                                return Ch;
+                                return Ch.ToString();
                             }
                     }
                 }

@@ -10,7 +10,7 @@ namespace Ks.ConsoleTests
         public static void Start()
         {
             var Rand = new Random();
-            var L = Utilities.Collections.Range(45).Select<int?>(I => Rand.Next());
+            var L = Utilities.Collections.Range(45).Select(I => (int?)Rand.Next());
             var ChoiceReader = new ConsoleListChoiceReader<int?>(L);
 
             do

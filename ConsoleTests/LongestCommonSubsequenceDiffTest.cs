@@ -21,7 +21,7 @@ namespace Ks.ConsoleTests
 
             var I = 0;
             var J = 0;
-            foreach (var L in LCS.Append((File1.Length, File2.Length)))
+            foreach (var L in LCS.Append((Index1: File1.Length, Index2: File2.Length)))
             {
                 var loopTo = L.Index1 - 1;
                 for (I = I; I <= loopTo; I++)

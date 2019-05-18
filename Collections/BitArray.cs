@@ -42,7 +42,7 @@ namespace Ks
             {
                 var loopTo = this._Bytes.Length - 1;
                 for (var I = 0; I <= loopTo; I++)
-                    this._Bytes[I] = ~this._Bytes[I];
+                    this._Bytes[I] = (byte)~this._Bytes[I];
             }
 
             /// <param name="Amount">Shift left if positive, right if negative.</param>
@@ -50,7 +50,7 @@ namespace Ks
             {
                 var loopTo = this._Bytes.Length - 1;
                 for (var I = 0; I <= loopTo; I++)
-                    this._Bytes[I] = ~this._Bytes[I];
+                    this._Bytes[I] = (byte)~this._Bytes[I];
                 this._Bytes[this._Bytes.Length - 1] = System.Convert.ToByte(((int)this._Bytes[this._Bytes.Length - 1] & ((1 << this.LastByteBitCount()) - 1)));
             }
 

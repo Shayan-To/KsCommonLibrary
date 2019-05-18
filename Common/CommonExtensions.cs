@@ -1016,22 +1016,22 @@ namespace Ks
 
             public static object CreateInstance<T1>(this Type Self, T1 Arg1)
             {
-                return Self.GetConstructor(new[] { typeof(T1) }).Invoke(new[] { Arg1 });
+                return Self.GetConstructor(new[] { typeof(T1) }).Invoke(new object[] { Arg1 });
             }
 
             public static object CreateInstance<T1, T2>(this Type Self, T1 Arg1, T2 Arg2)
             {
-                return Self.GetConstructor(new[] { typeof(T1), typeof(T2) }).Invoke(new[] { Arg1, Arg2 });
+                return Self.GetConstructor(new[] { typeof(T1), typeof(T2) }).Invoke(new object[] { Arg1, Arg2 });
             }
 
             public static object CreateInstance<T1, T2, T3>(this Type Self, T1 Arg1, T2 Arg2, T3 Arg3)
             {
-                return Self.GetConstructor(new[] { typeof(T1), typeof(T2), typeof(T3) }).Invoke(new[] { Arg1, Arg2, Arg3 });
+                return Self.GetConstructor(new[] { typeof(T1), typeof(T2), typeof(T3) }).Invoke(new object[] { Arg1, Arg2, Arg3 });
             }
 
             public static object CreateInstance<T1, T2, T3, T4>(this Type Self, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4)
             {
-                return Self.GetConstructor(new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }).Invoke(new[] { Arg1, Arg2, Arg3, Arg4 });
+                return Self.GetConstructor(new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }).Invoke(new object[] { Arg1, Arg2, Arg3, Arg4 });
             }
 
             public static object RunSharedMethod(this Type Self, string Name)
@@ -1041,22 +1041,22 @@ namespace Ks
 
             public static object RunSharedMethod<T1>(this Type Self, string Name, T1 Arg1)
             {
-                return Self.GetMethod(Name, new[] { typeof(T1) }).Invoke(null, new[] { Arg1 });
+                return Self.GetMethod(Name, new[] { typeof(T1) }).Invoke(null, new object[] { Arg1 });
             }
 
             public static object RunSharedMethod<T1, T2>(this Type Self, string Name, T1 Arg1, T2 Arg2)
             {
-                return Self.GetMethod(Name, new[] { typeof(T1), typeof(T2) }).Invoke(null, new[] { Arg1, Arg2 });
+                return Self.GetMethod(Name, new[] { typeof(T1), typeof(T2) }).Invoke(null, new object[] { Arg1, Arg2 });
             }
 
             public static object RunSharedMethod<T1, T2, T3>(this Type Self, string Name, T1 Arg1, T2 Arg2, T3 Arg3)
             {
-                return Self.GetMethod(Name, new[] { typeof(T1), typeof(T2), typeof(T3) }).Invoke(null, new[] { Arg1, Arg2, Arg3 });
+                return Self.GetMethod(Name, new[] { typeof(T1), typeof(T2), typeof(T3) }).Invoke(null, new object[] { Arg1, Arg2, Arg3 });
             }
 
             public static object RunSharedMethod<T1, T2, T3, T4>(this Type Self, string Name, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4)
             {
-                return Self.GetMethod(Name, new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }).Invoke(null, new[] { Arg1, Arg2, Arg3, Arg4 });
+                return Self.GetMethod(Name, new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }).Invoke(null, new object[] { Arg1, Arg2, Arg3, Arg4 });
             }
 
             public static object RunMethod(this object Self, string Name)
@@ -1066,22 +1066,22 @@ namespace Ks
 
             public static object RunMethod<T1>(this object Self, string Name, T1 Arg1)
             {
-                return Self.GetType().GetMethod(Name, new[] { typeof(T1) }).Invoke(Self, new[] { Arg1 });
+                return Self.GetType().GetMethod(Name, new[] { typeof(T1) }).Invoke(Self, new object[] { Arg1 });
             }
 
             public static object RunMethod<T1, T2>(this object Self, string Name, T1 Arg1, T2 Arg2)
             {
-                return Self.GetType().GetMethod(Name, new[] { typeof(T1), typeof(T2) }).Invoke(Self, new[] { Arg1, Arg2 });
+                return Self.GetType().GetMethod(Name, new[] { typeof(T1), typeof(T2) }).Invoke(Self, new object[] { Arg1, Arg2 });
             }
 
             public static object RunMethod<T1, T2, T3>(this object Self, string Name, T1 Arg1, T2 Arg2, T3 Arg3)
             {
-                return Self.GetType().GetMethod(Name, new[] { typeof(T1), typeof(T2), typeof(T3) }).Invoke(Self, new[] { Arg1, Arg2, Arg3 });
+                return Self.GetType().GetMethod(Name, new[] { typeof(T1), typeof(T2), typeof(T3) }).Invoke(Self, new object[] { Arg1, Arg2, Arg3 });
             }
 
             public static object RunMethod<T1, T2, T3, T4>(this object Self, string Name, T1 Arg1, T2 Arg2, T3 Arg3, T4 Arg4)
             {
-                return Self.GetType().GetMethod(Name, new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }).Invoke(Self, new[] { Arg1, Arg2, Arg3, Arg4 });
+                return Self.GetType().GetMethod(Name, new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }).Invoke(Self, new object[] { Arg1, Arg2, Arg3, Arg4 });
             }
 
             public static T GetSharedFieldValue<T>(this Type Self, string Name)

@@ -47,7 +47,7 @@ namespace Ks.Tests
                 [Fact()]
                 public void ListToString()
                 {
-                    Assert.Equal("{}", Utilities.Serialization.ListToString(new[] { }));
+                    Assert.Equal("{}", Utilities.Serialization.ListToString(new string[] { }));
                     Assert.Equal("{,}", Utilities.Serialization.ListToString(new[] { "" }));
                     Assert.Equal("{AA,BB,}", Utilities.Serialization.ListToString(new[] { "AA", "BB" }));
                     Assert.Equal(@"{\{\,\},\{\r\}\n,}", Utilities.Serialization.ListToString(new[] { "{,}", ("{" + Conversions.ToString(ControlChars.Cr) + "}" + Conversions.ToString(ControlChars.Lf)) }));

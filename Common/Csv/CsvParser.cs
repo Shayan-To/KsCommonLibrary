@@ -14,7 +14,7 @@ namespace Ks
                 this.Index = 0;
                 this.NormalizeLineEndings = true;
                 this.DelimiterChar = Delimiter;
-                this.Delimiter = Delimiter;
+                this.Delimiter = Delimiter.ToString();
                 this.Csv = Csv;
 
                 this.ParseCsv(HasHeaders);
