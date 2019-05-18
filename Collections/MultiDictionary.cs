@@ -90,7 +90,7 @@ namespace Ks
                 List<TValue> L = null;
                 if (this.Dic.TryGetValue(key, out L))
                 {
-                    value = new MultiDictionaryList<TKey, TValue>();
+                    value = new MultiDictionaryList<TKey, TValue>(this, key, L);
                     return true;
                 }
                 value = default;
