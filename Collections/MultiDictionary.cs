@@ -9,10 +9,10 @@ namespace Ks
         {
             private void IncrementVersion()
             {
-                if ((int)this.Version == 255)
-                    this.Version = 0;
-                else
-                    this.Version = (byte)((int)this.Version + 1);
+                unchecked
+                {
+                    this.Version += 1;
+                }
             }
 
             internal void ReportKeyEmpty(MultiDictionaryList<TKey, TValue> List)
