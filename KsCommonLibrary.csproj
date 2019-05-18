@@ -84,6 +84,7 @@
     <Compile Include="Common\EventBasedTask.cs" />
     <Compile Include="Common\HashCodeComparer.cs" />
     <Compile Include="Common\HashRandom.cs" />
+    <Compile Include="Common\IndexerProperty.cs" />
     <Compile Include="Common\InvocationException.cs" />
     <Compile Include="Common\JoinDirection.cs" />
     <Compile Include="Common\JoinElement.cs" />
