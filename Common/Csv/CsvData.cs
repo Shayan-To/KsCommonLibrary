@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
-
-namespace Ks
+﻿namespace Ks
 {
     namespace Common
     {
@@ -38,7 +35,7 @@ namespace Ks
 
             private static void WriteField(string Field, bool UseQuotes, System.Text.StringBuilder Out)
             {
-                if (Field.StartsWith("\"") | Field.Contains(Conversions.ToString(ControlChars.Cr)) | Field.Contains(Conversions.ToString(ControlChars.Lf)))
+                if (Field.StartsWith("\"") | Field.Contains("\r") | Field.Contains("\n"))
                     UseQuotes = true;
 
                 if (!UseQuotes)

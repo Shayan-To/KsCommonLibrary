@@ -3,7 +3,6 @@ using System.Collections;
 using System;
 using System.ComponentModel;
 using Ks.Common.MVVM;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -218,7 +217,7 @@ namespace Ks
 
             public string ToString(string format, IFormatProvider formatProvider)
             {
-                var R = new System.Text.StringBuilder(Conversions.ToString('{'));
+                var R = new System.Text.StringBuilder("{");
                 var Bl = true;
                 foreach (var KV in this)
                 {

@@ -3,14 +3,12 @@ using System.Threading.Tasks;
 using Mono;
 using System.Data;
 using System.Diagnostics;
-using Microsoft.VisualBasic;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Controls;
 using System;
 using System.Xml.Linq;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -67,8 +65,8 @@ namespace Ks
                         case var case3 when case3 == nameof(this.Direction).ToLower():
                             {
                                 Value = Value.ToLower();
-                                Verify.True((Operators.CompareString(Value, nameof(FlowDirection.LeftToRight).ToLower(), TextCompare: false) == 0) | (Operators.CompareString(Value, nameof(FlowDirection.RightToLeft).ToLower(), TextCompare: false) == 0) | (Value == "rtl") | (Value == "ltr"));
-                                this._Direction = ((Value == "ltr") | (Operators.CompareString(Value, nameof(FlowDirection.LeftToRight).ToLower(), TextCompare: false) == 0)) ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+                                Verify.True((Value == nameof(FlowDirection.LeftToRight).ToLower()) | (Value == nameof(FlowDirection.RightToLeft).ToLower()) | (Value == "rtl") | (Value == "ltr"));
+                                this._Direction = ((Value == "ltr") | (Value == nameof(FlowDirection.LeftToRight).ToLower())) ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
                                 break;
                             }
 

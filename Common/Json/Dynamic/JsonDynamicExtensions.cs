@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using System.Linq;
 using System.Collections.Generic;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -147,8 +146,8 @@ namespace Ks
 
             public static bool GetBoolean(this JsonDynamicValue Self)
             {
-                Verify.True((Operators.CompareString(Self.Value, JsonDynamicValue.True, TextCompare: false) == 0) | (Operators.CompareString(Self.Value, JsonDynamicValue.False, TextCompare: false) == 0), "Value must be a boolean.");
-                return Operators.CompareString(Self.Value, JsonDynamicValue.True, TextCompare: false) == 0;
+                Verify.True((Self.Value == JsonDynamicValue.True) | (Self.Value == JsonDynamicValue.False), "Value must be a boolean.");
+                return Self.Value == JsonDynamicValue.True;
             }
 
             public static int GetInteger(this JsonDynamicValue Self)

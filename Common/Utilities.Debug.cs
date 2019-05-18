@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System;
 using System.Text;
-using Microsoft.VisualBasic.CompilerServices;
 using Media = System.Windows.Media;
 using Reflect = System.Reflection;
 using SIO = System.IO;
@@ -90,7 +89,7 @@ namespace Ks
                         }
                     }
 
-                    R.AppendLine(Conversions.ToString(')'));
+                    R.Append(')').AppendLine();
 
                     Console.Write(R.ToString());
                 }
@@ -133,7 +132,7 @@ namespace Ks
                         }
                     }
 
-                    R.AppendLine(Conversions.ToString(')'));
+                    R.Append(')').AppendLine();
 
                     return R.ToString();
                 }

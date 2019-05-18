@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 using System;
 
 namespace Ks
@@ -131,15 +130,15 @@ namespace Ks
                     if (I < (index + count))
                         Ch = buffer[I];
                     else
-                        Ch = ControlChars.Lf;
-                    if ((Ch == ControlChars.Cr) | (Ch == ControlChars.Lf))
+                        Ch = '\n';
+                    if ((Ch == '\r') | (Ch == '\n'))
                     {
                         if (Bl)
                             this.Base.Write(new string(' ', StampLength));
                         Bl = true;
                         this.Base.WriteLine(buffer, SI, I - SI);
 
-                        if (I < ((index + count) - 1) && ((Ch == ControlChars.Cr) & (buffer[I + 1] == ControlChars.Lf)))
+                        if (I < ((index + count) - 1) && ((Ch == '\r') & (buffer[I + 1] == '\n')))
                             I += 1;
                         SI = I + 1;
                     }
@@ -276,15 +275,15 @@ namespace Ks
                     if (I < (index + count))
                         Ch = buffer[I];
                     else
-                        Ch = ControlChars.Lf;
-                    if ((Ch == ControlChars.Cr) | (Ch == ControlChars.Lf))
+                        Ch = '\n';
+                    if ((Ch == '\r') | (Ch == '\n'))
                     {
                         if (Bl)
                             await this.Base.WriteAsync(new string(' ', StampLength));
                         Bl = true;
                         await this.Base.WriteLineAsync(buffer, SI, I - SI);
 
-                        if (I < ((index + count) - 1) && ((Ch == ControlChars.Cr) & (buffer[I + 1] == ControlChars.Lf)))
+                        if (I < ((index + count) - 1) && ((Ch == '\r') & (buffer[I + 1] == '\n')))
                             I += 1;
                         SI = I + 1;
                     }

@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Collections.Generic;
 using System;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -89,7 +88,7 @@ namespace Ks
 
             public static (uint ProcessId, uint ThreadId) GetWindowThreadProcessId(IntPtr hwnd)
             {
-                uint ProcessId = Conversions.ToUInteger(0);
+                uint ProcessId = 0u;
                 var ThreadId = Unsafe.GetWindowThreadProcessId(hwnd, out ProcessId);
                 Common.VerifyError();
                 return (ProcessId, ThreadId);

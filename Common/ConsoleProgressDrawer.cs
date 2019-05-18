@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Microsoft.VisualBasic;
 using System;
 
 namespace Ks
@@ -22,7 +21,7 @@ namespace Ks
             private void Draw(string TextBefore, string TextAfter)
             {
                 if (this.IsSingleLine)
-                    Console.Write(ControlChars.Cr);
+                    Console.Write('\r');
 
                 Console.Write(TextBefore);
 

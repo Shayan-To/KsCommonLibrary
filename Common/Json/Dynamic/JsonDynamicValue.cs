@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-
-namespace Ks
+﻿namespace Ks
 {
     namespace Common
     {
@@ -58,7 +56,7 @@ namespace Ks
 
             public static bool operator ==(JsonDynamicValue L, JsonDynamicValue R)
             {
-                return (Operators.CompareString(L.Value, R.Value, TextCompare: false) == 0) & (L.IsString == R.IsString);
+                return (L.Value == R.Value) & (L.IsString == R.IsString);
             }
 
             public static bool operator !=(JsonDynamicValue L, JsonDynamicValue R)

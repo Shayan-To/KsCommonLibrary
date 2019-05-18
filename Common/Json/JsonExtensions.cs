@@ -3,7 +3,6 @@
 using System.Data;
 using System.Linq;
 using System;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -108,8 +107,8 @@ namespace Ks
 #if !RelaxedStrings
                 Verify.False(V.IsString, "Value must be a boolean.");
 #endif
-                Verify.True((Operators.CompareString(V.Value, True, TextCompare: false) == 0) | (Operators.CompareString(V.Value, False, TextCompare: false) == 0), "Value must be a boolean.");
-                return Operators.CompareString(V.Value, True, TextCompare: false) == 0;
+                Verify.True((V.Value == True) | (V.Value == False), "Value must be a boolean.");
+                return V.Value == True;
             }
 
             public static int GetInteger(this JsonObject Self)

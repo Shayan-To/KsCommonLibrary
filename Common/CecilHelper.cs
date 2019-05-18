@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Collections.Generic;
 using System;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -33,7 +32,7 @@ namespace Ks
 
             public bool Equals(Mono.Cecil.TypeDefinition Type1, Mono.Cecil.TypeDefinition Type2)
             {
-                return (Operators.CompareString(Type1.FullName, Type2.FullName, TextCompare: false) == 0) & (Operators.CompareString(Type1.Module.FileName, Type2.Module.FileName, TextCompare: false) == 0);
+                return (Type1.FullName == Type2.FullName) & (Type1.Module.FileName == Type2.Module.FileName);
             }
 
             public System.Reflection.MethodInfo Convert(Mono.Cecil.MethodDefinition Method)

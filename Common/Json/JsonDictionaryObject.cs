@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using System;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -17,7 +16,7 @@ namespace Ks
                 Array.Sort(this.List, CompareKeyHash);
                 var loopTo = this.List.Length - 2;
                 for (var I = 0; I <= loopTo; I++)
-                    Verify.False(Operators.CompareString(this.List[I].Key, this.List[I + 1].Key, TextCompare: false) == 0, "Cannot have two items with the same key.");
+                    Verify.False(this.List[I].Key == this.List[I + 1].Key, "Cannot have two items with the same key.");
             }
 
             public int Count
@@ -78,7 +77,7 @@ namespace Ks
                 var loopTo = (T.StartIndex + T.Length) - 1;
                 for (var I = T.StartIndex; I <= loopTo; I++)
                 {
-                    if (Operators.CompareString(this.List[I].Key, Key, TextCompare: false) == 0)
+                    if (this.List[I].Key == Key)
                     {
                         Value = this.List[I].Value;
                         return true;

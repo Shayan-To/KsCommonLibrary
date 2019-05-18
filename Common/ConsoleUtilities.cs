@@ -1,7 +1,5 @@
-﻿using Microsoft.VisualBasic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -78,7 +76,7 @@ namespace Ks
             public static void WriteTypes(IEnumerable<Type> Types)
             {
                 foreach (var T in Types)
-                    Console.WriteLine(T.FullName + Conversions.ToString(ControlChars.Tab) + T.Attributes.ToString());
+                    Console.WriteLine(T.FullName + "\t" + T.Attributes.ToString());
             }
 
             public static void Pause()

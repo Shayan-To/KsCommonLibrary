@@ -1,8 +1,6 @@
-﻿using Microsoft.VisualBasic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.Text;
-using Microsoft.VisualBasic.CompilerServices;
 using Media = System.Windows.Media;
 using Reflect = System.Reflection;
 using SIO = System.IO;
@@ -41,21 +39,22 @@ namespace Ks
                 {
                     switch (Ch)
                     {
-                        case ControlChars.Cr:
+                        case '\r':
                             {
                                 return @"\r";
                             }
 
-                        case ControlChars.Lf:
+                        case '\n':
                             {
                                 return @"\n";
                             }
 
                         default:
                             {
-                                if (EscapeChars.Contains(Conversions.ToString(Ch)))
-                                    return Conversions.ToString('\\') + Conversions.ToString(Ch);
-                                return Ch.ToString();
+                                var s = Ch.ToString();
+                                if (EscapeChars.Contains(s))
+                                    return "\\" + s;
+                                return s;
                             }
                     }
                 }
@@ -66,17 +65,17 @@ namespace Ks
                     {
                         case 'r':
                             {
-                                return ControlChars.Cr;
+                                return '\r';
                             }
 
                         case 'n':
                             {
-                                return ControlChars.Lf;
+                                return '\n';
                             }
 
                         default:
                             {
-                                if (EscapeChars.Contains(Conversions.ToString(Ch)))
+                                if (EscapeChars.Contains(Ch.ToString()))
                                     return Ch;
                                 throw new Exception("Invalid escape character.");
                             }
@@ -183,9 +182,9 @@ namespace Ks
                             continue;
                         }
 
-                        if ((Ch == ControlChars.Cr) | (Ch == ControlChars.Lf))
+                        if ((Ch == '\r') | (Ch == '\n'))
                         {
-                            if (((Ch == ControlChars.Cr) & ((I + 1) < Str.Length)) && Str[I + 1] == ControlChars.Lf)
+                            if (((Ch == '\r') & ((I + 1) < Str.Length)) && Str[I + 1] == '\n')
                                 I += 1;
 
                             Res.Add(R.ToString());
@@ -333,9 +332,9 @@ namespace Ks
                             continue;
                         }
 
-                        if ((Ch == ControlChars.Cr) | (Ch == ControlChars.Lf))
+                        if ((Ch == '\r') | (Ch == '\n'))
                         {
-                            if (((Ch == ControlChars.Cr) & ((I + 1) < Str.Length)) && Str[I + 1] == ControlChars.Lf)
+                            if (((Ch == '\r') & ((I + 1) < Str.Length)) && Str[I + 1] == '\n')
                                 I += 1;
 
                             Verify.False(Key == null, "Invalid dictionary string.");

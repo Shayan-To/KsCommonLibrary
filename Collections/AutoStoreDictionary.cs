@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 using System;
-using Microsoft.VisualBasic.CompilerServices;
 using System.Collections.Specialized;
 
 namespace Ks
@@ -209,7 +208,7 @@ namespace Ks
 
             public string ToString(string format, IFormatProvider formatProvider)
             {
-                var R = new System.Text.StringBuilder(Conversions.ToString('{'));
+                var R = new System.Text.StringBuilder("{");
                 var Bl = true;
                 foreach (var KV in this)
                 {

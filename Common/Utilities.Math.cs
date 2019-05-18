@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using Microsoft.VisualBasic;
 using System.Linq;
 using System.Collections.Generic;
 using System;
@@ -553,7 +552,7 @@ namespace Ks
 
                 private static readonly char[][] Digits = new Func<char[][]>(() =>
                 {
-                    var D = Collections.Concat(Collections.Range(10).Select(I => (char)(Strings.AscW('0') + I)), Collections.Range(26).Select(I => (char)(Strings.AscW('a') + I)))
+                    var D = Collections.Concat(Collections.Range(10).Select(I => (char)('0' + I)), Collections.Range(26).Select(I => (char)('a' + I)))
                                     .ToArray();
                     return Collections.Range(2, D.Length - 2).Select(I => D.Subarray(0, I)).ToArray();
                 }).Invoke();

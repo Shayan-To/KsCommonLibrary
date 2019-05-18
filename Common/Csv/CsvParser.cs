@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using Microsoft.VisualBasic.CompilerServices;
+﻿using System;
 
 namespace Ks
 {
@@ -122,7 +120,7 @@ namespace Ks
 
             private bool ReadToken(string T)
             {
-                if (Operators.CompareString(this.PeekToken(), T, TextCompare: false) == 0)
+                if (this.PeekToken() == T)
                 {
                     this.ReadToken();
                     return true;
@@ -150,13 +148,13 @@ namespace Ks
                 if (this.IsFinished())
                     return null;
 
-                if (this.ReadChar(ControlChars.Cr))
+                if (this.ReadChar('\r'))
                 {
-                    this.ReadChar(ControlChars.Lf);
+                    this.ReadChar('\n');
                     return NewLine;
                 }
 
-                if (this.ReadChar(ControlChars.Lf))
+                if (this.ReadChar('\n'))
                     return NewLine;
 
                 if (this.ReadChar(this.DelimiterChar))
@@ -178,14 +176,14 @@ namespace Ks
                             continue;
                         }
 
-                        if (this.NormalizeLineEndings && this.ReadChar(ControlChars.Cr))
+                        if (this.NormalizeLineEndings && this.ReadChar('\r'))
                         {
-                            this.ReadChar(ControlChars.Lf);
+                            this.ReadChar('\n');
                             Res.Append(NewLine);
                             continue;
                         }
 
-                        if (this.NormalizeLineEndings && this.ReadChar(ControlChars.Lf))
+                        if (this.NormalizeLineEndings && this.ReadChar('\n'))
                         {
                             Res.Append(NewLine);
                             continue;
@@ -199,7 +197,7 @@ namespace Ks
                     do
                     {
                         var T = this.PeekChar();
-                        if (!T.HasValue | (T == this.DelimiterChar) | (T == ControlChars.Cr) | (T == ControlChars.Lf))
+                        if (!T.HasValue | (T == this.DelimiterChar) | (T == '\r') | (T == '\n'))
                             break;
                         Res.Append(this.ReadChar());
                     }
@@ -249,7 +247,7 @@ namespace Ks
                 }
             }
 
-            private static string NewLine = ControlChars.CrLf;
+            private static string NewLine = "\r\n";
 
             private string Delimiter;
             private char DelimiterChar;

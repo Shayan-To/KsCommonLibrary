@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-
-namespace Ks
+﻿namespace Ks
 {
     namespace Common
     {
@@ -227,7 +225,7 @@ namespace Ks
 
             public override string ToString()
             {
-                return Conversions.ToString(this.Numerator) + ((this.Denumenator != 1) ? ("/" + Conversions.ToString(this.Denumenator)) : "");
+                return this.Numerator.ToString() + ((this.Denumenator != 1) ? ("/" + this.Denumenator.ToString()) : "");
             }
 
             private readonly int _Numerator;

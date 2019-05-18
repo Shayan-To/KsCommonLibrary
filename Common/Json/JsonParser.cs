@@ -1,9 +1,7 @@
 ﻿//#define RelaxedStrings
 
-using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -119,7 +117,7 @@ namespace Ks
                 if (Array.IndexOf(Operators, Ch) != -1)
                 {
                     this.Index += 1;
-                    return new Token(Conversions.ToString(this.Input[this.Index - 1]), TokenType.Operator);
+                    return new Token(this.Input[this.Index - 1].ToString(), TokenType.Operator);
                 }
 
                 if (Ch == '"')
@@ -184,11 +182,11 @@ namespace Ks
                     var Ch = this.Input[I];
                     R *= 16;
                     if (('0' <= Ch) & (Ch <= '9'))
-                        R += Strings.AscW(Ch) - Strings.AscW('0');
+                        R += Ch - '0';
                     else if (('a' <= Ch) & (Ch <= 'f'))
-                        R += (Strings.AscW(Ch) - Strings.AscW('a')) + 10;
+                        R += Ch - 'a' + 10;
                     else if (('A' <= Ch) & (Ch <= 'F'))
-                        R += (Strings.AscW(Ch) - Strings.AscW('A')) + 10;
+                        R += Ch - 'A' + 10;
                     else
                         Verify.Fail("Invalid JSON format. Invalid escape sequence.");
                 }

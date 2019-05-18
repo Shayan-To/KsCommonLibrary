@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-
-namespace Ks
+﻿namespace Ks
 {
     namespace Common
     {
@@ -26,7 +24,7 @@ namespace Ks
                     if (BeginningOfFile & (CharsIndex == (CharsInitialIndex - 1)))
                         Ch = 0xFEFF;
                     else
-                        Ch = Strings.AscW(CharsArray[CharsIndex]);
+                        Ch = CharsArray[CharsIndex];
 
                     if (Ch < 128)
                     {

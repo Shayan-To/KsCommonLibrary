@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 
 namespace Ks
@@ -39,7 +38,7 @@ namespace Ks
                     {
                         this.Out.Write(S.Substring(PrevStart, I - PrevStart));
                         this.Out.Write(@"\u");
-                        this.Out.Write(Convert.ToString(Strings.AscW(Ch), 16).PadLeft(4, '0'));
+                        this.Out.Write(Convert.ToString(Ch, 16).PadLeft(4, '0'));
                         PrevStart = I + 1;
                     }
                 }

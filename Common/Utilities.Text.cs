@@ -1,8 +1,6 @@
-﻿using Microsoft.VisualBasic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.Text;
-using Microsoft.VisualBasic.CompilerServices;
 using Media = System.Windows.Media;
 using Reflect = System.Reflection;
 using SIO = System.IO;
@@ -101,7 +99,7 @@ namespace Ks
 
                     T2 = Input[0];
 
-                    if (Conversions.ToString(T2) != @"\")
+                    if (T2 != '\\')
                     {
                         if (DoesThrow && Input.Length != 1)
                             throw new ArgumentException("Invalid escaped character.");
@@ -368,13 +366,13 @@ namespace Ks
                     {
                         switch (Ch)
                         {
-                            case ControlChars.Cr:
+                            case '\r':
                                 {
                                     Res.Append(@"\r");
                                     break;
                                 }
 
-                            case ControlChars.Lf:
+                            case '\n':
                                 {
                                     Res.Append(@"\n");
                                     break;
@@ -416,13 +414,13 @@ namespace Ks
                             {
                                 case 'r':
                                     {
-                                        Res.Append(ControlChars.Cr);
+                                        Res.Append('\r');
                                         break;
                                     }
 
                                 case 'n':
                                     {
-                                        Res.Append(ControlChars.Lf);
+                                        Res.Append('\n');
                                         break;
                                     }
 
@@ -455,12 +453,12 @@ namespace Ks
 
                 public static string FirstCapitalized(string Str)
                 {
-                    return Conversions.ToString(char.ToUpper(Str[0])) + Str.Substring(1).ToLower();
+                    return char.ToUpper(Str[0]).ToString() + Str.Substring(1).ToLower();
                 }
 
                 public static string EnumerableToString<T>(IEnumerable<T> Enumerable)
                 {
-                    var Res = new StringBuilder(Conversions.ToString('{'));
+                    var Res = new StringBuilder("{");
                     var Bl = true;
 
                     foreach (T I in Enumerable)

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
 using Ks.Common;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks.ConsoleTests
 {
@@ -39,7 +38,7 @@ namespace Ks.ConsoleTests
                 if (I == File1.Length)
                     break;
                 // They can be non-equal, as the comparer trims.
-                if (Operators.CompareString(File1[I], File2[J], TextCompare: false) == 0)
+                if (File1[I] == File2[J])
                     ConsoleUtilities.WriteColored(File2[J], ConsoleColor.Black, ConsoleColor.White);
                 else
                     ConsoleUtilities.WriteColored(File2[J], ConsoleColor.Blue, ConsoleColor.White);
@@ -55,7 +54,7 @@ namespace Ks.ConsoleTests
         {
             public override bool Equals(string x, string y)
             {
-                return Operators.CompareString(x.Trim(), y.Trim(), TextCompare: false) == 0; // x.GetHashCode() = y.GetHashCode()
+                return x.Trim() == y.Trim(); // x.GetHashCode() = y.GetHashCode()
             }
 
             public override int GetHashCode(string obj)
