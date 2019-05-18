@@ -105,7 +105,7 @@ namespace Ks
                 this.CheckChanges();
                 if (this.List == null)
                     return -1;
-                return this.List ?? EmptyList.IndexOf(item);
+                return (this.List ?? EmptyList).IndexOf(item);
             }
 
             public void CopyTo(TValue[] array, int arrayIndex)
@@ -125,7 +125,7 @@ namespace Ks
             public List<TValue>.Enumerator GetEnumerator()
             {
                 this.CheckChanges();
-                return this.List ?? EmptyList.GetEnumerator();
+                return (this.List ?? EmptyList).GetEnumerator();
             }
 
             public TValue this[int index]
