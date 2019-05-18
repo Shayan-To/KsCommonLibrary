@@ -13,7 +13,7 @@ using System.Xml.Linq;
 
 namespace Ks
 {
-    namespace Ks.Common.Controls
+    namespace Common.Controls
     {
         public class ObjList : BaseList<Obj>, System.Windows.Markup.IAddChild
         {

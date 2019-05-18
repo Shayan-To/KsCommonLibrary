@@ -14,7 +14,7 @@ using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
-    namespace Ks.Common.MVVM
+    namespace Common.MVVM
     {
         public class KsLanguage : IDisposable
         {

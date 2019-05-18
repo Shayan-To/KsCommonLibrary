@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace Ks
 {
-    namespace Ks.Common.MVVM
+    namespace Common.MVVM
     {
         public class TranslationConverter : IValueConverter
         {

@@ -14,7 +14,7 @@ using Ks.Common.MVVM;
 
 namespace Ks
 {
-    namespace Ks.Common.Controls
+    namespace Common.Controls
     {
         [StyleTypedProperty(Property = nameof(CheckListBox.ItemContainerStyle), StyleTargetType = typeof(CheckListBoxItem))]
         public class CheckListBox : ItemsControl

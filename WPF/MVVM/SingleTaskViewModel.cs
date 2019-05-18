@@ -3,7 +3,7 @@ using System;
 
 namespace Ks
 {
-    namespace Ks.Common.MVVM
+    namespace Common.MVVM
     {
         public abstract class SingleTaskViewModel : ViewModel
         {

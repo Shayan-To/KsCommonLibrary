@@ -4,7 +4,7 @@ using Ks.Common.MVVM;
 
 namespace Ks
 {
-    namespace Ks.Common.Controls
+    namespace Common.Controls
     {
         [ContentProperty("Content")]
         public class PopupHolder : FrameworkElement // UIElement is not used as base type throughout the whole libraries! Using FrameworkElement instead.

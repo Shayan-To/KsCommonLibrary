@@ -6,7 +6,7 @@ using System.Windows.Data;
 
 namespace Ks
 {
-    namespace Ks.Common.MVVM.Converters
+    namespace Common.MVVM.Converters
     {
         public class SubstringConverter : IValueConverter
         {

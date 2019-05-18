@@ -16,7 +16,7 @@ using Page = Ks.Common.Controls.Page;
 
 namespace Ks
 {
-    namespace Ks.Common.MVVM
+    namespace Common.MVVM
     {
         [AttributeUsage(AttributeTargets.Class, Inherited = false)]
         public class ViewModelMetadataAttribute : Attribute

@@ -15,7 +15,7 @@ using System.Runtime.CompilerServices;
 
 namespace Ks
 {
-    namespace Ks.Common.MVVM
+    namespace Common.MVVM
     {
         public abstract class AutoStoreObject : INotifyPropertyChanged
         {

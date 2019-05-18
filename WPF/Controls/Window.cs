@@ -14,7 +14,7 @@ using Ks.Common.MVVM;
 
 namespace Ks
 {
-    namespace Ks.Common.Controls
+    namespace Common.Controls
     {
 
         // ToDo Add some context class that the main window can be get from it. (We kind of have it right now, the KsApplication class is our context class, we just have to make the main objects (like windows and pages and ...) have it. (And maybe it is not needed in this kind of design. Because a view is known only by its view model, and for a view by itself, there is no use.)

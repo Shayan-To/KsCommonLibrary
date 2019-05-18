@@ -2,7 +2,7 @@
 
 namespace Ks
 {
-    namespace Ks.Common.NonUI
+    namespace Common.NonUI
     {
         public abstract class NonUIElement : FrameworkElement
         {

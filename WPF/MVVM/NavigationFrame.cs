@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Ks
 {
-    namespace Ks.Common.MVVM
+    namespace Common.MVVM
     {
         public class NavigationFrame : IEnumerable<ViewModel>
         {

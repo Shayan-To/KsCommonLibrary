@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace Ks
 {
-    namespace Ks.Common.Controls
+    namespace Common.Controls
     {
         public class SimplePanel : Panel
         {

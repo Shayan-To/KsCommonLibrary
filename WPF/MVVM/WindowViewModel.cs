@@ -3,7 +3,7 @@ using Ks.Common.Controls;
 
 namespace Ks
 {
-    namespace Ks.Common.MVVM
+    namespace Common.MVVM
     {
         [ViewModelMetadata(typeof(Controls.Window), IsSingleInstance = true)]
         public class WindowViewModel : NavigationViewModel

@@ -4,7 +4,7 @@ using System.Windows.Interop;
 
 namespace Ks
 {
-    namespace Ks.Common.Controls
+    namespace Common.Controls
     {
         public class NoChromeWindow : System.Windows.Window
         {

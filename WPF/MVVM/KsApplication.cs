@@ -14,7 +14,7 @@ using Ks.Common.Controls;
 
 namespace Ks
 {
-    namespace Ks.Common.MVVM
+    namespace Common.MVVM
     {
         public abstract class KsApplication : BindableBase
         {

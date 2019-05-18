@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Ks
 {
-    namespace Ks.Common.Controls
+    namespace Common.Controls
     {
         public class ToolTip : System.Windows.Controls.ToolTip
         {

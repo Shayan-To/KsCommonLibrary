@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Ks
 {
-    namespace Ks.Common.NonUI
+    namespace Common.NonUI
     {
         public class OneWaySetter : NonUIElement
         {

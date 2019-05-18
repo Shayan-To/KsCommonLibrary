@@ -5,7 +5,7 @@ using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
-    namespace Ks.Common.Win32
+    namespace Common.Win32
     {
         public abstract partial class Windows
         {
