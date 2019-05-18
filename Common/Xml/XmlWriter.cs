@@ -24,7 +24,7 @@ namespace Ks
                 var loopTo = S.Length - 1;
                 for (var I = 0; I <= loopTo; I++)
                 {
-                    var Ch = S.Chars[I];
+                    var Ch = S[I];
                     if (EscapeDic.ContainsKey(Ch) | char.IsControl(Ch) | (char.IsWhiteSpace(Ch) & (Ch != ' ')))
                         return true;
                 }
@@ -38,7 +38,7 @@ namespace Ks
                 var loopTo = S.Length - 1;
                 for (I = 0; I <= loopTo; I++)
                 {
-                    var Ch = S.Chars[I];
+                    var Ch = S[I];
                     string Esc = null;
                     if (EscapeDic.TryGetValue(Ch, out Esc))
                     {

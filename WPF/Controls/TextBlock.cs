@@ -67,7 +67,7 @@ namespace Ks
 
                 Verify.False(Regex.IsMatch(S, @"`[^`\[\]\{\}]"), "Invalid escape sequence.");
 
-                S = Regex.Replace(S, @"`[\[\]\{\}]", M => "`" + "[]{}".IndexOf(M.Value.Chars[1]).ToString());
+                S = Regex.Replace(S, @"`[\[\]\{\}]", M => "`" + "[]{}".IndexOf(M.Value[1]).ToString());
                 var UnEscape = (string T) => Regex.Replace(T, "`([0123])", M => "[]{}".Chars[ParseInv.Integer(M.Groups[1].Value)].ToString());
 
                 if (S.StartsWith("{}"))
@@ -134,7 +134,7 @@ namespace Ks
                     var OldDigits = "0123456789";
                     var NewDigits = "۰۱۲۳۴۵۶۷۸۹";
                     for (int I = 0; I <= 9; I++)
-                        S = S.Replace(OldDigits.Chars[I], NewDigits.Chars[I]);
+                        S = S.Replace(OldDigits[I], NewDigits[I]);
                     return S;
                 }
                 if (Lang.Id.ToLowerInvariant() == "arb")
@@ -142,7 +142,7 @@ namespace Ks
                     var OldDigits = "0123456789";
                     var NewDigits = "٠١٢٣٤٥٦٧٨٩";
                     for (int I = 0; I <= 9; I++)
-                        S = S.Replace(OldDigits.Chars[I], NewDigits.Chars[I]);
+                        S = S.Replace(OldDigits[I], NewDigits[I]);
                     return S;
                 }
 

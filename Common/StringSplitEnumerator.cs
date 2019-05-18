@@ -51,7 +51,7 @@ namespace Ks
             {
                 if ((int)this._Options == (int)StringSplitOptions.RemoveEmptyEntries)
                 {
-                    while (this.Index != this._String.Length && Array.BinarySearch(this._Chars, this._String.Chars[this.Index]) != -1)
+                    while (this.Index != this._String.Length && Array.BinarySearch(this._Chars, this._String[this.Index]) != -1)
                         this.Index += 1;
                 }
             }
@@ -60,7 +60,7 @@ namespace Ks
             {
                 if (this.GiveRest)
                     this.Index = this._String.Length;
-                while (this.Index != this._String.Length && Array.BinarySearch(this._Chars, this._String.Chars[this.Index]) == -1)
+                while (this.Index != this._String.Length && Array.BinarySearch(this._Chars, this._String[this.Index]) == -1)
                     this.Index += 1;
             }
 

@@ -26,7 +26,7 @@ namespace Ks
                 var loopTo = S.Length - 1;
                 for (I = 0; I <= loopTo; I++)
                 {
-                    var Ch = S.Chars[I];
+                    var Ch = S[I];
                     var ECh = Ch;
                     if (EscapeDic.TryGetValue(Ch, out ECh))
                     {

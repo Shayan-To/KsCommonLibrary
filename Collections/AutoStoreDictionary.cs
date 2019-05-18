@@ -31,7 +31,7 @@ namespace Ks
 
                 // For backward compatibility.
                 OrderedDictionary<string, string> T;
-                if (Data.Chars[0] == '{')
+                if (Data[0] == '{')
                     T = Utilities.Serialization.DicFromString(Data);
                 else
                     T = Utilities.Serialization.DicFromStringMultiline(Data);

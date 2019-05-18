@@ -19,7 +19,7 @@ namespace Ks
                 var loopTo = S.Length - 1;
                 for (int I = 0; I <= loopTo; I++)
                 {
-                    if (S.Chars[I] != '0')
+                    if (S[I] != '0')
                         return S.Substring(I);
                 }
                 return "0";

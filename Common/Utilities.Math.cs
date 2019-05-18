@@ -370,7 +370,7 @@ namespace Ks
                 public static long ConvertFromBase(string N, char[] Digits, char NegativeSign = '-')
                 {
                     var I = 0;
-                    var IsNegative = N.Chars[I] == NegativeSign;
+                    var IsNegative = N[I] == NegativeSign;
                     if (IsNegative)
                         I += 1;
 
@@ -379,7 +379,7 @@ namespace Ks
                     var loopTo = N.Length - 1;
                     for (I = I; I <= loopTo; I++)
                     {
-                        var T = Array.IndexOf(Digits, N.Chars[I]);
+                        var T = Array.IndexOf(Digits, N[I]);
                         Verify.False(T == -1, $"Invalid digit at index {I}.");
                         Res = (Res * (long)Base) + (long)T;
                     }
@@ -415,7 +415,7 @@ namespace Ks
                     var loopTo = N.Length - 1;
                     for (I = I; I <= loopTo; I++)
                     {
-                        var T = Array.IndexOf(Digits, N.Chars[I]);
+                        var T = Array.IndexOf(Digits, N[I]);
                         Verify.False(T == -1, $"Invalid digit at index {I}.");
                         Res = (Res * (ulong)Base) + (ulong)System.Convert.ToUInt32(T);
                     }
@@ -510,7 +510,7 @@ namespace Ks
                     var loopTo = N.Length - 1;
                     for (var I = 0; I <= loopTo; I++)
                     {
-                        var Cur = Array.IndexOf(Digits, N.Chars[I]);
+                        var Cur = Array.IndexOf(Digits, N[I]);
                         Verify.False(Cur == -1, $"Invalid digit at index {I}.");
 
                         J = 0;

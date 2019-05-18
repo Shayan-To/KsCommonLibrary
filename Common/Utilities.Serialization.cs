@@ -106,7 +106,7 @@ namespace Ks
                     var loopTo = Str.Length - 1;
                     for (int I = 0; I <= loopTo; I++)
                     {
-                        var Ch = Str.Chars[I];
+                        var Ch = Str[I];
 
                         if (I == 0)
                         {
@@ -121,7 +121,7 @@ namespace Ks
                             if (I == Str.Length)
                                 throw new Exception("Invalid list string.");
 
-                            R.Append(UnescapeChar(Str.Chars[I], @",\{}"));
+                            R.Append(UnescapeChar(Str[I], @",\{}"));
                             continue;
                         }
 
@@ -169,7 +169,7 @@ namespace Ks
                     var loopTo = Str.Length - 1;
                     for (int I = 0; I <= loopTo; I++)
                     {
-                        var Ch = Str.Chars[I];
+                        var Ch = Str[I];
 
                         if (Ch == '\\')
                         {
@@ -177,13 +177,13 @@ namespace Ks
                             if (I == Str.Length)
                                 Verify.Fail("Invalid list string.");
 
-                            R.Append(UnescapeChar(Str.Chars[I], @"\"));
+                            R.Append(UnescapeChar(Str[I], @"\"));
                             continue;
                         }
 
                         if ((Ch == ControlChars.Cr) | (Ch == ControlChars.Lf))
                         {
-                            if (((Ch == ControlChars.Cr) & ((I + 1) < Str.Length)) && Str.Chars[I + 1] == ControlChars.Lf)
+                            if (((Ch == ControlChars.Cr) & ((I + 1) < Str.Length)) && Str[I + 1] == ControlChars.Lf)
                                 I += 1;
 
                             Res.Add(R.ToString());
@@ -235,7 +235,7 @@ namespace Ks
                     var loopTo = Str.Length - 1;
                     for (int I = 0; I <= loopTo; I++)
                     {
-                        var Ch = Str.Chars[I];
+                        var Ch = Str[I];
 
                         if (I == 0)
                         {
@@ -250,7 +250,7 @@ namespace Ks
                             if (I == Str.Length)
                                 throw new Exception("Invalid dictionary string.");
 
-                            R.Append(UnescapeChar(Str.Chars[I], @",\{}:"));
+                            R.Append(UnescapeChar(Str[I], @",\{}:"));
                             continue;
                         }
 
@@ -312,14 +312,14 @@ namespace Ks
                     var loopTo = Str.Length - 1;
                     for (int I = 0; I <= loopTo; I++)
                     {
-                        var Ch = Str.Chars[I];
+                        var Ch = Str[I];
 
                         if (Ch == '\\')
                         {
                             I += 1;
                             Verify.False(I == Str.Length, "Invalid dictionary string.");
 
-                            R.Append(UnescapeChar(Str.Chars[I], @"\:"));
+                            R.Append(UnescapeChar(Str[I], @"\:"));
                             continue;
                         }
 
@@ -333,7 +333,7 @@ namespace Ks
 
                         if ((Ch == ControlChars.Cr) | (Ch == ControlChars.Lf))
                         {
-                            if (((Ch == ControlChars.Cr) & ((I + 1) < Str.Length)) && Str.Chars[I + 1] == ControlChars.Lf)
+                            if (((Ch == ControlChars.Cr) & ((I + 1) < Str.Length)) && Str[I + 1] == ControlChars.Lf)
                                 I += 1;
 
                             Verify.False(Key == null, "Invalid dictionary string.");

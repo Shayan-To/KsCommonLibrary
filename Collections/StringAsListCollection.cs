@@ -23,7 +23,7 @@ namespace Ks
             {
                 get
                 {
-                    return this.Base.Chars[Index];
+                    return this.Base[Index];
                 }
             }
 

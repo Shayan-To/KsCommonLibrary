@@ -96,7 +96,7 @@ namespace Ks
                     if (Input.Length == 0)
                         throw new ArgumentException();
 
-                    T2 = Input.Chars[0];
+                    T2 = Input[0];
 
                     if (Conversions.ToString(T2) != @"\")
                     {
@@ -105,7 +105,7 @@ namespace Ks
                         return T2;
                     }
 
-                    T1 = Input.Chars[1];
+                    T1 = Input[1];
 
                     if (EscapeDic.TryGetValue(T1, out T2))
                     {
@@ -124,7 +124,7 @@ namespace Ks
                             else
                                 return T1;
                         }
-                        if (!(IsHexadecimalDigit(Input.Chars[2]) && IsHexadecimalDigit(Input.Chars[3])))
+                        if (!(IsHexadecimalDigit(Input[2]) && IsHexadecimalDigit(Input[3])))
                         {
                             if (DoesThrow)
                                 throw new ArgumentException("Invalid escaped string.");
@@ -144,7 +144,7 @@ namespace Ks
                             else
                                 return T1;
                         }
-                        if (!(IsHexadecimalDigit(Input.Chars[2]) && IsHexadecimalDigit(Input.Chars[3]) && IsHexadecimalDigit(Input.Chars[4]) && IsHexadecimalDigit(Input.Chars[5])))
+                        if (!(IsHexadecimalDigit(Input[2]) && IsHexadecimalDigit(Input[3]) && IsHexadecimalDigit(Input[4]) && IsHexadecimalDigit(Input[5])))
                         {
                             if (DoesThrow)
                                 throw new ArgumentException("Invalid escaped string.");
@@ -164,7 +164,7 @@ namespace Ks
                             else
                                 return T1;
                         }
-                        if (!(IsHexadecimalDigit(Input.Chars[2]) && IsHexadecimalDigit(Input.Chars[3]) && IsHexadecimalDigit(Input.Chars[4]) && IsHexadecimalDigit(Input.Chars[5]) && IsHexadecimalDigit(Input.Chars[6]) && IsHexadecimalDigit(Input.Chars[7]) && IsHexadecimalDigit(Input.Chars[8]) && IsHexadecimalDigit(Input.Chars[9])))
+                        if (!(IsHexadecimalDigit(Input[2]) && IsHexadecimalDigit(Input[3]) && IsHexadecimalDigit(Input[4]) && IsHexadecimalDigit(Input[5]) && IsHexadecimalDigit(Input[6]) && IsHexadecimalDigit(Input[7]) && IsHexadecimalDigit(Input[8]) && IsHexadecimalDigit(Input[9])))
                         {
                             if (DoesThrow)
                                 throw new ArgumentException("Invalid escaped string.");
@@ -184,7 +184,7 @@ namespace Ks
                             else
                                 return T1;
                         }
-                        if (!(IsOctalDigit(Input.Chars[2]) && IsOctalDigit(Input.Chars[3])))
+                        if (!(IsOctalDigit(Input[2]) && IsOctalDigit(Input[3])))
                         {
                             if (DoesThrow)
                                 throw new ArgumentException("Invalid escaped string.");
@@ -209,7 +209,7 @@ namespace Ks
                     var loopTo = Input.Length - 1;
                     for (int I = 0; I <= loopTo; I++)
                     {
-                        T2 = Input.Chars[I];
+                        T2 = Input[I];
 
                         if (T2 == '\\')
                         {
@@ -223,7 +223,7 @@ namespace Ks
                                     break;
                             }
 
-                            T1 = Input.Chars[I];
+                            T1 = Input[I];
 
                             if (EscapeDic.TryGetValue(T1, out T2))
                             {
@@ -243,7 +243,7 @@ namespace Ks
                                         continue;
                                     }
                                 }
-                                if (!(IsHexadecimalDigit(Input.Chars[I + 1]) && IsHexadecimalDigit(Input.Chars[I + 2])))
+                                if (!(IsHexadecimalDigit(Input[I + 1]) && IsHexadecimalDigit(Input[I + 2])))
                                 {
                                     if (DoesThrow)
                                         throw new ArgumentException("Invalid escaped string.");
@@ -271,7 +271,7 @@ namespace Ks
                                         continue;
                                     }
                                 }
-                                if (!(IsHexadecimalDigit(Input.Chars[I + 1]) && IsHexadecimalDigit(Input.Chars[I + 2]) && IsHexadecimalDigit(Input.Chars[I + 3]) && IsHexadecimalDigit(Input.Chars[I + 4])))
+                                if (!(IsHexadecimalDigit(Input[I + 1]) && IsHexadecimalDigit(Input[I + 2]) && IsHexadecimalDigit(Input[I + 3]) && IsHexadecimalDigit(Input[I + 4])))
                                 {
                                     if (DoesThrow)
                                         throw new ArgumentException("Invalid escaped string.");
@@ -299,7 +299,7 @@ namespace Ks
                                         continue;
                                     }
                                 }
-                                if (!(IsHexadecimalDigit(Input.Chars[I + 1]) && IsHexadecimalDigit(Input.Chars[I + 2]) && IsHexadecimalDigit(Input.Chars[I + 3]) && IsHexadecimalDigit(Input.Chars[I + 4]) && IsHexadecimalDigit(Input.Chars[I + 5]) && IsHexadecimalDigit(Input.Chars[I + 6]) && IsHexadecimalDigit(Input.Chars[I + 7]) && IsHexadecimalDigit(Input.Chars[I + 8])))
+                                if (!(IsHexadecimalDigit(Input[I + 1]) && IsHexadecimalDigit(Input[I + 2]) && IsHexadecimalDigit(Input[I + 3]) && IsHexadecimalDigit(Input[I + 4]) && IsHexadecimalDigit(Input[I + 5]) && IsHexadecimalDigit(Input[I + 6]) && IsHexadecimalDigit(Input[I + 7]) && IsHexadecimalDigit(Input[I + 8])))
                                 {
                                     if (DoesThrow)
                                         throw new ArgumentException("Invalid escaped string.");
@@ -327,7 +327,7 @@ namespace Ks
                                         continue;
                                     }
                                 }
-                                if (!(IsOctalDigit(Input.Chars[I + 1]) && IsOctalDigit(Input.Chars[I + 2])))
+                                if (!(IsOctalDigit(Input[I + 1]) && IsOctalDigit(Input[I + 2])))
                                 {
                                     if (DoesThrow)
                                         throw new ArgumentException("Invalid escaped string.");
@@ -400,14 +400,14 @@ namespace Ks
                     var loopTo = Str.Length - 1;
                     for (int I = 0; I <= loopTo; I++)
                     {
-                        var Ch = Str.Chars[I];
+                        var Ch = Str[I];
 
                         if (Ch == '\\')
                         {
                             I += 1;
                             if (I == Str.Length)
                                 throw new Exception("Invalid list string.");
-                            Ch = Str.Chars[I];
+                            Ch = Str[I];
 
                             switch (Ch)
                             {
@@ -453,7 +453,7 @@ namespace Ks
 
                 public static string FirstCapitalized(string Str)
                 {
-                    return Conversions.ToString(char.ToUpper(Str.Chars[0])) + Str.Substring(1).ToLower();
+                    return Conversions.ToString(char.ToUpper(Str[0])) + Str.Substring(1).ToLower();
                 }
 
                 public static string EnumerableToString<T>(IEnumerable<T> Enumerable)
