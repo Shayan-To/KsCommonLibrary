@@ -27,9 +27,9 @@ namespace Ks
                 }
             }
 
-            private INavigationView _ParentView;
+            private MVVM.INavigationView _ParentView;
 
-            internal INavigationView ParentView
+            internal MVVM.INavigationView ParentView
             {
                 get
                 {

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using Ks.Common.Controls;
+using Page = Ks.Common.Controls.Page;
 
 namespace Ks
 {

@@ -121,7 +121,7 @@ namespace Ks
                 this.Application.MainWindow = null;
                 // Me.Application.StartupUri = Nothing
 
-                var Window = (Window)this.Window.View;
+                var Window = (Controls.Window)this.Window.View;
                 Window.Resources.MergedDictionaries.Add(this.Application.Resources);
 
                 this.Application.Dispatcher.BeginInvoke(new Action(() =>

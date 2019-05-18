@@ -4,7 +4,7 @@
     {
         internal interface INavigationView
         {
-            Page Content { get; set; }
+            Controls.Page Content { get; set; }
         }
     }
 }

@@ -11,6 +11,8 @@ using System.Windows.Controls;
 using System;
 using System.Xml.Linq;
 using Ks.Common.Controls;
+using Window = Ks.Common.Controls.Window;
+using Page = Ks.Common.Controls.Page;
 
 namespace Ks
 {
