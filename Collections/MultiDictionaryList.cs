@@ -13,7 +13,7 @@ namespace Ks
                 this._Parent = Parent;
                 this._Key = Key;
                 this.List = List;
-                this.Version = this.Parent.Version;
+                this.Version = Parent.Version;
             }
 
             private void CheckChanges()

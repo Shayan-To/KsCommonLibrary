@@ -9,6 +9,8 @@ namespace Ks
             public Lazy(Func<TRes> Func)
             {
                 this._Func = Func;
+                this._Value = default;
+                this.ValueCalculated = default;
             }
 
             public void Reset()
