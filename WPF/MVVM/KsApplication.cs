@@ -393,38 +393,21 @@ namespace Ks
 
             private readonly Dictionary<Type, ViewModel> SingleInstanceViewModels = new Dictionary<Type, ViewModel>();
 
+            private static DependencyObject DepObj;
+
             public static bool IsInDesignMode
             {
                 get
                 {
-                    ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-                    /* Cannot convert LocalDeclarationStatementSyntax, System.NotSupportedException: StaticKeyword not supported!
-                       at ICSharpCode.CodeConverter.CSharp.SyntaxKindExtensions.ConvertToken(SyntaxKind t, TokenContext context)
-                       at ICSharpCode.CodeConverter.CSharp.CommonConversions.ConvertModifier(SyntaxToken m, TokenContext context)
-                       at ICSharpCode.CodeConverter.CSharp.CommonConversions.<ConvertModifiersCore>d__23.MoveNext()
-                       at System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
-                       at Microsoft.CodeAnalysis.SyntaxTokenList.CreateNode(IEnumerable`1 tokens)
-                       at Microsoft.CodeAnalysis.CSharp.SyntaxFactory.TokenList(IEnumerable`1 tokens)
-                       at ICSharpCode.CodeConverter.CSharp.CommonConversions.ConvertModifiers(IEnumerable`1 modifiers, TokenContext context, Boolean isVariableOrConst, Boolean isConstructor)
-                       at ICSharpCode.CodeConverter.CSharp.VisualBasicConverter.MethodBodyVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-                       at Microsoft.CodeAnalysis.VisualBasic.Syntax.LocalDeclarationStatementSyntax.Accept[TResult](VisualBasicSyntaxVisitor`1 visitor)
-                       at Microsoft.CodeAnalysis.VisualBasic.VisualBasicSyntaxVisitor`1.Visit(SyntaxNode node)
-                       at ICSharpCode.CodeConverter.CSharp.VisualBasicConverter.ByRefParameterVisitor.AddLocalVariables(VisualBasicSyntaxNode node)
-                       at ICSharpCode.CodeConverter.CSharp.VisualBasicConverter.ByRefParameterVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-                       at Microsoft.CodeAnalysis.VisualBasic.Syntax.LocalDeclarationStatementSyntax.Accept[TResult](VisualBasicSyntaxVisitor`1 visitor)
-                       at Microsoft.CodeAnalysis.VisualBasic.VisualBasicSyntaxVisitor`1.Visit(SyntaxNode node)
-                       at ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.ConvertWithTrivia(SyntaxNode node)
-                       at ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-
-                    Input: 
-                    #If SimulateDesign Then
-                                    Return True
-                    #Else
-                                    Static DepObj As DependencyObject = New DependencyObject()
-
-                     */
+#if SimulateDesign
+                    return true;
+#else
+                    if (DepObj == null)
+                    {
+                        DepObj = new DependencyObject();
+                    }
                     return System.ComponentModel.DesignerProperties.GetIsInDesignMode(DepObj);
+#endif
                 }
             }
 

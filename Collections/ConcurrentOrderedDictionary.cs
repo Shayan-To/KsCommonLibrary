@@ -60,40 +60,24 @@ namespace Ks
                 }
             }
 
+            private IReadOnlyList<TKey> _KeysList;
+
             public IReadOnlyList<TKey> KeysList
             {
                 get
                 {
                     lock (this.LockObject)
                     {
-                        ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-                        /* Cannot convert LocalDeclarationStatementSyntax, System.NotSupportedException: StaticKeyword not supported!
-                           at ICSharpCode.CodeConverter.CSharp.SyntaxKindExtensions.ConvertToken(SyntaxKind t, TokenContext context)
-                           at ICSharpCode.CodeConverter.CSharp.CommonConversions.ConvertModifier(SyntaxToken m, TokenContext context)
-                           at ICSharpCode.CodeConverter.CSharp.CommonConversions.<ConvertModifiersCore>d__23.MoveNext()
-                           at System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
-                           at Microsoft.CodeAnalysis.SyntaxTokenList.CreateNode(IEnumerable`1 tokens)
-                           at Microsoft.CodeAnalysis.CSharp.SyntaxFactory.TokenList(IEnumerable`1 tokens)
-                           at ICSharpCode.CodeConverter.CSharp.CommonConversions.ConvertModifiers(IEnumerable`1 modifiers, TokenContext context, Boolean isVariableOrConst, Boolean isConstructor)
-                           at ICSharpCode.CodeConverter.CSharp.VisualBasicConverter.MethodBodyVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-                           at Microsoft.CodeAnalysis.VisualBasic.Syntax.LocalDeclarationStatementSyntax.Accept[TResult](VisualBasicSyntaxVisitor`1 visitor)
-                           at Microsoft.CodeAnalysis.VisualBasic.VisualBasicSyntaxVisitor`1.Visit(SyntaxNode node)
-                           at ICSharpCode.CodeConverter.CSharp.VisualBasicConverter.ByRefParameterVisitor.AddLocalVariables(VisualBasicSyntaxNode node)
-                           at ICSharpCode.CodeConverter.CSharp.VisualBasicConverter.ByRefParameterVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-                           at Microsoft.CodeAnalysis.VisualBasic.Syntax.LocalDeclarationStatementSyntax.Accept[TResult](VisualBasicSyntaxVisitor`1 visitor)
-                           at Microsoft.CodeAnalysis.VisualBasic.VisualBasicSyntaxVisitor`1.Visit(SyntaxNode node)
-                           at ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.ConvertWithTrivia(SyntaxNode node)
-                           at ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-
-                        Input: 
-                                            Static R As IReadOnlyList(Of TKey) = New ConcurrentList(Of TKey)(DirectCast(Me.BaseDic.KeysList, IList(Of TKey)), Me.LockObject)
-
-                         */
-                        return R;
+                        if (this._KeysList == null)
+                        {
+                            this._KeysList = new ConcurrentList<TKey>((IList<TKey>)this.BaseDic.KeysList, this.LockObject);
+                        }
+                        return this._KeysList;
                     }
                 }
             }
+
+            private IReadOnlyList<TValue> _ValuesList;
 
             public IReadOnlyList<TValue> ValuesList
             {
@@ -101,31 +85,11 @@ namespace Ks
                 {
                     lock (this.LockObject)
                     {
-                        ;
-#error Cannot convert LocalDeclarationStatementSyntax - see comment for details
-                        /* Cannot convert LocalDeclarationStatementSyntax, System.NotSupportedException: StaticKeyword not supported!
-                           at ICSharpCode.CodeConverter.CSharp.SyntaxKindExtensions.ConvertToken(SyntaxKind t, TokenContext context)
-                           at ICSharpCode.CodeConverter.CSharp.CommonConversions.ConvertModifier(SyntaxToken m, TokenContext context)
-                           at ICSharpCode.CodeConverter.CSharp.CommonConversions.<ConvertModifiersCore>d__23.MoveNext()
-                           at System.Linq.Enumerable.WhereEnumerableIterator`1.MoveNext()
-                           at Microsoft.CodeAnalysis.SyntaxTokenList.CreateNode(IEnumerable`1 tokens)
-                           at Microsoft.CodeAnalysis.CSharp.SyntaxFactory.TokenList(IEnumerable`1 tokens)
-                           at ICSharpCode.CodeConverter.CSharp.CommonConversions.ConvertModifiers(IEnumerable`1 modifiers, TokenContext context, Boolean isVariableOrConst, Boolean isConstructor)
-                           at ICSharpCode.CodeConverter.CSharp.VisualBasicConverter.MethodBodyVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-                           at Microsoft.CodeAnalysis.VisualBasic.Syntax.LocalDeclarationStatementSyntax.Accept[TResult](VisualBasicSyntaxVisitor`1 visitor)
-                           at Microsoft.CodeAnalysis.VisualBasic.VisualBasicSyntaxVisitor`1.Visit(SyntaxNode node)
-                           at ICSharpCode.CodeConverter.CSharp.VisualBasicConverter.ByRefParameterVisitor.AddLocalVariables(VisualBasicSyntaxNode node)
-                           at ICSharpCode.CodeConverter.CSharp.VisualBasicConverter.ByRefParameterVisitor.VisitLocalDeclarationStatement(LocalDeclarationStatementSyntax node)
-                           at Microsoft.CodeAnalysis.VisualBasic.Syntax.LocalDeclarationStatementSyntax.Accept[TResult](VisualBasicSyntaxVisitor`1 visitor)
-                           at Microsoft.CodeAnalysis.VisualBasic.VisualBasicSyntaxVisitor`1.Visit(SyntaxNode node)
-                           at ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.ConvertWithTrivia(SyntaxNode node)
-                           at ICSharpCode.CodeConverter.CSharp.CommentConvertingMethodBodyVisitor.DefaultVisit(SyntaxNode node)
-
-                        Input: 
-                                            Static R As IReadOnlyList(Of TValue) = Me.KeysList.SelectAsList(Function(K) Me.Item(K))
-
-                         */
-                        return R;
+                        if (this._ValuesList == null)
+                        {
+                            this._ValuesList = this.KeysList.SelectAsList(K => this[K]);
+                        }
+                        return this._ValuesList;
                     }
                 }
             }
