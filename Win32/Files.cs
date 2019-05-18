@@ -63,10 +63,7 @@ namespace Ks
             /// In Windows 8 and Windows Server 2012, this function is supported by the following technologies.
             /// </remarks>
                 [DllImport("Kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-                public static bool CreateHardLinkW(string lpFileName, string lpExistingFileName, IntPtr lpSecurityAttributes)
-                {
-                    return default(bool);
-                }
+                public static extern bool CreateHardLinkW(string lpFileName, string lpExistingFileName, IntPtr lpSecurityAttributes);
             }
 
             public static void CreateHardLink(string FileName, string ExistingFileName)

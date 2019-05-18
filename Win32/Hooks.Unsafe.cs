@@ -51,10 +51,7 @@ namespace Ks
             /// If the function fails, the return value is NULL. To get extended error information, call GetLastError.
             /// </returns>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static IntPtr SetWindowsHookEx(HookType idHook, KeyboardProc lpfn, IntPtr hMod, uint dwThreadId)
-                {
-                    return default(IntPtr);
-                }
+                public static extern IntPtr SetWindowsHookEx(HookType idHook, KeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
 
                 /// HHOOK WINAPI SetWindowsHookEx(
             /// _In_ int       idHook,
@@ -93,10 +90,7 @@ namespace Ks
             /// If the function fails, the return value is NULL. To get extended error information, call GetLastError.
             /// </returns>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static IntPtr SetWindowsHookEx(HookType idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId)
-                {
-                    return default(IntPtr);
-                }
+                public static extern IntPtr SetWindowsHookEx(HookType idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
 
                 /// HHOOK WINAPI SetWindowsHookEx(
             /// _In_ int       idHook,
@@ -135,10 +129,7 @@ namespace Ks
             /// If the function fails, the return value is NULL. To get extended error information, call GetLastError.
             /// </returns>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static IntPtr SetWindowsHookEx(HookType idHook, MouseProc lpfn, IntPtr hMod, uint dwThreadId)
-                {
-                    return default(IntPtr);
-                }
+                public static extern IntPtr SetWindowsHookEx(HookType idHook, MouseProc lpfn, IntPtr hMod, uint dwThreadId);
 
                 /// HHOOK WINAPI SetWindowsHookEx(
             /// _In_ int       idHook,
@@ -177,10 +168,7 @@ namespace Ks
             /// If the function fails, the return value is NULL. To get extended error information, call GetLastError.
             /// </returns>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static IntPtr SetWindowsHookEx(HookType idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId)
-                {
-                    return default(IntPtr);
-                }
+                public static extern IntPtr SetWindowsHookEx(HookType idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
 
                 /// BOOL WINAPI UnhookWindowsHookEx(
             /// _In_ HHOOK hhk
@@ -202,10 +190,7 @@ namespace Ks
             /// The hook procedure can be in the state of being called by another thread even after UnhookWindowsHookEx returns. If the hook procedure is not being called concurrently, the hook procedure is removed immediately before UnhookWindowsHookEx returns.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static bool UnhookWindowsHookEx(IntPtr hhk)
-                {
-                    return default(bool);
-                }
+                public static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
                 /// LRESULT WINAPI CallNextHookEx(
             /// _In_opt_ HHOOK  hhk,
@@ -245,10 +230,7 @@ namespace Ks
             /// Calling CallNextHookEx is optional, but it is highly recommended; otherwise, other applications that have installed hooks will not receive hook notifications and may behave incorrectly as a result. You should call CallNextHookEx unless you absolutely need to prevent the notification from being seen by other applications.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static bool CallNextHookEx(IntPtr hhk, int nCode, UIntPtr wParam, IntPtr lParam)
-                {
-                    return default(bool);
-                }
+                public static extern bool CallNextHookEx(IntPtr hhk, int nCode, UIntPtr wParam, IntPtr lParam);
 
                 public enum HookType : int
                 {

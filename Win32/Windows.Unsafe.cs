@@ -41,10 +41,7 @@ namespace Ks
             /// The length member of WINDOWPLACEMENT must be set to sizeof(WINDOWPLACEMENT). If this member is not set correctly, the function returns FALSE. For additional remarks on the proper use of window placement coordinates, see WINDOWPLACEMENT.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static bool GetWindowPlacement(IntPtr hWnd, ref WindowPlacement lpwndpl)
-                {
-                    return default(bool);
-                }
+                public static extern bool GetWindowPlacement(IntPtr hWnd, ref WindowPlacement lpwndpl);
 
                 /// BOOL WINAPI EnumWindows(
             /// _In_ WNDENUMPROC lpEnumFunc,
@@ -75,10 +72,7 @@ namespace Ks
             /// Note  For Windows 8 and later, EnumWindows enumerates only top-level windows of desktop apps.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam)
-                {
-                    return default(bool);
-                }
+                public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
 
                 /// BOOL WINAPI GetWindowRect(
             /// _In_  HWND   hWnd,
@@ -106,10 +100,7 @@ namespace Ks
             /// In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static bool GetWindowRect(IntPtr hWnd, ref Rect lpRect)
-                {
-                    return default(bool);
-                }
+                public static extern bool GetWindowRect(IntPtr hWnd, ref Rect lpRect);
 
                 /// HWND WINAPI GetForegroundWindow(void);
             /// <summary>
@@ -120,10 +111,7 @@ namespace Ks
             /// The return value is a handle to the foreground window. The foreground window can be NULL in certain circumstances, such as when a window is losing activation.
             /// </returns>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static IntPtr GetForegroundWindow()
-                {
-                    return default(IntPtr);
-                }
+                public static extern IntPtr GetForegroundWindow();
 
                 /// int WINAPI GetWindowTextLength(
             /// _In_ HWND hWnd
@@ -147,10 +135,7 @@ namespace Ks
             /// To obtain the exact length of the text, use the WM_GETTEXT, LB_GETTEXT, or CB_GETLBTEXT messages, or the GetWindowText function.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-                public static int GetWindowTextLength(IntPtr hWnd)
-                {
-                    return default(int);
-                }
+                public static extern int GetWindowTextLength(IntPtr hWnd);
 
                 /// int WINAPI GetWindowText(
             /// _In_  HWND   hWnd,
@@ -185,10 +170,7 @@ namespace Ks
             /// To retrieve the text of a control in another process, send a WM_GETTEXT message directly instead of calling GetWindowText.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-                public static int GetWindowText(IntPtr hWnd, System.Text.StringBuilder lpString, int nMaxCount)
-                {
-                    return default(int);
-                }
+                public static extern int GetWindowText(IntPtr hWnd, System.Text.StringBuilder lpString, int nMaxCount);
 
                 /// <summary>
             /// Retrieves a handle to a window whose class name and window name match the specified strings. The function searches child windows, beginning with the one following the specified child window. This function does not perform a case-sensitive search.
@@ -236,10 +218,7 @@ namespace Ks
             /// Note that 0x8000 is the atom for a menu class. When an application calls this function, the function checks whether a context menu is being displayed that the application created.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-                public static IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow)
-                {
-                    return default(IntPtr);
-                }
+                public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
 
                 /// <summary>
             /// Retrieves a handle to the top-level window whose class name and window name match the specified strings. This function does not search child windows. This function does not perform a case-sensitive search.
@@ -270,10 +249,7 @@ namespace Ks
             /// If the lpWindowName parameter is not NULL, FindWindow calls the GetWindowText function to retrieve the window name for comparison. For a description of a potential problem that can arise, see the Remarks for GetWindowText.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-                public static IntPtr FindWindow(string lpClassName, string lpWindowName)
-                {
-                    return default(IntPtr);
-                }
+                public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
                 /// <summary>
             /// Retrieves a handle to the window that contains the specified point.
@@ -294,10 +270,7 @@ namespace Ks
             /// The WindowFromPoint function does not retrieve a handle to a hidden or disabled window, even if the point is within the window. An application should use the ChildWindowFromPoint function for a nonrestrictive search.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static IntPtr WindowFromPoint(Point p)
-                {
-                    return default(IntPtr);
-                }
+                public static extern IntPtr WindowFromPoint(Point p);
 
                 /// <summary>
             /// Retrieves the handle to the ancestor of the specified window.
@@ -321,10 +294,7 @@ namespace Ks
             /// The return value is the handle to the ancestor window.
             /// </returns>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static IntPtr GetAncestor(IntPtr hwnd, GetAncestorFlags gaFlags)
-                {
-                    return default(IntPtr);
-                }
+                public static extern IntPtr GetAncestor(IntPtr hwnd, GetAncestorFlags gaFlags);
 
                 /// <summary>
             /// Retrieves a handle to a window that has the specified relationship (Z-Order or owner) to the specified window.
@@ -351,10 +321,7 @@ namespace Ks
             /// The EnumChildWindows function is more reliable than calling GetWindow in a loop. An application that calls GetWindow to perform this task risks being caught in an infinite loop or referencing a handle to a window that has been destroyed.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static IntPtr GetWindow(IntPtr hwnd, GetWindowCommand uCmd)
-                {
-                    return default(IntPtr);
-                }
+                public static extern IntPtr GetWindow(IntPtr hwnd, GetWindowCommand uCmd);
 
                 /// <summary>
             /// Retrieves a handle to the specified window's parent or owner.
@@ -380,10 +347,7 @@ namespace Ks
             /// To obtain a window's owner window, instead of using GetParent, use GetWindow with the GW_OWNER flag. To obtain the parent window and not the owner, instead of using GetParent, use GetAncestor with the GA_PARENT flag.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static IntPtr GetParent(IntPtr hwnd)
-                {
-                    return default(IntPtr);
-                }
+                public static extern IntPtr GetParent(IntPtr hwnd);
 
                 /// DWORD WINAPI GetWindowThreadProcessId(
             /// _In_      HWND    hWnd,
@@ -407,10 +371,7 @@ namespace Ks
             /// The return value is the identifier of the thread that created the window.
             /// </returns>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static uint GetWindowThreadProcessId(IntPtr hwnd, ref uint lpdwProcessId)
-                {
-                    return default(uint);
-                }
+                public static extern uint GetWindowThreadProcessId(IntPtr hwnd, ref uint lpdwProcessId);
 
                 /// BOOL WINAPI SetWindowPos(
             /// _In_     HWND hWnd,
@@ -479,10 +440,7 @@ namespace Ks
             /// To use SetWindowPos to bring a window to the top, the process that owns the window must have SetForegroundWindow permission.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static bool SetWindowPos(IntPtr hwnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags)
-                {
-                    return default(bool);
-                }
+                public static extern bool SetWindowPos(IntPtr hwnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
 
                 /// BOOL CALLBACK EnumWindowsProc(
             /// _In_ HWND   hwnd,
