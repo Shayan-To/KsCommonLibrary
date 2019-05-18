@@ -103,8 +103,6 @@ namespace Ks
             public int IndexOf(TValue item)
             {
                 this.CheckChanges();
-                if (this.List == null)
-                    return -1;
                 return (this.List ?? EmptyList).IndexOf(item);
             }
 
