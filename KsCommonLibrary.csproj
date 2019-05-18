@@ -103,6 +103,7 @@
     <Compile Include="Common\ListEqualityComparer.cs" />
     <Compile Include="Common\Interval.cs" />
     <Compile Include="Common\OnScreenDrawer.cs" />
+    <Compile Include="Common\PropertyMethodAttribute.cs" />
     <Compile Include="Common\QuickSorter.cs" />
     <Compile Include="Common\Ratio.cs" />
     <Compile Include="Common\Serialization\FormatterGetProxy.cs" />
