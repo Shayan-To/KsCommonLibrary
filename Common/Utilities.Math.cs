@@ -551,7 +551,7 @@ namespace Ks
                     return ConvertFromBaseB(N, Digits[Base]);
                 }
 
-                private static readonly char[][] Digits = (() =>
+                private static readonly char[][] Digits = new Func<char[][]>(() =>
                 {
                     var D = Collections.Concat(Collections.Range(10).Select(I => (char)(Strings.AscW('0') + I)), Collections.Range(26).Select(I => (char)(Strings.AscW('a') + I)))
                                     .ToArray();

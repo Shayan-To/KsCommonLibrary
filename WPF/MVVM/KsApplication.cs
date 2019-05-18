@@ -124,11 +124,11 @@ namespace Ks
                 var Window = (Window)this.Window.View;
                 Window.Resources.MergedDictionaries.Add(this.Application.Resources);
 
-                this.Application.Dispatcher.BeginInvoke(() =>
+                this.Application.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     this.OnStart();
                     this.State = KsApplicationState.Started;
-                });
+                }));
 
                 this.Application.Run(Window);
 
