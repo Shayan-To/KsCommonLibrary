@@ -21,7 +21,7 @@ namespace Ks
             public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
             {
                 var Th = (Thickness)Value;
-                double? V;
+                double? V = null;
 
                 // ToDo Correct the double equality checks. (It should somehow just check the significant digits, and not the order of magnitude...)
 

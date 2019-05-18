@@ -109,7 +109,7 @@ namespace Ks
 
             public static IntPtr GetAncestorWindow(IntPtr hwnd, AncestorKind Kind)
             {
-                IntPtr R;
+                IntPtr R = default;
 
                 if ((uint)Kind == (uint)AncestorKind.ParentOrOwner)
                     R = Unsafe.GetParent(hwnd);

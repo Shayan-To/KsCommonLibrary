@@ -852,7 +852,7 @@ namespace Ks
 
             public static (Rect, bool?) GetLargestFitOf(this Rect Self, Size Size)
             {
-                bool? Bl;
+                bool? Bl = null;
 
                 if (Self.IsEmpty)
                     return (Rect.Empty, Bl);
@@ -897,7 +897,7 @@ namespace Ks
 
             public static (Rect, bool?) GetSmallestBoundOf(this Rect Self, Size Size)
             {
-                bool? Bl;
+                bool? Bl = null;
 
                 if (Self.IsEmpty)
                     return (Rect.Empty, Bl);
