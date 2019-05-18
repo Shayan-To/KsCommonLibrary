@@ -292,25 +292,21 @@ namespace Ks
 
                 if (this.AutoFlush)
                     await this.Base.FlushAsync();
-                return default(Task);
             }
 
             public override async Task WriteLineAsync()
             {
                 await this.WriteLineAsync(null, 0, 0);
-                return default(Task);
             }
 
             public override async Task WriteLineAsync(char value)
             {
                 await this.WriteLineAsync(value.ToString(this.Base.FormatProvider));
-                return default(Task);
             }
 
             public override async Task WriteLineAsync(string value)
             {
                 await this.WriteLineAsync(value?.ToCharArray(), 0, value?.Length ?? 0);
-                return default(Task);
             }
 
             public override void Close()

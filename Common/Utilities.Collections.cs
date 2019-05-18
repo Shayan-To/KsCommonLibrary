@@ -97,6 +97,7 @@ namespace Ks
 
                 public static IEnumerable<T> InEnumerable<T>()
                 {
+                    yield break;
                 }
 
                 public static IEnumerable<T> InEnumerable<T>(T I1)

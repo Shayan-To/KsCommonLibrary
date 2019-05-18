@@ -51,7 +51,6 @@ namespace Ks
                 {
                     if (this.Content != null)
                         yield return this.Content;
-                    return default(IEnumerator);
                 }
             }
 

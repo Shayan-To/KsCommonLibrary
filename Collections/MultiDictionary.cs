@@ -66,7 +66,6 @@ namespace Ks
                 {
                     foreach (var KV in this.Dic)
                         yield return new MultiDictionaryList<TKey, TValue>(this, KV.Key, KV.Value);
-                    return default(IEnumerable(Of MultiDictionaryList(Of TKey, TValue)));
                 }
             }
 

@@ -55,7 +55,6 @@ namespace Ks
                     yield return Steel;
                     yield return Mauve;
                     yield return Taupe;
-                    return default(System.Collections.Generic.IEnumerable(Of System.Windows.Media.Color));
                 }
             }
         }
