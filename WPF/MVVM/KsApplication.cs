@@ -267,7 +267,7 @@ namespace Ks
                 }
 
                 var loopTo2 = NewFrame.Count;
-                for (J = I; J <= loopTo2; J++)
+                for (var J = I; J <= loopTo2; J++)
                 {
                     var Parent = NewFrame[J - 1] as NavigationViewModel;
                     var Current = (J != NewFrame.Count) ? NewFrame[J] : null;

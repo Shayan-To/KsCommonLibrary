@@ -355,7 +355,7 @@ namespace Ks
                 for (var I = OldIndex; I <= loopTo; I++)
                     Self[I] = Self[I + 1];
                 var loopTo1 = NewIndex + 1;
-                for (I = OldIndex; I >= loopTo1; I += -1)
+                for (var I = OldIndex; I >= loopTo1; I += -1)
                     Self[I] = Self[I - 1];
                 Self[NewIndex] = Item;
             }
@@ -373,7 +373,7 @@ namespace Ks
                 for (var I = StartIndex; I <= loopTo; I++)
                     Self[I] = Self[I + Length];
                 var loopTo1 = Self.Count - Length;
-                for (I = Self.Count - 1; I >= loopTo1; I += -1)
+                for (var I = Self.Count - 1; I >= loopTo1; I += -1)
                     Self.RemoveAt(I);
             }
 
