@@ -65,7 +65,7 @@ namespace Ks
                             throw new NotSupportedException("Collection is read only.");
                         this.NullValue[0] = value;
                         this.HasNullValue = true;
-                        break;
+                        return;
                     }
                     this.Dic[key] = value;
                 }
@@ -193,7 +193,7 @@ namespace Ks
 
             private readonly IDictionary<TKey, TValue> Dic;
             private bool HasNullValue;
-            private readonly TValue[] NullValue = new TValue[1] { };
+            private readonly TValue[] NullValue = new TValue[1];
 
             private readonly MergedCollection<TKey> KeysCollection;
             private readonly MergedCollection<TValue> ValuesCollection;

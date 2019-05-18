@@ -26,8 +26,8 @@ namespace Ks
 
             public CheckListBox()
             {
-                this.CollectionObserver.ElementGotIn += this.CheckedItems_ItemGotIn();
-                this.CollectionObserver.ElementGotOut += this.CheckedItems_ItemGotOut();
+                this.CollectionObserver.ElementGotIn += this.CheckedItems_ItemGotIn;
+                this.CollectionObserver.ElementGotOut += this.CheckedItems_ItemGotOut;
             }
 
             // Private Shared Sub SelectionMode_Changed(d As DependencyObject, e As DependencyPropertyChangedEventArgs)

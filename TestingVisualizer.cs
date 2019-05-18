@@ -372,8 +372,8 @@ namespace Ks
             private Color BorderRectangleColor;
             private Graphics Graphics;
             private Form Form;
-            private readonly Interval[] FIntervals = new Interval[2] { };
-            private readonly Interval[] Intervals = new Interval[2] { };
+            private readonly Interval[] FIntervals = new Interval[2];
+            private readonly Interval[] Intervals = new Interval[2];
 
             private struct Interval
             {

@@ -126,7 +126,7 @@ namespace Ks
                 this.Index = Data.Index;
             }
 
-            private readonly byte[] Tmp = new byte[8] { };
+            private readonly byte[] Tmp = new byte[8];
             private readonly System.Security.Cryptography.HashAlgorithm Hasher;
             private readonly byte[] Buffer;
             private int Index;

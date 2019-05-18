@@ -123,7 +123,7 @@ namespace Ks
                 this.SetT(Formatter, (T)Obj);
             }
 
-            public static new Serializer<T> Create(string Id, Func<FormatterGetProxy, T> Get, Action<FormatterGetProxy, T> Get2, Action<FormatterSetProxy, T> Set)
+            public static Serializer<T> Create(string Id, Func<FormatterGetProxy, T> Get, Action<FormatterGetProxy, T> Get2, Action<FormatterSetProxy, T> Set)
             {
                 return new DelegateSerializer(Id, Get, Get2, Set);
             }

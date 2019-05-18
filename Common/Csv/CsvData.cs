@@ -55,7 +55,7 @@ namespace Ks
                 Out.Append('"');
             }
 
-            public new string ToString(bool UseQuotes = true, char Delimiter = ',')
+            public string ToString(bool UseQuotes = true, char Delimiter = ',')
             {
                 var Res = new System.Text.StringBuilder();
 

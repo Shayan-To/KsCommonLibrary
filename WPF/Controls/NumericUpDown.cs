@@ -15,7 +15,7 @@ namespace Ks
                 DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(typeof(NumericUpDown)));
             }
 
-            private DelegateCommand _IncrementCommand = new DelegateCommand(this.OnIncrementCommand());
+            private DelegateCommand _IncrementCommand = new DelegateCommand(this.OnIncrementCommand);
 
             private void OnIncrementCommand()
             {
@@ -30,7 +30,7 @@ namespace Ks
                 }
             }
 
-            private DelegateCommand _DecrementCommand = new DelegateCommand(this.OnDecrementCommand());
+            private DelegateCommand _DecrementCommand = new DelegateCommand(this.OnDecrementCommand);
 
             private void OnDecrementCommand()
             {

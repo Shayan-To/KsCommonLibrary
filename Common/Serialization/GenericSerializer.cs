@@ -82,7 +82,7 @@ namespace Ks
 
             private readonly OrderedDictionary<Type[], Serializer> Cache = new OrderedDictionary<Type[], Serializer>(new ArrayComparer<Type>());
 
-            public static new GenericSerializer Create(string Id, Type SerializerType, Func<Type, Type[]> GetTypeArgument)
+            public static GenericSerializer Create(string Id, Type SerializerType, Func<Type, Type[]> GetTypeArgument)
             {
                 return new DelegateGenericSerializer(Id, SerializerType, GetTypeArgument);
             }

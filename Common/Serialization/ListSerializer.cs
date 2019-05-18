@@ -13,7 +13,7 @@ namespace Ks
 
             public override void SetT(FormatterSetProxy Formatter, IEnumerable<T> Obj)
             {
-                Formatter.Set(nameof(Obj.Count), Obj.Count());
+                Formatter.Set(nameof(Enumerable.Count), Obj.Count());
                 foreach (var I in Obj)
                     Formatter.Set(null, I);
             }

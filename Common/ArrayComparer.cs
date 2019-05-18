@@ -33,7 +33,7 @@ namespace Ks
                 return x.Length - y.Length;
             }
 
-            public new bool Equals(T[] x, T[] y)
+            public bool Equals(T[] x, T[] y)
             {
                 var loopTo = Math.Min(x.Length, y.Length) - 1;
                 for (int I = 0; I <= loopTo; I++)
@@ -44,9 +44,9 @@ namespace Ks
                 return x.Length == y.Length;
             }
 
-            public new int GetHashCode(T[] obj)
+            public int GetHashCode(T[] obj)
             {
-                var R = 0xFAB43DC8;
+                var R = unchecked((int)0xFAB43DC8);
                 var loopTo = obj.Length - 1;
                 for (int I = 0; I <= loopTo; I++)
                     R = Utilities.CombineHashCodes(R, this.EqualityComparer.GetHashCode(obj[I]));

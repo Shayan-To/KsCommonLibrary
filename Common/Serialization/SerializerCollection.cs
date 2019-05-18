@@ -27,7 +27,7 @@ namespace Ks
 
             public override void RemoveAt(int index)
             {
-                Verify.False(this.LockedItems.Contains(this.ItemAt), "Serializer is locked.");
+                Verify.False(this.LockedItems.Contains(this[index]), "Serializer is locked.");
                 base.RemoveAt(index);
             }
 
@@ -43,16 +43,16 @@ namespace Ks
                 return base.Set(Value);
             }
 
-            public override Serializer ItemAt
+            public override Serializer this[int index]
             {
                 get
                 {
-                    return base.ItemAt;
+                    return base[index];
                 }
                 set
                 {
                     Verify.False(this.LockedItems.Contains(value), "Serializer is locked.");
-                    base.ItemAt = value;
+                    base[index] = value;
                 }
             }
 

@@ -84,7 +84,7 @@ namespace Ks
             {
             }
 
-            private DelegateCommand _ShowCommand = new DelegateCommand(this.Show());
+            private DelegateCommand _ShowCommand = new DelegateCommand(this.Show);
 
             public void Show()
             {
@@ -99,7 +99,7 @@ namespace Ks
                 }
             }
 
-            private DelegateCommand _HideCommand = new DelegateCommand(this.Hide());
+            private DelegateCommand _HideCommand = new DelegateCommand(this.Hide);
 
             public void Hide()
             {

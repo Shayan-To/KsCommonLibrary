@@ -9,7 +9,7 @@ namespace Ks
 {
     namespace Common
     {
-        public delegate void NotifyCollectionChangedEventHandler<T>(object sender, NotifyCollectionChangedEventArgs<NotifyCollectionChangedEventHandler(Of T).T> e);
+        public delegate void NotifyCollectionChangedEventHandler<T>(object sender, NotifyCollectionChangedEventArgs<T> e);
 
         public class NotifyCollectionChangedEventArgs<T> : NotifyCollectionChangedEventArgs
         {

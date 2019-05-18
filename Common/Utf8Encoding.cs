@@ -13,7 +13,7 @@ namespace Ks
 
                 var CharsInitialIndex = CharsIndex;
                 var BytesInitialIndex = BytesIndex;
-                var T = new byte[6] { };
+                var T = new byte[6];
                 if (BeginningOfFile)
                     CharsIndex -= 1;
                 var loopTo = CharsLenght - 1;

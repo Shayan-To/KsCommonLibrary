@@ -96,7 +96,7 @@ namespace Ks
                 this.Initialize();
             }
 
-            private readonly byte[] TempArray = new byte[8] { };
+            private readonly byte[] TempArray = new byte[8];
         }
     }
 }

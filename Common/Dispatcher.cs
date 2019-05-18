@@ -11,7 +11,7 @@ namespace Ks
         {
             private void RunAction((Action Action, int Id) AI)
             {
-                (EventWaitHandle WaitHandle, Exception Exception) WaitingData = default((WaitHandle As EventWaitHandle, Exception As Exception));
+                (EventWaitHandle WaitHandle, Exception Exception) WaitingData;
                 this.WaitingActions.TryGetValue(AI.Id, out WaitingData);
 
                 try
@@ -101,7 +101,7 @@ namespace Ks
                 var List = new List<(Action Action, int Id)>();
                 do
                 {
-                    (Action Action, int Id) AI = default((Action As Action, Id As Integer));
+                    (Action Action, int Id) AI;
                     if (!this.Queue.TryTake(out AI))
                         break;
                     List.Add(AI);

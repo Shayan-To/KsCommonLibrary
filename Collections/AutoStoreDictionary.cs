@@ -329,7 +329,7 @@ namespace Ks
 
             private ConcurrentOrderedDictionary<string, string> BaseDic;
             private readonly System.IO.Stream Stream;
-            private readonly TaskDelayer TaskDelayer = new TaskDelayer(this.Store(), TimeSpan.FromSeconds((double)10));
+            private readonly TaskDelayer TaskDelayer = new TaskDelayer(this.Store, TimeSpan.FromSeconds((double)10));
         }
     }
 }

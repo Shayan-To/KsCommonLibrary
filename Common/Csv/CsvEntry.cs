@@ -33,7 +33,7 @@ namespace Ks
                     if (value == null)
                         value = "";
                     if ((value.Length == 0) & (Index >= this.Data.Count))
-                        break;
+                        return;
                     while (Index >= this.Data.Count)
                         this.Data.Add("");
                     this.Data[Index] = value;

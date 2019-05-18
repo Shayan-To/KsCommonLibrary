@@ -73,7 +73,7 @@ namespace Ks
                 }
             }
 
-            private readonly TaskDelayer TaskDelayer = new TaskDelayer(this.DoSave(), TimeSpan.FromSeconds((double)10));
+            private readonly TaskDelayer TaskDelayer = new TaskDelayer(this.DoSave, TimeSpan.FromSeconds((double)10));
             private System.IO.Stream InStream;
             private int Length;
         }

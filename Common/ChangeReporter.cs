@@ -23,11 +23,11 @@ namespace Ks
 
                 PropObj = Obj as INotifyPropertyChanged;
                 if (PropObj != null)
-                    PropObj.PropertyChanged += this.OnPropertyChanged();
+                    PropObj.PropertyChanged += this.OnPropertyChanged;
 
                 CollecObj = Obj as INotifyCollectionChanged;
                 if (CollecObj != null)
-                    CollecObj.CollectionChanged += this.OnCollectionChanged();
+                    CollecObj.CollectionChanged += this.OnCollectionChanged;
 
                 Enumerable = Obj as IEnumerable;
                 if (Enumerable != null)
@@ -45,11 +45,11 @@ namespace Ks
 
                 PropObj = Obj as INotifyPropertyChanged;
                 if (PropObj != null)
-                    PropObj.PropertyChanged -= this.OnPropertyChanged();
+                    PropObj.PropertyChanged -= this.OnPropertyChanged;
 
                 CollecObj = Obj as INotifyCollectionChanged;
                 if (CollecObj != null)
-                    CollecObj.CollectionChanged -= this.OnCollectionChanged();
+                    CollecObj.CollectionChanged -= this.OnCollectionChanged;
 
                 Enumerable = Obj as IEnumerable;
                 if (Enumerable != null)

@@ -21,7 +21,7 @@ namespace Ks
                 var Handle = Helper.EnsureHandle();
                 var HandleSource = HwndSource.FromHwnd(Handle);
                 // Dim HandleSource = HwndSource.FromVisual(Me)
-                HandleSource.AddHook(this.WindowProcess());
+                HandleSource.AddHook(this.WindowProcess);
             }
 
             private IntPtr WindowProcess(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

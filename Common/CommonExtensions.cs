@@ -444,7 +444,7 @@ namespace Ks
 
             public static (int StartIndex, int Length) BinarySearch<T>(this IReadOnlyList<T> Self, T Value, IComparer<T> Comp)
             {
-                return Self.BinarySearch(Value, Comp.Compare());
+                return Self.BinarySearch(Value, Comp.Compare);
             }
 
             /// <summary>
@@ -1249,7 +1249,7 @@ namespace Ks
 
             public static int Write(this System.IO.Stream Self, System.IO.Stream Stream, long Start = -1, long Length = -1, Action<int> ProgressCallback = null)
             {
-                var Buffer = new byte[65536] { };
+                var Buffer = new byte[65536];
 
                 if (Start != (long)-1)
                     Stream.Seek(Start, System.IO.SeekOrigin.Begin);
@@ -1282,7 +1282,7 @@ namespace Ks
             public static string GetRegexMatch(this System.IO.TextReader Self, Regex Regex)
             {
                 var Text = new System.Text.StringBuilder();
-                char[] Buffer = new char[256] { };
+                char[] Buffer = new char[256];
 
                 while (!Regex.IsMatch(Text.ToString()))
                 {

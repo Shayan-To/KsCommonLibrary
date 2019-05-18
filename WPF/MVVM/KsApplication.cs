@@ -249,7 +249,7 @@ namespace Ks
                 var loopTo = Math.Min(NewFrame.Count, OldFrame.Count) - 1;
                 for (I = I; I <= loopTo; I++)
                 {
-                    if (NewFrame.Item != OldFrame.Item)
+                    if (NewFrame[I] != OldFrame[I])
                         break;
                 }
 
@@ -257,7 +257,7 @@ namespace Ks
                 var loopTo1 = I;
                 for (var J = OldFrame.Count - 1; J >= loopTo1; J += -1)
                 {
-                    var VM = OldFrame.Item;
+                    var VM = OldFrame[J];
 
                     VM.NavigationFrame = null;
                     if (VM.IsNavigation())
@@ -269,8 +269,8 @@ namespace Ks
                 var loopTo2 = NewFrame.Count;
                 for (J = I; J <= loopTo2; J++)
                 {
-                    var Parent = NewFrame.Item as NavigationViewModel;
-                    var Current = (J != NewFrame.Count) ? NewFrame.Item : null;
+                    var Parent = NewFrame[J - 1] as NavigationViewModel;
+                    var Current = (J != NewFrame.Count) ? NewFrame[J] : null;
 
                     if (Current != null)
                         Current.NavigationFrame = NewFrame.SubFrame(J + 1);
@@ -311,7 +311,7 @@ namespace Ks
                 }
             }
 
-            private DelegateCommand _NavigateBackCommand = new DelegateCommand(this.NavigateBack());
+            private DelegateCommand _NavigateBackCommand = new DelegateCommand(this.NavigateBack);
 
             public DelegateCommand NavigateBackCommand
             {

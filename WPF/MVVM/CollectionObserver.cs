@@ -173,7 +173,7 @@ namespace Ks
             }
 
             private readonly List<object> Clone = new List<object>();
-            private readonly NotifyCollectionChangedEventHandler _Collection_CollectionChanged = new NotifyCollectionChangedEventHandler(this.Collection_CollectionChanged());
+            private readonly NotifyCollectionChangedEventHandler _Collection_CollectionChanged = new NotifyCollectionChangedEventHandler(this.Collection_CollectionChanged);
         }
 
         public class ElementEventArgs<T> : EventArgs

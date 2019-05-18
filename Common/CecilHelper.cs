@@ -31,7 +31,7 @@ namespace Ks
                 return false;
             }
 
-            public new bool Equals(Mono.Cecil.TypeDefinition Type1, Mono.Cecil.TypeDefinition Type2)
+            public bool Equals(Mono.Cecil.TypeDefinition Type1, Mono.Cecil.TypeDefinition Type2)
             {
                 return (Operators.CompareString(Type1.FullName, Type2.FullName, TextCompare: false) == 0) & (Operators.CompareString(Type1.Module.FileName, Type2.Module.FileName, TextCompare: false) == 0);
             }

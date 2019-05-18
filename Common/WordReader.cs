@@ -68,7 +68,7 @@
                 }
             }
 
-            private readonly char[] Buffer = new char[4096] { };
+            private readonly char[] Buffer = new char[4096];
             private int BufferSize = 0;
             private int Index;
         }

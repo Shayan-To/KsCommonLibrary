@@ -49,7 +49,7 @@ namespace Ks
                 return this.Count - O.Count;
             }
 
-            public new bool Equals(object Other, System.Collections.IEqualityComparer Comparer)
+            public bool Equals(object Other, System.Collections.IEqualityComparer Comparer)
             {
                 if (!(Other is ComparableCollection<T>))
                     return false;
@@ -67,7 +67,7 @@ namespace Ks
                 return true;
             }
 
-            public new int GetHashCode(System.Collections.IEqualityComparer Comparer)
+            public int GetHashCode(System.Collections.IEqualityComparer Comparer)
             {
                 var Bl = true;
                 var R = 0;

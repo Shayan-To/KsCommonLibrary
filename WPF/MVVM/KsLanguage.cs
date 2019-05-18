@@ -261,7 +261,7 @@ namespace Ks
 
             private readonly Dictionary<string, string> Dictionary = new Dictionary<string, string>();
             private readonly CsvData Csv;
-            private readonly TaskDelayer TaskDelayer = new TaskDelayer(this.DoStore(), TimeSpan.FromSeconds((double)10));
+            private readonly TaskDelayer TaskDelayer = new TaskDelayer(this.DoStore, TimeSpan.FromSeconds((double)10));
             private readonly System.IO.Stream Stream;
         }
     }

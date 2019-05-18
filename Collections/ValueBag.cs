@@ -297,7 +297,7 @@ namespace Ks
                 if (!BagType.IsGenericType || BagType.GetGenericTypeDefinition() != typeof(ValueBag<>))
                 {
                 }
-                this.Type = BagType.GetGenericArguments()(0);
+                this.Type = BagType.GetGenericArguments()[0];
             }
 
             public override PropertyDescriptorCollection GetProperties()

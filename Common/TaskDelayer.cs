@@ -19,7 +19,7 @@ namespace Ks
                 this._MaxDelay = (MaxDelay == TimeSpan.Zero) ? TimeSpan.MaxValue : MaxDelay;
                 this._InactivityTime = InactivityTime;
 
-                this.TaskThread = new System.Threading.Thread(this.TaskThreadProcedure()) { IsBackground = true, Name = nameof(TaskDelayer) + " thread - " + Conversions.ToString(this.GetHashCode()) };
+                this.TaskThread = new System.Threading.Thread(this.TaskThreadProcedure) { IsBackground = true, Name = nameof(TaskDelayer) + " thread - " + Conversions.ToString(this.GetHashCode()) };
                 this.TaskThread.Start();
             }
 

@@ -35,7 +35,7 @@ namespace Ks
                 return new Rect(BasePoint, PopupSize);
             }
 
-            private DelegateCommand _ShowPopupCommand = new DelegateCommand(this.ShowPopup());
+            private DelegateCommand _ShowPopupCommand = new DelegateCommand(this.ShowPopup);
 
             public void ShowPopup()
             {
@@ -50,7 +50,7 @@ namespace Ks
                 }
             }
 
-            private DelegateCommand _HidePopupCommand = new DelegateCommand(this.HidePopup());
+            private DelegateCommand _HidePopupCommand = new DelegateCommand(this.HidePopup);
 
             public void HidePopup()
             {
@@ -129,7 +129,7 @@ namespace Ks
                 if (OldValue != null)
                     OldValue.ArrangeCallBack = null;
                 if (NewValue != null)
-                    NewValue.ArrangeCallBack = Self.ArrangePopup();
+                    NewValue.ArrangeCallBack = Self.ArrangePopup;
             }
 
             public static readonly DependencyProperty PopupProperty = PopupPropertyKey.DependencyProperty;

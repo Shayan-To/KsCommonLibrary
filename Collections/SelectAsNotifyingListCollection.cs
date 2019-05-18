@@ -12,14 +12,14 @@ namespace Ks
             {
                 var Notifying = List as INotifyCollectionChanged;
                 if (Notifying != null)
-                    Notifying.CollectionChanged += this.List_CollectionChanged();
+                    Notifying.CollectionChanged += this.List_CollectionChanged;
             }
 
             public SelectAsNotifyingListCollection(IReadOnlyList<TIn> List, Func<TIn, int, TOut> Func) : base(List, Func)
             {
                 var Notifying = List as INotifyCollectionChanged;
                 if (Notifying != null)
-                    Notifying.CollectionChanged += this.List_CollectionChanged();
+                    Notifying.CollectionChanged += this.List_CollectionChanged;
             }
 
             private void List_CollectionChanged(object Sender, NotifyCollectionChangedEventArgs E)

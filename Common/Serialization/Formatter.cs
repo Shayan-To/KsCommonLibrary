@@ -49,7 +49,7 @@ namespace Ks
 
                 for (int I = this.Serializers.Count - 1; I >= 0; I += -1)
                 {
-                    var S = this.Serializers.ItemAt;
+                    var S = this.Serializers[I];
 
                     if (!S.CanSerializeType(Type))
                         continue;
@@ -83,7 +83,7 @@ namespace Ks
                     var Id = this.ObjectsCount;
                     if (IsRefType)
                     {
-                        (int, bool) Tmp = default((Integer, Boolean));
+                        (int, bool) Tmp;
                         var WasInCache = this.SetCache.TryGetValue(Obj, out Tmp);
 
                         var IsDone = Tmp.Item2;
@@ -174,7 +174,7 @@ namespace Ks
 
                     Serializer S = default(Serializer);
                     if (IsGeneric)
-                        S = this.GetSerializer<T>(default(CNullable(Of T)), true);
+                        S = this.GetSerializer<T>(default(CNullable<T>), true);
                     else
                         S = this.Get<Serializer>(nameof(Serializer));
 
@@ -237,12 +237,12 @@ namespace Ks
 
             protected internal T Get<T>(string Name)
             {
-                return this.GetImpl<T>(Name, default(CNullable(Of T)), true);
+                return this.GetImpl<T>(Name, default(CNullable<T>), true);
             }
 
             protected internal object Get(string Name)
             {
-                return this.GetImpl<object>(Name, default(CNullable(Of Object)), false);
+                return this.GetImpl<object>(Name, default(CNullable<object>), false);
             }
 
             protected internal void Get<T>(string Name, T Obj)
