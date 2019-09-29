@@ -7,12 +7,8 @@ namespace Ks
     {
         partial class Hooks
         {
-            public abstract class Unsafe
+            public static class Unsafe
             {
-                private Unsafe()
-                {
-                    throw new NotSupportedException();
-                }
 
                 /// HHOOK WINAPI SetWindowsHookEx(
             /// _In_ int       idHook,

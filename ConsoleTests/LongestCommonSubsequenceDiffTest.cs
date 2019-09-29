@@ -4,7 +4,7 @@ using Ks.Common;
 
 namespace Ks.ConsoleTests
 {
-    public class LongestCommonSubsequenceTest
+    public static class LongestCommonSubsequenceTest
     {
         [InteractiveRunnable(true)]
         public static void Start()

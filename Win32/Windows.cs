@@ -8,17 +8,9 @@ namespace Ks
     {
         public abstract partial class Windows
         {
-            private Windows()
-            {
-                throw new NotSupportedException();
-            }
 
-            public abstract class Helpers
+            public static class Helpers
             {
-                private Helpers()
-                {
-                    throw new NotSupportedException();
-                }
 
                 public static bool SetWindowPos(IntPtr hwnd, Unsafe.SetWindowPosInsertAfter hWndInsertAfter, int X, int Y, int cx, int cy, Unsafe.SetWindowPosFlags uFlags)
                 {

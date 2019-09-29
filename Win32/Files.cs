@@ -5,19 +5,11 @@ namespace Ks
 {
     namespace Common.Win32
     {
-        public abstract class Files
+        public static class Files
         {
-            private Files()
-            {
-                throw new NotSupportedException();
-            }
 
-            public abstract class Unsafe
+            public static class Unsafe
             {
-                private Unsafe()
-                {
-                    throw new NotSupportedException();
-                }
 
                 /// BOOL WINAPI CreateHardLink(
             /// _In_       LPCTSTR               lpFileName,

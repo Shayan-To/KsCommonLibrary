@@ -13,12 +13,8 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class Math
+            public static class Math
             {
-                private Math()
-                {
-                    throw new NotSupportedException();
-                }
 
                 /// <summary>
             /// Calculates the non-negative reminder of the two numbers specified.

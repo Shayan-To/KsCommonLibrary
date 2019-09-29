@@ -11,12 +11,8 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class Serialization
+            public static class Serialization
             {
-                private Serialization()
-                {
-                    throw new NotSupportedException();
-                }
 
                 public static System.Windows.Media.Color HexToColor(string Hex)
                 {

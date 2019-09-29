@@ -11,12 +11,8 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class Reflection
+            public static class Reflection
             {
-                private Reflection()
-                {
-                    throw new NotSupportedException();
-                }
 
                 public static IEnumerable<Reflect.Assembly> GetAllAccessibleAssemblies()
                 {

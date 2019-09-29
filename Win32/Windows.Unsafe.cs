@@ -7,12 +7,8 @@ namespace Ks
     {
         partial class Windows
         {
-            public abstract class Unsafe
+            public static class Unsafe
             {
-                private Unsafe()
-                {
-                    throw new NotSupportedException();
-                }
 
                 /// BOOL WINAPI GetWindowPlacement(
             /// _In_    HWND            hWnd,

@@ -3,13 +3,8 @@ using Ks.Common;
 
 namespace Ks.ConsoleTests
 {
-    public abstract class Application
+    public static class Application
     {
-        private Application()
-        {
-            throw new NotSupportedException();
-        }
-
         public static void Main()
         {
             ConsoleUtilities.Initialize();

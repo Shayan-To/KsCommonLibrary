@@ -5,12 +5,8 @@ namespace Ks
 {
     namespace Common
     {
-        public class ConsoleUtilities
+        public static class ConsoleUtilities
         {
-            private ConsoleUtilities()
-            {
-                throw new NotSupportedException();
-            }
 
             public const ConsoleColor DefaultBackColor = ConsoleColor.White;
             public const ConsoleColor DefaultForeColor = ConsoleColor.Black;

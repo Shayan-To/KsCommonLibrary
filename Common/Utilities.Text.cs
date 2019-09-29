@@ -11,12 +11,8 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class Text
+            public static class Text
             {
-                private Text()
-                {
-                    throw new NotSupportedException();
-                }
 
                 private static readonly Dictionary<char, char> EscapeDic = new Dictionary<char, char>()
                 {

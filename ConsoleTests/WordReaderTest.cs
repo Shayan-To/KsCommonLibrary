@@ -3,7 +3,7 @@ using Ks.Common;
 
 namespace Ks.ConsoleTests
 {
-    public class WordReaderTest
+    public static class WordReaderTest
     {
         [InteractiveRunnable(true)]
         public static void Start()

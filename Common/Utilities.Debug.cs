@@ -11,12 +11,8 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class Debug
+            public static class Debug
             {
-                private Debug()
-                {
-                    throw new NotSupportedException();
-                }
 
                 public static void ShowMessageBox(string text, string caption = "")
                 {

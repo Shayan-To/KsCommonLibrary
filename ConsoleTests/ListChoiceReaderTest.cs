@@ -4,7 +4,7 @@ using Ks.Common;
 
 namespace Ks.ConsoleTests
 {
-    public class ListChoiceReaderTest
+    public static class ListChoiceReaderTest
     {
         [InteractiveRunnable(true)]
         public static void Start()

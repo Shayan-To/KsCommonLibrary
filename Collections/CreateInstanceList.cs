@@ -5,12 +5,8 @@ namespace Ks
 {
     namespace Common
     {
-        public sealed class CreateInstanceList
+        public static class CreateInstanceList
         {
-            private CreateInstanceList()
-            {
-                throw new NotSupportedException();
-            }
 
             public static CreateInstanceList<T> Create<T>(IList<T> List, Func<int, T> Creator)
             {

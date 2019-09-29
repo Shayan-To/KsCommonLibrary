@@ -7,7 +7,7 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class Collections
+            public static class Collections
             {
                 public static IEnumerable<T> Concat<T>(IEnumerable<IEnumerable<T>> Collections)
                 {

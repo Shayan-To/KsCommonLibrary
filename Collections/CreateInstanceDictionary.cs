@@ -5,12 +5,8 @@ namespace Ks
 {
     namespace Common
     {
-        public sealed class CreateInstanceDictionary
+        public static class CreateInstanceDictionary
         {
-            private CreateInstanceDictionary()
-            {
-                throw new NotSupportedException();
-            }
 
             public static CreateInstanceDictionary<TKey, TValue> Create<TKey, TValue>(IDictionary<TKey, TValue> Dic, Func<TKey, TValue> Creator)
             {

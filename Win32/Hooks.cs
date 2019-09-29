@@ -68,12 +68,8 @@ namespace Ks
     /// WH_MOUSE_LL
     /// This behavior is similar to what happens when there is an architecture mismatch between the hook DLL and the target application process, for example, when the hook DLL is 32-bit and the application process 64-bit.
     /// </remarks>
-        public abstract partial class Hooks
+        public static partial class Hooks
         {
-            private Hooks()
-            {
-                throw new NotSupportedException();
-            }
 
             /// LRESULT CALLBACK LowLevelKeyboardProc(
         /// _In_ int    nCode,
