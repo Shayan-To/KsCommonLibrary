@@ -84,6 +84,15 @@
     <Compile Include="Common\DelegateEqualityComparer.cs" />
     <Compile Include="Common\Dispatcher.cs" />
     <Compile Include="Common\EventBasedTask.cs" />
+    <Compile Include="Common\Graph\Graph.cs" />
+    <Compile Include="Common\Graph\Graph.Internal.cs" />
+    <Compile Include="Common\Graph\GraphBuilder.cs" />
+    <Compile Include="Common\Graph\GraphConstraint.cs" />
+    <Compile Include="Common\Graph\GraphDefaultConstraints.cs" />
+    <Compile Include="Common\Graph\GraphEdge.cs" />
+    <Compile Include="Common\Graph\GraphEdgeData.cs" />
+    <Compile Include="Common\Graph\GraphNode.cs" />
+    <Compile Include="Common\Graph\GraphNodeData.cs" />
     <Compile Include="Common\HashCodeComparer.cs" />
     <Compile Include="Common\HashRandom.cs" />
     <Compile Include="Common\IndexerProperty.cs" />
@@ -154,6 +163,11 @@
     <Compile Include="Common\XmlLinqTraverser.cs" />
     <Compile Include="Common\XmlTraverser.cs" />
     <Compile Include="Common\Xml\XmlWriter.cs" />
+    <Compile Include="DiscreteOptimization\Algorithm.cs" />
+    <Compile Include="DiscreteOptimization\LongTermMemory.cs" />
+    <Compile Include="DiscreteOptimization\Model.cs" />
+    <Compile Include="DiscreteOptimization\RouletteWheel.cs" />
+    <Compile Include="DiscreteOptimization\SimulatedAnnealing.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TestingVisualizer.cs" />
     <Compile Include="Win32\Common.cs" />
