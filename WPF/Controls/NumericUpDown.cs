@@ -113,7 +113,9 @@ namespace Ks
                 }
             }
 
-            private bool IsDirty;
+#pragma warning disable CS0169 // The field is never used
+            private bool IsDirty; // ToDo
+#pragma warning restore CS0169 // The field is never used
         }
     }
 }

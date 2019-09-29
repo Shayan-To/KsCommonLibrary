@@ -14,7 +14,7 @@ namespace Ks
         public class NotifyCollectionChangedEventArgs<T> : NotifyCollectionChangedEventArgs
         {
 
-            /* TODO ERROR: Skipped WarningDirectiveTrivia */
+#pragma warning disable CS0618 // Type or member is obsolete
             [Obsolete("Use the Create methods instead.")]
             public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action) : base(action)
             {
@@ -209,7 +209,8 @@ namespace Ks
             {
                 return new NotifyCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Move, changedItems, index, oldIndex);
             }
-            /* TODO ERROR: Skipped WarningDirectiveTrivia */
+#pragma warning restore CS0618 // Type or member is obsolete
+
             public static NotifyCollectionChangedEventArgs<T> FromNotifyCollectionChangedEventArgs(NotifyCollectionChangedEventArgs E)
             {
                 switch (E.Action)

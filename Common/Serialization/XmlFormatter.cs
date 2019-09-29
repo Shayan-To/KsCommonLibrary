@@ -80,7 +80,9 @@ namespace Ks
                 return SB.ToString();
             }
 
-            private System.Xml.XmlReader XmlReader;
+#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value null
+            private System.Xml.XmlReader XmlReader; // ToDo
+#pragma warning restore CS0649 // Field is never assigned to, and will always have its default value null
             private System.Xml.XmlWriter XmlWriter;
         }
     }

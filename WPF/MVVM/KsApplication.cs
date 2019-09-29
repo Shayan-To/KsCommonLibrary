@@ -420,7 +420,9 @@ namespace Ks
                 }
             }
 
-            private readonly string _Version;
+#pragma warning disable CS0169 // The field is never used
+            private readonly string _Version; // ToDo
+#pragma warning restore CS0169 // The field is never used
 
             public string Version
             {
@@ -440,7 +442,9 @@ namespace Ks
                 }
             }
 
-            private readonly Type _HomePageType;
+#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value null
+            private readonly Type _HomePageType; // To-Do
+#pragma warning restore CS0649 // Field is never assigned to, and will always have its default value null
 
             public Type HomePageType
             {

@@ -253,8 +253,9 @@ namespace Ks
 
             public static void Reverse<T>(this IList<T> Self)
             {
-                /* TODO ERROR: Skipped WarningDirectiveTrivia */
+#pragma warning disable CS0612
                 Self.Reverse(0);
+#pragma warning restore CS0612
             }
 
             [Obsolete()]
