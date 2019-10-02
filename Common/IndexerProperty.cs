@@ -4,6 +4,7 @@ namespace Ks.Common
 {
     public class IndexerProperty<T, TProp, TIn>
     {
+        // ToDo Revise the API to be more nice. (See BitArray)
 
         public IndexerProperty(T self, Func<T, TIn, TProp> getter, Action<T, TIn, TProp> setter)
         {

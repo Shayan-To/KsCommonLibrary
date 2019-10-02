@@ -121,6 +121,7 @@ namespace Ks
                 Common.VerifyError();
             }
 
+            // ToDo Change types to AncestorKind:
             private const uint GetAncestorConstant = 100;
             private const uint GetWindowConstant = 200;
 

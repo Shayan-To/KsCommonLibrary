@@ -12,6 +12,7 @@ namespace Ks
 
             public abstract T this[int Index] { get; }
 
+            // ToDo Make this protected _GetEnumerable
             public abstract IEnumerator<T> GetEnumerator();
 
             IEnumerator IEnumerable.GetEnumerator()
