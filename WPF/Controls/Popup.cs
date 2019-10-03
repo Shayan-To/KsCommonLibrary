@@ -34,9 +34,6 @@ namespace Ks
                     this.RemoveHandler(BeforeShowEvent, value);
                 }
             }
-            void OnBeforeShow()
-            {
-            }
 
             public static readonly RoutedEvent ShownEvent = EventManager.RegisterRoutedEvent("Shown", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(Popup));
 
@@ -57,9 +54,6 @@ namespace Ks
                     this.RemoveHandler(ShownEvent, value);
                 }
             }
-            void OnShown()
-            {
-            }
 
             public static readonly RoutedEvent HidEvent = EventManager.RegisterRoutedEvent("Hid", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(Popup));
 
@@ -79,9 +73,6 @@ namespace Ks
                 {
                     this.RemoveHandler(HidEvent, value);
                 }
-            }
-            void OnHid()
-            {
             }
 
             private DelegateCommand _ShowCommand = new DelegateCommand(this.Show);

@@ -76,7 +76,6 @@ namespace Ks
                                 if (EscapeChars.Contains(Conversions.ToString(Ch)))
                                     return Ch;
                                 throw new Exception("Invalid escape character.");
-                                break;
                             }
                     }
                 }

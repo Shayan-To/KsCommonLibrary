@@ -432,7 +432,6 @@ namespace Ks
                                 default:
                                     {
                                         throw new Exception("Invalid escape character.");
-                                        break;
                                     }
                             }
                         }

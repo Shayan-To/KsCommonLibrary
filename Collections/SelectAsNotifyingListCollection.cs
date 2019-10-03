@@ -63,7 +63,6 @@ namespace Ks
                         default:
                             {
                                 throw new InvalidOperationException("Action not supported.");
-                                break;
                             }
                     }
                 }
@@ -103,7 +102,6 @@ namespace Ks
                         default:
                             {
                                 throw new InvalidOperationException("Action not supported.");
-                                break;
                             }
                     }
 
