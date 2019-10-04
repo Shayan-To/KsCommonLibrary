@@ -21,15 +21,15 @@ namespace Ks
             }
         }
 
-        public class ListCollectionRA<T, List> : INotifyingCollection<List>, IList<List>, ISerializable where List : IList<T>
+        public class ListCollectionRA<T, TList> : INotifyingCollection<TList>, IList<TList>, ISerializable where TList : IList<T>
         {
-            private readonly List<List> InnerList;
-            private readonly Func<List> ListSeeder;
+            private readonly List<TList> InnerList;
+            private readonly Func<TList> ListSeeder;
 
-            public ListCollectionRA(Func<List> ListSeeder)
+            public ListCollectionRA(Func<TList> ListSeeder)
             {
                 this.ListSeeder = ListSeeder;
-                this.InnerList = new List<List>();
+                this.InnerList = new List<TList>();
             }
 
             // Public Sub New()
@@ -59,7 +59,7 @@ namespace Ks
             // Parameters = DirectCast(Parameters.Clone(), Object())
             // End Sub
 
-            public List this[int Index]
+            public TList this[int Index]
             {
                 get
                 {
@@ -87,7 +87,7 @@ namespace Ks
                 this.GetObjectData(info, context);
             }
 
-            public event NotifyCollectionChangedEventHandler<List> CollectionChanged;
+            public event NotifyCollectionChangedEventHandler<TList> CollectionChanged;
             private event NotifyCollectionChangedEventHandler INotifyCollectionChanged_CollectionChanged;
             event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
             {
@@ -95,25 +95,25 @@ namespace Ks
                 remove => this.INotifyCollectionChanged_CollectionChanged -= value;
             }
 
-            protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs<List> E)
+            protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs<TList> E)
             {
                 CollectionChanged?.Invoke(this, E);
                 INotifyCollectionChanged_CollectionChanged?.Invoke(this, E);
             }
 
-            private List InstantiateList()
+            private TList InstantiateList()
             {
                 return this.ListSeeder.Invoke();
             }
 
             private void EnsureFits(int Index)
             {
-                List T;
-                List<List> NewItems;
+                TList T;
+                List<TList> NewItems;
 
                 if (this.InnerList.Count <= Index)
                 {
-                    NewItems = new List<List>();
+                    NewItems = new List<TList>();
                     for (var I = this.InnerList.Count; I <= Index; I++)
                     {
                         T = this.InstantiateList();
@@ -121,16 +121,16 @@ namespace Ks
                         NewItems.Add(T);
                     }
 
-                    this.OnCollectionChanged(NotifyCollectionChangedEventArgs<List>.CreateAdd(NewItems));
+                    this.OnCollectionChanged(NotifyCollectionChangedEventArgs<TList>.CreateAdd(NewItems));
                 }
             }
 
-            public List<List>.Enumerator GetEnumerator()
+            public List<TList>.Enumerator GetEnumerator()
             {
                 return this.InnerList.GetEnumerator();
             }
 
-            IEnumerator<List> IEnumerable<List>.GetEnumerator()
+            IEnumerator<TList> IEnumerable<TList>.GetEnumerator()
             {
                 return this.InnerList.GetEnumerator();
             }
@@ -156,17 +156,17 @@ namespace Ks
                 }
             }
 
-            public void CopyTo(List[] Array, int ArrayIndex)
+            public void CopyTo(TList[] Array, int ArrayIndex)
             {
                 this.InnerList.CopyTo(Array, ArrayIndex);
             }
 
-            public int IndexOf(List item)
+            public int IndexOf(TList item)
             {
                 throw new NotSupportedException();
             }
 
-            public void Insert(int index, List item)
+            public void Insert(int index, TList item)
             {
                 throw new NotSupportedException();
             }
@@ -176,7 +176,7 @@ namespace Ks
                 throw new NotSupportedException();
             }
 
-            public void Add(List item)
+            public void Add(TList item)
             {
                 throw new NotSupportedException();
             }
@@ -186,12 +186,12 @@ namespace Ks
                 throw new NotSupportedException();
             }
 
-            public bool Contains(List item)
+            public bool Contains(TList item)
             {
                 throw new NotSupportedException();
             }
 
-            public bool Remove(List item)
+            public bool Remove(TList item)
             {
                 throw new NotSupportedException();
             }
