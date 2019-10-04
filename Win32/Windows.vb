@@ -1,6 +1,4 @@
-﻿Imports System.ComponentModel
-
-Namespace Common.Win32
+﻿Namespace Common.Win32
 
     Partial Public MustInherit Class Windows
 
@@ -18,7 +16,18 @@ Namespace Common.Win32
                 Return Unsafe.SetWindowPos(hwnd, New IntPtr(hWndInsertAfter), X, Y, cx, cy, uFlags)
             End Function
 
+            Public Shared Function GetWindowPlacement(hWnd As IntPtr) As Unsafe.WindowPlacement
+                Dim R = New Unsafe.WindowPlacement().InitNew()
+                Unsafe.GetWindowPlacement(hWnd, R)
+                Common.VerifyError()
+                Return R
+            End Function
+
         End Class
+
+        Public Shared Function GetWindowState(Hwnd As IntPtr) As Unsafe.WindowShowState
+            Return Helpers.GetWindowPlacement(Hwnd).ShowCmd
+        End Function
 
         Public Shared Function GetAllWindows() As IntPtr()
             Dim L = New List(Of IntPtr)()
@@ -177,6 +186,45 @@ Namespace Common.Win32
             ''' otherwise, if there are no enabled popup windows, the retrieved handle is that of the specified window.
             ''' </summary>
             EnabledPopup = GetWindowConstant + 6
+
+        End Enum
+
+        ''' <summary>
+        ''' Documentation from https://msdn.microsoft.com/en-us/library/windows/desktop/ms646267(v=vs.85).aspx.
+        ''' Values are extracted from WinUser.h (line 424).
+        ''' </summary>
+        Public Enum KeyFlags
+
+            ''' #define KF_EXTENDED 0x0100
+            ''' <summary>
+            ''' Manipulates the extended key flag.
+            ''' </summary>
+            Extended = &H100
+            ''' #define KF_DLGMODE 0x0800
+            ''' <summary>
+            ''' Manipulates the dialog mode flag, which indicates whether a dialog box is active.
+            ''' </summary>
+            DlgMode = &H800
+            ''' #define KF_MENUMODE 0x1000
+            ''' <summary>
+            ''' Manipulates the menu mode flag, which indicates whether a menu is active.
+            ''' </summary>
+            MenuMode = &H1000
+            ''' #define KF_ALTDOWN 0x2000
+            ''' <summary>
+            ''' Manipulates the ALT key flag, which indicates whether the ALT key is pressed.
+            ''' </summary>
+            AltDown = &H2000
+            ''' #define KF_REPEAT 0x4000
+            ''' <summary>
+            ''' Manipulates the repeat count.
+            ''' </summary>
+            Repeat = &H4000
+            ''' #define KF_UP 0x8000
+            ''' <summary>
+            ''' Manipulates the transition state flag.
+            ''' </summary>
+            Up = &H8000
 
         End Enum
 

@@ -10,6 +10,36 @@ Namespace Common.Win32
                 Throw New NotSupportedException()
             End Sub
 
+            ''' BOOL WINAPI GetWindowPlacement(
+            '''   _In_    HWND            hWnd,
+            '''   _Inout_ WINDOWPLACEMENT *lpwndpl
+            ''' );
+            ''' <summary>
+            ''' Retrieves the show state and the restored, minimized, and maximized positions of the specified window.
+            ''' </summary>
+            ''' <param name="hWnd">
+            ''' hWnd [in]
+            ''' Type: HWND
+            ''' A handle to the window.
+            ''' </param>
+            ''' <param name="lpwndpl">
+            ''' lpwndpl [in, out]
+            ''' Type: WINDOWPLACEMENT*
+            ''' A pointer to the WINDOWPLACEMENT structure that receives the show state and position information. Before calling GetWindowPlacement, set the length member to sizeof(WINDOWPLACEMENT). GetWindowPlacement fails if lpwndpl-> length is not set correctly.
+            ''' </param>
+            ''' <returns>
+            ''' Type: BOOL
+            ''' If the function succeeds, the return value is nonzero.
+            ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.
+            ''' </returns>
+            ''' <remarks>
+            ''' The flags member of WINDOWPLACEMENT retrieved by this function is always zero. If the window identified by the hWnd parameter is maximized, the showCmd member is SW_SHOWMAXIMIZED. If the window is minimized, showCmd is SW_SHOWMINIMIZED. Otherwise, it is SW_SHOWNORMAL.
+            ''' The length member of WINDOWPLACEMENT must be set to sizeof(WINDOWPLACEMENT). If this member is not set correctly, the function returns FALSE. For additional remarks on the proper use of window placement coordinates, see WINDOWPLACEMENT.
+            ''' </remarks>
+            <DllImport("User32.dll", SetLastError:=True)>
+            Public Shared Function GetWindowPlacement(hWnd As IntPtr, ByRef lpwndpl As WindowPlacement) As Boolean
+            End Function
+
             ''' BOOL WINAPI EnumWindows(
             '''   _In_ WNDENUMPROC lpEnumFunc,
             '''   _In_ LPARAM      lParam
@@ -582,6 +612,140 @@ Namespace Common.Win32
                 ''' Retrieves the owned root window by walking the chain of parent and owner windows returned by GetParent.
                 ''' </summary>
                 RootOwner = 3
+
+            End Enum
+
+            ''' typedef struct tagWINDOWPLACEMENT {
+            '''   UINT  length;
+            '''   UINT  flags;
+            '''   UINT  showCmd;
+            '''   POINT ptMinPosition;
+            '''   POINT ptMaxPosition;
+            '''   RECT  rcNormalPosition;
+            ''' } WINDOWPLACEMENT, *PWINDOWPLACEMENT, *LPWINDOWPLACEMENT;
+            ''' <summary>
+            ''' Contains information about the placement of a window on the screen.
+            ''' </summary>
+            ''' <remarks>
+            ''' If the window is a top-level window that does not have the WS_EX_TOOLWINDOW window style, then the coordinates represented by the following members are in workspace coordinates: ptMinPosition, ptMaxPosition, and rcNormalPosition. Otherwise, these members are in screen coordinates.
+            ''' Workspace coordinates differ from screen coordinates in that they take the locations and sizes of application toolbars (including the taskbar) into account. Workspace coordinate (0,0) is the upper-left corner of the workspace area, the area of the screen not being used by application toolbars.
+            ''' The coordinates used in a WINDOWPLACEMENT structure should be used only by the GetWindowPlacement and SetWindowPlacement functions. Passing workspace coordinates to functions which expect screen coordinates (such as SetWindowPos) will result in the window appearing in the wrong location. For example, if the taskbar is at the top of the screen, saving window coordinates using GetWindowPlacement and restoring them using SetWindowPos causes the window to appear to "creep" up the screen.
+            ''' </remarks>
+            Public Structure WindowPlacement
+
+                Public Shared ReadOnly ActualLength As UInteger = CUInt(Marshal.SizeOf(Of WindowPlacement)())
+
+                Public Sub Init()
+                    Me.Length = ActualLength
+                End Sub
+
+                Public Function InitNew() As WindowPlacement
+                    Me.Length = ActualLength
+                    Return Me
+                End Function
+
+                ''' <summary>
+                ''' Type: UINT
+                ''' The length of the structure, in bytes. Before calling the GetWindowPlacement or SetWindowPlacement functions, set this member to sizeof(WINDOWPLACEMENT).
+                ''' GetWindowPlacement and SetWindowPlacement fail if this member is not set correctly.
+                ''' </summary>
+                Public Length As UInteger
+                ''' <summary>
+                ''' Type: UINT
+                ''' The flags that control the position of the minimized window and the method by which the window is restored. This member can be one or more of the following values.
+                ''' </summary>
+                Public Flags As WindowPlacementFlags
+                ''' <summary>
+                ''' Type: UINT
+                ''' The current show state of the window. This member can be one of the following values.
+                ''' </summary>
+                Public ShowCmd As WindowShowState
+                ''' <summary>
+                ''' Type: POINT
+                ''' The coordinates of the window's upper-left corner when the window is minimized.
+                ''' </summary>
+                Public PtMinPosition As Point
+                ''' <summary>
+                ''' Type: POINT
+                ''' The coordinates of the window's upper-left corner when the window is maximized.
+                ''' </summary>
+                Public PtMaxPosition As Point
+                ''' <summary>
+                ''' Type: RECT
+                ''' The window's coordinates when the window is in the restored position.
+                ''' </summary>
+                Public RcNormalPosition As Rect
+
+            End Structure
+
+            Public Enum WindowShowState As UInteger
+
+                ''' <summary>
+                ''' Hides the window and activates another window.
+                ''' </summary>
+                Hide = 0
+                ''' <summary>
+                ''' Maximizes the specified window.
+                ''' </summary>
+                Maximize = 3
+                ''' <summary>
+                ''' Minimizes the specified window and activates the next top-level window in the z-order.
+                ''' </summary>
+                Minimize = 6
+                ''' <summary>
+                ''' Activates and displays the window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when restoring a minimized window.
+                ''' </summary>
+                Restore = 9
+                ''' <summary>
+                ''' Activates the window and displays it in its current size and position.
+                ''' </summary>
+                Show = 5
+                ''' <summary>
+                ''' Activates the window and displays it as a maximized window.
+                ''' </summary>
+                ShowMaximized = 3
+                ''' <summary>
+                ''' Activates the window and displays it as a minimized window.
+                ''' </summary>
+                ShowMinimized = 2
+                ''' <summary>
+                ''' Displays the window as a minimized window.
+                ''' This value is similar to SW_SHOWMINIMIZED, except the window is not activated.
+                ''' </summary>
+                ShowMinNoActive = 7
+                ''' <summary>
+                ''' Displays the window in its current size and position.
+                ''' This value is similar to SW_SHOW, except the window is not activated.
+                ''' </summary>
+                ShowNA = 8
+                ''' <summary>
+                ''' Displays a window in its most recent size and position.
+                ''' This value is similar to SW_SHOWNORMAL, except the window is not activated.
+                ''' </summary>
+                ShowNoActivate = 4
+                ''' <summary>
+                ''' Activates and displays a window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when displaying the window for the first time.
+                ''' </summary>
+                Shownormal = 1
+
+            End Enum
+
+            Public Enum WindowPlacementFlags As UInteger
+
+                ''' <summary>
+                ''' If the calling thread and the thread that owns the window are attached to different input queues, the system posts the request to the thread that owns the window. This prevents the calling thread from blocking its execution while other threads process the request.
+                ''' </summary>
+                CWindowPlacement = &H4
+                ''' <summary>
+                ''' The restored window will be maximized, regardless of whether it was maximized before it was minimized. This setting is only valid the next time the window is restored. It does not change the default restoration behavior.
+                ''' This flag is only valid when the SW_SHOWMINIMIZED value is specified for the showCmd member.
+                ''' </summary>
+                RestoreToMaximized = &H2
+                ''' <summary>
+                ''' The coordinates of the minimized window may be specified.
+                ''' This flag must be specified if the coordinates are set in the ptMinPosition member.
+                ''' </summary>
+                SetMinPosition = &H1
 
             End Enum
 
