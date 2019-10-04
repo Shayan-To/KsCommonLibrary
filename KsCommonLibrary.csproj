@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FAD29DA9-D078-0DE0-0C4D-F444F0C0F1C2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Ks</RootNamespace>
+    <AssemblyName>KsCommonLibrary</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.vb</DefaultItemExcludes>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DefineConstants>VB_VERSION=11.0</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>On</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DesignSimulate|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\DesignSimulate\</OutputPath>
+    <DefineConstants>VB_VERSION=11.0,SimulateDesign=True</DefineConstants>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>VB_VERSION=11.0</DefineConstants>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DesignSimulate|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\DesignSimulate\</OutputPath>
+    <DefineConstants>VB_VERSION=11.0,SimulateDesign=True</DefineConstants>
+    <DocumentationFile>KsCommonLibrary.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.0\lib\net40\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.0\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.0\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.0\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="Mono" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Windows" />
+    <Import Include="System.Windows.Controls" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections\BitArray.cs" />
+    <Compile Include="Collections\EnumerableCacher.cs" />
+    <Compile Include="Collections\Array2D.cs" />
+    <Compile Include="Collections\ListWithKeys.cs" />
+    <Compile Include="Collections\OwnerNotifyingList.cs" />
+    <Compile Include="Common\Closable.cs" />
+    <Compile Include="Common\ConsoleListChoiceReader.cs" />
+    <Compile Include="Common\DelegateEqualityComparer.cs" />
+    <Compile Include="Common\Dispatcher.cs" />
+    <Compile Include="Common\EventBasedTask.cs" />
+    <Compile Include="Common\HashCodeComparer.cs" />
+    <Compile Include="Common\HashRandom.cs" />
+    <Compile Include="Common\InvocationException.cs" />
+    <Compile Include="Common\JoinDirection.cs" />
+    <Compile Include="Common\JoinElement.cs" />
+    <Compile Include="Common\Json\Dynamic\JsonDynamicBase.cs" />
+    <Compile Include="Common\Json\Dynamic\JsonDynamicValue.cs" />
+    <Compile Include="Common\Json\Dynamic\JsonDynamicExtensions.cs" />
+    <Compile Include="Common\Json\Dynamic\JsonDynamicDictionary.cs" />
+    <Compile Include="Common\Json\Dynamic\JsonDynamicList.cs" />
+    <Compile Include="Common\Json\JsonExtensions.cs" />
+    <Compile Include="Common\Json\JsonDictionaryObject.cs" />
+    <Compile Include="Common\Json\JsonListObject.cs" />
+    <Compile Include="Common\Json\JsonObject.cs" />
+    <Compile Include="Common\Json\JsonParser.cs" />
+    <Compile Include="Common\Json\JsonValueObject.cs" />
+    <Compile Include="Common\Json\JsonWriter.cs" />
+    <Compile Include="Common\ListEqualityComparer.cs" />
+    <Compile Include="Common\Interval.cs" />
+    <Compile Include="Common\OnScreenDrawer.cs" />
+    <Compile Include="Common\QuickSorter.cs" />
+    <Compile Include="Common\Ratio.cs" />
+    <Compile Include="Common\Serialization\FormatterGetProxy.cs" />
+    <Compile Include="Common\Serialization\FormatterSetProxy.cs" />
+    <Compile Include="Common\Serialization\ObjectTraverseProvider.cs" />
+    <Compile Include="Common\Serialization\ObjectTraverser.cs" />
+    <Compile Include="Common\Serialization\SerializationArrayChunk.cs" />
+    <Compile Include="Collections\CastAsListCollection.cs" />
+    <Compile Include="Collections\ConcurrentList.cs" />
+    <Compile Include="Collections\ConcurrentOrderedDictionary.cs" />
+    <Compile Include="Collections\MultiDimensionalList.cs" />
+    <Compile Include="Collections\OneToOneFreezableDictionary.cs" />
+    <Compile Include="Collections\PartialReadOnlyDictionary.cs" />
+    <Compile Include="Collections\ReadOnlyListWrapper.cs" />
+    <Compile Include="Collections\StringAsListCollection.cs" />
+    <Compile Include="Common\ArrayComparer.cs" />
+    <Compile Include="Common\Conversion.cs" />
+    <Compile Include="Common\MultiTextWriter.cs" />
+    <Compile Include="Common\ReferenceEqualityComparer.cs" />
+    <Compile Include="Common\Serialization\ListSerializer.cs" />
+    <Compile Include="Common\Serialization\DictionarySerializer.cs" />
+    <Compile Include="Common\Serialization\ArraySerializer.cs" />
+    <Compile Include="Common\Serialization\StringFormatterBase.cs" />
+    <Compile Include="Common\Serialization\GenericSerializer.cs" />
+    <Compile Include="Common\Serialization\BinaryFormatterBase.cs" />
+    <Compile Include="Common\Serialization\Formatter.cs" />
+    <Compile Include="Common\Serialization\Serializer.cs" />
+    <Compile Include="Common\Serialization\SerializerCollection.cs" />
+    <Compile Include="Common\Serialization\XmlFormatter.cs" />
+    <Compile Include="Common\DebugTextWriter.cs" />
+    <Compile Include="Common\TaskDeduplicator.cs" />
+    <Compile Include="Common\TextWriterWrapperTemplate.cs" />
+    <Compile Include="Common\TextWriterTimeStampAdder.cs" />
+    <Compile Include="Common\Timer.cs" />
+    <Compile Include="Common\Utilities.Math.cs" />
+    <Compile Include="Common\Utilities.Debug.cs" />
+    <Compile Include="Common\Utilities.Reflection.cs" />
+    <Compile Include="Common\Utilities.IO.cs" />
+    <Compile Include="Common\Utilities.Serialization.cs" />
+    <Compile Include="Common\Utilities.Collections.cs" />
+    <Compile Include="Common\Utilities.Representation.cs" />
+    <Compile Include="Common\Utilities.Algorithm.cs" />
+    <Compile Include="Common\Utilities.Text.cs" />
+    <Compile Include="Common\Void.cs" />
+    <Compile Include="Common\WordReader.cs" />
+    <Compile Include="Common\XmlLinqTraverser.cs" />
+    <Compile Include="Common\XmlTraverser.cs" />
+    <Compile Include="Common\Xml\XmlWriter.cs" />
+    <Compile Include="TestingVisualizer.cs" />
+    <Compile Include="Win32\Common.cs" />
+    <Compile Include="Win32\Files.cs" />
+    <Compile Include="Win32\Hooks.Unsafe.cs" />
+    <Compile Include="Win32\Hooks.cs" />
+    <Compile Include="Win32\Windows.Unsafe.cs" />
+    <Compile Include="Win32\Windows.cs" />
+    <Compile Include="WPF\Controls\NumericUpDown.cs" />
+    <Compile Include="WPF\Controls\Obj.cs" />
+    <Compile Include="WPF\Controls\ObjList.cs" />
+    <Compile Include="WPF\Controls\EqualizingStackPanel.cs" />
+    <Compile Include="WPF\Controls\TextBlock.cs" />
+    <Compile Include="WPF\Controls\ToolTip.cs" />
+    <Compile Include="WPF\MVVM\AutoStoreObject.cs" />
+    <Compile Include="WPF\MVVM\Converters\SubstringConverter.cs" />
+    <Compile Include="WPF\MVVM\Converters\MultiplyMultiConverter.cs" />
+    <Compile Include="WPF\MVVM\Converters\TimeSpanFriendlyConverter.cs" />
+    <Compile Include="WPF\MVVM\KsLanguage.cs" />
+    <Compile Include="Collections\AutoStoreDictionary.cs" />
+    <Compile Include="Collections\BaseDictionary.cs" />
+    <Compile Include="Collections\BaseList.cs" />
+    <Compile Include="Collections\BaseReadOnlyList.cs" />
+    <Compile Include="Collections\CreateInstanceList.cs" />
+    <Compile Include="Collections\DictionaryEnumerator.cs" />
+    <Compile Include="Collections\HeapOperations.cs" />
+    <Compile Include="Collections\InsertionSortList.cs" />
+    <Compile Include="Collections\IOrderedDictionary.cs" />
+    <Compile Include="Collections\MergedCollection.cs" />
+    <Compile Include="Collections\MultiDictionary.cs" />
+    <Compile Include="Collections\MultiDictionaryList.cs" />
+    <Compile Include="Collections\NullAcceptingDictionary.cs" />
+    <Compile Include="Collections\MergedList.cs" />
+    <Compile Include="Collections\OneToOneDictionary.cs" />
+    <Compile Include="Collections\OneToOneOrderedFreezableDictionary.cs" />
+    <Compile Include="Collections\OneToOneOrderedDictionary.cs" />
+    <Compile Include="Collections\OrderedDictionary.cs" />
+    <Compile Include="Collections\PushPopList.cs" />
+    <Compile Include="Collections\NullExpandingDictionary.cs" />
+    <Compile Include="Collections\NullExpandingList.cs" />
+    <Compile Include="Collections\ReadOnlyCollectionWrapper.cs" />
+    <Compile Include="Collections\SelectAsNotifyingListCollection.cs" />
+    <Compile Include="Collections\SelectAsListCollection.cs" />
+    <Compile Include="Common\AccentColors.cs" />
+    <Compile Include="Common\Assert.cs" />
+    <Compile Include="Common\ConsoleProgressDrawer.cs" />
+    <Compile Include="Common\Csv\CsvData.cs" />
+    <Compile Include="Common\Csv\CsvEntry.cs" />
+    <Compile Include="Common\Csv\CsvEntryList.cs" />
+    <Compile Include="Common\Csv\CsvColumn.cs" />
+    <Compile Include="Common\Csv\CsvColumnList.cs" />
+    <Compile Include="Common\Csv\CsvParser.cs" />
+    <Compile Include="Common\SaveDelayer.cs" />
+    <Compile Include="Common\InvalidImplementationException.cs" />
+    <Compile Include="Common\AssertionException.cs" />
+    <Compile Include="Common\CecilHelper.cs" />
+    <Compile Include="Common\ChangeReporter.cs" />
+    <Compile Include="Common\ClosableBoolean.cs" />
+    <Compile Include="Common\CNullable.cs" />
+    <Compile Include="Common\CommonExtensions.cs" />
+    <Compile Include="Collections\ComparableCollection.cs" />
+    <Compile Include="Collections\ComplementCollection.cs" />
+    <Compile Include="Common\InteractiveRunnableAttribute.cs" />
+    <Compile Include="Collections\CreateInstanceDictionary.cs" />
+    <Compile Include="Collections\INotifyingCollection.cs" />
+    <Compile Include="Collections\IntegerList.cs" />
+    <Compile Include="Collections\ListCollectionRA.cs" />
+    <Compile Include="Common\ConsoleUtilities.cs" />
+    <Compile Include="Common\DefaultCacher.cs" />
+    <Compile Include="Common\Freezable.cs" />
+    <Compile Include="Common\Lazy.cs" />
+    <Compile Include="Collections\ListShifter.cs" />
+    <Compile Include="Common\MergeSorter.cs" />
+    <Compile Include="Collections\NotifyingDictionary.cs" />
+    <Compile Include="Collections\NotifyingSet.cs" />
+    <Compile Include="Common\SampleAttribute.cs" />
+    <Compile Include="Common\StringSplitEnumerator.cs" />
+    <Compile Include="Common\TaskDelayer.cs" />
+    <Compile Include="Common\Utf8Encoding.cs" />
+    <Compile Include="Common\Utilities.cs" />
+    <Compile Include="Collections\ValueBag.cs" />
+    <Compile Include="Common\Verify.cs" />
+    <Compile Include="WPF\Controls\NavigationPage.cs" />
+    <Compile Include="WPF\Controls\ContentElement.cs" />
+    <Compile Include="WPF\Controls\CheckListBox.cs" />
+    <Compile Include="WPF\MVVM\Converters\ModuloConverter.cs" />
+    <Compile Include="WPF\MVVM\Converters\AdderConverter.cs" />
+    <Compile Include="WPF\MVVM\INavigationView.cs" />
+    <Compile Include="WPF\Controls\NoChromeWindow.cs" />
+    <Compile Include="WPF\Controls\Page.cs" />
+    <Compile Include="WPF\Controls\Popup.cs" />
+    <Compile Include="WPF\Controls\PopupPanel.cs" />
+    <Compile Include="WPF\Controls\PopupShelter.cs" />
+    <Compile Include="WPF\Controls\ResizableCanvas.cs" />
+    <Compile Include="WPF\Controls\SimplePanel.cs" />
+    <Compile Include="WPF\Controls\Squaring.cs" />
+    <Compile Include="WPF\Controls\Window.cs" />
+    <Compile Include="WPF\Controls\WindowBase.cs" />
+    <Compile Include="InteractiveConsole.cs" />
+    <Compile Include="WPF\MVVM\AddChildList.cs" />
+    <Compile Include="WPF\MVVM\KsApplication.cs" />
+    <Compile Include="WPF\MVVM\BindableBase.cs" />
+    <Compile Include="WPF\MVVM\CollectionObserver.cs" />
+    <Compile Include="WPF\MVVM\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="WPF\MVVM\Converters\BrightnessConverter.cs" />
+    <Compile Include="WPF\MVVM\Converters\AlphaConverter.cs" />
+    <Compile Include="WPF\MVVM\Converters\ScaleInverseConverter.cs" />
+    <Compile Include="WPF\MVVM\Converters\ThicknessAverageConverter.cs" />
+    <Compile Include="WPF\MVVM\Converters\LinearConverter.cs" />
+    <Compile Include="WPF\MVVM\Converters\NumberPaddingConverter.cs" />
+    <Compile Include="WPF\MVVM\Converters\ScaleConverter.cs" />
+    <Compile Include="WPF\MVVM\Converters\ThicknessConverter.cs" />
+    <Compile Include="WPF\MVVM\DelegateCommand.cs" />
+    <Compile Include="WPF\Controls\PopupHolder.cs" />
+    <Compile Include="WPF\MVVM\MvvmExtensions.cs" />
+    <Compile Include="WPF\MVVM\Navigation.cs" />
+    <Compile Include="WPF\MVVM\NavigationCommand.cs" />
+    <Compile Include="WPF\MVVM\NavigationData.cs" />
+    <Compile Include="WPF\MVVM\NavigationEventArgs.cs" />
+    <Compile Include="WPF\MVVM\NavigationFrame.cs" />
+    <Compile Include="WPF\MVVM\NavigationType.cs" />
+    <Compile Include="WPF\MVVM\NavigationViewModel.cs" />
+    <Compile Include="WPF\MVVM\SingleTaskViewModel.cs" />
+    <Compile Include="WPF\MVVM\TranslationConverter.cs" />
+    <Compile Include="WPF\MVVM\Utils.cs" />
+    <Compile Include="WPF\MVVM\ViewModel.cs" />
+    <Compile Include="WPF\MVVM\ViewModelMetadataAttribute.cs" />
+    <Compile Include="WPF\MVVM\WindowViewModel.cs" />
+    <Compile Include="WPF\MVVM\WorldedObject.cs" />
+    <Compile Include="WPF\NonUI\NonUIElement.cs" />
+    <Compile Include="WPF\NonUI\OneWaySetter.cs" />
+    <Compile Include="Common\Serialization\Formatter.Serializers.cs" />
+    <Compile Include="My Project\AssemblyInfo.cs" />
+    <Compile Include="My Project\Application.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="ToDos.txt" />
+    <None Include="Win32\DataTypes.md" />
+    <None Include="Win32\DataTypes.html" />
+    <None Include="Win32\DataTypes.ps1" />
+    <None Include="Win32\DataTypesHelpViewer.ps1" />
+    <None Include="Win32\DataTypesSearch.ps1" />
+    <None Include="Win32\Help.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
