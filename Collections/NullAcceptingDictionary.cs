@@ -157,7 +157,7 @@ namespace Ks
                 return this.Dic.Remove(key);
             }
 
-            public override bool TryGetValue(TKey key, ref TValue value)
+            public override bool TryGetValue(TKey key, out TValue value)
             {
                 if (key == null)
                 {

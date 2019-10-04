@@ -6,7 +6,7 @@ namespace Ks
     {
         public class Utf8Encoding
         {
-            public static bool Encode(char[] CharsArray, int CharsIndex, int CharsLenght, byte[] BytesArray, int BytesIndex, int BytesLength, bool BeginningOfFile, ref int CharsRead, ref int BytesWritten)
+            public static bool Encode(char[] CharsArray, int CharsIndex, int CharsLenght, byte[] BytesArray, int BytesIndex, int BytesLength, bool BeginningOfFile, out int CharsRead, out int BytesWritten)
             {
                 CharsLenght += CharsIndex;
                 BytesLength += BytesIndex;
@@ -67,7 +67,7 @@ namespace Ks
                 return true;
             }
 
-            public static bool Decode(byte[] BytesArray, int BytesIndex, int BytesLength, char[] CharsArray, int CharsIndex, int CharsLength, bool BeginningOfFile, ref int BytesRead, ref int CharsWritten)
+            public static bool Decode(byte[] BytesArray, int BytesIndex, int BytesLength, char[] CharsArray, int CharsIndex, int CharsLength, bool BeginningOfFile, out int BytesRead, out int CharsWritten)
             {
                 CharsLength += CharsIndex;
                 BytesLength += BytesIndex;

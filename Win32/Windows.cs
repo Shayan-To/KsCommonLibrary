@@ -29,7 +29,7 @@ namespace Ks
                 public static Unsafe.WindowPlacement GetWindowPlacement(IntPtr hWnd)
                 {
                     var R = new Unsafe.WindowPlacement().InitNew();
-                    Unsafe.GetWindowPlacement(hWnd, ref R);
+                    Unsafe.GetWindowPlacement(hWnd, out R);
                     Common.VerifyError();
                     return R;
                 }
@@ -55,7 +55,7 @@ namespace Ks
             public static Rect GetWindowRect(IntPtr hWnd)
             {
                 Rect R = default(Rect);
-                Unsafe.GetWindowRect(hWnd, ref R);
+                Unsafe.GetWindowRect(hWnd, out R);
                 Common.VerifyError();
                 return R;
             }
@@ -90,7 +90,7 @@ namespace Ks
             public static (uint ProcessId, uint ThreadId) GetWindowThreadProcessId(IntPtr hwnd)
             {
                 uint ProcessId = Conversions.ToUInteger(0);
-                var ThreadId = Unsafe.GetWindowThreadProcessId(hwnd, ref ProcessId);
+                var ThreadId = Unsafe.GetWindowThreadProcessId(hwnd, out ProcessId);
                 Common.VerifyError();
                 return (ProcessId, ThreadId);
             }

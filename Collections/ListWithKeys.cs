@@ -82,7 +82,7 @@ namespace Ks
             {
                 var Index = this.Indexes[Condition.Key];
                 List<T> Res = null;
-                Index.TryGetValue(Condition.KeyValue, ref Res);
+                Index.TryGetValue(Condition.KeyValue, out Res);
                 return Res;
             }
 
@@ -90,7 +90,7 @@ namespace Ks
             {
                 var Index = this.Indexes[Condition.Key];
                 List<T> Res = null;
-                Index.TryGetValue(Condition.KeyValue, ref Res);
+                Index.TryGetValue(Condition.KeyValue, out Res);
                 return Res;
             }
 

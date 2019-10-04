@@ -180,9 +180,9 @@ namespace Ks
                 this.Collection_Changed();
             }
 
-            public override bool TryGetValue(string key, ref string value)
+            public override bool TryGetValue(string key, out string value)
             {
-                return this.BaseDic.TryGetValue(key, ref value);
+                return this.BaseDic.TryGetValue(key, out value);
             }
 
             public IEnumerator<KeyValuePair<string, string>> GetEnumerator()

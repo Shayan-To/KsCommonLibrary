@@ -167,10 +167,10 @@ namespace Ks
                     return this.BaseDic.Remove(key);
             }
 
-            public override bool TryGetValue(TKey key, ref TValue value)
+            public override bool TryGetValue(TKey key, out TValue value)
             {
                 lock (this.LockObject)
-                    return this.BaseDic.TryGetValue(key, ref value);
+                    return this.BaseDic.TryGetValue(key, out value);
             }
 
             public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()

@@ -28,14 +28,14 @@ namespace Ks
                     for (var I = 0; I <= PageLength - 1; I++)
                     {
                         T Tmp = default(T);
-                        if (!this.List.TryGetValue(this.ChoiceOffset + I, ref Tmp))
+                        if (!this.List.TryGetValue(this.ChoiceOffset + I, out Tmp))
                             break;
                         Choices.Add(Tmp);
                     }
 
                     var PrevPagePossible = (this.ChoiceOffset - PageLength) >= 0;
                     var argValue = default(T);
-                    var NextPagePossible = this.List.TryGetValue(this.ChoiceOffset + PageLength, ref argValue);
+                    var NextPagePossible = this.List.TryGetValue(this.ChoiceOffset + PageLength, out argValue);
                     Console.WriteLine();
                     Console.WriteLine();
                     var loopTo = Choices.Count - 1;

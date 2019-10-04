@@ -68,9 +68,9 @@ namespace Ks
                 }
             }
 
-            private bool IReadOnlyDictionary_TryGetValue(string key, ref JsonDynamicBase value)
+            private bool IReadOnlyDictionary_TryGetValue(string key, out JsonDynamicBase value)
             {
-                return this.TryGetValue(key, ref value);
+                return this.TryGetValue(key, out value);
             }
 
             protected void ICollection_Add(KeyValuePair<string, JsonDynamicBase> item)
@@ -86,7 +86,7 @@ namespace Ks
             protected bool ICollection_Remove(KeyValuePair<string, JsonDynamicBase> item)
             {
                 JsonDynamicBase V = null;
-                if (!this.TryGetValue(item.Key, ref V))
+                if (!this.TryGetValue(item.Key, out V))
                     return false;
                 if (!object.Equals(V, item.Value))
                     return false;
@@ -106,7 +106,7 @@ namespace Ks
             protected bool ICollection_Contains(KeyValuePair<string, JsonDynamicBase> item)
             {
                 JsonDynamicBase V = null;
-                if (!this.TryGetValue(item.Key, ref V))
+                if (!this.TryGetValue(item.Key, out V))
                     return false;
                 return object.Equals(V, item.Value);
             }
@@ -229,7 +229,7 @@ namespace Ks
                 return this.Base.Remove(key);
             }
 
-            public bool TryGetValue(string key, ref JsonDynamicBase value)
+            public bool TryGetValue(string key, out JsonDynamicBase value)
             {
                 return this.Base.TryGetValue(key, out value);
             }

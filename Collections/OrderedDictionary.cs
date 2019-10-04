@@ -177,7 +177,7 @@ namespace Ks
                 return true;
             }
 
-            public override bool TryGetValue(TKey key, ref TValue value)
+            public override bool TryGetValue(TKey key, out TValue value)
             {
                 return this._Dic.TryGetValue(key, out value);
             }

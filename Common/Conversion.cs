@@ -71,62 +71,62 @@ namespace Ks
                 return bool.Parse(Str);
             }
 
-            public static bool TryInteger(string Str, ref int Value)
+            public static bool TryInteger(string Str, out int Value)
             {
                 return int.TryParse(Str, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out Value);
             }
 
-            public static bool TryLong(string Str, ref long Value)
+            public static bool TryLong(string Str, out long Value)
             {
                 return long.TryParse(Str, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out Value);
             }
 
-            public static bool TryShort(string Str, ref short Value)
+            public static bool TryShort(string Str, out short Value)
             {
                 return short.TryParse(Str, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out Value);
             }
 
-            public static bool TryByte(string Str, ref byte Value)
+            public static bool TryByte(string Str, out byte Value)
             {
                 return byte.TryParse(Str, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out Value);
             }
 
-            public static bool TryUInteger(string Str, ref uint Value)
+            public static bool TryUInteger(string Str, out uint Value)
             {
                 return uint.TryParse(Str, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out Value);
             }
 
-            public static bool TryULong(string Str, ref ulong Value)
+            public static bool TryULong(string Str, out ulong Value)
             {
                 return ulong.TryParse(Str, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out Value);
             }
 
-            public static bool TryUShort(string Str, ref ushort Value)
+            public static bool TryUShort(string Str, out ushort Value)
             {
                 return ushort.TryParse(Str, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out Value);
             }
 
-            public static bool TrySByte(string Str, ref sbyte Value)
+            public static bool TrySByte(string Str, out sbyte Value)
             {
                 return sbyte.TryParse(Str, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out Value);
             }
 
-            public static bool TryDouble(string Str, ref double Value)
+            public static bool TryDouble(string Str, out double Value)
             {
                 return double.TryParse(Str, System.Globalization.NumberStyles.Float | System.Globalization.NumberStyles.AllowThousands, System.Globalization.CultureInfo.InvariantCulture, out Value);
             }
 
-            public static bool TrySingle(string Str, ref float Value)
+            public static bool TrySingle(string Str, out float Value)
             {
                 return float.TryParse(Str, System.Globalization.NumberStyles.Float | System.Globalization.NumberStyles.AllowThousands, System.Globalization.CultureInfo.InvariantCulture, out Value);
             }
 
-            public static bool TryDecimal(string Str, ref decimal Value)
+            public static bool TryDecimal(string Str, out decimal Value)
             {
                 return decimal.TryParse(Str, System.Globalization.NumberStyles.Number, System.Globalization.CultureInfo.InvariantCulture, out Value);
             }
 
-            public static bool TryBoolean(string Str, ref bool Value)
+            public static bool TryBoolean(string Str, out bool Value)
             {
                 return bool.TryParse(Str, out Value);
             }

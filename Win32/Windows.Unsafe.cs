@@ -41,7 +41,7 @@ namespace Ks
             /// The length member of WINDOWPLACEMENT must be set to sizeof(WINDOWPLACEMENT). If this member is not set correctly, the function returns FALSE. For additional remarks on the proper use of window placement coordinates, see WINDOWPLACEMENT.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static extern bool GetWindowPlacement(IntPtr hWnd, ref WindowPlacement lpwndpl);
+                public static extern bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement lpwndpl);
 
                 /// BOOL WINAPI EnumWindows(
             /// _In_ WNDENUMPROC lpEnumFunc,
@@ -100,7 +100,7 @@ namespace Ks
             /// In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.
             /// </remarks>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static extern bool GetWindowRect(IntPtr hWnd, ref Rect lpRect);
+                public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
 
                 /// HWND WINAPI GetForegroundWindow(void);
             /// <summary>
@@ -371,7 +371,7 @@ namespace Ks
             /// The return value is the identifier of the thread that created the window.
             /// </returns>
                 [DllImport("User32.dll", SetLastError = true)]
-                public static extern uint GetWindowThreadProcessId(IntPtr hwnd, ref uint lpdwProcessId);
+                public static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint lpdwProcessId);
 
                 /// BOOL WINAPI SetWindowPos(
             /// _In_     HWND hWnd,

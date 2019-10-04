@@ -85,7 +85,7 @@ namespace Ks
                 return this.BaseDic.Remove(key);
             }
 
-            public override bool TryGetValue(TKey key, ref TValue value)
+            public override bool TryGetValue(TKey key, out TValue value)
             {
                 return this.BaseDic.TryGetValue(key, out value);
             }

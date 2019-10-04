@@ -33,7 +33,7 @@ namespace Ks
                 get
                 {
                     JsonObject Value = null;
-                    Verify.True(this.TryGetValue(Key, ref Value), "Key not found.");
+                    Verify.True(this.TryGetValue(Key, out Value), "Key not found.");
                     return Value;
                 }
             }
@@ -43,7 +43,7 @@ namespace Ks
                 get
                 {
                     JsonObject Value = null;
-                    this.TryGetValue(Key, ref Value);
+                    this.TryGetValue(Key, out Value);
                     return Value;
                 }
             }
@@ -67,7 +67,7 @@ namespace Ks
             public bool ContainsKey(string key)
             {
                 JsonObject Value = null;
-                return this.TryGetValue(key, ref Value);
+                return this.TryGetValue(key, out Value);
             }
 
             public IEnumerator<KeyValuePair<string, JsonObject>> GetEnumerator()
@@ -75,7 +75,7 @@ namespace Ks
                 return ((IReadOnlyList<KeyValuePair<string, JsonObject>>)this.List).GetEnumerator();
             }
 
-            public bool TryGetValue(string Key, ref JsonObject Value)
+            public bool TryGetValue(string Key, out JsonObject Value)
             {
                 var T = this.List.BinarySearch(new KeyValuePair<string, JsonObject>(Key, null), CompareKeyHash);
                 var loopTo = (T.StartIndex + T.Length) - 1;

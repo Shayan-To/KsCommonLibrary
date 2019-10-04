@@ -85,7 +85,7 @@ namespace Ks
                 return this.GetEnumerator();
             }
 
-            public bool TryGetValue(TKey key, ref MultiDictionaryList<TKey, TValue> value)
+            public bool TryGetValue(TKey key, out MultiDictionaryList<TKey, TValue> value)
             {
                 List<TValue> L = null;
                 if (this.Dic.TryGetValue(key, out L))

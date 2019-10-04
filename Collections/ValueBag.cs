@@ -198,7 +198,7 @@ namespace Ks
                 return this.Dic.Remove(key);
             }
 
-            public bool TryGetValue(string key, ref T value)
+            public bool TryGetValue(string key, out T value)
             {
                 return this.Dic.TryGetValue(key, out value);
             }

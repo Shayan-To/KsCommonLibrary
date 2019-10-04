@@ -156,7 +156,7 @@ namespace Ks
                 return this._Items.IndexOf(this._Dic[key]);
             }
 
-            public virtual bool TryGetValue(TKey key, ref TValue value)
+            public virtual bool TryGetValue(TKey key, out TValue value)
             {
                 return this._Dic.TryGetValue(key, out value);
             }
@@ -320,7 +320,7 @@ namespace Ks
             private bool ICollection_Remove(KeyValuePair<TKey, TValue> item)
             {
                 TValue V = default(TValue);
-                if (!this.TryGetValue(item.Key, ref V))
+                if (!this.TryGetValue(item.Key, out V))
                     return false;
                 if (!object.Equals(V, item.Value))
                     return false;
@@ -340,7 +340,7 @@ namespace Ks
             private bool ICollection_Contains(KeyValuePair<TKey, TValue> item)
             {
                 TValue V = default(TValue);
-                if (!this.TryGetValue(item.Key, ref V))
+                if (!this.TryGetValue(item.Key, out V))
                     return false;
                 return object.Equals(V, item.Value);
             }

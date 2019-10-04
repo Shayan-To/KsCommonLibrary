@@ -62,9 +62,9 @@ namespace Ks
                 }
             }
 
-            private bool IReadOnlyDictionary_TryGetValue(TKey key, ref TValue value)
+            private bool IReadOnlyDictionary_TryGetValue(TKey key, out TValue value)
             {
-                return this.TryGetValue(key, ref value);
+                return this.TryGetValue(key, out value);
             }
 
             protected void ICollection_Add(KeyValuePair<TKey, TValue> item)
@@ -80,7 +80,7 @@ namespace Ks
             protected bool ICollection_Remove(KeyValuePair<TKey, TValue> item)
             {
                 TValue V = default(TValue);
-                if (!this.TryGetValue(item.Key, ref V))
+                if (!this.TryGetValue(item.Key, out V))
                     return false;
                 if (!object.Equals(V, item.Value))
                     return false;
@@ -100,7 +100,7 @@ namespace Ks
             protected bool ICollection_Contains(KeyValuePair<TKey, TValue> item)
             {
                 TValue V = default(TValue);
-                if (!this.TryGetValue(item.Key, ref V))
+                if (!this.TryGetValue(item.Key, out V))
                     return false;
                 return object.Equals(V, item.Value);
             }
@@ -177,7 +177,7 @@ namespace Ks
 
             public abstract bool Remove(TKey key);
 
-            public abstract bool TryGetValue(TKey key, ref TValue value);
+            public abstract bool TryGetValue(TKey key, out TValue value);
 
             protected virtual IDictionaryEnumerator IDictionary_GetEnumerator()
             {

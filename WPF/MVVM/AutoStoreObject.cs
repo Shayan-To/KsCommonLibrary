@@ -72,7 +72,7 @@ namespace Ks
                     foreach (var T in this.GetType().GetBaseTypes())
                     {
                         PropertyMetadata M = default(PropertyMetadata);
-                        if (MetadataDic[T].TryGetValue(PropertyName, ref M))
+                        if (MetadataDic[T].TryGetValue(PropertyName, out M))
                         {
                             var Str = M.ToStringCallback.Invoke(Source);
                             StoreDictionary[this.GetStoreKey(PropertyName)] = Str;

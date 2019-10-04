@@ -16,7 +16,7 @@ namespace Ks
                 get
                 {
                     var argValue = default(T);
-                    this.TryGetValue(int.MaxValue, ref argValue);
+                    this.TryGetValue(int.MaxValue, out argValue);
                     return this.List.Count;
                 }
             }
@@ -26,7 +26,7 @@ namespace Ks
                 get
                 {
                     T Res = default(T);
-                    Verify.TrueArg(this.TryGetValue(Index, ref Res), nameof(Index), "Index out of range.");
+                    Verify.TrueArg(this.TryGetValue(Index, out Res), nameof(Index), "Index out of range.");
                     return Res;
                 }
             }
@@ -35,14 +35,14 @@ namespace Ks
             {
                 var I = 0;
                 T T = default(T);
-                while (this.TryGetValue(I, ref T))
+                while (this.TryGetValue(I, out T))
                 {
                     yield return T;
                     I += 1;
                 }
             }
 
-            public bool TryGetValue(int Index, ref T Value)
+            public bool TryGetValue(int Index, out T Value)
             {
                 var loopTo = Index;
                 for (var I = this.List.Count; I <= loopTo; I++)
