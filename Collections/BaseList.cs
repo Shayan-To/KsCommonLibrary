@@ -16,10 +16,14 @@ namespace Ks
 
             public abstract T this[int index] { get; set; }
 
-            public abstract int Count { get; private set; }
+            public abstract int Count { get; }
 
-            protected abstract IEnumerator<T> IEnumerable_1_GetEnumerator();
+            protected abstract IEnumerator<T> _GetEnumerator();
 
+            IEnumerator<T> IEnumerable<T>.GetEnumerator()
+            {
+                return this._GetEnumerator();
+            }
             public virtual int IndexOf(T item)
             {
                 var loopTo = this.Count - 1;
@@ -48,6 +52,11 @@ namespace Ks
                 }
             }
 
+            void ICollection.CopyTo(Array array, int index)
+            {
+                this.CopyTo(array, index);
+            }
+
             public virtual bool Remove(T item)
             {
                 var I = this.IndexOf(item);
@@ -58,7 +67,7 @@ namespace Ks
                 return true;
             }
 
-            private object IList_Item
+            object IList.this[int index]
             {
                 get
                 {
@@ -70,7 +79,7 @@ namespace Ks
                 }
             }
 
-            private T IReadOnlyList_Item
+            T IReadOnlyList<T>.this[int index]
             {
                 get
                 {
@@ -86,7 +95,23 @@ namespace Ks
                 }
             }
 
-            private bool IList_IsFixedSize
+            bool IList.IsReadOnly
+            {
+                get
+                {
+                    return this.IList_IsReadOnly;
+                }
+            }
+
+            bool ICollection<T>.IsReadOnly
+            {
+                get
+                {
+                    return this.IList_IsReadOnly;
+                }
+            }
+
+            bool IList.IsFixedSize
             {
                 get
                 {
@@ -94,7 +119,7 @@ namespace Ks
                 }
             }
 
-            private object IList_SyncRoot
+            object ICollection.SyncRoot
             {
                 get
                 {
@@ -102,7 +127,7 @@ namespace Ks
                 }
             }
 
-            private bool IList_IsSynchronized
+            bool ICollection.IsSynchronized
             {
                 get
                 {
@@ -115,28 +140,28 @@ namespace Ks
                 return this.IndexOf(item) != -1;
             }
 
-            private int IList_Add(object value)
+            int IList.Add(object value)
             {
                 this.Add((T)value);
                 return this.Count - 1;
             }
 
-            private bool IList_Contains(object value)
+            bool IList.Contains(object value)
             {
                 return this.Contains((T)value);
             }
 
-            private int IList_IndexOf(object value)
+            int IList.IndexOf(object value)
             {
                 return this.IndexOf((T)value);
             }
 
-            private void IList_Insert(int index, object value)
+            void IList.Insert(int index, object value)
             {
                 this.Insert(index, (T)value);
             }
 
-            private void IList_Remove(object value)
+            void IList.Remove(object value)
             {
                 this.Remove((T)value);
             }
@@ -146,9 +171,9 @@ namespace Ks
                 this.Insert(this.Count, item);
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
-                return this.IEnumerable_1_GetEnumerator();
+                return this._GetEnumerator();
             }
         }
     }

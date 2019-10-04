@@ -110,6 +110,11 @@ namespace Ks
 
             public event NotifyCollectionChangedEventHandler<TOut> CollectionChanged;
             private event NotifyCollectionChangedEventHandler INotifyCollectionChanged_CollectionChanged;
+            event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
+            {
+                add => this.INotifyCollectionChanged_CollectionChanged += value;
+                remove => this.INotifyCollectionChanged_CollectionChanged -= value;
+            }
 
             protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs<TOut> E)
             {

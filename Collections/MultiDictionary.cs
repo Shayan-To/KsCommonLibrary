@@ -80,7 +80,7 @@ namespace Ks
                     yield return new KeyValuePair<TKey, MultiDictionaryList<TKey, TValue>>(KV.Key, new MultiDictionaryList<TKey, TValue>(this, KV.Key, KV.Value));
             }
 
-            private IEnumerator<KeyValuePair<TKey, MultiDictionaryList<TKey, TValue>>> IEnumerable_1_GetEnumerator()
+            IEnumerator<KeyValuePair<TKey, MultiDictionaryList<TKey, TValue>>> IEnumerable<KeyValuePair<TKey, MultiDictionaryList<TKey, TValue>>>.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
@@ -93,10 +93,11 @@ namespace Ks
                     value = new MultiDictionaryList<TKey, TValue>();
                     return true;
                 }
+                value = default;
                 return false;
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }

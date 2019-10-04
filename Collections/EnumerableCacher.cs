@@ -48,7 +48,10 @@ namespace Ks
                 for (var I = this.List.Count; I <= loopTo; I++)
                 {
                     if (!this.Enumerator.MoveNext())
+                    {
+                        Value = default;
                         return false;
+                    }
                     this.List.Add(this.Enumerator.Current);
                 }
 

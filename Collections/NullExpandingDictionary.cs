@@ -96,7 +96,7 @@ namespace Ks
                 return true;
             }
 
-            protected override IEnumerator<KeyValuePair<TKey, TValue>> IEnumerator_1_GetEnumerator()
+            protected override IEnumerator<KeyValuePair<TKey, TValue>> _GetEnumerator()
             {
                 return this.GetEnumerator();
             }

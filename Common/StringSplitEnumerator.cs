@@ -79,7 +79,7 @@ namespace Ks
                 }
             }
 
-            private object IEnumerator_Current
+            object IEnumerator.Current
             {
                 get
                 {

@@ -84,7 +84,7 @@ namespace Ks
                 return this.List.GetEnumerator();
             }
 
-            public IEnumerator<T> IEnumerable_1_GetEnumerator()
+            IEnumerator<T> IEnumerable<T>.GetEnumerator()
             {
                 return this.List.GetEnumerator();
             }
@@ -99,7 +99,7 @@ namespace Ks
                 return this.List.Remove(item);
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.List.GetEnumerator();
             }

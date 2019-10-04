@@ -8,13 +8,13 @@ namespace Ks
     {
         public abstract class BaseReadOnlyList<T> : IReadOnlyList<T>, IList<T>, IList
         {
-            public abstract int Count { get; private set; }
+            public abstract int Count { get; }
 
-            public abstract T this[int Index] { get; private set; }
+            public abstract T this[int Index] { get; }
 
             public abstract IEnumerator<T> GetEnumerator();
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
@@ -47,7 +47,12 @@ namespace Ks
                 }
             }
 
-            private T IList_1_Item
+            void ICollection.CopyTo(Array array, int index)
+            {
+                this.CopyTo(array, index);
+            }
+
+            T IList<T>.this[int index]
             {
                 get
                 {
@@ -59,7 +64,7 @@ namespace Ks
                 }
             }
 
-            private object IList_Item
+            object IList.this[int index]
             {
                 get
                 {
@@ -71,7 +76,7 @@ namespace Ks
                 }
             }
 
-            private bool IList_IsReadOnly
+            bool IList.IsReadOnly
             {
                 get
                 {
@@ -79,7 +84,15 @@ namespace Ks
                 }
             }
 
-            private bool IList_IsFixedSize
+            bool ICollection<T>.IsReadOnly
+            {
+                get
+                {
+                    return true;
+                }
+            }
+
+            bool IList.IsFixedSize
             {
                 get
                 {
@@ -87,7 +100,7 @@ namespace Ks
                 }
             }
 
-            private object IList_SyncRoot
+            object ICollection.SyncRoot
             {
                 get
                 {
@@ -95,7 +108,7 @@ namespace Ks
                 }
             }
 
-            private bool IList_IsSynchronized
+            bool ICollection.IsSynchronized
             {
                 get
                 {
@@ -103,22 +116,32 @@ namespace Ks
                 }
             }
 
-            private void IList_Insert(int index, T item)
+            void IList<T>.Insert(int index, T item)
             {
                 throw new NotSupportedException();
             }
 
-            private void IList_RemoveAt(int index)
+            void IList.RemoveAt(int index)
             {
                 throw new NotSupportedException();
             }
 
-            private void IList_Add(T item)
+            void IList<T>.RemoveAt(int index)
             {
                 throw new NotSupportedException();
             }
 
-            private void IList_Clear()
+            void ICollection<T>.Add(T item)
+            {
+                throw new NotSupportedException();
+            }
+
+            void IList.Clear()
+            {
+                throw new NotSupportedException();
+            }
+
+            void ICollection<T>.Clear()
             {
                 throw new NotSupportedException();
             }
@@ -128,32 +151,32 @@ namespace Ks
                 return this.IndexOf(item) != -1;
             }
 
-            private bool IList_Remove(T item)
+            bool ICollection<T>.Remove(T item)
             {
                 throw new NotSupportedException();
             }
 
-            private int IList_Add(object value)
+            int IList.Add(object value)
             {
                 throw new NotSupportedException();
             }
 
-            private bool IList_Contains(object value)
+            bool IList.Contains(object value)
             {
                 return this.Contains((T)value);
             }
 
-            private int IList_IndexOf(object value)
+            int IList.IndexOf(object value)
             {
                 return this.IndexOf((T)value);
             }
 
-            private void IList_Insert(int index, object value)
+            void IList.Insert(int index, object value)
             {
                 throw new NotSupportedException();
             }
 
-            private void IList_Remove(object value)
+            void IList.Remove(object value)
             {
                 throw new NotSupportedException();
             }

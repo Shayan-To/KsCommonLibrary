@@ -24,7 +24,23 @@ namespace Ks
                 }
             }
 
-            private object IDictionary_Item
+            bool ICollection<KeyValuePair<string, JsonDynamicBase>>.IsReadOnly
+            {
+                get
+                {
+                    return this.IsReadOnly;
+                }
+            }
+
+            bool IDictionary.IsReadOnly
+            {
+                get
+                {
+                    return this.IsReadOnly;
+                }
+            }
+
+            object IDictionary.this[object key]
             {
                 get
                 {
@@ -36,7 +52,7 @@ namespace Ks
                 }
             }
 
-            private JsonDynamicBase IReadOnlyDictionary_Item
+            JsonDynamicBase IReadOnlyDictionary<string, JsonDynamicBase>.this[string key]
             {
                 get
                 {
@@ -44,7 +60,7 @@ namespace Ks
                 }
             }
 
-            private bool IDictionary_IsFixedSize
+            bool IDictionary.IsFixedSize
             {
                 get
                 {
@@ -52,7 +68,7 @@ namespace Ks
                 }
             }
 
-            private bool ICollection_IsSynchronized
+            bool ICollection.IsSynchronized
             {
                 get
                 {
@@ -60,7 +76,7 @@ namespace Ks
                 }
             }
 
-            private object ICollection_SyncRoot
+            object ICollection.SyncRoot
             {
                 get
                 {
@@ -68,22 +84,22 @@ namespace Ks
                 }
             }
 
-            private bool IReadOnlyDictionary_TryGetValue(string key, out JsonDynamicBase value)
+            bool IReadOnlyDictionary<string, JsonDynamicBase>.TryGetValue(string key, out JsonDynamicBase value)
             {
                 return this.TryGetValue(key, out value);
             }
 
-            protected void ICollection_Add(KeyValuePair<string, JsonDynamicBase> item)
+            void ICollection<KeyValuePair<string, JsonDynamicBase>>.Add(KeyValuePair<string, JsonDynamicBase> item)
             {
                 this.Add(item.Key, item.Value);
             }
 
-            private void IDictionary_Add(object key, object value)
+            void IDictionary.Add(object key, object value)
             {
                 this.Add((string)key, (JsonDynamicBase)value);
             }
 
-            protected bool ICollection_Remove(KeyValuePair<string, JsonDynamicBase> item)
+            bool ICollection<KeyValuePair<string, JsonDynamicBase>>.Remove(KeyValuePair<string, JsonDynamicBase> item)
             {
                 JsonDynamicBase V = null;
                 if (!this.TryGetValue(item.Key, out V))
@@ -93,17 +109,17 @@ namespace Ks
                 return this.Remove(item.Key);
             }
 
-            private void IDictionary_Remove(object key)
+            void IDictionary.Remove(object key)
             {
                 this.Remove((string)key);
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
 
-            protected bool ICollection_Contains(KeyValuePair<string, JsonDynamicBase> item)
+            bool ICollection<KeyValuePair<string, JsonDynamicBase>>.Contains(KeyValuePair<string, JsonDynamicBase> item)
             {
                 JsonDynamicBase V = null;
                 if (!this.TryGetValue(item.Key, out V))
@@ -111,12 +127,12 @@ namespace Ks
                 return object.Equals(V, item.Value);
             }
 
-            private bool IDictionary_Contains(object key)
+            bool IDictionary.Contains(object key)
             {
                 return this.ContainsKey((string)key);
             }
 
-            private bool IReadOnlyDictionary_ContainsKey(string key)
+            bool IReadOnlyDictionary<string, JsonDynamicBase>.ContainsKey(string key)
             {
                 return this.ContainsKey(key);
             }
@@ -133,19 +149,7 @@ namespace Ks
                 }
             }
 
-            public JsonDynamicValue ItemValue
-            {
-                get
-                {
-                    return (JsonDynamicValue)this.Base[key];
-                }
-                set
-                {
-                    this.Base[key] = value;
-                }
-            }
-
-            protected virtual ICollection IDictionary_Keys
+            ICollection IDictionary.Keys
             {
                 get
                 {
@@ -153,7 +157,7 @@ namespace Ks
                 }
             }
 
-            protected virtual ICollection IDictionary_Values
+            ICollection IDictionary.Values
             {
                 get
                 {
@@ -161,7 +165,7 @@ namespace Ks
                 }
             }
 
-            private IEnumerable<string> IReadOnlyDictionary_Keys
+            IEnumerable<string> IReadOnlyDictionary<string, JsonDynamicBase>.Keys
             {
                 get
                 {
@@ -169,7 +173,7 @@ namespace Ks
                 }
             }
 
-            private IEnumerable<JsonDynamicBase> IReadOnlyDictionary_Values
+            IEnumerable<JsonDynamicBase> IReadOnlyDictionary<string, JsonDynamicBase>.Values
             {
                 get
                 {
@@ -203,6 +207,11 @@ namespace Ks
                 this.Base.Clear();
             }
 
+            void ICollection.CopyTo(Array array, int index)
+            {
+                this.CopyTo(array, index);
+            }
+
             public virtual void CopyTo(KeyValuePair<string, JsonDynamicBase>[] array, int arrayIndex)
             {
                 this.CopyTo((Array)array, arrayIndex);
@@ -234,12 +243,22 @@ namespace Ks
                 return this.Base.TryGetValue(key, out value);
             }
 
-            protected virtual IDictionaryEnumerator IDictionary_GetEnumerator()
+            protected virtual IDictionaryEnumerator GetDictionaryEnumerator()
             {
                 return new DictionaryEnumerator<string, JsonDynamicBase, IEnumerator<KeyValuePair<string, JsonDynamicBase>>>(this.GetEnumerator());
             }
 
-            protected IEnumerator<KeyValuePair<string, JsonDynamicBase>> IEnumerator_1_GetEnumerator()
+            protected IEnumerator<KeyValuePair<string, JsonDynamicBase>> _GetEnumerator()
+            {
+                return this.GetEnumerator();
+            }
+
+            IDictionaryEnumerator IDictionary.GetEnumerator()
+            {
+                return this.GetDictionaryEnumerator();
+            }
+
+            IEnumerator<KeyValuePair<string, JsonDynamicBase>> IEnumerable<KeyValuePair<string, JsonDynamicBase>>.GetEnumerator()
             {
                 return this.GetEnumerator();
             }

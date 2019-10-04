@@ -22,7 +22,7 @@ namespace Ks
                 return ((IList<T>)this.Arr).GetEnumerator();
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
@@ -41,7 +41,7 @@ namespace Ks
                 return Index;
             }
 
-            public T Item
+            public T this[params int[] Indexes]
             {
                 get
                 {
@@ -61,14 +61,6 @@ namespace Ks
                 get
                 {
                     return this._Lengths_RO;
-                }
-            }
-
-            public int Lengths
-            {
-                get
-                {
-                    return this._Lengths[Index];
                 }
             }
 

@@ -115,7 +115,7 @@ namespace Ks
                     this.List.CopyTo(array, arrayIndex);
             }
 
-            private void IList_CopyTo(Array array, int index)
+            void ICollection.CopyTo(Array array, int index)
             {
                 this.CheckChanges();
                 if (this.List != null)
@@ -159,43 +159,43 @@ namespace Ks
 
             // The following methods call the ones from above.
 
-            private bool IList_Contains(object value)
+            bool IList.Contains(object value)
             {
                 return this.Contains((TValue)value);
             }
 
-            private int IList_IndexOf(object value)
+            int IList.IndexOf(object value)
             {
                 return this.IndexOf((TValue)value);
             }
 
-            private IEnumerator<TValue> IEnumerable_1_GetEnumerator()
+            IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
 
-            private int IList_Add(object value)
+            int IList.Add(object value)
             {
                 this.Add((TValue)value);
                 return this.Count - 1;
             }
 
-            private void IList_Insert(int index, object value)
+            void IList.Insert(int index, object value)
             {
                 this.Insert(index, (TValue)value);
             }
 
-            private void IList_Remove(object value)
+            void IList.Remove(object value)
             {
                 this.Remove((TValue)value);
             }
 
-            private object IList_Item
+            object IList.this[int index]
             {
                 get
                 {
@@ -207,7 +207,7 @@ namespace Ks
                 }
             }
 
-            private bool IsReadOnly
+            bool IList.IsReadOnly
             {
                 get
                 {
@@ -215,7 +215,7 @@ namespace Ks
                 }
             }
 
-            private bool IsFixedSize
+            bool ICollection<TValue>.IsReadOnly
             {
                 get
                 {
@@ -223,7 +223,15 @@ namespace Ks
                 }
             }
 
-            private object SyncRoot
+            bool IList.IsFixedSize
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            object ICollection.SyncRoot
             {
                 get
                 {
@@ -231,7 +239,7 @@ namespace Ks
                 }
             }
 
-            private bool IsSynchronized
+            bool ICollection.IsSynchronized
             {
                 get
                 {

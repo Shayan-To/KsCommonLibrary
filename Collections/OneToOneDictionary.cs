@@ -18,7 +18,7 @@ namespace Ks
                 this.KeySelector = KeySelector;
             }
 
-            private bool IsReadOnly
+            bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
             {
                 get
                 {
@@ -26,19 +26,27 @@ namespace Ks
                 }
             }
 
-            private object IDictionary_Item
+            bool IDictionary.IsReadOnly
             {
                 get
                 {
-                    return this.IDictionary_Item;
+                    return false;
+                }
+            }
+
+            object IDictionary.this[object key]
+            {
+                get
+                {
+                    return this[(TKey)key];
                 }
                 set
                 {
-                    this.IDictionary_Item = (TValue)value;
+                    throw new NotSupportedException();
                 }
             }
 
-            private bool IDictionary_IsFixedSize
+            bool IDictionary.IsFixedSize
             {
                 get
                 {
@@ -46,7 +54,7 @@ namespace Ks
                 }
             }
 
-            private bool ICollection_IsSynchronized
+            bool ICollection.IsSynchronized
             {
                 get
                 {
@@ -54,7 +62,7 @@ namespace Ks
                 }
             }
 
-            private object ICollection_SyncRoot
+            object ICollection.SyncRoot
             {
                 get
                 {
@@ -62,17 +70,17 @@ namespace Ks
                 }
             }
 
-            private void ICollection_Add(KeyValuePair<TKey, TValue> item)
+            void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
             {
-                this.IDictionary_Add(item.Key, item.Value);
+                throw new NotSupportedException();
             }
 
-            private void IDictionary_Add(object key, object value)
+            void IDictionary.Add(object key, object value)
             {
-                this.IDictionary_Add((TKey)key, (TValue)value);
+                throw new NotSupportedException();
             }
 
-            private bool ICollection_Remove(KeyValuePair<TKey, TValue> item)
+            bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
             {
                 TValue V = default(TValue);
                 if (!this.TryGetValue(item.Key, out V))
@@ -82,17 +90,22 @@ namespace Ks
                 return this.RemoveKey(item.Key);
             }
 
-            private void IDictionary_Remove(object key)
+            void IDictionary.Remove(object key)
             {
                 this.RemoveKey((TKey)key);
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            bool IDictionary<TKey, TValue>.Remove(TKey key)
+            {
+                return this.RemoveKey(key);
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
 
-            private bool ICollection_Contains(KeyValuePair<TKey, TValue> item)
+            bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
             {
                 TValue V = default(TValue);
                 if (!this.TryGetValue(item.Key, out V))
@@ -100,12 +113,12 @@ namespace Ks
                 return object.Equals(V, item.Value);
             }
 
-            private bool IDictionary_Contains(object key)
+            bool IDictionary.Contains(object key)
             {
                 return this.ContainsKey((TKey)key);
             }
 
-            private ICollection IDictionary_Keys
+            ICollection IDictionary.Keys
             {
                 get
                 {
@@ -113,7 +126,7 @@ namespace Ks
                 }
             }
 
-            private ICollection IDictionary_Values
+            ICollection IDictionary.Values
             {
                 get
                 {
@@ -131,7 +144,7 @@ namespace Ks
                 }
             }
 
-            private void CopyTo(Array array, int index)
+            void ICollection.CopyTo(Array array, int index)
             {
                 Verify.True((index + this.Count) <= array.GetLength(0), "Array is not large enough.");
                 foreach (var I in this)
@@ -141,7 +154,7 @@ namespace Ks
                 }
             }
 
-            private IDictionaryEnumerator IDictionary_GetEnumerator()
+            IDictionaryEnumerator IDictionary.GetEnumerator()
             {
                 return new DictionaryEnumerator<TKey, TValue, IEnumerator<KeyValuePair<TKey, TValue>>>(this.GetEnumerator());
             }
@@ -162,7 +175,7 @@ namespace Ks
                 }
             }
 
-            private TValue IDictionary_Item
+            TValue IDictionary<TKey, TValue>.this[TKey key]
             {
                 get
                 {
@@ -192,7 +205,7 @@ namespace Ks
 
             // ToDo Keys and Values may have not implemented ICollection and cause problems when using IDictionary.
 
-            private void IDictionary_Add(TKey key, TValue value)
+            void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
             {
                 throw new NotSupportedException();
             }

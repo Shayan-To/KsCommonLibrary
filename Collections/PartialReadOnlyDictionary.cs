@@ -90,7 +90,7 @@ namespace Ks
                 return this.BaseDic.TryGetValue(key, out value);
             }
 
-            protected override IEnumerator<KeyValuePair<TKey, TValue>> IEnumerator_1_GetEnumerator()
+            protected override IEnumerator<KeyValuePair<TKey, TValue>> _GetEnumerator()
             {
                 return this.GetEnumerator();
             }

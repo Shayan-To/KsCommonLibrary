@@ -111,20 +111,20 @@ namespace Ks
                 }
             }
 
-            public KeyValuePair<string, string> ItemAt
+            public KeyValuePair<string, string> this[int index]
             {
                 get
                 {
-                    return this.BaseDic.ItemAt;
+                    return this.BaseDic[index];
                 }
                 set
                 {
-                    this.BaseDic.ItemAt = value;
+                    this.BaseDic[index] = value;
                     this.Collection_Changed();
                 }
             }
 
-            private bool IList_IsReadOnly
+            bool IList.IsReadOnly
             {
                 get
                 {
@@ -132,7 +132,7 @@ namespace Ks
                 }
             }
 
-            private bool IList_IsFixedSize
+            bool IList.IsFixedSize
             {
                 get
                 {
@@ -190,7 +190,12 @@ namespace Ks
                 return this.BaseDic.GetEnumerator();
             }
 
-            protected override IEnumerator<KeyValuePair<string, string>> IEnumerator_1_GetEnumerator()
+            IDictionaryEnumerator IOrderedDictionary.GetEnumerator()
+            {
+                return this.GetDictionaryEnumerator();
+            }
+
+            protected override IEnumerator<KeyValuePair<string, string>> _GetEnumerator()
             {
                 return this.GetEnumerator();
             }
@@ -200,7 +205,7 @@ namespace Ks
                 return this.ToString("", Utilities.Text.CurruntFormatProvider);
             }
 
-            public new string ToString(string format, IFormatProvider formatProvider)
+            public string ToString(string format, IFormatProvider formatProvider)
             {
                 var R = new System.Text.StringBuilder(Conversions.ToString('{'));
                 var Bl = true;
@@ -217,40 +222,53 @@ namespace Ks
                 return R.Append('}').ToString();
             }
 
-            private object IList_ItemAt
+            object IList.this[int index]
             {
                 get
                 {
-                    return this.ItemAt;
+                    return this[index];
                 }
                 set
                 {
-                    this.ItemAt = (KeyValuePair<string, string>)value;
+                    this[index] = (KeyValuePair<string, string>)value;
                 }
             }
 
-            private int IList_Add(object value)
+            object IOrderedDictionary.this[int index]
+            {
+                get
+                {
+                    return this[index];
+                }
+                set
+                {
+                    this[index] = (KeyValuePair<string, string>)value;
+                }
+            }
+
+            int IList.Add(object value)
             {
                 this.ICollection_Add((KeyValuePair<string, string>)value);
                 return this.Count - 1;
             }
 
-            private void IList_Insert(int index, KeyValuePair<string, string> item)
+            void IList<KeyValuePair<string, string>>.Insert(int index, KeyValuePair<string, string> item)
             {
                 this.Insert(index, item.Key, item.Value);
             }
 
-            private void IList_Insert(int index, object value)
+            void IList.Insert(int index, object value)
             {
-                this.IList_Insert(index, (KeyValuePair<string, string>)value);
+                var kv = (KeyValuePair<string, string>)value;
+                this.Insert(index, kv.Key, kv.Value);
             }
 
-            private void IOrderedDictionary_Insert(int index, object key, object value)
+            void IOrderedDictionary.Insert(int index, object key, object value)
             {
                 this.Insert(index, (string)key, (string)value);
             }
 
-            private void IList_Remove(object value)
+            void IList.Remove(object value)
             {
                 this.ICollection_Remove((KeyValuePair<string, string>)value);
             }
@@ -258,7 +276,7 @@ namespace Ks
             private int IList_IndexOf(KeyValuePair<string, string> item)
             {
                 var R = this.IndexOf(item.Key);
-                var T = this.ItemAt.Value;
+                var T = this[R].Value;
 
                 if (R == -1)
                     return -1;
@@ -267,17 +285,22 @@ namespace Ks
                 return R;
             }
 
-            private int IList_IndexOf(object value)
+            int IList<KeyValuePair<string, string>>.IndexOf(KeyValuePair<string, string> item)
+            {
+                return this.IList_IndexOf(item);
+            }
+
+            int IList.IndexOf(object value)
             {
                 return this.IList_IndexOf((KeyValuePair<string, string>)value);
             }
 
-            private IDictionaryEnumerator IOrderedDictionary_GetEnumerator()
+            IDictionaryEnumerator IDictionary.GetEnumerator()
             {
-                return this.IDictionary_GetEnumerator();
+                return this.GetDictionaryEnumerator();
             }
 
-            private bool IList_Contains(object value)
+            bool IList.Contains(object value)
             {
                 return this.ICollection_Contains((KeyValuePair<string, string>)value);
             }

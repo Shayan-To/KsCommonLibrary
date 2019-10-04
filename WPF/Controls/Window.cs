@@ -139,7 +139,7 @@ namespace Ks
                     KV.Value.Style = ShelterStyle;
             }
 
-            private Page INavigationView_Content
+            Page INavigationView.Content
             {
                 get
                 {

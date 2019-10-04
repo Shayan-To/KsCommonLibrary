@@ -49,7 +49,7 @@ namespace Ks
                 throw new NotImplementedException();
             }
 
-            protected override IEnumerator<T> IEnumerable_1_GetEnumerator()
+            protected override IEnumerator<T> _GetEnumerator()
             {
                 return this.GetEnumerator();
             }

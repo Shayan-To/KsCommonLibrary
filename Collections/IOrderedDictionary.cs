@@ -8,7 +8,7 @@ namespace Ks
     {
         public interface IOrderedDictionary<TKey, TValue> : IOrderedDictionary, IList, IList<KeyValuePair<TKey, TValue>>, IDictionary<TKey, TValue>, IDictionary
         {
-            new void Insert(int index, TKey key, TValue value);
+            void Insert(int index, TKey key, TValue value);
         }
     }
 }

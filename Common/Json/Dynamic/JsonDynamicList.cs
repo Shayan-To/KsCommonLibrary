@@ -43,7 +43,12 @@ namespace Ks
                 }
             }
 
-            protected IEnumerator<JsonDynamicBase> IEnumerable_1_GetEnumerator()
+            protected IEnumerator<JsonDynamicBase> _GetEnumerator()
+            {
+                return this.GetEnumerator();
+            }
+
+            IEnumerator<JsonDynamicBase> IEnumerable<JsonDynamicBase>.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
@@ -62,6 +67,11 @@ namespace Ks
                         return I;
                 }
                 return -1;
+            }
+
+            void ICollection.CopyTo(Array array, int index)
+            {
+                this.CopyTo(array, index);
             }
 
             public virtual void CopyTo(JsonDynamicBase[] array, int arrayIndex)
@@ -91,7 +101,7 @@ namespace Ks
                 return true;
             }
 
-            private object IList_Item
+            object IList.this[int index]
             {
                 get
                 {
@@ -103,7 +113,7 @@ namespace Ks
                 }
             }
 
-            private JsonDynamicBase IReadOnlyList_Item
+            JsonDynamicBase IReadOnlyList<JsonDynamicBase>.this[int index]
             {
                 get
                 {
@@ -111,7 +121,7 @@ namespace Ks
                 }
             }
 
-            protected virtual bool IList_IsReadOnly
+            bool IList.IsReadOnly
             {
                 get
                 {
@@ -119,7 +129,7 @@ namespace Ks
                 }
             }
 
-            private bool IList_IsFixedSize
+            bool ICollection<JsonDynamicBase>.IsReadOnly
             {
                 get
                 {
@@ -127,7 +137,15 @@ namespace Ks
                 }
             }
 
-            private object IList_SyncRoot
+            bool IList.IsFixedSize
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            object ICollection.SyncRoot
             {
                 get
                 {
@@ -135,7 +153,7 @@ namespace Ks
                 }
             }
 
-            private bool IList_IsSynchronized
+            bool ICollection.IsSynchronized
             {
                 get
                 {
@@ -148,28 +166,28 @@ namespace Ks
                 return this.IndexOf(item) != -1;
             }
 
-            private int IList_Add(object value)
+            int IList.Add(object value)
             {
                 this.Add((JsonDynamicBase)value);
                 return this.Count - 1;
             }
 
-            private bool IList_Contains(object value)
+            bool IList.Contains(object value)
             {
                 return this.Contains((JsonDynamicBase)value);
             }
 
-            private int IList_IndexOf(object value)
+            int IList.IndexOf(object value)
             {
                 return this.IndexOf((JsonDynamicBase)value);
             }
 
-            private void IList_Insert(int index, object value)
+            void IList.Insert(int index, object value)
             {
                 this.Insert(index, (JsonDynamicBase)value);
             }
 
-            private void IList_Remove(object value)
+            void IList.Remove(object value)
             {
                 this.Remove((JsonDynamicBase)value);
             }
@@ -179,9 +197,9 @@ namespace Ks
                 this.Insert(this.Count, item);
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
-                return this.IEnumerable_1_GetEnumerator();
+                return this._GetEnumerator();
             }
 
             private readonly List<JsonDynamicBase> Base = new List<JsonDynamicBase>();

@@ -8,7 +8,7 @@ namespace Ks
     {
         public abstract class BaseDictionary<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>, IDictionary<TKey, TValue>, IDictionary
         {
-            public abstract int Count { get; private set; }
+            public abstract int Count { get; }
 
             protected virtual bool IsReadOnly
             {
@@ -18,7 +18,23 @@ namespace Ks
                 }
             }
 
-            private object IDictionary_Item
+            bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
+            {
+                get
+                {
+                    return this.IsReadOnly;
+                }
+            }
+
+            bool IDictionary.IsReadOnly
+            {
+                get
+                {
+                    return this.IsReadOnly;
+                }
+            }
+
+            object IDictionary.this[object key]
             {
                 get
                 {
@@ -30,7 +46,7 @@ namespace Ks
                 }
             }
 
-            private TValue IReadOnlyDictionary_Item
+            TValue IReadOnlyDictionary<TKey, TValue>.this[TKey key]
             {
                 get
                 {
@@ -38,7 +54,7 @@ namespace Ks
                 }
             }
 
-            private bool IDictionary_IsFixedSize
+            bool IDictionary.IsFixedSize
             {
                 get
                 {
@@ -46,7 +62,7 @@ namespace Ks
                 }
             }
 
-            private bool ICollection_IsSynchronized
+            bool ICollection.IsSynchronized
             {
                 get
                 {
@@ -54,7 +70,7 @@ namespace Ks
                 }
             }
 
-            private object ICollection_SyncRoot
+            object ICollection.SyncRoot
             {
                 get
                 {
@@ -62,7 +78,7 @@ namespace Ks
                 }
             }
 
-            private bool IReadOnlyDictionary_TryGetValue(TKey key, out TValue value)
+            bool IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value)
             {
                 return this.TryGetValue(key, out value);
             }
@@ -72,7 +88,12 @@ namespace Ks
                 this.Add(item.Key, item.Value);
             }
 
-            private void IDictionary_Add(object key, object value)
+            void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
+            {
+                this.ICollection_Add(item);
+            }
+
+            void IDictionary.Add(object key, object value)
             {
                 this.Add((TKey)key, (TValue)value);
             }
@@ -87,14 +108,19 @@ namespace Ks
                 return this.Remove(item.Key);
             }
 
-            private void IDictionary_Remove(object key)
+            bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
+            {
+                return this.ICollection_Remove(item);
+            }
+
+            void IDictionary.Remove(object key)
             {
                 this.Remove((TKey)key);
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
-                return this.IEnumerator_1_GetEnumerator();
+                return this._GetEnumerator();
             }
 
             protected bool ICollection_Contains(KeyValuePair<TKey, TValue> item)
@@ -105,12 +131,17 @@ namespace Ks
                 return object.Equals(V, item.Value);
             }
 
-            private bool IDictionary_Contains(object key)
+            bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
+            {
+                return this.ICollection_Contains(item);
+            }
+
+            bool IDictionary.Contains(object key)
             {
                 return this.ContainsKey((TKey)key);
             }
 
-            private bool IReadOnlyDictionary_ContainsKey(TKey key)
+            bool IReadOnlyDictionary<TKey, TValue>.ContainsKey(TKey key)
             {
                 return this.ContainsKey(key);
             }
@@ -133,7 +164,23 @@ namespace Ks
                 }
             }
 
-            private IEnumerable<TKey> IReadOnlyDictionary_Keys
+            ICollection IDictionary.Keys
+            {
+                get
+                {
+                    return this.IDictionary_Keys;
+                }
+            }
+
+            ICollection IDictionary.Values
+            {
+                get
+                {
+                    return this.IDictionary_Values;
+                }
+            }
+
+            IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys
             {
                 get
                 {
@@ -141,7 +188,7 @@ namespace Ks
                 }
             }
 
-            private IEnumerable<TValue> IReadOnlyDictionary_Values
+            IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values
             {
                 get
                 {
@@ -149,9 +196,9 @@ namespace Ks
                 }
             }
 
-            public abstract ICollection<TKey> Keys { get; private set; }
+            public abstract ICollection<TKey> Keys { get; }
 
-            public abstract ICollection<TValue> Values { get; private set; }
+            public abstract ICollection<TValue> Values { get; }
 
             public abstract void Add(TKey key, TValue value);
 
@@ -173,18 +220,33 @@ namespace Ks
                 }
             }
 
+            void ICollection.CopyTo(Array array, int index)
+            {
+                this.CopyTo(array, index);
+            }
+
             public abstract bool ContainsKey(TKey key);
 
             public abstract bool Remove(TKey key);
 
             public abstract bool TryGetValue(TKey key, out TValue value);
 
-            protected virtual IDictionaryEnumerator IDictionary_GetEnumerator()
+            protected virtual IDictionaryEnumerator GetDictionaryEnumerator()
             {
-                return new DictionaryEnumerator<TKey, TValue, IEnumerator<KeyValuePair<TKey, TValue>>>(this.IEnumerator_1_GetEnumerator());
+                return new DictionaryEnumerator<TKey, TValue, IEnumerator<KeyValuePair<TKey, TValue>>>(this._GetEnumerator());
             }
 
-            protected abstract IEnumerator<KeyValuePair<TKey, TValue>> IEnumerator_1_GetEnumerator();
+            IDictionaryEnumerator IDictionary.GetEnumerator()
+            {
+                return this.GetDictionaryEnumerator();
+            }
+
+            IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
+            {
+                return this._GetEnumerator();
+            }
+
+            protected abstract IEnumerator<KeyValuePair<TKey, TValue>> _GetEnumerator();
         }
     }
 }

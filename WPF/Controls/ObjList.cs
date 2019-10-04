@@ -78,7 +78,7 @@ namespace Ks
                 this.Parent.ReportObjChanged();
             }
 
-            protected override IEnumerator<Obj> IEnumerable_1_GetEnumerator()
+            protected override IEnumerator<Obj> _GetEnumerator()
             {
                 return this.List.GetEnumerator();
             }

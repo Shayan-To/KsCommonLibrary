@@ -13,7 +13,7 @@ namespace Ks
                 DefaultStyleKeyProperty.OverrideMetadata(typeof(NavigationPage), new FrameworkPropertyMetadata(typeof(NavigationPage)));
             }
 
-            private Page INavigationView_Content
+            Page INavigationView.Content
             {
                 get
                 {

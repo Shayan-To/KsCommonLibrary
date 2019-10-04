@@ -63,7 +63,7 @@ namespace Ks
                 this.List.Insert(Index, Item);
             }
 
-            public new void Insert(int Index)
+            public void Insert(int Index)
             {
                 this.Insert(Index, this.Creator.Invoke(Index));
             }
@@ -99,7 +99,7 @@ namespace Ks
                 return this.List.GetEnumerator();
             }
 
-            protected override IEnumerator<T> IEnumerable_1_GetEnumerator()
+            protected override IEnumerator<T> _GetEnumerator()
             {
                 return this.GetEnumerator();
             }

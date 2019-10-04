@@ -36,13 +36,18 @@ namespace Ks
                 }
             }
 
-            private event NotifyCollectionChangedEventHandler NonGeneric_CollectionChanged;
             public event NotifyCollectionChangedEventHandler<T> CollectionChanged;
+            event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
+            {
+                add => this.INotifyCollectionChanged_CollectionChanged += value;
+                remove => this.INotifyCollectionChanged_CollectionChanged -= value;
+            }
+            private event NotifyCollectionChangedEventHandler INotifyCollectionChanged_CollectionChanged;
 
             protected void OnCollectionChanged(NotifyCollectionChangedEventArgs<T> E)
             {
                 CollectionChanged?.Invoke(this, E);
-                NonGeneric_CollectionChanged?.Invoke(this, E);
+                INotifyCollectionChanged_CollectionChanged?.Invoke(this, E);
             }
 
             public int Count
@@ -79,7 +84,7 @@ namespace Ks
                 return this._Collection1.Concat(this._Collection2).GetEnumerator();
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
@@ -185,13 +190,18 @@ namespace Ks
 
             private readonly List<T> InnerList;
 
-            private event NotifyCollectionChangedEventHandler NonGeneric_CollectionChanged;
             public event NotifyCollectionChangedEventHandler<T> CollectionChanged;
+            private event NotifyCollectionChangedEventHandler INotifyCollectionChanged_CollectionChanged;
+            event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
+            {
+                add => this.INotifyCollectionChanged_CollectionChanged += value;
+                remove => this.INotifyCollectionChanged_CollectionChanged -= value;
+            }
 
             protected internal void OnCollectionChanged(NotifyCollectionChangedEventArgs<T> E)
             {
                 CollectionChanged?.Invoke(this, E);
-                NonGeneric_CollectionChanged?.Invoke(this, E);
+                INotifyCollectionChanged_CollectionChanged?.Invoke(this, E);
             }
 
             private readonly ComplementingCollectionMaster<T> _Master;
@@ -235,12 +245,12 @@ namespace Ks
                 return this.InnerList.GetEnumerator();
             }
 
-            private IEnumerator<T> GetEnumerator_Interface()
+            IEnumerator<T> IEnumerable<T>.GetEnumerator()
             {
                 return this.InnerList.GetEnumerator();
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }

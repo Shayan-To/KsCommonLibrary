@@ -38,14 +38,11 @@ namespace Ks
                 }
             }
 
-            public JsonObject ItemOrDefault
+            public JsonObject GetItemOrDefault(string Key)
             {
-                get
-                {
-                    JsonObject Value = null;
-                    this.TryGetValue(Key, out Value);
-                    return Value;
-                }
+                JsonObject Value = null;
+                this.TryGetValue(Key, out Value);
+                return Value;
             }
 
             public IEnumerable<string> Keys
@@ -87,10 +84,11 @@ namespace Ks
                         return true;
                     }
                 }
+                Value = default;
                 return false;
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }

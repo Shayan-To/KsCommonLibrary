@@ -166,6 +166,7 @@ namespace Ks
                         value = this.NullValue[0];
                         return true;
                     }
+                    value = default;
                     return false;
                 }
 
@@ -186,7 +187,7 @@ namespace Ks
                 return this.Dic.GetEnumerator();
             }
 
-            protected override IEnumerator<KeyValuePair<TKey, TValue>> IEnumerator_1_GetEnumerator()
+            protected override IEnumerator<KeyValuePair<TKey, TValue>> _GetEnumerator()
             {
                 return this.GetEnumerator();
             }

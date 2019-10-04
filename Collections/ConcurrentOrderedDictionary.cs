@@ -95,21 +95,21 @@ namespace Ks
                 }
             }
 
-            public KeyValuePair<TKey, TValue> ItemAt
+            public KeyValuePair<TKey, TValue> this[int index]
             {
                 get
                 {
                     lock (this.LockObject)
-                        return this.BaseDic.ItemAt;
+                        return this.BaseDic[index];
                 }
                 set
                 {
                     lock (this.LockObject)
-                        this.BaseDic.ItemAt = value;
+                        this.BaseDic[index] = value;
                 }
             }
 
-            private bool IList_IsReadOnly
+            bool IList.IsReadOnly
             {
                 get
                 {
@@ -117,7 +117,7 @@ namespace Ks
                 }
             }
 
-            private bool IList_IsFixedSize
+            bool IList.IsFixedSize
             {
                 get
                 {
@@ -182,24 +182,36 @@ namespace Ks
                 }
             }
 
-            protected override IEnumerator<KeyValuePair<TKey, TValue>> IEnumerator_1_GetEnumerator()
+            protected override IEnumerator<KeyValuePair<TKey, TValue>> _GetEnumerator()
             {
                 return this.GetEnumerator();
             }
 
-            private object IList_ItemAt
+            object IOrderedDictionary.this[int index]
             {
                 get
                 {
-                    return this.ItemAt;
+                    return this[index];
                 }
                 set
                 {
-                    this.ItemAt = (KeyValuePair<TKey, TValue>)value;
+                    this[index] = (KeyValuePair<TKey, TValue>)value;
                 }
             }
 
-            private int IList_Add(object value)
+            object IList.this[int index]
+            {
+                get
+                {
+                    return this[index];
+                }
+                set
+                {
+                    this[index] = (KeyValuePair<TKey, TValue>)value;
+                }
+            }
+
+            int IList.Add(object value)
             {
                 lock (this.LockObject)
                 {
@@ -208,22 +220,23 @@ namespace Ks
                 }
             }
 
-            private void IList_Insert(int index, KeyValuePair<TKey, TValue> item)
+            void IList<KeyValuePair<TKey, TValue>>.Insert(int index, KeyValuePair<TKey, TValue> item)
             {
                 this.Insert(index, item.Key, item.Value);
             }
 
-            private void IList_Insert(int index, object value)
+            void IList.Insert(int index, object value)
             {
-                this.IList_Insert(index, (KeyValuePair<TKey, TValue>)value);
+                var kv = (KeyValuePair<TKey, TValue>)value;
+                this.Insert(index, kv.Key, kv.Value);
             }
 
-            private void IOrderedDictionary_Insert(int index, object key, object value)
+            void IOrderedDictionary.Insert(int index, object key, object value)
             {
                 this.Insert(index, (TKey)key, (TValue)value);
             }
 
-            private void IList_Remove(object value)
+            void IList.Remove(object value)
             {
                 this.ICollection_Remove((KeyValuePair<TKey, TValue>)value);
             }
@@ -236,7 +249,7 @@ namespace Ks
                 lock (this.LockObject)
                 {
                     R = this.IndexOf(item.Key);
-                    T = this.ItemAt.Value;
+                    T = this[R].Value;
                 }
 
                 if (R == -1)
@@ -246,17 +259,22 @@ namespace Ks
                 return R;
             }
 
-            private int IList_IndexOf(object value)
+            int IList<KeyValuePair<TKey, TValue>>.IndexOf(KeyValuePair<TKey, TValue> item)
+            {
+                return this.IList_IndexOf(item);
+            }
+
+            int IList.IndexOf(object value)
             {
                 return this.IList_IndexOf((KeyValuePair<TKey, TValue>)value);
             }
 
-            private IDictionaryEnumerator IOrderedDictionary_GetEnumerator()
+            IDictionaryEnumerator IOrderedDictionary.GetEnumerator()
             {
-                return this.IDictionary_GetEnumerator();
+                return this.GetDictionaryEnumerator();
             }
 
-            private bool IList_Contains(object value)
+            bool IList.Contains(object value)
             {
                 return this.ICollection_Contains((KeyValuePair<TKey, TValue>)value);
             }

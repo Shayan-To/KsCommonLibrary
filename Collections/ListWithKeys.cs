@@ -68,7 +68,7 @@ namespace Ks
                     KInd.Value.Clear();
             }
 
-            protected override IEnumerator<T> IEnumerable_1_GetEnumerator()
+            protected override IEnumerator<T> _GetEnumerator()
             {
                 return this.GetEnumerator();
             }
@@ -288,13 +288,13 @@ namespace Ks
                     this._KeySelector = KeySelector;
                 }
 
-                public new static Condition<TK> operator ==(Key<TK> Key, TK KeyValue)
+                public static Condition<TK> operator ==(Key<TK> Key, TK KeyValue)
                 {
                     Key.VerifyAlive();
                     return new Condition<TK>(Key, KeyValue);
                 }
 
-                public new static Condition<TK> operator !=(Key<TK> Key, TK KeyValue)
+                public static Condition<TK> operator !=(Key<TK> Key, TK KeyValue)
                 {
                     Key.VerifyAlive();
                     return new Condition<TK>(Key, KeyValue);

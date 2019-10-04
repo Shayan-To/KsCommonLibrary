@@ -16,7 +16,7 @@ namespace Ks
                 this.CloseOperation.Invoke();
             }
 
-            private void Dispose()
+            void IDisposable.Dispose()
             {
                 this.Close();
             }

@@ -27,7 +27,7 @@ namespace Ks
                 }
             }
 
-            public virtual TValue ItemAt
+            public virtual TValue this[int index]
             {
                 get
                 {
@@ -108,7 +108,7 @@ namespace Ks
                 }
             }
 
-            private TValue IDictionary_Item
+            TValue IDictionary<TKey, TValue>.this[TKey key]
             {
                 get
                 {
@@ -136,12 +136,12 @@ namespace Ks
                 }
             }
 
-            private void IDictionary_Add(TKey key, TValue value)
+            void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
             {
                 throw new NotSupportedException();
             }
 
-            public void Insert(int index, TKey key, TValue value)
+            void IOrderedDictionary<TKey, TValue>.Insert(int index, TKey key, TValue value)
             {
                 throw new NotSupportedException();
             }
@@ -166,7 +166,7 @@ namespace Ks
                 this.Insert(this.Count, Value);
             }
 
-            private bool IList_IsReadOnly
+            bool IList.IsReadOnly
             {
                 get
                 {
@@ -174,7 +174,7 @@ namespace Ks
                 }
             }
 
-            private bool IList_IsFixedSize
+            bool IDictionary.IsReadOnly
             {
                 get
                 {
@@ -182,23 +182,51 @@ namespace Ks
                 }
             }
 
-            private object IList_ItemAt
+            bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
             {
                 get
                 {
-                    return this.IList_1_ItemAt;
+                    return false;
+                }
+            }
+
+            bool IList.IsFixedSize
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            object IList.this[int index]
+            {
+                get
+                {
+                    return this[index];
                 }
                 set
                 {
-                    this.IList_1_ItemAt = (KeyValuePair<TKey, TValue>)value;
+                    throw new NotSupportedException();
                 }
             }
 
-            private KeyValuePair<TKey, TValue> IList_1_ItemAt
+            object IOrderedDictionary.this[int index]
             {
                 get
                 {
-                    var Value = this.ItemAt;
+                    return this[index];
+                }
+                set
+                {
+                    throw new NotSupportedException();
+                }
+            }
+
+            KeyValuePair<TKey, TValue> IList<KeyValuePair<TKey, TValue>>.this[int index]
+            {
+                get
+                {
+                    var Value = this[index];
                     return new KeyValuePair<TKey, TValue>(this.KeySelector.Invoke(Value), Value);
                 }
                 set
@@ -207,28 +235,27 @@ namespace Ks
                 }
             }
 
-            private int IList_Add(object value)
+            int IList.Add(object value)
             {
-                this.ICollection_Add((KeyValuePair<TKey, TValue>)value);
-                return this.Count - 1;
+                throw new NotSupportedException();
             }
 
-            private void IList_Insert(int index, KeyValuePair<TKey, TValue> item)
+            void IList<KeyValuePair<TKey, TValue>>.Insert(int index, KeyValuePair<TKey, TValue> item)
             {
-                this.Insert(index, item.Key, item.Value);
+                throw new NotSupportedException();
             }
 
-            private void IList_Insert(int index, object value)
+            void IList.Insert(int index, object value)
             {
-                this.IList_Insert(index, (KeyValuePair<TKey, TValue>)value);
+                throw new NotSupportedException();
             }
 
-            private void IOrderedDictionary_Insert(int index, object key, object value)
+            void IOrderedDictionary.Insert(int index, object key, object value)
             {
-                this.Insert(index, (TKey)key, (TValue)value);
+                throw new NotSupportedException();
             }
 
-            private void IList_Remove(object value)
+            void IList.Remove(object value)
             {
                 this.ICollection_Remove((KeyValuePair<TKey, TValue>)value);
             }
@@ -243,22 +270,26 @@ namespace Ks
                 var R = this.IndexOf(item.Key);
                 if (R == -1)
                     return -1;
-                if (!object.Equals(item.Value, this.ItemAt))
+                if (!object.Equals(item.Value, this[R]))
                     return -1;
                 return R;
             }
+            int IList<KeyValuePair<TKey, TValue>>.IndexOf(KeyValuePair<TKey, TValue> item)
+            {
+                return this.IList_IndexOf(item);
+            }
 
-            private int IList_IndexOf(object value)
+            int IList.IndexOf(object value)
             {
                 return this.IList_IndexOf((KeyValuePair<TKey, TValue>)value);
             }
 
-            private IDictionaryEnumerator IOrderedDictionary_GetEnumerator()
+            IDictionaryEnumerator IOrderedDictionary.GetEnumerator()
             {
                 return this.IDictionary_GetEnumerator();
             }
 
-            private bool IList_Contains(object value)
+            bool IList.Contains(object value)
             {
                 return this.ICollection_Contains((KeyValuePair<TKey, TValue>)value);
             }
@@ -271,19 +302,19 @@ namespace Ks
                 }
             }
 
-            private object IDictionary_Item
+            object IDictionary.this[object key]
             {
                 get
                 {
-                    return this.IDictionary_Item;
+                    return this[(TKey)key];
                 }
                 set
                 {
-                    this.IDictionary_Item = (TValue)value;
+                    throw new NotSupportedException();
                 }
             }
 
-            private bool IDictionary_IsFixedSize
+            bool IDictionary.IsFixedSize
             {
                 get
                 {
@@ -291,7 +322,7 @@ namespace Ks
                 }
             }
 
-            private bool ICollection_IsSynchronized
+            bool ICollection.IsSynchronized
             {
                 get
                 {
@@ -299,7 +330,7 @@ namespace Ks
                 }
             }
 
-            private object ICollection_SyncRoot
+            object ICollection.SyncRoot
             {
                 get
                 {
@@ -307,14 +338,14 @@ namespace Ks
                 }
             }
 
-            private void ICollection_Add(KeyValuePair<TKey, TValue> item)
+            void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
             {
-                this.IDictionary_Add(item.Key, item.Value);
+                throw new NotSupportedException();
             }
 
-            private void IDictionary_Add(object key, object value)
+            void IDictionary.Add(object key, object value)
             {
-                this.IDictionary_Add((TKey)key, (TValue)value);
+                throw new NotSupportedException();
             }
 
             private bool ICollection_Remove(KeyValuePair<TKey, TValue> item)
@@ -327,12 +358,22 @@ namespace Ks
                 return this.RemoveKey(item.Key);
             }
 
-            private void IDictionary_Remove(object key)
+            bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
+            {
+                return this.ICollection_Remove(item);
+            }
+
+            bool IDictionary<TKey, TValue>.Remove(TKey key)
+            {
+                return this.RemoveKey(key);
+            }
+
+            void IDictionary.Remove(object key)
             {
                 this.RemoveKey((TKey)key);
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
@@ -345,12 +386,17 @@ namespace Ks
                 return object.Equals(V, item.Value);
             }
 
-            private bool IDictionary_Contains(object key)
+            bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
+            {
+                return this.ICollection_Contains(item);
+            }
+
+            bool IDictionary.Contains(object key)
             {
                 return this.ContainsKey((TKey)key);
             }
 
-            private ICollection IDictionary_Keys
+            ICollection IDictionary.Keys
             {
                 get
                 {
@@ -358,7 +404,7 @@ namespace Ks
                 }
             }
 
-            private ICollection IDictionary_Values
+            ICollection IDictionary.Values
             {
                 get
                 {
@@ -376,7 +422,7 @@ namespace Ks
                 }
             }
 
-            private void CopyTo(Array array, int index)
+            void ICollection.CopyTo(Array array, int index)
             {
                 Verify.True((index + this.Count) <= array.GetLength(0), "Array is not large enough.");
                 foreach (var I in this)
@@ -384,6 +430,11 @@ namespace Ks
                     array.SetValue(I, index);
                     index += 1;
                 }
+            }
+
+            IDictionaryEnumerator IDictionary.GetEnumerator()
+            {
+                return this.IDictionary_GetEnumerator();
             }
 
             private IDictionaryEnumerator IDictionary_GetEnumerator()

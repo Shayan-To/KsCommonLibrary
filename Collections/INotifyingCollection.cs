@@ -396,7 +396,7 @@ namespace Ks
                 this.OnCollectionChanged(NotifyCollectionChangedEventArgs<T>.CreateReset());
             }
 
-            protected override IEnumerator<T> IEnumerable_1_GetEnumerator()
+            protected override IEnumerator<T> _GetEnumerator()
             {
                 return this.BaseList.GetEnumerator();
             }
@@ -428,8 +428,13 @@ namespace Ks
                 }
             }
 
-            public new event NotifyCollectionChangedEventHandler<T> CollectionChanged;
+            public event NotifyCollectionChangedEventHandler<T> CollectionChanged;
             private event NotifyCollectionChangedEventHandler INotifyCollectionChanged_CollectionChanged;
+            event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
+            {
+                add => this.INotifyCollectionChanged_CollectionChanged += value;
+                remove => this.INotifyCollectionChanged_CollectionChanged -= value;
+            }
 
             protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs<T> E)
             {

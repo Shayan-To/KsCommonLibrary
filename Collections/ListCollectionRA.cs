@@ -82,13 +82,23 @@ namespace Ks
             {
             }
 
+            void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+            {
+                this.GetObjectData(info, context);
+            }
+
             public event NotifyCollectionChangedEventHandler<List> CollectionChanged;
-            private event NotifyCollectionChangedEventHandler Nongeneric_CollectionChanged;
+            private event NotifyCollectionChangedEventHandler INotifyCollectionChanged_CollectionChanged;
+            event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
+            {
+                add => this.INotifyCollectionChanged_CollectionChanged += value;
+                remove => this.INotifyCollectionChanged_CollectionChanged -= value;
+            }
 
             protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs<List> E)
             {
                 CollectionChanged?.Invoke(this, E);
-                Nongeneric_CollectionChanged?.Invoke(this, E);
+                INotifyCollectionChanged_CollectionChanged?.Invoke(this, E);
             }
 
             private List InstantiateList()
@@ -121,12 +131,12 @@ namespace Ks
                 return this.InnerList.GetEnumerator();
             }
 
-            private IEnumerator<List> GetEnumerator_Interface()
+            IEnumerator<List> IEnumerable<List>.GetEnumerator()
             {
                 return this.InnerList.GetEnumerator();
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }

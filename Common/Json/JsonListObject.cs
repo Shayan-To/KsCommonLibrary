@@ -34,7 +34,7 @@ namespace Ks
                 return ((IReadOnlyList<JsonObject>)this.List).GetEnumerator();
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }

@@ -34,7 +34,7 @@ namespace Ks
                 }
             }
 
-            private int ICollection_Count
+            int ICollection.Count
             {
                 get
                 {
@@ -101,7 +101,7 @@ namespace Ks
                 throw new NotSupportedException();
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }

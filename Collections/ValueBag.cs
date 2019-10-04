@@ -11,7 +11,7 @@ namespace Ks
     {
         [TypeDescriptionProvider(typeof(ValueBagTypeDescriptionProvider))]
         public class ValueBag<T> : BindableBase, IDictionary<string, T>, IDictionary, IFormattable
-        {
+         {
             public int Count
             {
                 get
@@ -41,7 +41,7 @@ namespace Ks
                 }
             }
 
-            private ICollection<string> IDictionary_2_Keys
+            ICollection<string> IDictionary<string, T>.Keys
             {
                 get
                 {
@@ -57,7 +57,7 @@ namespace Ks
                 }
             }
 
-            private ICollection<T> IDictionary_2_Values
+            ICollection<T> IDictionary<string, T>.Values
             {
                 get
                 {
@@ -73,7 +73,7 @@ namespace Ks
                 }
             }
 
-            private object NonGeneric_Item
+            object IDictionary.this[object key]
             {
                 get
                 {
@@ -85,7 +85,7 @@ namespace Ks
                 }
             }
 
-            private ICollection IDictionary_Keys
+            ICollection IDictionary.Keys
             {
                 get
                 {
@@ -93,7 +93,7 @@ namespace Ks
                 }
             }
 
-            private ICollection IDictionary_Values
+            ICollection IDictionary.Values
             {
                 get
                 {
@@ -101,7 +101,7 @@ namespace Ks
                 }
             }
 
-            private bool IDictionary_IsReadOnly
+            bool IDictionary.IsReadOnly
             {
                 get
                 {
@@ -109,7 +109,15 @@ namespace Ks
                 }
             }
 
-            private bool IsFixedSize
+            bool ICollection<KeyValuePair<string, T>>.IsReadOnly
+            {
+                get
+                {
+                    return this.IsReadOnly;
+                }
+            }
+
+            bool IDictionary.IsFixedSize
             {
                 get
                 {
@@ -117,7 +125,7 @@ namespace Ks
                 }
             }
 
-            private int ICollection_Count
+            int ICollection.Count
             {
                 get
                 {
@@ -125,7 +133,7 @@ namespace Ks
                 }
             }
 
-            private object SyncRoot
+            object ICollection.SyncRoot
             {
                 get
                 {
@@ -133,7 +141,7 @@ namespace Ks
                 }
             }
 
-            private bool IsSynchronized
+            bool ICollection.IsSynchronized
             {
                 get
                 {
@@ -141,7 +149,7 @@ namespace Ks
                 }
             }
 
-            private void Add(KeyValuePair<string, T> Item)
+            void ICollection<KeyValuePair<string, T>>.Add(KeyValuePair<string, T> Item)
             {
                 this.Dic.Add(Item.Key, Item.Value);
                 this.NotifyPropertyChanged(Item.Key);
@@ -158,12 +166,12 @@ namespace Ks
                 this.Dic.Clear();
             }
 
-            private void CopyTo(KeyValuePair<string, T>[] array, int arrayIndex)
+            void ICollection<KeyValuePair<string, T>>.CopyTo(KeyValuePair<string, T>[] array, int arrayIndex)
             {
                 ((ICollection<KeyValuePair<string, T>>)this.Dic).CopyTo(array, arrayIndex);
             }
 
-            private bool Contains(KeyValuePair<string, T> item)
+            bool ICollection<KeyValuePair<string, T>>.Contains(KeyValuePair<string, T> item)
             {
                 return ((ICollection<KeyValuePair<string, T>>)this.Dic).Contains(item);
             }
@@ -173,12 +181,12 @@ namespace Ks
                 return this.Dic.ContainsKey(key);
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.Dic.GetEnumerator();
             }
 
-            private IEnumerator<KeyValuePair<string, T>> IEnumerable_1_GetEnumerator()
+            IEnumerator<KeyValuePair<string, T>> IEnumerable<KeyValuePair<string, T>>.GetEnumerator()
             {
                 return this.Dic.GetEnumerator();
             }
@@ -188,7 +196,7 @@ namespace Ks
                 return this.Dic.GetEnumerator();
             }
 
-            private bool Remove(KeyValuePair<string, T> item)
+            bool ICollection<KeyValuePair<string, T>>.Remove(KeyValuePair<string, T> item)
             {
                 return ((ICollection<KeyValuePair<string, T>>)this.Dic).Remove(item);
             }
@@ -208,7 +216,7 @@ namespace Ks
                 return this.ToString("", Utilities.Text.CurruntFormatProvider);
             }
 
-            public new string ToString(string format, IFormatProvider formatProvider)
+            public string ToString(string format, IFormatProvider formatProvider)
             {
                 var R = new System.Text.StringBuilder(Conversions.ToString('{'));
                 var Bl = true;
@@ -225,32 +233,32 @@ namespace Ks
                 return R.Append('}').ToString();
             }
 
-            private bool Contains(object key)
+            bool IDictionary.Contains(object key)
             {
-                return this.Contains((string)key);
+                return this.ContainsKey((string)key);
             }
 
-            private void Add(object key, object value)
+            void IDictionary.Add(object key, object value)
             {
                 this.Add((string)key, (T)value);
             }
 
-            private void IDictionary_Clear()
+            void IDictionary.Clear()
             {
                 this.Clear();
             }
 
-            private IDictionaryEnumerator IDictionary_GetEnumerator()
+            IDictionaryEnumerator IDictionary.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
 
-            private void Remove(object key)
+            void IDictionary.Remove(object key)
             {
                 this.Remove((string)key);
             }
 
-            private void CopyTo(Array array, int index)
+            void ICollection.CopyTo(Array array, int index)
             {
                 ((IDictionary)this.Dic).CopyTo(array, index);
             }

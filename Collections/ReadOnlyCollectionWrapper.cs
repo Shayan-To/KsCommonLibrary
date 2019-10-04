@@ -84,7 +84,7 @@ namespace Ks
                 throw new NotSupportedException();
             }
 
-            private IEnumerator<T> IEnumerable_GetEnumerator()
+            IEnumerator<T> IEnumerable<T>.GetEnumerator()
             {
                 return this.Collection.GetEnumerator();
             }

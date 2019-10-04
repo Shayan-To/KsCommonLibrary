@@ -141,12 +141,12 @@ namespace Ks
                 return this.List.GetEnumerator();
             }
 
-            private IEnumerator<CsvColumn> IEnumerable_1_GetEnumerator()
+            IEnumerator<CsvColumn> IEnumerable<CsvColumn>.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }

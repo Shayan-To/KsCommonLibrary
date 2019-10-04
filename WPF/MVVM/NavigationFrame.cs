@@ -18,7 +18,7 @@ namespace Ks
                 return ((IEnumerable<ViewModel>)this.List).GetEnumerator();
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
@@ -39,7 +39,7 @@ namespace Ks
                 var loopTo = this.Count - 1;
                 for (int I = 0; I <= loopTo; I++)
                 {
-                    if (this.Item == ViewModel)
+                    if (this[I] == ViewModel)
                         return I;
                 }
                 return -1;
@@ -89,19 +89,16 @@ namespace Ks
             {
                 get
                 {
-                    return this.Item;
+                    return this[this.Count - 1];
                 }
             }
 
-            public NavigationViewModel Parents
+            public NavigationViewModel GetParent(int Index)
             {
-                get
-                {
-                    return (NavigationViewModel)this.Item;
-                }
+                return (NavigationViewModel)this[this.Count - 2 - Index];
             }
 
-            public ViewModel Item
+            public ViewModel this[int Index]
             {
                 get
                 {

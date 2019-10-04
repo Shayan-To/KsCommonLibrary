@@ -305,14 +305,14 @@ namespace Ks
                     this.PreviousMultiline = PreviousMultiline;
                 }
 
-                private void Dispose()
+                void IDisposable.Dispose()
                 {
-                    this.Writer.CloseOpening(this.ClosingChar, this.PreviousState, this.PreviousMultiline);
+                    this.Close();
                 }
 
                 public void Close()
                 {
-                    this.Dispose();
+                    this.Writer.CloseOpening(this.ClosingChar, this.PreviousState, this.PreviousMultiline);
                 }
 
                 private readonly char ClosingChar;

@@ -54,7 +54,7 @@ namespace Ks
                 this._Bytes[this._Bytes.Length - 1] = System.Convert.ToByte(((int)this._Bytes[this._Bytes.Length - 1] & ((1 << this.LastByteBitCount()) - 1)));
             }
 
-            protected override IEnumerator<bool> IEnumerable_1_GetEnumerator()
+            protected override IEnumerator<bool> _GetEnumerator()
             {
                 return this.GetEnumerator();
             }

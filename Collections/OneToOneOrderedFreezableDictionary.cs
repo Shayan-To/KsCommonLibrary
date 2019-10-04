@@ -46,16 +46,16 @@ namespace Ks
 
             private bool FreezeCalled;
 
-            public override TValue ItemAt
+            public override TValue this[int index]
             {
                 get
                 {
-                    return base.ItemAt;
+                    return base[index];
                 }
                 set
                 {
                     this.VerifyWrite();
-                    base.ItemAt = value;
+                    base[index] = value;
                 }
             }
 

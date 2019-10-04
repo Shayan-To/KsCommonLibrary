@@ -66,12 +66,12 @@ namespace Ks
                 return this.List.GetEnumerator();
             }
 
-            private IEnumerator<CsvEntry> IEnumerable_1_GetEnumerator()
+            IEnumerator<CsvEntry> IEnumerable<CsvEntry>.GetEnumerator()
             {
                 return this.GetEnumerator();
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }

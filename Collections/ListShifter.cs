@@ -89,7 +89,7 @@ namespace Ks
                 return this.InnerList.Remove(item);
             }
 
-            private IEnumerator IEnumerable_GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
                 return this.GetEnumerator();
             }

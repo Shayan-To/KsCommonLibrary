@@ -10,27 +10,27 @@ namespace Ks
             return x.GetHashCode().CompareTo(y.GetHashCode());
         }
 
-        public new int GetHashCode(T obj)
+        public int GetHashCode(T obj)
         {
             return obj.GetHashCode();
         }
 
-        public new bool Equals(T x, T y)
+        public bool Equals(T x, T y)
         {
             return x.GetHashCode() == y.GetHashCode();
         }
 
-        private int Compare(object x, object y)
+        int IComparer.Compare(object x, object y)
         {
             return this.Compare((T)x, (T)y);
         }
 
-        private new int GetHashCode(object obj)
+        int IEqualityComparer.GetHashCode(object obj)
         {
             return this.GetHashCode((T)obj);
         }
 
-        private new bool Equals(object x, object y)
+        bool IEqualityComparer.Equals(object x, object y)
         {
             var TX = (T)x;
             var TY = (T)y;

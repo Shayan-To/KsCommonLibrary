@@ -61,7 +61,7 @@ namespace Ks
                     this.BaseList.RemoveAt(index);
             }
 
-            protected override IEnumerator<T> IEnumerable_1_GetEnumerator()
+            protected override IEnumerator<T> _GetEnumerator()
             {
                 return this.GetEnumerator();
             }

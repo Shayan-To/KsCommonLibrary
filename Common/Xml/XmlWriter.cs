@@ -359,14 +359,14 @@ namespace Ks
                     this.PreviousTagId = PreviousTagId;
                 }
 
-                private void Dispose()
+                void IDisposable.Dispose()
                 {
-                    this.Writer.CloseOpening(this.Name, this.TagId, this.PreviousState, this.PreviousMultiline, this.PreviousTagId);
+                    this.Close();
                 }
 
                 public void Close()
                 {
-                    this.Dispose();
+                    this.Writer.CloseOpening(this.Name, this.TagId, this.PreviousState, this.PreviousMultiline, this.PreviousTagId);
                 }
 
                 private readonly string Name;

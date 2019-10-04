@@ -178,7 +178,7 @@ namespace Ks
                     this.OnChanged();
                 }
 
-                protected override IEnumerator<Drawing> IEnumerable_1_GetEnumerator()
+                protected override IEnumerator<Drawing> _GetEnumerator()
                 {
                     return this.GetEnumerator();
                 }
