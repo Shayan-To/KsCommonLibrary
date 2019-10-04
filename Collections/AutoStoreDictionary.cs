@@ -177,8 +177,9 @@ namespace Ks
 
             public override bool Remove(string key)
             {
-                return this.BaseDic.Remove(key);
+                var res = this.BaseDic.Remove(key);
                 this.Collection_Changed();
+                return res;
             }
 
             public override bool TryGetValue(string key, out string value)
