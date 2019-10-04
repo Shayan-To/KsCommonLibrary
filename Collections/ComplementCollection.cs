@@ -44,7 +44,7 @@ namespace Ks
             }
             private event NotifyCollectionChangedEventHandler INotifyCollectionChanged_CollectionChanged;
 
-            protected void OnCollectionChanged(NotifyCollectionChangedEventArgs<T> E)
+            protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs<T> E)
             {
                 CollectionChanged?.Invoke(this, E);
                 INotifyCollectionChanged_CollectionChanged?.Invoke(this, E);
@@ -198,7 +198,7 @@ namespace Ks
                 remove => this.INotifyCollectionChanged_CollectionChanged -= value;
             }
 
-            protected internal void OnCollectionChanged(NotifyCollectionChangedEventArgs<T> E)
+            protected internal virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs<T> E)
             {
                 CollectionChanged?.Invoke(this, E);
                 INotifyCollectionChanged_CollectionChanged?.Invoke(this, E);
