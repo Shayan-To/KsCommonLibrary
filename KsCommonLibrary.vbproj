@@ -137,6 +137,7 @@
     <Compile Include="Collections\BitArray.vb" />
     <Compile Include="Collections\EnumerableCacher.vb" />
     <Compile Include="Collections\Array2D.vb" />
+    <Compile Include="Collections\ListWithKeys.vb" />
     <Compile Include="Collections\OwnerNotifyingList.vb" />
     <Compile Include="Common\Closable.vb" />
     <Compile Include="Common\ConsoleListChoiceReader.vb" />
