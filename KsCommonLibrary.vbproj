@@ -215,6 +215,8 @@
     <Compile Include="TestingVisualizer.vb" />
     <Compile Include="Win32\Common.vb" />
     <Compile Include="Win32\Files.vb" />
+    <Compile Include="Win32\Hooks.Unsafe.vb" />
+    <Compile Include="Win32\Hooks.vb" />
     <Compile Include="Win32\Windows.Unsafe.vb" />
     <Compile Include="Win32\Windows.vb" />
     <Compile Include="WPF\Controls\NumericUpDown.vb" />
