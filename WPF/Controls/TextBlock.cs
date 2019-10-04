@@ -53,7 +53,7 @@ namespace Ks
                 if (Text != null)
                 {
                     var Lang = GetKsLanguage(this);
-                    this.OutText = CorrectString(Lang?.Translation ?? Text, Lang);
+                    this.OutText = CorrectString(Lang?.GetTranslation(Text) ?? Text, Lang);
                     return;
                 }
 
@@ -115,7 +115,7 @@ namespace Ks
                 S = Regex.Replace(S, @"\[([^\[\]]*)\]", M =>
                 {
                     var T = UnEscape.Invoke(M.Groups[1].Value);
-                    return Lang?.Translation ?? T;
+                    return Lang?.GetTranslation(T) ?? T;
                 });
 
                 Verify.False(S.Contains("[") | S.Contains("]"), "Invalid format string.");

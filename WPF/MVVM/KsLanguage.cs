@@ -112,31 +112,28 @@ namespace Ks
                 this.TaskDelayer.RunTask(TaskDelayerRunningMode.Delayed);
             }
 
-            public string Translation
+            public string GetTranslation(string Text)
             {
-                get
-                {
-                    if (Text == null || Text.Length == 0)
-                        return Text;
-
-                    string R = null;
-
-                    if (this.Dictionary.TryGetValue(Text, out R))
-                        return R;
-
-                    this.Dictionary.Add(Text, Text);
-
-                    lock (this.LockObject)
-                    {
-                        var E = this.Csv.Entries.Add();
-                        E[0] = Text;
-                        E[1] = Text;
-                    }
-
-                    this.TaskDelayer.RunTask(TaskDelayerRunningMode.Delayed);
-
+                if (Text == null || Text.Length == 0)
                     return Text;
+
+                string R = null;
+
+                if (this.Dictionary.TryGetValue(Text, out R))
+                    return R;
+
+                this.Dictionary.Add(Text, Text);
+
+                lock (this.LockObject)
+                {
+                    var E = this.Csv.Entries.Add();
+                    E[0] = Text;
+                    E[1] = Text;
                 }
+
+                this.TaskDelayer.RunTask(TaskDelayerRunningMode.Delayed);
+
+                return Text;
             }
 
             private void DoStore()

@@ -20,14 +20,15 @@ namespace Ks
 
                 var MaxHeight = 0.0;
                 var MaxWidth = 0.0;
-                AvailableSize = this.CreateSize(this.Dimension / (double)ChildCount, this.Dimension);
+                AvailableSize = this.CreateSize(this.Dimension(AvailableSize, Orientation.Horizontal) / (double)ChildCount,
+                                                this.Dimension(AvailableSize, Orientation.Vertical));
 
                 foreach (UIElement C in this.Children)
                 {
                     C.Measure(AvailableSize);
                     var Sz = C.DesiredSize;
-                    MaxWidth = Math.Max(MaxWidth, this.Dimension);
-                    MaxHeight = Math.Max(MaxHeight, this.Dimension);
+                    MaxWidth = Math.Max(MaxWidth, this.Dimension(Sz, Orientation.Horizontal));
+                    MaxHeight = Math.Max(MaxHeight, this.Dimension(Sz, Orientation.Vertical));
                 }
 
                 return this.CreateSize(MaxWidth * (double)ChildCount, MaxHeight);
@@ -38,8 +39,8 @@ namespace Ks
                 var ChildCount = this.Children.Count;
                 var OrigFinalSize = FinalSize;
 
-                var Width = this.Dimension / (double)ChildCount;
-                FinalSize = this.CreateSize(Width, this.Dimension);
+                var Width = this.Dimension(FinalSize, Orientation.Horizontal) / (double)ChildCount;
+                FinalSize = this.CreateSize(Width, this.Dimension(FinalSize, Orientation.Vertical));
                 var X = 0.0;
 
                 foreach (UIElement C in this.Children)
@@ -67,16 +68,13 @@ namespace Ks
                     return new Point(Y, X);
             }
 
-            private double Dimension
+            private double Dimension(Size Size, Orientation Orientation)
             {
-                get
-                {
-                    Orientation = Orientation ^ this.OrientationCache;
-                    if ((int)Orientation == (int)Orientation.Horizontal)
-                        return Size.Width;
-                    else
-                        return Size.Height;
-                }
+                Orientation = Orientation ^ this.OrientationCache;
+                if ((int)Orientation == (int)Orientation.Horizontal)
+                    return Size.Width;
+                else
+                    return Size.Height;
             }
 
             public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(EqualizingStackPanel), new PropertyMetadata(Orientation.Vertical, Orientation_Changed, Orientation_Coerce));

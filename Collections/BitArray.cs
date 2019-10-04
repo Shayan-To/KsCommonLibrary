@@ -12,6 +12,7 @@ namespace Ks
             {
                 this._Count = Count;
                 this._Bytes = new byte[((Count >> 3) + (((Count & 7) == 0) ? 0 : 1)) - 1 + 1];
+                this.Byte = new IndexerProperty<BitArray, byte, int>(this, this.Byte.Getter, this.Byte.Setter);
             }
 
             public override void Insert(int index, bool item)
@@ -118,19 +119,19 @@ namespace Ks
                 }
             }
 
-            public byte Byte
-            {
-                get
+            public IndexerProperty<BitArray, byte, int> Byte { get; } = new IndexerProperty<BitArray, byte, int>(
+                null,
+                (self, Index) =>
                 {
-                    return this._Bytes[Index];
-                }
-                set
+                    return self._Bytes[Index];
+                },
+                (self, Index, value) =>
                 {
-                    if (Index == (this._Bytes.Length - 1))
-                        value = System.Convert.ToByte(((int)value & ((1 << this.LastByteBitCount()) - 1)));
-                    this._Bytes[Index] = value;
+                    if (Index == (self._Bytes.Length - 1))
+                        value = System.Convert.ToByte(((int)value & ((1 << self.LastByteBitCount()) - 1)));
+                    self._Bytes[Index] = value;
                 }
-            }
+            );
 
             public int BytesCount
             {

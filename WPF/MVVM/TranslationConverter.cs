@@ -17,7 +17,7 @@ namespace Ks
             {
                 var Lang = this.GetLanguage();
                 var Text = System.Convert.ToString(Value);
-                return Lang?.Translation ?? Text;
+                return Lang?.GetTranslation(Text) ?? Text;
             }
 
             public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)

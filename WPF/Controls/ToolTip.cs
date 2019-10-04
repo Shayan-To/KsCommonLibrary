@@ -29,7 +29,7 @@ namespace Ks
                     return;
 
                 var Lang = TextBlock.GetKsLanguage(this);
-                var OText = Lang?.Translation ?? Text;
+                var OText = Lang?.GetTranslation(Text) ?? Text;
 
                 this.Visibility = (OText.Length != 0) ? Visibility.Visible : Visibility.Collapsed;
                 this.Content = OText;
