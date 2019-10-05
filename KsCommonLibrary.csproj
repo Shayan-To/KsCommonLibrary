@@ -287,6 +287,7 @@
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="packages.config" />
     <None Include="ToDos.txt" />
     <None Include="Win32\DataTypes.md" />
