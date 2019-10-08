@@ -46,7 +46,7 @@ namespace Ks
                     TValue R;
                     if (this.Dic.TryGetValue(key, out R))
                         return R;
-                    return default(TValue);
+                    return default;
                 }
                 set
                 {

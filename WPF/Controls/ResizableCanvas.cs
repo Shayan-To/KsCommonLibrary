@@ -21,7 +21,7 @@ namespace Ks
                     if (!RB.Item2.HasValue)
                     {
                         Console.WriteLine("Error. " + Utilities.Debug.CompactStackTrace(5));
-                        return default(Rect?);
+                        return default;
                     }
                     ViewingRectangle = RB.Item1;
                 }

@@ -130,7 +130,7 @@ namespace Ks
             {
                 if (this.IsReadOnly)
                     throw new NotSupportedException();
-                this.NullValue[0] = default(TValue);
+                this.NullValue[0] = default;
                 this.HasNullValue = false;
                 this.Dic.Clear();
             }
@@ -150,7 +150,7 @@ namespace Ks
                         throw new NotSupportedException();
                     if (!this.HasNullValue)
                         return false;
-                    this.NullValue[0] = default(TValue);
+                    this.NullValue[0] = default;
                     this.HasNullValue = false;
                     return true;
                 }

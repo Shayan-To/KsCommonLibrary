@@ -219,7 +219,7 @@ namespace Ks
             private char? ReadChar()
             {
                 if (this.IsFinished())
-                    return default(char?);
+                    return default;
                 var R = this.Str[Index];
                 Index += 1;
                 return R;
@@ -228,7 +228,7 @@ namespace Ks
             private char? PeekChar()
             {
                 if (this.IsFinished())
-                    return default(char?);
+                    return default;
                 return this.Str[Index];
             }
 

@@ -78,7 +78,7 @@ namespace Ks
                         {
                             ConsoleUtilities.WriteColored(" Q");
                             Console.WriteLine();
-                            return default(T);
+                            return default;
                         }
 
                         var N = 0;

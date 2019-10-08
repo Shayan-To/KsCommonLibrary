@@ -11,7 +11,7 @@ namespace Ks
         {
 
             /// <param name="Task">The task that should be invoked. This call will be taken place on some background thread.</param>
-            public TaskDelayer(Action Task, TimeSpan MinDelay, TimeSpan MaxDelay = default(TimeSpan), TimeSpan InactivityTime = default(TimeSpan))
+            public TaskDelayer(Action Task, TimeSpan MinDelay, TimeSpan MaxDelay = default, TimeSpan InactivityTime = default)
             {
                 this.StopWatch.Start();
 

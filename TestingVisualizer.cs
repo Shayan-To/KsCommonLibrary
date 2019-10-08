@@ -237,7 +237,7 @@ namespace Ks
                         }
                 }
                 Verify.Fail();
-                return default(DColor);
+                return default;
             }
 
             private int _FormWidth;

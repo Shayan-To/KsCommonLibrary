@@ -204,7 +204,7 @@ namespace Ks
 
                 public static string CEscape(string Input, bool DoesThrow = true)
                 {
-                    char T1 = default(char), T2 = default(char);
+                    char T1 = default, T2 = default;
 
                     var Res = new StringBuilder();
                     for (var I = 0; I < Input.Length; I++)

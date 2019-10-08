@@ -37,13 +37,13 @@ namespace Ks
                 get
                 {
                     if (Index >= this.List.Count)
-                        return default(T);
+                        return default;
                     return this.List[Index];
                 }
                 set
                 {
                     for (var I = this.List.Count; I <= Index; I++)
-                        this.List.Add(default(T));
+                        this.List.Add(default);
                     this.List[Index] = value;
                 }
             }

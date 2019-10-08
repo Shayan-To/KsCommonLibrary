@@ -129,7 +129,7 @@ namespace Ks
 
                 private static readonly StringBuilder Builder = new StringBuilder();
 
-                public static string GetTimeStamp(DateTime? Time = default(DateTime?), bool Compact = false)
+                public static string GetTimeStamp(DateTime? Time = default, bool Compact = false)
                 {
                     DateTime Now;
                     if (Time.HasValue)

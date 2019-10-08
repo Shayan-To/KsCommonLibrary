@@ -10,7 +10,7 @@ namespace Ks
     {
         public static class JsonExtensions
         {
-            public static void WriteValue(this JsonWriter Writer, JsonObject Obj, bool? MultiLine = default(bool?))
+            public static void WriteValue(this JsonWriter Writer, JsonObject Obj, bool? MultiLine = default)
             {
                 if (Obj is JsonDictionaryObject)
                 {

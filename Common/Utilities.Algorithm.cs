@@ -41,7 +41,7 @@ namespace Ks
                 /// <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
             /// <param name="End">Func(End) must equal True.</param>
             /// <returns>Index of first true.</returns>
-                public static int BinarySearch(Func<int, bool> Func, bool Foreward, int Start, int? End = default(int?))
+                public static int BinarySearch(Func<int, bool> Func, bool Foreward, int Start, int? End = default)
                 {
                     if (Foreward)
                     {

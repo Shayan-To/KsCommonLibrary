@@ -8,7 +8,7 @@ namespace Ks
     {
         public static class JsonDynamicExtensions
         {
-            public static void WriteValue(this JsonWriter Writer, JsonDynamicBase Obj, bool? MultiLine = default(bool?))
+            public static void WriteValue(this JsonWriter Writer, JsonDynamicBase Obj, bool? MultiLine = default)
             {
                 if (Obj is JsonDynamicDictionary)
                 {

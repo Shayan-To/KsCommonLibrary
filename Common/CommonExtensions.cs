@@ -208,10 +208,10 @@ namespace Ks
                 if (Collection != null)
                     return Collection.Count;
 
-                return default(int?);
+                return default;
             }
 
-            public static IEnumerable<T> PadBegin<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default(T))
+            public static IEnumerable<T> PadBegin<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default)
             {
                 var Cnt = Self.Count();
                 if (Cnt >= Count)
@@ -227,7 +227,7 @@ namespace Ks
                     yield return I;
             }
 
-            public static IEnumerable<T> PadEnd<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default(T))
+            public static IEnumerable<T> PadEnd<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default)
             {
                 var Cnt = Self.FastCount();
                 if (Cnt.HasValue)
@@ -238,7 +238,7 @@ namespace Ks
                 return Self.PadEndImpl(Count, PaddingElement);
             }
 
-            private static IEnumerable<T> PadEndImpl<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default(T))
+            private static IEnumerable<T> PadEndImpl<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default)
             {
                 var Cnt = 0;
                 foreach (var I in Self)
@@ -804,7 +804,7 @@ namespace Ks
             {
                 if (Self.CanPop())
                     return Self.Peek();
-                return default(T);
+                return default;
             }
 
             public static EnumerableCacher<T> AsCachedList<T>(this IEnumerable<T> Self)
@@ -1316,7 +1316,7 @@ namespace Ks
             public static T NothingIfEmpty<T>(this T Self) where T : ICollection
             {
                 if (Self.Count == 0)
-                    return default(T);
+                    return default;
                 return Self;
             }
 

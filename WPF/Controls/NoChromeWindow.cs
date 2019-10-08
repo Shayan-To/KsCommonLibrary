@@ -35,14 +35,14 @@ namespace Ks
                         }
                 }
 
-                return default(IntPtr);
+                return default;
             }
 
             private IntPtr NCHitTest(IntPtr wParam, IntPtr lParam, ref bool Handled)
             {
                 var MousePosition = System.Windows.Input.Mouse.GetPosition(this);
                 var InputElement = this.InputHitTest(MousePosition);
-                return default(IntPtr);
+                return default;
             }
         }
     }

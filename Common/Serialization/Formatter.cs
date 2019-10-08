@@ -173,7 +173,7 @@ namespace Ks
 
                     var S = default(Serializer);
                     if (IsGeneric)
-                        S = this.GetSerializer<T>(default(CNullable<T>), true);
+                        S = this.GetSerializer<T>(default, true);
                     else
                         S = this.Get<Serializer>(nameof(Serializer));
 
@@ -236,12 +236,12 @@ namespace Ks
 
             protected internal T Get<T>(string Name)
             {
-                return this.GetImpl<T>(Name, default(CNullable<T>), true);
+                return this.GetImpl<T>(Name, default, true);
             }
 
             protected internal object Get(string Name)
             {
-                return this.GetImpl<object>(Name, default(CNullable<object>), false);
+                return this.GetImpl<object>(Name, default, false);
             }
 
             protected internal void Get<T>(string Name, T Obj)

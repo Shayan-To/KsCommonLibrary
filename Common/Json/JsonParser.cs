@@ -103,14 +103,14 @@ namespace Ks
                 if (this._PeekedToken.HasValue)
                 {
                     var R = this._PeekedToken.Value;
-                    this._PeekedToken = default(Token?);
+                    this._PeekedToken = default;
                     return R;
                 }
 
                 this.SkipWhiteSpace();
 
                 if (this.Index == this.Input.Length)
-                    return default(Token);
+                    return default;
 
                 var Ch = this.Input[this.Index];
 

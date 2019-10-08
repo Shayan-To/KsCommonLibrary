@@ -157,7 +157,7 @@ namespace Ks
 
             protected virtual NavigationData OnNavigateToEmpty()
             {
-                return default(NavigationData);
+                return default;
             }
 
             public TViewModel GetViewModel<TViewModel>() where TViewModel : ViewModel
