@@ -52,7 +52,7 @@ namespace Ks
             public virtual bool Set(TValue Value)
             {
                 var Key = this.KeySelector.Invoke(Value);
-                TValue PValue = default(TValue);
+                var PValue = default(TValue);
 
                 if (this._Dic.TryGetValue(Key, out PValue))
                 {
@@ -88,7 +88,7 @@ namespace Ks
 
             public virtual bool RemoveKey(TKey key)
             {
-                TValue Value = default(TValue);
+                var Value = default(TValue);
                 if (!this._Dic.TryGetValue(key, out Value))
                     return false;
 
@@ -352,7 +352,7 @@ namespace Ks
 
             private bool ICollection_Remove(KeyValuePair<TKey, TValue> item)
             {
-                TValue V = default(TValue);
+                var V = default(TValue);
                 if (!this.TryGetValue(item.Key, out V))
                     return false;
                 if (!object.Equals(V, item.Value))
@@ -382,7 +382,7 @@ namespace Ks
 
             private bool ICollection_Contains(KeyValuePair<TKey, TValue> item)
             {
-                TValue V = default(TValue);
+                var V = default(TValue);
                 if (!this.TryGetValue(item.Key, out V))
                     return false;
                 return object.Equals(V, item.Value);

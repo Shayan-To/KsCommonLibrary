@@ -112,7 +112,7 @@ namespace Ks
                 if (this.Index == this.Input.Length)
                     return default(Token);
 
-                char Ch = this.Input[this.Index];
+                var Ch = this.Input[this.Index];
 
                 if (Array.IndexOf(Operators, Ch) != -1)
                 {
@@ -156,7 +156,7 @@ namespace Ks
                         }
                         else
                         {
-                            char Ch = default(char);
+                            var Ch = default(char);
                             Verify.True(EscapeDic.TryGetValue(this.Input[I], out Ch), "Invalid JSON format. Invalid escape sequence.");
                             Res.Append(Ch);
                         }

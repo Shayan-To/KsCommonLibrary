@@ -19,7 +19,7 @@
                     if (BytesIndex == BytesLength)
                         break;
 
-                    int Ch = default(int);
+                    var Ch = default(int);
                     if (BeginningOfFile & (CharsIndex == (CharsInitialIndex - 1)))
                         Ch = 0xFEFF;
                     else
@@ -104,8 +104,8 @@
                     if ((BytesIndex + I) >= BytesLength)
                         break;
 
-                    int Ch = (B << (I + 1)) >> (I + 1);
-                    for (int J = 1; J < I; J++)
+                    var Ch = (B << (I + 1)) >> (I + 1);
+                    for (var J = 1; J < I; J++)
                     {
                         BytesIndex += 1;
                         B = BytesArray[BytesIndex];

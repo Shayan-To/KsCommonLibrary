@@ -32,7 +32,7 @@ namespace Ks
                         Count = F.Length - 1;
 
                     var R = new StringBuilder();
-                    for (int I = 0; I < Count; I++)
+                    for (var I = 0; I < Count; I++)
                     {
                         if (I > 1)
                             R.Append('>');
@@ -77,7 +77,7 @@ namespace Ks
                     else
                     {
                         var Bl = true;
-                        for (int I = 0; I < Args.Length; I++)
+                        for (var I = 0; I < Args.Length; I++)
                         {
                             if (Bl)
                                 Bl = false;

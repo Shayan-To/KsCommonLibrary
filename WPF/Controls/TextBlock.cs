@@ -139,7 +139,7 @@ namespace Ks
                 {
                     var OldDigits = "0123456789";
                     var NewDigits = "۰۱۲۳۴۵۶۷۸۹";
-                    for (int I = 0; I < 10; I++)
+                    for (var I = 0; I < 10; I++)
                         S = S.Replace(OldDigits[I], NewDigits[I]);
                     return S;
                 }
@@ -147,7 +147,7 @@ namespace Ks
                 {
                     var OldDigits = "0123456789";
                     var NewDigits = "٠١٢٣٤٥٦٧٨٩";
-                    for (int I = 0; I < 10; I++)
+                    for (var I = 0; I < 10; I++)
                         S = S.Replace(OldDigits[I], NewDigits[I]);
                     return S;
                 }

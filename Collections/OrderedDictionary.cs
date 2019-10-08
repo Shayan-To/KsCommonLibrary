@@ -170,7 +170,7 @@ namespace Ks
 
             public int IndexOf(TKey key)
             {
-                for (int I = 0; I < this._Keys.Count; I++)
+                for (var I = 0; I < this._Keys.Count; I++)
                 {
                     if (this.Comparer.Equals(key, this._Keys[I]))
                         return I;

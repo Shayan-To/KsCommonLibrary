@@ -24,7 +24,7 @@ namespace Ks
             public int Compare(T[] x, T[] y)
             {
                 var count = Math.Min(x.Length, y.Length);
-                for (int I = 0; I < count; I++)
+                for (var I = 0; I < count; I++)
                 {
                     var T = this.Comparer.Compare(x[I], y[I]);
                     if (T != 0)
@@ -36,7 +36,7 @@ namespace Ks
             public bool Equals(T[] x, T[] y)
             {
                 var count = Math.Min(x.Length, y.Length);
-                for (int I = 0; I < count; I++)
+                for (var I = 0; I < count; I++)
                 {
                     if (!this.EqualityComparer.Equals(x[I], y[I]))
                         return false;
@@ -47,7 +47,7 @@ namespace Ks
             public int GetHashCode(T[] obj)
             {
                 var R = unchecked((int)0xFAB43DC8);
-                for (int I = 0; I < obj.Length; I++)
+                for (var I = 0; I < obj.Length; I++)
                     R = Utilities.CombineHashCodes(R, this.EqualityComparer.GetHashCode(obj[I]));
                 return R;
             }

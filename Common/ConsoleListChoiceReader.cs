@@ -27,7 +27,7 @@ namespace Ks
                     Choices.Clear();
                     for (var I = 0; I < PageLength; I++)
                     {
-                        T Tmp = default(T);
+                        var Tmp = default(T);
                         if (!this.List.TryGetValue(this.ChoiceOffset + I, out Tmp))
                             break;
                         Choices.Add(Tmp);

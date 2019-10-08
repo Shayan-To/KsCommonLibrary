@@ -76,7 +76,7 @@ namespace Ks
             {
                 var FIX = this.Intervals[(int)Orientation.X];
                 var FPoints = new Point[Points.Count - 1 + 1];
-                for (int I = 0; I < FPoints.Length; I++)
+                for (var I = 0; I < FPoints.Length; I++)
                 {
                     var T = Points[I];
                     var P = ConvertPoint(T.X, T.Y, Orientation.X);
@@ -94,7 +94,7 @@ namespace Ks
                 var FIX = this.Intervals[(int)Orientation.X];
                 var N = 1000;
                 var Points = new Point[N + 1];
-                for (int I = 0; I <= N; I++)
+                for (var I = 0; I <= N; I++)
                 {
                     var X = FIX.Start + ((FIX.Length / N) * I);
                     var P = ConvertPoint(X, Func.Invoke(X), Orientation.X);

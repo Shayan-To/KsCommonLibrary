@@ -531,7 +531,7 @@ namespace Ks
             public static IEnumerable<T> DistinctNeighbours<T>(this IEnumerable<T> Self, IEqualityComparer<T> Comparer)
             {
                 var Bl = true;
-                T P = default(T);
+                var P = default(T);
 
                 foreach (var I in Self)
                 {
@@ -642,7 +642,7 @@ namespace Ks
 
             public static void AddRange<T>(this IList<T> Self, IEnumerable<T> Items)
             {
-                foreach (T I in Items)
+                foreach (var I in Items)
                     Self.Add(I);
             }
 
@@ -730,8 +730,8 @@ namespace Ks
 
             public static T MaxOrDefault<T>(this IEnumerable<T> Self, Func<T, int, double?> Selector)
             {
-                double? M = default(double?);
-                T R = default(T);
+                var M = default(double?);
+                var R = default(T);
                 var Ind = 0;
                 foreach (var I in Self)
                 {
@@ -748,8 +748,8 @@ namespace Ks
 
             public static T MinOrDefault<T>(this IEnumerable<T> Self, Func<T, int, double?> Selector)
             {
-                double? M = default(double?);
-                T R = default(T);
+                var M = default(double?);
+                var R = default(T);
                 var Ind = 0;
                 foreach (var I in Self)
                 {
@@ -766,8 +766,8 @@ namespace Ks
 
             public static T MaxOrDefault<T>(this IEnumerable<T> Self, Func<T, int, long?> Selector)
             {
-                long? M = default(long?);
-                T R = default(T);
+                var M = default(long?);
+                var R = default(T);
                 var Ind = 0;
                 foreach (var I in Self)
                 {
@@ -784,8 +784,8 @@ namespace Ks
 
             public static T MinOrDefault<T>(this IEnumerable<T> Self, Func<T, int, long?> Selector)
             {
-                long? M = default(long?);
-                T R = default(T);
+                var M = default(long?);
+                var R = default(T);
                 var Ind = 0;
                 foreach (var I in Self)
                 {
@@ -1204,7 +1204,7 @@ namespace Ks
 
                 var TotalN = 0;
                 var N = 0;
-                byte[] Buf = default(byte[]);
+                var Buf = default(byte[]);
 
                 do
                 {
@@ -1273,7 +1273,7 @@ namespace Ks
             public static string GetRegexMatch(this System.IO.TextReader Self, Regex Regex)
             {
                 var Text = new System.Text.StringBuilder();
-                char[] Buffer = new char[256];
+                var Buffer = new char[256];
 
                 while (!Regex.IsMatch(Text.ToString()))
                 {

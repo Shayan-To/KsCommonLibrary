@@ -59,7 +59,7 @@ namespace Ks
                     Id = this.CurrentId;
                 }
 
-                (EventWaitHandle WaitHandle, Exception Exception) WaitingData = default((EventWaitHandle WaitHandle, Exception Exception));
+                var WaitingData = default((EventWaitHandle WaitHandle, Exception Exception));
 
                 using (var WaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset))
                 {

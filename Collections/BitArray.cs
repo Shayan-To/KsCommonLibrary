@@ -79,7 +79,7 @@ namespace Ks
             {
                 Verify.True((0 <= Index) & (Index < this.Count), "Index out of range.");
 
-                int B = (int)this._Bytes[Index >> 3];
+                var B = (int)this._Bytes[Index >> 3];
                 var I = Index & 7;
                 B = B | (1 << I);
                 this._Bytes[Index >> 3] = (byte)B;
@@ -89,7 +89,7 @@ namespace Ks
             {
                 Verify.True((0 <= Index) & (Index < this.Count), "Index out of range.");
 
-                int B = (int)this._Bytes[Index >> 3];
+                var B = (int)this._Bytes[Index >> 3];
                 var I = Index & 7;
                 B = B & ~(1 << I);
                 this._Bytes[Index >> 3] = (byte)B;
@@ -109,7 +109,7 @@ namespace Ks
                 {
                     Verify.True((0 <= index) & (index < this.Count), "Index out of range.");
 
-                    int B = (int)this._Bytes[index >> 3];
+                    var B = (int)this._Bytes[index >> 3];
                     var I = index & 7;
                     B = (B & ~(1 << I)) | ((value ? 1 : 0) << I);
                     this._Bytes[index >> 3] = (byte)B;

@@ -123,9 +123,9 @@ namespace Ks
 
                 var SI = index;
                 var Bl = false;
-                for (int I = index; I <= index + count; I++)
+                for (var I = index; I <= index + count; I++)
                 {
-                    char Ch = default(char);
+                    var Ch = default(char);
                     if (I < (index + count))
                         Ch = buffer[I];
                     else
@@ -267,9 +267,9 @@ namespace Ks
 
                 var SI = index;
                 var Bl = false;
-                for (int I = index; I <= index + count; I++)
+                for (var I = index; I <= index + count; I++)
                 {
-                    char Ch = default(char);
+                    var Ch = default(char);
                     if (I < (index + count))
                         Ch = buffer[I];
                     else

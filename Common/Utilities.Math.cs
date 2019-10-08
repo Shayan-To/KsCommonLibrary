@@ -462,7 +462,7 @@ namespace Ks
                     var T = 0;
                     for (var I = 0; I < N.Length; I++)
                     {
-                        int Cur = (int)N[I];
+                        var Cur = (int)N[I];
 
                         J = 0;
                         var Size = DigitBits - Offset;

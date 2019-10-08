@@ -16,7 +16,7 @@ namespace Ks
             public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
             {
                 var S = string.Format(Culture, "{0}", Value);
-                for (int I = 0; I < S.Length; I++)
+                for (var I = 0; I < S.Length; I++)
                 {
                     if (S[I] != '0')
                         return S.Substring(I);

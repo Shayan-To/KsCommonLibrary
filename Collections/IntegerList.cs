@@ -92,7 +92,7 @@ namespace Ks
 
             public void CopyTo(int[] Array, int ArrayIndex)
             {
-                for (int I = this._Start; I < this._End; I += this._Step)
+                for (var I = this._Start; I < this._End; I += this._Step)
                 {
                     Array[ArrayIndex] = I;
                     ArrayIndex += 1;
@@ -101,7 +101,7 @@ namespace Ks
 
             public IEnumerator<int> GetEnumerator()
             {
-                for (int I = this._Start; I < this._End; I += this._Step)
+                for (var I = this._Start; I < this._End; I += this._Step)
                     yield return I;
             }
 

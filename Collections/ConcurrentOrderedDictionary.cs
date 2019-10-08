@@ -243,7 +243,7 @@ namespace Ks
 
             private int IList_IndexOf(KeyValuePair<TKey, TValue> item)
             {
-                int R = default(int);
+                var R = default(int);
                 TValue T;
 
                 lock (this.LockObject)

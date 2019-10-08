@@ -15,7 +15,7 @@ namespace Ks
                 foreach (UIElement C in this.Children)
                 {
                     C.Measure(AvailableSize);
-                    Size Sz = C.DesiredSize;
+                    var Sz = C.DesiredSize;
 
                     if (MaxHeight < Sz.Height)
                         MaxHeight = Sz.Height;
@@ -31,7 +31,7 @@ namespace Ks
                 foreach (UIElement C in this.Children)
                 {
                     var Popup = C as Popup;
-                    Rect? Rect = default(Rect?);
+                    var Rect = default(Rect?);
 
                     if (Popup != null)
                         Rect = Popup.ArrangeCallBack?.Invoke(this, FinalSize, Popup.DesiredSize);

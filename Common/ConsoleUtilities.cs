@@ -43,7 +43,7 @@ namespace Ks
             {
                 WriteColored(Prompt, ConsoleColor.Green);
 
-                ConsoleKey K = default(ConsoleKey);
+                var K = default(ConsoleKey);
                 do
                     K = Console.ReadKey(true).Key;
                 while (!((K == ConsoleKey.Y) | (K == ConsoleKey.N)));

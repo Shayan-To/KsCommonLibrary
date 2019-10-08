@@ -62,14 +62,14 @@ namespace Ks
                 {
                     case NotifyCollectionChangedAction.Add:
                         {
-                            for (int I = 0; I < E.NewItems.Count; I++)
+                            for (var I = 0; I < E.NewItems.Count; I++)
                                 this.Clone.Insert(E.NewStartingIndex + I, E.NewItems[I]);
                             break;
                         }
 
                     case NotifyCollectionChangedAction.Remove:
                         {
-                            for (int I = E.OldItems.Count - 1; I >= 0; I--)
+                            for (var I = E.OldItems.Count - 1; I >= 0; I--)
                                 this.Clone.RemoveAt(E.OldStartingIndex + I);
                             break;
                         }
@@ -78,18 +78,18 @@ namespace Ks
                         {
                             if (E.NewStartingIndex < E.OldStartingIndex)
                             {
-                                for (int I = 0; I < E.NewItems.Count; I++)
+                                for (var I = 0; I < E.NewItems.Count; I++)
                                     this.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I);
                             }
                             else
-                                for (int I = E.NewItems.Count - 1; I >= 0; I--)
+                                for (var I = E.NewItems.Count - 1; I >= 0; I--)
                                     this.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I);
                             break;
                         }
 
                     case NotifyCollectionChangedAction.Replace:
                         {
-                            for (int I = 0; I < E.NewItems.Count; I++)
+                            for (var I = 0; I < E.NewItems.Count; I++)
                                 this.Clone[E.NewStartingIndex + I] = E.NewItems[I];
                             break;
                         }

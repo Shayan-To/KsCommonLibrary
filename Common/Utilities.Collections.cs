@@ -38,7 +38,7 @@ namespace Ks
 
                 public static IEnumerable<T> Repeat<T>(T I1, int Count)
                 {
-                    for (int I = 0; I < Count; I++)
+                    for (var I = 0; I < Count; I++)
                         yield return I1;
                 }
 
@@ -75,7 +75,7 @@ namespace Ks
                     foreach (var I1 in Items1)
                     {
                         var Key = KeySelector1.Invoke(I1);
-                        T2 I2 = default(T2);
+                        var I2 = default(T2);
                         if (Dic.TryGetValue(Key, out I2))
                         {
                             Res.Add(new JoinElement<T1, T2, TKey>(Key, JoinDirection.Both, I1, I2));

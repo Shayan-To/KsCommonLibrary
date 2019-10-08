@@ -46,7 +46,7 @@ namespace Ks
                 if (!IsGeneric & Obj.HasValue)
                     Type = Obj.Value.GetType();
 
-                for (int I = this.Serializers.Count - 1; I >= 0; I--)
+                for (var I = this.Serializers.Count - 1; I >= 0; I--)
                 {
                     var S = this.Serializers[I];
 
@@ -171,14 +171,14 @@ namespace Ks
                         this.GetCache.Add(Id, null);
                     }
 
-                    Serializer S = default(Serializer);
+                    var S = default(Serializer);
                     if (IsGeneric)
                         S = this.GetSerializer<T>(default(CNullable<T>), true);
                     else
                         S = this.Get<Serializer>(nameof(Serializer));
 
                     var ST = S as Serializer<T>;
-                    T R = default(T);
+                    var R = default(T);
 
                     if (IsGeneric & ST != null)
                     {

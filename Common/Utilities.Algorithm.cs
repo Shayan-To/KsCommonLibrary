@@ -181,7 +181,7 @@ namespace Ks
                     {
                         var I = 0;
                         var J = 0;
-                        (int, int) Cur = default((int, int));
+                        var Cur = default((int, int));
                         do
                         {
                             Cur = Dyn[I, J];

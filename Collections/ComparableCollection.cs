@@ -39,7 +39,7 @@ namespace Ks
             {
                 var O = (ComparableCollection<T>)Other;
                 var count = Math.Min(this.Count, O.Count);
-                for (int I = 0; I < count; I++)
+                for (var I = 0; I < count; I++)
                 {
                     var C = Comparer.Compare(this[I], O[I]);
                     if (C != 0)
@@ -57,7 +57,7 @@ namespace Ks
 
                 if (this.Count != O.Count)
                     return false;
-                for (int I = 0; I < this.Count; I++)
+                for (var I = 0; I < this.Count; I++)
                 {
                     if (!Comparer.Equals(this[I], O[I]))
                         return false;
@@ -70,7 +70,7 @@ namespace Ks
             {
                 var Bl = true;
                 var R = 0;
-                foreach (T I in this)
+                foreach (var I in this)
                 {
                     if (Bl)
                     {

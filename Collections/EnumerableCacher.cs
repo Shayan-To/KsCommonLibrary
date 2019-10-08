@@ -25,7 +25,7 @@ namespace Ks
             {
                 get
                 {
-                    T Res = default(T);
+                    var Res = default(T);
                     Verify.TrueArg(this.TryGetValue(Index, out Res), nameof(Index), "Index out of range.");
                     return Res;
                 }
@@ -34,7 +34,7 @@ namespace Ks
             public override IEnumerator<T> GetEnumerator()
             {
                 var I = 0;
-                T T = default(T);
+                var T = default(T);
                 while (this.TryGetValue(I, out T))
                 {
                     yield return T;

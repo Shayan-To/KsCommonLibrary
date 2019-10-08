@@ -10,7 +10,7 @@ namespace Ks
             {
                 if (Start == Mid || this.Comparer.Compare(this.List[Mid - 1], this.List[Mid]) <= 0)
                     return;
-                for (int I = 0; I < Mid - Start; I++)
+                for (var I = 0; I < Mid - Start; I++)
                     this.Temp[I] = this.List[I + Start];
 
                 Merge(this.List, Start, this.Temp, 0, Mid - Start, this.List, Mid, End - Mid, this.Comparer);

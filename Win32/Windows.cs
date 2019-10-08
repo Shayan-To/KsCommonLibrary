@@ -53,7 +53,7 @@ namespace Ks
 
             public static Rect GetWindowRect(IntPtr hWnd)
             {
-                Rect R = default(Rect);
+                var R = default(Rect);
                 Unsafe.GetWindowRect(hWnd, out R);
                 Common.VerifyError();
                 return R;
@@ -88,7 +88,7 @@ namespace Ks
 
             public static (uint ProcessId, uint ThreadId) GetWindowThreadProcessId(IntPtr hwnd)
             {
-                uint ProcessId = 0u;
+                var ProcessId = 0u;
                 var ThreadId = Unsafe.GetWindowThreadProcessId(hwnd, out ProcessId);
                 Common.VerifyError();
                 return (ProcessId, ThreadId);

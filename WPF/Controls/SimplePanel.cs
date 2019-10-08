@@ -15,7 +15,7 @@ namespace Ks
                 foreach (UIElement C in this.Children)
                 {
                     C.Measure(AvailableSize);
-                    Size Sz = C.DesiredSize;
+                    var Sz = C.DesiredSize;
 
                     if (MaxHeight < Sz.Height)
                         MaxHeight = Sz.Height;

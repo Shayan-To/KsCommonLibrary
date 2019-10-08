@@ -207,7 +207,7 @@ namespace Ks
                     char T1 = default(char), T2 = default(char);
 
                     var Res = new StringBuilder();
-                    for (int I = 0; I < Input.Length; I++)
+                    for (var I = 0; I < Input.Length; I++)
                     {
                         T2 = Input[I];
 
@@ -397,7 +397,7 @@ namespace Ks
                 public static string UnescapeNewLine(string Str)
                 {
                     var Res = new StringBuilder();
-                    for (int I = 0; I < Str.Length; I++)
+                    for (var I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -459,7 +459,7 @@ namespace Ks
                     var Res = new StringBuilder("{");
                     var Bl = true;
 
-                    foreach (T I in Enumerable)
+                    foreach (var I in Enumerable)
                     {
                         if (Bl)
                             Bl = false;

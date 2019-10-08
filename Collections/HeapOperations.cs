@@ -24,7 +24,7 @@ namespace Ks
                         break;
                     var Min = List[MinIndex];
                     var I = RightChild(Index);
-                    T T = default(T);
+                    var T = default(T);
                     if (I < Count)
                     {
                         T = List[I];
@@ -50,7 +50,7 @@ namespace Ks
 
             public void MakeHeap(IList<T> List, int Count)
             {
-                for (int I = Parent(Count - 1); I >= 0; I--)
+                for (var I = Parent(Count - 1); I >= 0; I--)
                     this.Heapify(List, Count, I);
             }
 

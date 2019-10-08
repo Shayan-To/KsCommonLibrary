@@ -26,7 +26,7 @@ namespace Ks
             }
             public virtual int IndexOf(T item)
             {
-                for (int I = 0; I < this.Count; I++)
+                for (var I = 0; I < this.Count; I++)
                 {
                     if (object.Equals(item, this[I]))
                         return I;
@@ -43,7 +43,7 @@ namespace Ks
             {
                 Verify.TrueArg(array.Rank == 1, nameof(array), "Array's rank must be 1.");
                 Verify.TrueArg((index + this.Count) <= array.Length, nameof(array), "Array does not have enough length to copy the collection.");
-                for (int I = 0; I < this.Count; I++)
+                for (var I = 0; I < this.Count; I++)
                 {
                     array.SetValue(this[I], index);
                     index += 1;

@@ -86,7 +86,7 @@ namespace Ks
                 {
                     var Res = new StringBuilder("{");
 
-                    foreach (string Str in List)
+                    foreach (var Str in List)
                     {
                         foreach (var Ch in Str)
                             Res.Append(EscapeChar(Ch, @",\{}"));
@@ -104,7 +104,7 @@ namespace Ks
                 {
                     var Res = new List<string>();
                     var R = new StringBuilder();
-                    for (int I = 0; I < Str.Length; I++)
+                    for (var I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -151,7 +151,7 @@ namespace Ks
                 {
                     var Res = new StringBuilder();
 
-                    foreach (string Str in List)
+                    foreach (var Str in List)
                     {
                         foreach (var Ch in Str)
                             Res.Append(EscapeChar(Ch, @"\"));
@@ -166,7 +166,7 @@ namespace Ks
                 {
                     var Res = new List<string>();
                     var R = new StringBuilder();
-                    for (int I = 0; I < Str.Length; I++)
+                    for (var I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -231,7 +231,7 @@ namespace Ks
                     var Res = new OrderedDictionary<string, string>();
                     var R = new StringBuilder();
                     string Key = null;
-                    for (int I = 0; I < Str.Length; I++)
+                    for (var I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -307,7 +307,7 @@ namespace Ks
                     var Res = new OrderedDictionary<string, string>();
                     var R = new StringBuilder();
                     string Key = null;
-                    for (int I = 0; I < Str.Length; I++)
+                    for (var I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 

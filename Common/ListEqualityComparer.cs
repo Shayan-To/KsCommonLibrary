@@ -19,7 +19,7 @@ namespace Ks
             {
                 if (x.Count != y.Count)
                     return false;
-                for (int I = 0; I < x.Count; I++)
+                for (var I = 0; I < x.Count; I++)
                 {
                     if (this.EqualityComparer.Equals(x[I], y[I]))
                         return false;
@@ -30,7 +30,7 @@ namespace Ks
             public override int GetHashCode(IList<T> obj)
             {
                 var Hash = 0;
-                for (int I = 0; I < obj.Count; I++)
+                for (var I = 0; I < obj.Count; I++)
                     Hash = Utilities.CombineHashCodes(Hash, I, this.EqualityComparer.GetHashCode(obj[I]));
                 return Hash;
             }

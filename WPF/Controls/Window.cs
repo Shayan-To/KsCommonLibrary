@@ -109,10 +109,10 @@ namespace Ks
             internal void UpdateDims()
             {
                 var DimmedSeen = false;
-                foreach (int I in this.ShelterLayers.Keys.Reverse())
+                foreach (var I in this.ShelterLayers.Keys.Reverse())
                 {
                     var Layer = this.ShelterLayers[I];
-                    for (int J = Layer.Count - 1; J >= 0; J--)
+                    for (var J = Layer.Count - 1; J >= 0; J--)
                     {
                         var Popup = Layer[J];
                         if (Popup.HasShelter)

@@ -70,7 +70,7 @@ namespace Ks
 
                     foreach (var t in this.GetType().GetBaseTypes())
                     {
-                        PropertyMetadata M = default(PropertyMetadata);
+                        var M = default(PropertyMetadata);
                         if (MetadataDic[t].TryGetValue(PropertyName, out M))
                         {
                             var Str = M.ToStringCallback.Invoke(Source);

@@ -124,7 +124,7 @@ namespace Ks
 
                 C1.ClearI();
 
-                foreach (T I in C1Clone)
+                foreach (var I in C1Clone)
                 {
                     C2.AddI(I);
                     C2.OnCollectionChanged(NotifyCollectionChangedEventArgs<T>.CreateAdd(I));
