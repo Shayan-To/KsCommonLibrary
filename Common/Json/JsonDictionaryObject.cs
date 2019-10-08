@@ -73,7 +73,7 @@ namespace Ks
             public bool TryGetValue(string Key, out JsonObject Value)
             {
                 var T = this.List.BinarySearch(new KeyValuePair<string, JsonObject>(Key, null), CompareKeyHash);
-                for (var I = T.StartIndex; I < T.StartIndex + T.Length; I++)
+                for (var I = T.Index; I < T.Index + T.Count; I++)
                 {
                     if (this.List[I].Key == Key)
                     {

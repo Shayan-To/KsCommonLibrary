@@ -463,14 +463,19 @@ namespace Ks
                 return new SubList<T>(self, index, count);
             }
 
-            public static (int StartIndex, int Length) BinarySearch<T>(this IReadOnlyList<T> Self, T Value)
+            public static (int Index, int Count) BinarySearch<T>(this IReadOnlyList<T> Self, T Value)
             {
                 return Self.BinarySearch(Value, Comparer<T>.Default);
             }
 
-            public static (int StartIndex, int Length) BinarySearch<T>(this IReadOnlyList<T> Self, T Value, IComparer<T> Comp)
+            public static (int Index, int Count) BinarySearch<T>(this IReadOnlyList<T> Self, T Value, IComparer<T> Comp)
             {
-                return Self.BinarySearch(Value, Comp.Compare);
+                return Self.BinarySearch(Value, new Comparison<T, T>(Comp.Compare));
+            }
+
+            public static (int Index, int Count) BinarySearch<T>(this IReadOnlyList<T> Self, T Value, Comparison<T> Comp)
+            {
+                return Self.BinarySearch(Value, new Comparison<T, T>(Comp));
             }
 
             /// <summary>
@@ -481,7 +486,7 @@ namespace Ks
         /// Start index being the index of fist occurrance of Value, and length being the count of its occurrances.
         /// If no occurrance of Value has been found, start index will be at the first element larger than Value.
         /// </returns>
-            public static (int StartIndex, int Length) BinarySearch<T>(this IReadOnlyList<T> Self, T Value, Comparison<T> Comp)
+            public static (int Index, int Count) BinarySearch<T, TValue>(this IReadOnlyList<T> Self, TValue Value, Comparison<T, TValue> Comp)
             {
                 var Count = Utilities.Math.LeastPowerOfTwoOnMin(Self.Count + 1) / 2;
                 var Offset1 = -1;
@@ -1373,5 +1378,8 @@ namespace Ks
                 return !B1 | B2;
             }
         }
+
+        public delegate int Comparison<in T1, in T2>(T1 x, T2 y);
+
     }
 }
