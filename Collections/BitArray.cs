@@ -40,16 +40,14 @@ namespace Ks
 
             public void Not()
             {
-                var loopTo = this._Bytes.Length - 1;
-                for (var I = 0; I <= loopTo; I++)
+                for (var I = 0; I < this._Bytes.Length; I++)
                     this._Bytes[I] = (byte)~this._Bytes[I];
             }
 
             /// <param name="Amount">Shift left if positive, right if negative.</param>
             public void Shift(int Amount)
             {
-                var loopTo = this._Bytes.Length - 1;
-                for (var I = 0; I <= loopTo; I++)
+                for (var I = 0; I < this._Bytes.Length; I++)
                     this._Bytes[I] = (byte)~this._Bytes[I];
                 this._Bytes[this._Bytes.Length - 1] = (byte)(this._Bytes[this._Bytes.Length - 1] & ((1 << this.LastByteBitCount()) - 1));
             }
@@ -61,19 +59,18 @@ namespace Ks
 
             public IEnumerator<bool> GetEnumerator()
             {
-                var loopTo = this._Bytes.Length - 2;
-                for (var I = 0; I <= loopTo; I++)
+                for (var I = 0; I < this._Bytes.Length - 1; I++)
                 {
                     var B = this._Bytes[I];
-                    for (var J = 0; J <= 7; J++)
+                    for (var J = 0; J < 8; J++)
                         yield return (B >> J & 1) == 1;
                 }
 
                 if (true)
                 {
                     var B = this._Bytes[this._Bytes.Length - 1];
-                    var loopTo1 = this.LastByteBitCount() - 1;
-                    for (var J = 0; J <= loopTo1; J++)
+                    var bits = this.LastByteBitCount();
+                    for (var J = 0; J < bits; J++)
                         yield return (B >> J & 1) == 1;
                 }
             }

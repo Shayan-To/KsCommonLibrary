@@ -13,8 +13,7 @@ namespace Ks
             public override void SetT(FormatterSetProxy Formatter, T[] Obj)
             {
                 Formatter.Set(nameof(Obj.Length), Obj.Length);
-                var loopTo = Obj.Length - 1;
-                for (int I = 0; I <= loopTo; I++)
+                for (int I = 0; I < Obj.Length; I++)
                     Formatter.Set(null, Obj[I]);
             }
 
@@ -24,8 +23,7 @@ namespace Ks
                 Length = Formatter.Get<int>(nameof(Length));
 
                 var R = new T[Length - 1 + 1];
-                var loopTo = Length - 1;
-                for (int I = 0; I <= loopTo; I++)
+                for (int I = 0; I < Length; I++)
                     R[I] = Formatter.Get<T>(null);
 
                 return R;

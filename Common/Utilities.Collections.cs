@@ -26,8 +26,8 @@ namespace Ks
                 public static IEnumerable<int> Range(int Start, int Length, int Step = 1)
                 {
                     Verify.TrueArg(Step != 0, "Step");
-                    var loopTo = (Start + Length) - ((Length < 0) ? -1 : 1);
-                    for (Start = Start; Start <= loopTo; Start += Step)
+                    var End = Start + Length;
+                    for (; Start != End; Start += Step)
                         yield return Start;
                 }
 
@@ -38,8 +38,7 @@ namespace Ks
 
                 public static IEnumerable<T> Repeat<T>(T I1, int Count)
                 {
-                    var loopTo = Count;
-                    for (int I = 1; I <= loopTo; I++)
+                    for (int I = 0; I < Count; I++)
                         yield return I1;
                 }
 

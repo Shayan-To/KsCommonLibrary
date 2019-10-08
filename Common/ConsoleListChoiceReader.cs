@@ -25,7 +25,7 @@ namespace Ks
                 do
                 {
                     Choices.Clear();
-                    for (var I = 0; I <= PageLength - 1; I++)
+                    for (var I = 0; I < PageLength; I++)
                     {
                         T Tmp = default(T);
                         if (!this.List.TryGetValue(this.ChoiceOffset + I, out Tmp))
@@ -38,8 +38,7 @@ namespace Ks
                     var NextPagePossible = this.List.TryGetValue(this.ChoiceOffset + PageLength, out argValue);
                     Console.WriteLine();
                     Console.WriteLine();
-                    var loopTo = Choices.Count - 1;
-                    for (var I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < Choices.Count; I++)
                     {
                         ConsoleUtilities.WriteColored($"{I + 1,4} : {this.Selector.Invoke(Choices[I])}", ConsoleColor.Cyan);
                         Console.WriteLine();

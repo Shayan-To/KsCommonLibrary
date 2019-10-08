@@ -104,8 +104,7 @@ namespace Ks
                 {
                     var Res = new List<string>();
                     var R = new StringBuilder();
-                    var loopTo = Str.Length - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (int I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -167,8 +166,7 @@ namespace Ks
                 {
                     var Res = new List<string>();
                     var R = new StringBuilder();
-                    var loopTo = Str.Length - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (int I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -233,8 +231,7 @@ namespace Ks
                     var Res = new OrderedDictionary<string, string>();
                     var R = new StringBuilder();
                     string Key = null;
-                    var loopTo = Str.Length - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (int I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -310,8 +307,7 @@ namespace Ks
                     var Res = new OrderedDictionary<string, string>();
                     var R = new StringBuilder();
                     string Key = null;
-                    var loopTo = Str.Length - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (int I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 

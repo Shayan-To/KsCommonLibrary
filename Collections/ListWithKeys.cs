@@ -208,8 +208,7 @@ namespace Ks
             {
                 var Key = new Key<TK>(this, KeySelector);
                 var Index = CreateInstanceDictionary.Create<object, List<T>>();
-                var loopTo = this.List.Count - 1;
-                for (var I = 0; I <= loopTo; I++)
+                for (var I = 0; I < this.List.Count; I++)
                 {
                     var Elem = this.List[I];
                     var K = KeySelector.Invoke(Elem);

@@ -247,16 +247,15 @@ namespace Ks
                 this.UpdateCanNavigateBack();
 
                 var I = 0;
-                var loopTo = Math.Min(NewFrame.Count, OldFrame.Count) - 1;
-                for (I = I; I <= loopTo; I++)
+                var count = Math.Min(NewFrame.Count, OldFrame.Count);
+                for (; I < count; I++)
                 {
                     if (NewFrame[I] != OldFrame[I])
                         break;
                 }
 
                 var NavigationEventArgs = new NavigationEventArgs(NavigationType);
-                var loopTo1 = I;
-                for (var J = OldFrame.Count - 1; J >= loopTo1; J += -1)
+                for (var J = OldFrame.Count - 1; J >= I; J--)
                 {
                     var VM = OldFrame[J];
 
@@ -267,8 +266,7 @@ namespace Ks
                     VM.OnNavigatedFrom(NavigationEventArgs);
                 }
 
-                var loopTo2 = NewFrame.Count;
-                for (var J = I; J <= loopTo2; J++)
+                for (var J = I; J <= NewFrame.Count; J++)
                 {
                     var Parent = NewFrame[J - 1] as NavigationViewModel;
                     var Current = (J != NewFrame.Count) ? NewFrame[J] : null;

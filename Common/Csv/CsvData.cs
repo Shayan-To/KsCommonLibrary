@@ -77,8 +77,7 @@
                 foreach (var E in this.Entries)
                 {
                     var Bl = true;
-                    var loopTo = ColsCount - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (int I = 0; I < ColsCount; I++)
                     {
                         if (Bl)
                             Bl = false;

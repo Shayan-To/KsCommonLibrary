@@ -44,8 +44,7 @@ namespace Ks
 
             public bool TryGetValue(int Index, out T Value)
             {
-                var loopTo = Index;
-                for (var I = this.List.Count; I <= loopTo; I++)
+                for (var I = this.List.Count; I <= Index; I++)
                 {
                     if (!this.Enumerator.MoveNext())
                     {

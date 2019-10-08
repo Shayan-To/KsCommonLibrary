@@ -20,8 +20,7 @@ namespace Ks
                 public static (double Value, string Prefix) GetPrefixedRepresentation(double Value, IReadOnlyList<(string Prefix, int Multiplier, Interval AcceptInterval)> Prefixes)
                 {
                     var I = 0;
-                    var loopTo = Prefixes.Count - 1;
-                    for (I = 0; I <= loopTo; I++)
+                    for (I = 0; I < Prefixes.Count; I++)
                     {
                         if (string.IsNullOrEmpty(Prefixes[I].Prefix))
                             break;
@@ -69,9 +68,8 @@ namespace Ks
                     var Ticks = Time.Ticks;
                     // We will start from the greatest unit, and pick at most Count of them with non-zero Value.
                     // ToDo If ticks is negative, the greatest unit will always be non-zero, even if not necessary. (-1 days 23 hours, instead of -1 hours)
-                    var I = 0;
-                    var loopTo = Start + 1;
-                    for (I = Units.Length - 1; I >= loopTo; I += -1)
+                    var I = Units.Length - 1;
+                    for (; I > Start; I--)
                     {
                         var Unit = Units[I];
                         var UnitTicks = Unit.Item2.Ticks;

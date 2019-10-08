@@ -114,8 +114,7 @@ namespace Ks
                 if (this.InnerList.Count <= Index)
                 {
                     NewItems = new List<List>();
-                    var loopTo = Index;
-                    for (int I = this.InnerList.Count; I <= loopTo; I++)
+                    for (int I = this.InnerList.Count; I <= Index; I++)
                     {
                         T = this.InstantiateList();
                         this.InnerList.Add(T);

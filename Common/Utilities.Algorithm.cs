@@ -139,9 +139,9 @@ namespace Ks
                     // 2 -> First index has +1?
                     // 4 -> Second index has +1?
 
-                    for (var I = M - 1; I >= 0; I += -1)
+                    for (var I = M - 1; I >= 0; I--)
                     {
-                        for (var J = N - 1; J >= 0; J += -1)
+                        for (var J = N - 1; J >= 0; J--)
                         {
                             var Length = ValueFunction.Invoke(List1[I], List2[J]);
                             var Mode = 1;
@@ -221,11 +221,9 @@ namespace Ks
                     // ToDo Output the operations as well.
 
                     var Dyn = new int[L1.Count + 1, L2.Count + 1];
-                    var loopTo = L1.Count;
-                    for (var I = 0; I <= loopTo; I++)
+                    for (var I = 0; I <= L1.Count; I++)
                     {
-                        var loopTo1 = L2.Count;
-                        for (var J = 0; J <= loopTo1; J++)
+                        for (var J = 0; J <= L2.Count; J++)
                         {
                             var Cost = int.MaxValue;
 

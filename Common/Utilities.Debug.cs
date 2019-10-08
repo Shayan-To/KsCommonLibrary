@@ -32,8 +32,7 @@ namespace Ks
                         Count = F.Length - 1;
 
                     var R = new StringBuilder();
-                    var loopTo = Count;
-                    for (int I = 1; I <= loopTo; I++)
+                    for (int I = 0; I < Count; I++)
                     {
                         if (I > 1)
                             R.Append('>');
@@ -78,8 +77,7 @@ namespace Ks
                     else
                     {
                         var Bl = true;
-                        var loopTo = Args.Length - 1;
-                        for (int I = 0; I <= loopTo; I++)
+                        for (int I = 0; I < Args.Length; I++)
                         {
                             if (Bl)
                                 Bl = false;

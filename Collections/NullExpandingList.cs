@@ -42,8 +42,7 @@ namespace Ks
                 }
                 set
                 {
-                    var loopTo = Index;
-                    for (int I = this.List.Count; I <= loopTo; I++)
+                    for (int I = this.List.Count; I <= Index; I++)
                         this.List.Add(default(T));
                     this.List[Index] = value;
                 }

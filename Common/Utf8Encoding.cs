@@ -14,8 +14,7 @@
                 var T = new byte[6];
                 if (BeginningOfFile)
                     CharsIndex -= 1;
-                var loopTo = CharsLenght - 1;
-                for (CharsIndex = CharsIndex; CharsIndex <= loopTo; CharsIndex++)
+                for (; CharsIndex < CharsLenght; CharsIndex++)
                 {
                     if (BytesIndex == BytesLength)
                         break;
@@ -51,7 +50,7 @@
                     if ((BytesIndex + I) >= BytesLength)
                         break;
 
-                    for (I = I - 1; I >= 0; I += -1)
+                    for (I -= 1; I >= 0; I--)
                     {
                         BytesArray[BytesIndex] = T[I];
                         BytesIndex += 1;
@@ -75,8 +74,7 @@
 
                 try
                 {
-                var loopTo = BytesLength - 1;
-                for (BytesIndex = BytesIndex; BytesIndex <= loopTo; BytesIndex++)
+                for (; BytesIndex < BytesLength; BytesIndex++)
                 {
                     if (CharsIndex == CharsLength)
                         break;
@@ -107,8 +105,7 @@
                         break;
 
                     int Ch = (B << (I + 1)) >> (I + 1);
-                    var loopTo1 = I - 1;
-                    for (int J = 1; J <= loopTo1; J++)
+                    for (int J = 1; J < I; J++)
                     {
                         BytesIndex += 1;
                         B = BytesArray[BytesIndex];

@@ -378,8 +378,7 @@ namespace Ks
 
                     var Res = 0L;
                     var Base = Digits.Length;
-                    var loopTo = N.Length - 1;
-                    for (I = I; I <= loopTo; I++)
+                    for (; I < N.Length; I++)
                     {
                         var T = Array.IndexOf(Digits, N[I]);
                         Verify.False(T == -1, $"Invalid digit at index {I}.");
@@ -414,8 +413,7 @@ namespace Ks
 
                     var Res = 0UL;
                     var Base = (uint)Digits.Length;
-                    var loopTo = N.Length - 1;
-                    for (I = I; I <= loopTo; I++)
+                    for (; I < N.Length; I++)
                     {
                         var T = Array.IndexOf(Digits, N[I]);
                         Verify.False(T == -1, $"Invalid digit at index {I}.");
@@ -462,8 +460,7 @@ namespace Ks
 
                     var J = 0;
                     var T = 0;
-                    var loopTo = N.Length - 1;
-                    for (var I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < N.Length; I++)
                     {
                         int Cur = (int)N[I];
 
@@ -509,8 +506,7 @@ namespace Ks
 
                     var J = 0;
                     var T = 0;
-                    var loopTo = N.Length - 1;
-                    for (var I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < N.Length; I++)
                     {
                         var Cur = Array.IndexOf(Digits, N[I]);
                         Verify.False(Cur == -1, $"Invalid digit at index {I}.");

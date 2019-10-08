@@ -38,8 +38,8 @@ namespace Ks
             public int CompareTo(object Other, System.Collections.IComparer Comparer)
             {
                 var O = (ComparableCollection<T>)Other;
-                var loopTo = Math.Min(this.Count, O.Count) - 1;
-                for (int I = 0; I <= loopTo; I++)
+                var count = Math.Min(this.Count, O.Count);
+                for (int I = 0; I < count; I++)
                 {
                     var C = Comparer.Compare(this[I], O[I]);
                     if (C != 0)
@@ -57,8 +57,7 @@ namespace Ks
 
                 if (this.Count != O.Count)
                     return false;
-                var loopTo = this.Count - 1;
-                for (int I = 0; I <= loopTo; I++)
+                for (int I = 0; I < this.Count; I++)
                 {
                     if (!Comparer.Equals(this[I], O[I]))
                         return false;

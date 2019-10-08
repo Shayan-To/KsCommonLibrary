@@ -112,7 +112,7 @@ namespace Ks
                 foreach (int I in this.ShelterLayers.Keys.Reverse())
                 {
                     var Layer = this.ShelterLayers[I];
-                    for (int J = Layer.Count - 1; J >= 0; J += -1)
+                    for (int J = Layer.Count - 1; J >= 0; J--)
                     {
                         var Popup = Layer[J];
                         if (Popup.HasShelter)

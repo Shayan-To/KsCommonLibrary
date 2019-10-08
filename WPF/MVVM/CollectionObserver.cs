@@ -62,15 +62,14 @@ namespace Ks
                 {
                     case NotifyCollectionChangedAction.Add:
                         {
-                            var loopTo = E.NewItems.Count - 1;
-                            for (int I = 0; I <= loopTo; I++)
+                            for (int I = 0; I < E.NewItems.Count; I++)
                                 this.Clone.Insert(E.NewStartingIndex + I, E.NewItems[I]);
                             break;
                         }
 
                     case NotifyCollectionChangedAction.Remove:
                         {
-                            for (int I = E.OldItems.Count - 1; I >= 0; I += -1)
+                            for (int I = E.OldItems.Count - 1; I >= 0; I--)
                                 this.Clone.RemoveAt(E.OldStartingIndex + I);
                             break;
                         }
@@ -79,20 +78,18 @@ namespace Ks
                         {
                             if (E.NewStartingIndex < E.OldStartingIndex)
                             {
-                                var loopTo1 = E.NewItems.Count - 1;
-                                for (int I = 0; I <= loopTo1; I++)
+                                for (int I = 0; I < E.NewItems.Count; I++)
                                     this.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I);
                             }
                             else
-                                for (int I = E.NewItems.Count - 1; I >= 0; I += -1)
+                                for (int I = E.NewItems.Count - 1; I >= 0; I--)
                                     this.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I);
                             break;
                         }
 
                     case NotifyCollectionChangedAction.Replace:
                         {
-                            var loopTo2 = E.NewItems.Count - 1;
-                            for (int I = 0; I <= loopTo2; I++)
+                            for (int I = 0; I < E.NewItems.Count; I++)
                                 this.Clone[E.NewStartingIndex + I] = E.NewItems[I];
                             break;
                         }

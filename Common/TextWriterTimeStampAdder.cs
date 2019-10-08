@@ -123,8 +123,7 @@ namespace Ks
 
                 var SI = index;
                 var Bl = false;
-                var loopTo = index + count;
-                for (int I = index; I <= loopTo; I++)
+                for (int I = index; I <= index + count; I++)
                 {
                     char Ch = default(char);
                     if (I < (index + count))
@@ -268,8 +267,7 @@ namespace Ks
 
                 var SI = index;
                 var Bl = false;
-                var loopTo = index + count;
-                for (int I = index; I <= loopTo; I++)
+                for (int I = index; I <= index + count; I++)
                 {
                     char Ch = default(char);
                     if (I < (index + count))

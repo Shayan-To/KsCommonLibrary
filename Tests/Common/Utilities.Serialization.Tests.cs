@@ -22,8 +22,7 @@ namespace Ks.Tests
                 [Property()]
                 public void ListToString_ListFromString_Consistency(string[] List)
                 {
-                    var loopTo = List.Length - 1;
-                    for (var I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < List.Length; I++)
                     {
                         if (List[I] == null)
                             List[I] = "";
@@ -54,8 +53,7 @@ namespace Ks.Tests
                 [Property()]
                 public void ListToStringMultiline_ListFromStringMultiline_Consistency(string[] List)
                 {
-                    var loopTo = List.Length - 1;
-                    for (var I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < List.Length; I++)
                     {
                         if (List[I] == null)
                             List[I] = "";

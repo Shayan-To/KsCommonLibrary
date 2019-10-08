@@ -11,8 +11,7 @@ namespace Ks
             public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
             {
                 var R = parameter == null ? 1 : System.Convert.ToDouble(parameter);
-                var loopTo = values.Length - 1;
-                for (var I = 0; I <= loopTo; I++)
+                for (var I = 0; I < values.Length; I++)
                     R *= System.Convert.ToDouble(values[I]);
                 return R;
             }

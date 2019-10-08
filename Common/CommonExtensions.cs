@@ -221,8 +221,7 @@ namespace Ks
 
             private static IEnumerable<T> PadBeginImpl<T>(this IEnumerable<T> Self, int SelfCount, int Count, T PaddingElement)
             {
-                var loopTo = Count - 1;
-                for (SelfCount = SelfCount; SelfCount <= loopTo; SelfCount++)
+                for (; SelfCount < Count; SelfCount++)
                     yield return PaddingElement;
                 foreach (var I in Self)
                     yield return I;
@@ -248,8 +247,7 @@ namespace Ks
                     Cnt += 1;
                 }
 
-                var loopTo = Count - 1;
-                for (Cnt = Cnt; Cnt <= loopTo; Cnt++)
+                for (; Cnt < Count; Cnt++)
                     yield return PaddingElement;
             }
 
@@ -266,8 +264,7 @@ namespace Ks
                     Count = Self.Count;
 
                 var Complement = (Count + (2 * Index)) - 1;
-                var loopTo = (Index + Count) - 1;
-                for (var I = Index; I <= loopTo; I++)
+                for (var I = Index; I < Index + Count; I++)
                 {
                     var C = Self[I];
                     Self[I] = Self[Complement - I];
@@ -329,8 +326,7 @@ namespace Ks
 
             public static int IndexOf<T>(this IList<T> Self, Func<T, int, bool> Predicate, int StartIndex = 0)
             {
-                var loopTo = Self.Count - 1;
-                for (var I = StartIndex; I <= loopTo; I++)
+                for (var I = StartIndex; I < Self.Count; I++)
                 {
                     if (Predicate.Invoke(Self[I], I))
                         return I;
@@ -338,9 +334,10 @@ namespace Ks
                 return -1;
             }
 
+            // ToDo: Set the fallback value to StartIndex before the loop.
             public static int LastIndexOf<T>(this IList<T> Self, Func<T, int, bool> Predicate, int StartIndex = -1)
             {
-                for (var I = (StartIndex != -1) ? StartIndex : (Self.Count - 1); I >= 0; I += -1)
+                for (var I = (StartIndex != -1) ? StartIndex : (Self.Count - 1); I >= 0; I--)
                 {
                     if (Predicate.Invoke(Self[I], I))
                         return I;
@@ -351,11 +348,9 @@ namespace Ks
             public static void Move<T>(this IList<T> Self, int OldIndex, int NewIndex)
             {
                 var Item = Self[OldIndex];
-                var loopTo = NewIndex - 1;
-                for (var I = OldIndex; I <= loopTo; I++)
+                for (var I = OldIndex; I < NewIndex; I++)
                     Self[I] = Self[I + 1];
-                var loopTo1 = NewIndex + 1;
-                for (var I = OldIndex; I >= loopTo1; I += -1)
+                for (var I = OldIndex; I > NewIndex; I--)
                     Self[I] = Self[I - 1];
                 Self[NewIndex] = Item;
             }
@@ -369,11 +364,9 @@ namespace Ks
 
                 Verify.TrueArg(Length > 0, nameof(Length), "Length must be a non-negative number.");
                 Verify.True((StartIndex + Length) <= Self.Count, "The given range must be inside the list.");
-                var loopTo = Self.Count - Length - 1;
-                for (var I = StartIndex; I <= loopTo; I++)
+                for (var I = StartIndex; I < Self.Count - Length; I++)
                     Self[I] = Self[I + Length];
-                var loopTo1 = Self.Count - Length;
-                for (var I = Self.Count - 1; I >= loopTo1; I += -1)
+                for (var I = Self.Count - 1; I >= Self.Count - Length; I--)
                     Self.RemoveAt(I);
             }
 
@@ -389,8 +382,7 @@ namespace Ks
 
                 var Count = 0;
                 var I = StartIndex;
-                var loopTo = (StartIndex + Length) - 1;
-                for (var J = StartIndex; J <= loopTo; J++)
+                for (var J = StartIndex; J < StartIndex + Length; J++)
                 {
                     if (!Predicate.Invoke(Self[J]))
                     {
@@ -613,8 +605,7 @@ namespace Ks
             public static void RandomizeOrder<T>(this IList<T> Self)
             {
                 var Rand = DefaultCacher<Random>.Value;
-                var loopTo = Self.Count - 1;
-                for (var I = 1; I <= loopTo; I++)
+                for (var I = 1; I < Self.Count; I++)
                 {
                     var J = Rand.Next(I + 1);
                     Self.Move(I, J);

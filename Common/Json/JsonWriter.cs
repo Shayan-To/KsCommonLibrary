@@ -22,8 +22,7 @@ namespace Ks
             {
                 var PrevStart = 0;
                 var I = 0;
-                var loopTo = S.Length - 1;
-                for (I = 0; I <= loopTo; I++)
+                for (; I < S.Length; I++)
                 {
                     var Ch = S[I];
                     var ECh = Ch;
@@ -48,8 +47,7 @@ namespace Ks
             private void WriteNewLine()
             {
                 this.Out.WriteLine();
-                var loopTo = this.CurrentIndent - 1;
-                for (var I = 0; I <= loopTo; I++)
+                for (var I = 0; I < this.CurrentIndent; I++)
                     this.Out.Write(this.IndentString);
             }
 

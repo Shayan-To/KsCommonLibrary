@@ -46,7 +46,7 @@ namespace Ks
                 if (!IsGeneric & Obj.HasValue)
                     Type = Obj.Value.GetType();
 
-                for (int I = this.Serializers.Count - 1; I >= 0; I += -1)
+                for (int I = this.Serializers.Count - 1; I >= 0; I--)
                 {
                     var S = this.Serializers[I];
 

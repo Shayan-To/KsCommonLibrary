@@ -36,8 +36,7 @@ namespace Ks
 
             public int IndexOf(ViewModel ViewModel)
             {
-                var loopTo = this.Count - 1;
-                for (int I = 0; I <= loopTo; I++)
+                for (int I = 0; I < this.Count; I++)
                 {
                     if (this[I] == ViewModel)
                         return I;
@@ -62,8 +61,7 @@ namespace Ks
 
                 if (Left.List.Length != Right.List.Length)
                     return false;
-                var loopTo = Left.List.Length - 1;
-                for (int I = 0; I <= loopTo; I++)
+                for (int I = 0; I < Left.List.Length; I++)
                 {
                     if (Left.List[I] != Right.List[I])
                         return false;

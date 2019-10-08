@@ -50,7 +50,7 @@ namespace Ks
 
             public void MakeHeap(IList<T> List, int Count)
             {
-                for (int I = Parent(Count - 1); I >= 0; I += -1)
+                for (int I = Parent(Count - 1); I >= 0; I--)
                     this.Heapify(List, Count, I);
             }
 

@@ -31,8 +31,7 @@ namespace Ks
             {
                 Verify.True(Indexes.Length == this._Lengths.Length);
                 var Index = 0;
-                var loopTo = Indexes.Length - 1;
-                for (int I = 0; I <= loopTo; I++)
+                for (int I = 0; I < Indexes.Length; I++)
                 {
                     Verify.True((0 <= Indexes[I]) & (Indexes[I] < this._Lengths[I]));
                     Index *= this._Lengths[I];

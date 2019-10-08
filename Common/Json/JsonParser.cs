@@ -133,8 +133,7 @@ namespace Ks
                 Assert.True(this.Input[this.Index] == '"');
 
                 var PrevStart = this.Index + 1;
-                var loopTo = this.Input.Length - 1;
-                for (var I = this.Index + 1; I <= loopTo; I++)
+                for (var I = this.Index + 1; I < this.Input.Length; I++)
                 {
                     if (this.Input[I] == '"')
                     {
@@ -176,8 +175,8 @@ namespace Ks
                 Verify.True((I + 3) < this.Input.Length, "Invalid JSON format. Unexpected end of data.");
 
                 var R = 0;
-                var loopTo = I + 3;
-                for (I = I; I <= loopTo; I++)
+                var end = I + 4;
+                for (; I < end; I++)
                 {
                     var Ch = this.Input[I];
                     R *= 16;
@@ -197,8 +196,7 @@ namespace Ks
             private string ReadNonQuotedValue()
             {
                 var StartIndex = this.Index;
-                var loopTo = this.Input.Length - 1;
-                for (this.Index = this.Index; this.Index <= loopTo; this.Index++)
+                for (; this.Index < this.Input.Length; this.Index++)
                 {
                     if (char.IsWhiteSpace(this.Input[this.Index]))
                         break;

@@ -20,8 +20,7 @@ namespace Ks
 
             private bool NeedsEscaping(string S)
             {
-                var loopTo = S.Length - 1;
-                for (var I = 0; I <= loopTo; I++)
+                for (var I = 0; I < S.Length; I++)
                 {
                     var Ch = S[I];
                     if (EscapeDic.ContainsKey(Ch) | char.IsControl(Ch) | (char.IsWhiteSpace(Ch) & (Ch != ' ')))
@@ -34,8 +33,7 @@ namespace Ks
             {
                 var PrevStart = 0;
                 var I = 0;
-                var loopTo = S.Length - 1;
-                for (I = 0; I <= loopTo; I++)
+                for (; I < S.Length; I++)
                 {
                     var Ch = S[I];
                     string Esc = null;
@@ -62,8 +60,7 @@ namespace Ks
                 Assert.True(AfterAttributes.Implies(IsAttribute));
 
                 this.Out.WriteLine();
-                var loopTo = this.CurrentIndent - 2;
-                for (var I = 0; I <= loopTo; I++)
+                for (var I = 0; I < this.CurrentIndent - 1; I++)
                     this.Out.Write(this.IndentString);
 
                 if (IsAttribute)

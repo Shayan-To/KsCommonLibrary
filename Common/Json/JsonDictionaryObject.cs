@@ -14,8 +14,7 @@ namespace Ks
             {
                 this.List = Items.ToArray();
                 Array.Sort(this.List, CompareKeyHash);
-                var loopTo = this.List.Length - 2;
-                for (var I = 0; I <= loopTo; I++)
+                for (var I = 0; I < this.List.Length - 1; I++)
                     Verify.False(this.List[I].Key == this.List[I + 1].Key, "Cannot have two items with the same key.");
             }
 
@@ -74,8 +73,7 @@ namespace Ks
             public bool TryGetValue(string Key, out JsonObject Value)
             {
                 var T = this.List.BinarySearch(new KeyValuePair<string, JsonObject>(Key, null), CompareKeyHash);
-                var loopTo = (T.StartIndex + T.Length) - 1;
-                for (var I = T.StartIndex; I <= loopTo; I++)
+                for (var I = T.StartIndex; I < T.StartIndex + T.Length; I++)
                 {
                     if (this.List[I].Key == Key)
                     {

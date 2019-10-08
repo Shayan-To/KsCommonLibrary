@@ -22,15 +22,13 @@ namespace Ks.ConsoleTests
             var J = 0;
             foreach (var L in LCS.Append((Index1: File1.Length, Index2: File2.Length)))
             {
-                var loopTo = L.Index1 - 1;
-                for (I = I; I <= loopTo; I++)
+                for (; I < L.Index1; I++)
                 {
                     ConsoleUtilities.WriteColored(File1[I], ConsoleColor.Red, ConsoleColor.White);
                     Console.WriteLine();
                 }
 
-                var loopTo1 = L.Index2 - 1;
-                for (J = J; J <= loopTo1; J++)
+                for (; J < L.Index2; J++)
                 {
                     ConsoleUtilities.WriteColored(File2[J], ConsoleColor.Green, ConsoleColor.Black);
                     Console.WriteLine();

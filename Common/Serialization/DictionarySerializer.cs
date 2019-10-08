@@ -24,8 +24,7 @@ namespace Ks
                 Count = Formatter.Get<int>(nameof(Count));
 
                 var R = new Dictionary<TKey, TValue>(Count);
-                var loopTo = Count - 1;
-                for (int I = 0; I <= loopTo; I++)
+                for (int I = 0; I < Count; I++)
                 {
                     var T = Formatter.Get<KeyValuePair<TKey, TValue>>(null);
                     R.Add(T.Key, T.Value);
