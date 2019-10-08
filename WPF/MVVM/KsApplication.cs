@@ -23,6 +23,8 @@ namespace Ks
 
             public KsApplication(string Name, Application Application)
             {
+                this._NavigateBackCommand = new DelegateCommand(this.NavigateBack);
+
                 this._Name = Name;
                 this._Application = Application;
 
@@ -311,7 +313,7 @@ namespace Ks
                 }
             }
 
-            private DelegateCommand _NavigateBackCommand = new DelegateCommand(this.NavigateBack);
+            private DelegateCommand _NavigateBackCommand;
 
             public DelegateCommand NavigateBackCommand
             {

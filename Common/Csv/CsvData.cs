@@ -9,11 +9,13 @@ namespace Ks
         {
             public CsvData(int EntriesCapacity)
             {
+                this._Columns = new CsvColumnList(this);
                 this._Entries = new CsvEntryList(this, EntriesCapacity);
             }
 
             public CsvData()
             {
+                this._Columns = new CsvColumnList(this);
                 this._Entries = new CsvEntryList(this);
             }
 
@@ -117,7 +119,7 @@ namespace Ks
                 }
             }
 
-            private readonly CsvColumnList _Columns = new CsvColumnList(this);
+            private readonly CsvColumnList _Columns;
 
             public CsvColumnList Columns
             {

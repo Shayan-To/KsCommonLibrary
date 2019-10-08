@@ -11,6 +11,8 @@ namespace Ks
         {
             public Formatter()
             {
+                this.SetProxy = new FormatterSetProxy(this);
+                this.GetProxy = new FormatterGetProxy(this);
                 this.Serializers.Add(GenericSerializer.Create(nameof(Array), typeof(ArraySerializer<>), T =>
                 {
                     if (!T.IsArray || T.GetArrayRank() != 1)

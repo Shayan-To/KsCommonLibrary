@@ -9,6 +9,13 @@ namespace Ks
         [ContentProperty("Content")]
         public class PopupHolder : FrameworkElement // UIElement is not used as base type throughout the whole libraries! Using FrameworkElement instead.
         {
+
+            public PopupHolder()
+            {
+                this._ShowPopupCommand = new DelegateCommand(this.ShowPopup);
+                this._HidePopupCommand = new DelegateCommand(this.HidePopup);
+            }
+
             protected override Size MeasureOverride(Size availableSize)
             {
                 return default(Size);
@@ -35,7 +42,7 @@ namespace Ks
                 return new Rect(BasePoint, PopupSize);
             }
 
-            private DelegateCommand _ShowPopupCommand = new DelegateCommand(this.ShowPopup);
+            private DelegateCommand _ShowPopupCommand;
 
             public void ShowPopup()
             {
@@ -50,7 +57,7 @@ namespace Ks
                 }
             }
 
-            private DelegateCommand _HidePopupCommand = new DelegateCommand(this.HidePopup);
+            private DelegateCommand _HidePopupCommand;
 
             public void HidePopup()
             {

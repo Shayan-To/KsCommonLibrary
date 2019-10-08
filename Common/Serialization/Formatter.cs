@@ -265,8 +265,8 @@ namespace Ks
                 }
             }
 
-            private readonly FormatterSetProxy SetProxy = new FormatterSetProxy(this);
-            private readonly FormatterGetProxy GetProxy = new FormatterGetProxy(this);
+            private readonly FormatterSetProxy SetProxy;
+            private readonly FormatterGetProxy GetProxy;
 
             private readonly Dictionary<object, (int, bool)> SetCache = new Dictionary<object, (int, bool)>(ReferenceEqualityComparer<object>.Instance);
             private readonly Dictionary<int, object> GetCache = new Dictionary<int, object>();

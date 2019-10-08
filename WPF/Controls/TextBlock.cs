@@ -31,6 +31,11 @@ namespace Ks
                 DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBlock), new FrameworkPropertyMetadata(typeof(TextBlock)));
             }
 
+            public TextBlock()
+            {
+                this._Objs = new ObjList(this);
+            }
+
             internal void ReportObjGotIn(Obj Obj)
             {
                 this.AddLogicalChild(Obj);
@@ -315,7 +320,7 @@ namespace Ks
                 }
             }
 
-            private readonly ObjList _Objs = new ObjList(this);
+            private readonly ObjList _Objs;
 
             public ObjList Objs
             {

@@ -11,6 +11,8 @@ namespace Ks
 
             public SaveDelayer(System.IO.Stream Stream, System.Text.Encoding Encoding = null)
             {
+                this.TaskDelayer = new TaskDelayer(this.DoSave, TimeSpan.FromSeconds((double)10));
+
                 if (Encoding == null)
                     Encoding = System.Text.Encoding.UTF8;
 
@@ -73,7 +75,7 @@ namespace Ks
                 }
             }
 
-            private readonly TaskDelayer TaskDelayer = new TaskDelayer(this.DoSave, TimeSpan.FromSeconds((double)10));
+            private readonly TaskDelayer TaskDelayer;
             private System.IO.Stream InStream;
             private int Length;
         }

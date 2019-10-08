@@ -15,6 +15,12 @@ namespace Ks
                 VerticalAlignmentProperty.OverrideMetadata(typeof(Popup), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             }
 
+            public Popup()
+            {
+                this._ShowCommand = new DelegateCommand(this.Show);
+                this._HideCommand = new DelegateCommand(this.Hide);
+            }
+
             public static readonly RoutedEvent BeforeShowEvent = EventManager.RegisterRoutedEvent("BeforeShow", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(Popup));
 
             protected virtual void OnBeforeShow()
@@ -75,7 +81,7 @@ namespace Ks
                 }
             }
 
-            private DelegateCommand _ShowCommand = new DelegateCommand(this.Show);
+            private DelegateCommand _ShowCommand;
 
             public void Show()
             {
@@ -90,7 +96,7 @@ namespace Ks
                 }
             }
 
-            private DelegateCommand _HideCommand = new DelegateCommand(this.Hide);
+            private DelegateCommand _HideCommand;
 
             public void Hide()
             {

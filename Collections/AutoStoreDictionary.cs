@@ -18,6 +18,8 @@ namespace Ks
             {
                 Verify.True(Stream.CanRead & Stream.CanWrite & Stream.CanSeek, "Stream must have read, write and seek capabilities.");
 
+                this.TaskDelayer = new TaskDelayer(this.Store, TimeSpan.FromSeconds((double)10));
+
                 this.Stream = Stream;
                 this._LeaveOpen = LeaveOpen;
 
@@ -353,7 +355,7 @@ namespace Ks
 
             private ConcurrentOrderedDictionary<string, string> BaseDic;
             private readonly System.IO.Stream Stream;
-            private readonly TaskDelayer TaskDelayer = new TaskDelayer(this.Store, TimeSpan.FromSeconds((double)10));
+            private readonly TaskDelayer TaskDelayer;
         }
     }
 }

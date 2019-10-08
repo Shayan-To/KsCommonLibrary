@@ -17,6 +17,8 @@ namespace Ks
             public OneToOneOrderedDictionary(Func<TValue, TKey> KeySelector)
             {
                 this.KeySelector = KeySelector;
+                this._Keys = this._Items.SelectAsList(V => this.KeySelector.Invoke(V));
+                this._Values = this._Items.AsReadOnly();
             }
 
             public virtual ICollection<TValue> Values
@@ -444,8 +446,8 @@ namespace Ks
 
             private readonly Dictionary<TKey, TValue> _Dic = new Dictionary<TKey, TValue>();
             private readonly List<TValue> _Items = new List<TValue>();
-            private readonly IList<TKey> _Keys = this._Items.SelectAsList(V => this.KeySelector.Invoke(V));
-            private readonly IList<TValue> _Values = this._Items.AsReadOnly();
+            private readonly IList<TKey> _Keys;
+            private readonly IList<TValue> _Values;
             private readonly Func<TValue, TKey> KeySelector;
         }
     }

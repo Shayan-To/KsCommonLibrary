@@ -11,6 +11,7 @@ namespace Ks
         {
             private OnScreenDrawer(Graphics Graphics)
             {
+                this._Drawings = new DrawingsCollection(this);
                 this.Graphics = Graphics;
                 this._IsDrawing = true;
             }
@@ -102,7 +103,7 @@ namespace Ks
                     D.StopDrawing();
             }
 
-            private readonly DrawingsCollection _Drawings = new DrawingsCollection(this);
+            private readonly DrawingsCollection _Drawings;
 
             public IList<Drawing> Drawings
             {
