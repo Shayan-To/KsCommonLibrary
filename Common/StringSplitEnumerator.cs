@@ -85,7 +85,7 @@ namespace Ks.Common
         {
             get
             {
-                return this._Chars[Index];
+                return this._Chars[this.Index];
             }
         }
 

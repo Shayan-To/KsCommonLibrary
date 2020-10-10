@@ -184,7 +184,7 @@ namespace Ks.Common.MVVM
 
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
         }
 
         public string Id { get; }

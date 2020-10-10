@@ -40,10 +40,10 @@ namespace Ks.Common
                 this.Graphics = Graphics.FromHwnd(this.Form.Handle);
             }
 
-            this.FIntervals[(int) Orientation.X] = new Interval(FormMargin, FormWidth);
-            this.FIntervals[(int) Orientation.Y] = new Interval(FormMargin + FormHeight, -FormHeight);
-            this.Intervals[(int) Orientation.X] = new Interval(XStart, XLength);
-            this.Intervals[(int) Orientation.Y] = new Interval(YStart, YLength);
+            this.FIntervals[(int) Orientation.X] = new Interval(this.FormMargin, this.FormWidth);
+            this.FIntervals[(int) Orientation.Y] = new Interval(this.FormMargin + this.FormHeight, -this.FormHeight);
+            this.Intervals[(int) Orientation.X] = new Interval(this.XStart, this.XLength);
+            this.Intervals[(int) Orientation.Y] = new Interval(this.YStart, this.YLength);
 
             this.BorderRectangleColor = BorderRectangleColor;
 
@@ -56,11 +56,11 @@ namespace Ks.Common
             var FIY = this.FIntervals[(int) Orientation.Y];
 
             this.Graphics.Clear(this.Form.BackColor);
-            using var Pen = new Pen(ConvertColor(BorderRectangleColor));
-            this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start, FIY.Start, Orientation.X), CreatePoint(FIX.Start + FIX.Length, FIY.Start, Orientation.X));
-            this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start, FIY.Start, Orientation.X), CreatePoint(FIX.Start, FIY.Start + FIY.Length, Orientation.X));
-            this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start + FIX.Length, FIY.Start + FIY.Length, Orientation.X), CreatePoint(FIX.Start + FIX.Length, FIY.Start, Orientation.X));
-            this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start + FIX.Length, FIY.Start + FIY.Length, Orientation.X), CreatePoint(FIX.Start, FIY.Start + FIY.Length, Orientation.X));
+            using var Pen = new Pen(this.ConvertColor(this.BorderRectangleColor));
+            this.Graphics.DrawLine(Pen, this.CreatePoint(FIX.Start, FIY.Start, Orientation.X), this.CreatePoint(FIX.Start + FIX.Length, FIY.Start, Orientation.X));
+            this.Graphics.DrawLine(Pen, this.CreatePoint(FIX.Start, FIY.Start, Orientation.X), this.CreatePoint(FIX.Start, FIY.Start + FIY.Length, Orientation.X));
+            this.Graphics.DrawLine(Pen, this.CreatePoint(FIX.Start + FIX.Length, FIY.Start + FIY.Length, Orientation.X), this.CreatePoint(FIX.Start + FIX.Length, FIY.Start, Orientation.X));
+            this.Graphics.DrawLine(Pen, this.CreatePoint(FIX.Start + FIX.Length, FIY.Start + FIY.Length, Orientation.X), this.CreatePoint(FIX.Start, FIY.Start + FIY.Length, Orientation.X));
         }
 
         public void DrawFunction(Color Color, IReadOnlyList<double> Ys, double XStart, double XStep)
@@ -75,11 +75,11 @@ namespace Ks.Common
             for (var I = 0; I < FPoints.Length; I++)
             {
                 var T = Points[I];
-                var P = ConvertPoint(T.X, T.Y, Orientation.X);
+                var P = this.ConvertPoint(T.X, T.Y, Orientation.X);
                 FPoints[I] = P;
             }
 
-            using var Pen = new Pen(ConvertColor(Color));
+            using var Pen = new Pen(this.ConvertColor(Color));
             this.Graphics.DrawLines(Pen, FPoints);
         }
 
@@ -91,11 +91,11 @@ namespace Ks.Common
             for (var I = 0; I <= N; I++)
             {
                 var X = FIX.Start + ((FIX.Length / N) * I);
-                var P = ConvertPoint(X, Func.Invoke(X), Orientation.X);
+                var P = this.ConvertPoint(X, Func.Invoke(X), Orientation.X);
                 Points[I] = P;
             }
 
-            using var Pen = new Pen(ConvertColor(Color));
+            using var Pen = new Pen(this.ConvertColor(Color));
             this.Graphics.DrawLines(Pen, Points);
         }
 
@@ -114,20 +114,20 @@ namespace Ks.Common
             var X2 = X + (100 * Math.Cos(A));
             var Y2 = Y + (100 * Math.Sin(A));
 
-            using var Pen = new Pen(ConvertColor(Color));
-            this.Graphics.DrawLine(Pen, CreatePoint(X, Y, Orientation.X), CreatePoint(X2, Y2, Orientation.X));
+            using var Pen = new Pen(this.ConvertColor(Color));
+            this.Graphics.DrawLine(Pen, this.CreatePoint(X, Y, Orientation.X), this.CreatePoint(X2, Y2, Orientation.X));
         }
 
         public void DrawPoint(Color Color, double Value, Orientation Orientation, string Caption = "")
         {
             var FIO = this.FIntervals[1 - (int) Orientation];
-            var FV = ConvertValue(Value, Orientation);
+            var FV = this.ConvertValue(Value, Orientation);
 
-            var Col = ConvertColor(Color);
-            using var Pen = new Pen(ConvertColor(Color));
-            using var Brush = new SolidBrush(ConvertColor(Color));
+            var Col = this.ConvertColor(Color);
+            using var Pen = new Pen(this.ConvertColor(Color));
+            using var Brush = new SolidBrush(this.ConvertColor(Color));
             this.Graphics.DrawLine(Pen, this.CreatePoint(FV, FIO.Start, Orientation), this.CreatePoint(FV, FIO.Start + FIO.Length, Orientation));
-            this.Graphics.DrawString(Caption, SystemFonts.DefaultFont, Brush, CreatePoint(FV, FIO.Start, Orientation));
+            this.Graphics.DrawString(Caption, SystemFonts.DefaultFont, Brush, this.CreatePoint(FV, FIO.Start, Orientation));
         }
 
         private Point CreatePoint(double X, double Y, Orientation Orientation)
@@ -155,12 +155,12 @@ namespace Ks.Common
 
         private Point ConvertPoint(double X, double Y, Orientation Orientation)
         {
-            return CreatePoint(ConvertValue(X, Orientation), ConvertValue(Y, Orientation ^ Orientation.Y), Orientation);
+            return this.CreatePoint(this.ConvertValue(X, Orientation), this.ConvertValue(Y, Orientation ^ Orientation.Y), Orientation);
         }
 
         private Size ConvertSize(double Width, double Height, Orientation Orientation)
         {
-            return CreateSize(ConvertValue(Width, Orientation), ConvertValue(Height, Orientation ^ Orientation.Y), Orientation);
+            return this.CreateSize(this.ConvertValue(Width, Orientation), this.ConvertValue(Height, Orientation ^ Orientation.Y), Orientation);
         }
 
         private DColor ConvertColor(Color Color)

@@ -37,7 +37,7 @@ namespace Ks.Common
                     var ShouldPeek = true;
 
                     // If a delimiter happens right after another, then an empty field should be considered between them.
-                    if ((T == NewLine) | T == null | (T == Delimiter))
+                    if ((T == NewLine) | T == null | (T == this.Delimiter))
                     {
                         D = "";
                         ShouldPeek = false;
@@ -46,11 +46,11 @@ namespace Ks.Common
                     Res.Columns.Add(D);
                     if (ShouldPeek)
                         T = this.PeekToken();
-                    if ((T == NewLine) | T == null | (T == Delimiter))
+                    if ((T == NewLine) | T == null | (T == this.Delimiter))
                     {
                         if (ShouldPeek)
                             this.ReadToken();
-                        if (T == Delimiter)
+                        if (T == this.Delimiter)
                             continue;
                         else
                             break;
@@ -84,7 +84,7 @@ namespace Ks.Common
                     break;
 
                 // If a delimiter happens right after another, then an empty field should be considered between them.
-                if (T == null | (T == NewLine) | (T == Delimiter))
+                if (T == null | (T == NewLine) | (T == this.Delimiter))
                 {
                     D = "";
                     ShouldPeek = false;
@@ -98,7 +98,7 @@ namespace Ks.Common
                     T = this.PeekToken();
                 if (T == null)
                     break;
-                if ((T == NewLine) | (T == Delimiter))
+                if ((T == NewLine) | (T == this.Delimiter))
                 {
                     if (ShouldPeek)
                         this.ReadToken();
@@ -214,8 +214,8 @@ namespace Ks.Common
         {
             if (this.IsFinished())
                 return default;
-            var R = this.Str[Index];
-            Index += 1;
+            var R = this.Str[this.Index];
+            this.Index += 1;
             return R;
         }
 
@@ -223,7 +223,7 @@ namespace Ks.Common
         {
             if (this.IsFinished())
                 return default;
-            return this.Str[Index];
+            return this.Str[this.Index];
         }
 
         private bool IsFinished()

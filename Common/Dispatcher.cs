@@ -165,7 +165,7 @@ namespace Ks.Common
 
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
         }
 
         public event EventHandler<ExceptionUnhandledEventArgs> ExceptionUnhandled;

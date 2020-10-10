@@ -70,7 +70,7 @@ namespace Ks.Common.MVVM
                     if (MetadataDic[t].TryGetValue(PropertyName, out var M))
                     {
                         var Str = M.ToStringCallback.Invoke(Source);
-                        StoreDictionary[this.GetStoreKey(PropertyName)] = Str;
+                        this.StoreDictionary[this.GetStoreKey(PropertyName)] = Str;
                         break;
                     }
                 }

@@ -17,7 +17,7 @@ namespace Ks.Common
             IEnumerable Enumerable;
 
             if (Obj.GetType().Name == "NotifyingCollection`1")
-                A.Add(Obj);
+                this.A.Add(Obj);
 
             PropObj = Obj as INotifyPropertyChanged;
             if (PropObj != null)

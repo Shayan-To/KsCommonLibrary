@@ -117,9 +117,9 @@ namespace Ks.Common
             }
 
             if (Ch == '"')
-                return new Token(ReadQuotedValue(), TokenType.QuotedValue);
+                return new Token(this.ReadQuotedValue(), TokenType.QuotedValue);
 
-            return new Token(ReadNonQuotedValue(), TokenType.Value);
+            return new Token(this.ReadNonQuotedValue(), TokenType.Value);
         }
 
         private string ReadQuotedValue()

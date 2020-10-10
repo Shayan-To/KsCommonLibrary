@@ -16,7 +16,7 @@ namespace Ks.Common
         [Obsolete("Use the Create methods instead.")]
         public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action) : base(action)
         {
-            InitializeAdd(action, null, -1);
+            this.InitializeAdd(action, null, -1);
         }
 
         public static NotifyCollectionChangedEventArgs<T> CreateReset()
@@ -31,9 +31,9 @@ namespace Ks.Common
         public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, T changedItem) : base(action, changedItem)
         {
             if (action == NotifyCollectionChangedAction.Reset)
-                InitializeAdd(action, null, -1);
+                this.InitializeAdd(action, null, -1);
             else
-                InitializeAddOrRemove(action, new T[] { changedItem }, -1);
+                this.InitializeAddOrRemove(action, new T[] { changedItem }, -1);
         }
 
         public static NotifyCollectionChangedEventArgs<T> CreateAdd(T changedItem)
@@ -53,9 +53,9 @@ namespace Ks.Common
         public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, T changedItem, int index) : base(action, changedItem, index)
         {
             if (action == NotifyCollectionChangedAction.Reset)
-                InitializeAdd(action, null, -1);
+                this.InitializeAdd(action, null, -1);
             else
-                InitializeAddOrRemove(action, new T[] { changedItem }, index);
+                this.InitializeAddOrRemove(action, new T[] { changedItem }, index);
         }
 
         public static NotifyCollectionChangedEventArgs<T> CreateAdd(T changedItem, int index)
@@ -75,9 +75,9 @@ namespace Ks.Common
         public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, IList<T> changedItems) : base(action, (IList) changedItems)
         {
             if (action == NotifyCollectionChangedAction.Reset)
-                InitializeAdd(action, null, -1);
+                this.InitializeAdd(action, null, -1);
             else
-                InitializeAddOrRemove(action, changedItems, -1);
+                this.InitializeAddOrRemove(action, changedItems, -1);
         }
 
         public static NotifyCollectionChangedEventArgs<T> CreateAdd(IList<T> changedItems)
@@ -97,9 +97,9 @@ namespace Ks.Common
         public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, IList<T> changedItems, int startingIndex) : base(action, (IList) changedItems, startingIndex)
         {
             if (action == NotifyCollectionChangedAction.Reset)
-                InitializeAdd(action, null, -1);
+                this.InitializeAdd(action, null, -1);
             else
-                InitializeAddOrRemove(action, changedItems, startingIndex);
+                this.InitializeAddOrRemove(action, changedItems, startingIndex);
         }
 
         public static NotifyCollectionChangedEventArgs<T> CreateAdd(IList<T> changedItems, int startingIndex)
@@ -118,7 +118,7 @@ namespace Ks.Common
         [Obsolete("Use the Create methods instead.")]
         public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, T newItem, T oldItem) : base(action, newItem, oldItem)
         {
-            InitializeMoveOrReplace(action, new T[] { newItem }, new T[] { oldItem }, -1, -1);
+            this.InitializeMoveOrReplace(action, new T[] { newItem }, new T[] { oldItem }, -1, -1);
         }
 
         public static NotifyCollectionChangedEventArgs<T> CreateReplace(T newItem, T oldItem)
@@ -132,7 +132,7 @@ namespace Ks.Common
         [Obsolete("Use the Create methods instead.")]
         public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, T newItem, T oldItem, int index) : base(action, newItem, oldItem, index)
         {
-            InitializeMoveOrReplace(action, new T[] { newItem }, new T[] { oldItem }, index, index);
+            this.InitializeMoveOrReplace(action, new T[] { newItem }, new T[] { oldItem }, index, index);
         }
 
         public static NotifyCollectionChangedEventArgs<T> CreateReplace(T newItem, T oldItem, int index)
@@ -146,7 +146,7 @@ namespace Ks.Common
         [Obsolete("Use the Create methods instead.")]
         public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, IList<T> newItems, IList<T> oldItems) : base(action, (IList) newItems, (IList) oldItems)
         {
-            InitializeMoveOrReplace(action, newItems, oldItems, -1, -1);
+            this.InitializeMoveOrReplace(action, newItems, oldItems, -1, -1);
         }
 
         public static NotifyCollectionChangedEventArgs<T> CreateMove(T changedItem)
@@ -171,7 +171,7 @@ namespace Ks.Common
         [Obsolete("Use the Create methods instead.")]
         public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, IList<T> newItems, IList<T> oldItems, int startingIndex) : base(action, (IList) newItems, (IList) oldItems, startingIndex)
         {
-            InitializeMoveOrReplace(action, newItems, oldItems, startingIndex, startingIndex);
+            this.InitializeMoveOrReplace(action, newItems, oldItems, startingIndex, startingIndex);
         }
 
         public static NotifyCollectionChangedEventArgs<T> CreateReplace(IList<T> newItems, IList<T> oldItems, int startingIndex)
@@ -186,7 +186,7 @@ namespace Ks.Common
         public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, T changedItem, int index, int oldIndex) : base(action, changedItem, index, oldIndex)
         {
             var changedItems = new T[] { changedItem };
-            InitializeMoveOrReplace(action, changedItems, changedItems, index, oldIndex);
+            this.InitializeMoveOrReplace(action, changedItems, changedItems, index, oldIndex);
         }
 
         public static NotifyCollectionChangedEventArgs<T> CreateMove(T changedItem, int index, int oldIndex)
@@ -200,7 +200,7 @@ namespace Ks.Common
         [Obsolete("Use the Create methods instead.")]
         public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, IList<T> changedItems, int index, int oldIndex) : base(action, (IList) changedItems, index, oldIndex)
         {
-            InitializeMoveOrReplace(action, changedItems, changedItems, index, oldIndex);
+            this.InitializeMoveOrReplace(action, changedItems, changedItems, index, oldIndex);
         }
 
         public static NotifyCollectionChangedEventArgs<T> CreateMove(IList<T> changedItems, int index, int oldIndex)
@@ -252,9 +252,9 @@ namespace Ks.Common
         private void InitializeAddOrRemove(NotifyCollectionChangedAction action, IList<T> changedItems, int startingIndex)
         {
             if (action == NotifyCollectionChangedAction.Add)
-                InitializeAdd(action, changedItems, startingIndex);
+                this.InitializeAdd(action, changedItems, startingIndex);
             else if (action == NotifyCollectionChangedAction.Remove)
-                InitializeRemove(action, changedItems, startingIndex);
+                this.InitializeRemove(action, changedItems, startingIndex);
         }
 
         private void InitializeAdd(NotifyCollectionChangedAction action, IList<T> newItems, int newStartingIndex)
@@ -269,8 +269,8 @@ namespace Ks.Common
 
         private void InitializeMoveOrReplace(NotifyCollectionChangedAction action, IList<T> newItems, IList<T> oldItems, int startingIndex, int oldStartingIndex)
         {
-            InitializeAdd(action, newItems, startingIndex);
-            InitializeRemove(action, oldItems, oldStartingIndex);
+            this.InitializeAdd(action, newItems, startingIndex);
+            this.InitializeRemove(action, oldItems, oldStartingIndex);
         }
 
         public IList<T> ItemsGotIn
