@@ -310,7 +310,7 @@ namespace Ks
             public override PropertyDescriptorCollection GetProperties()
             {
                 var BaseProps = base.GetProperties();
-                var R = new PropertyDescriptor[(BaseProps.Count + this.Bag?.Count ?? 0) - 1 + 1];
+                var R = new PropertyDescriptor[BaseProps.Count + this.Bag?.Count ?? 0];
                 var I = 0;
                 foreach (PropertyDescriptor P in BaseProps)
                 {

@@ -22,7 +22,7 @@ namespace Ks
                 var Length = default(int);
                 Length = Formatter.Get<int>(nameof(Length));
 
-                var R = new T[Length - 1 + 1];
+                var R = new T[Length];
                 for (var I = 0; I < Length; I++)
                     R[I] = Formatter.Get<T>(null);
 

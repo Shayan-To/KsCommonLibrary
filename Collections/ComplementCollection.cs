@@ -119,7 +119,7 @@ namespace Ks
                         C2 = this._Collection1;
                 }
 
-                C1Clone = new T[C1.Count - 1 + 1];
+                C1Clone = new T[C1.Count];
                 C1.CopyTo(C1Clone);
 
                 C1.ClearI();

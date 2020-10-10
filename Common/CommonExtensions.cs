@@ -402,7 +402,7 @@ namespace Ks
             {
                 if (Length != Array.Length)
                 {
-                    var R = new byte[Length - 1 + 1];
+                    var R = new byte[Length];
                     System.Array.Copy(Array, 0, R, 0, Math.Min(Length, Array.Length));
                     Array = R;
                 }
@@ -414,7 +414,7 @@ namespace Ks
             {
                 if ((Length != Array.Length) | (Offset != 0))
                 {
-                    var R = new byte[Length - 1 + 1];
+                    var R = new byte[Length];
                     System.Array.Copy(Array, Offset, R, 0, Math.Min(Length, Array.Length - Offset));
                     Array = R;
                 }
@@ -424,7 +424,7 @@ namespace Ks
 
             public static T[] Subarray<T>(this T[] Self, int Start, int Count)
             {
-                var Res = new T[Count - 1 + 1];
+                var Res = new T[Count];
                 Array.Copy(Self, Start, Res, 0, Count);
                 return Res;
             }
@@ -570,7 +570,7 @@ namespace Ks
 
             public static T[] RandomElements<T>(this IEnumerable<T> Self, int Count)
             {
-                var Res = new T[Count - 1 + 1];
+                var Res = new T[Count];
                 var Cnt = 0;
 
                 var Rand = DefaultCacher<Random>.Value;
@@ -1208,7 +1208,7 @@ namespace Ks
 
                 do
                 {
-                    Buf = new byte[BufLength - 1 + 1];
+                    Buf = new byte[BufLength];
                     N = 0;
                     do
                     {
@@ -1226,7 +1226,7 @@ namespace Ks
                 }
                 while (true);
 
-                var Res = new byte[TotalN - 1 + 1];
+                var Res = new byte[TotalN];
                 var Offset = 0;
                 foreach (var A in Arrs)
                 {

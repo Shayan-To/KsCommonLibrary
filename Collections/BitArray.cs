@@ -11,7 +11,7 @@ namespace Ks
             public BitArray(int Count)
             {
                 this._Count = Count;
-                this._Bytes = new byte[((Count >> 3) + (((Count & 7) == 0) ? 0 : 1)) - 1 + 1];
+                this._Bytes = new byte[(Count >> 3) + (((Count & 7) == 0) ? 0 : 1)];
                 this.Byte = new IndexerProperty<BitArray, byte, int>(this, this.Byte.Getter, this.Byte.Setter);
             }
 

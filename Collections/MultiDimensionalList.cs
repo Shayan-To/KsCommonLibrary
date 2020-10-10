@@ -14,7 +14,7 @@ namespace Ks
                 var Length = 1;
                 foreach (var L in Lengths)
                     Length *= L;
-                this.Arr = new T[Length - 1 + 1];
+                this.Arr = new T[Length];
             }
 
             public IEnumerator<T> GetEnumerator()

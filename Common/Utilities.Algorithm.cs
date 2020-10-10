@@ -132,7 +132,7 @@ namespace Ks
                     var N = List2.Count;
 
                     // The tuple is (Length, Mode). See below.
-                    var Dyn = new (int, int)[M - 1 + 1, N - 1 + 1];
+                    var Dyn = new (int, int)[M, N];
 
                     // Mode:
                     // 1 -> Did equal?
