@@ -32,32 +32,8 @@ namespace Ks
                 this.InnerList = new List<TList>();
             }
 
-            // Public Sub New()
-            // Me.New(Function() As List
-            // Return DirectCast(GetType(List).GetConstructor(New Type() {}).Invoke(New Object() {}), List)
-            // End Function)
-            // End Sub
-
-            // Public Sub New(ByVal Type As Type)
-            // Me.New(Function() As List
-            // Return DirectCast(Type.GetConstructor(New Type() {}).Invoke(New Object() {}), List)
-            // End Function)
-
-            // If Not GetType(List).IsAssignableFrom(Type) Then
-            // Throw New ArgumentException("Type has to implement the interface List.")
-            // End If
-            // End Sub
-
-            // Public Sub New(ByVal Constructor As Reflection.ConstructorInfo, ParamArray ByVal Parameters As Object())
-            // Me.New(Function() As List
-            // Return DirectCast(Constructor.Invoke(Parameters), List)
-            // End Function)
-
-            // If Not GetType(List).IsAssignableFrom(Constructor.DeclaringType) Then
-            // Throw New ArgumentException("Type has to implement the interface List.")
-            // End If
-            // Parameters = DirectCast(Parameters.Clone(), Object())
-            // End Sub
+            public ListCollectionRA() : this(() => (TList)typeof(TList).CreateInstance())
+            { }
 
             public TList this[int Index]
             {
