@@ -87,8 +87,6 @@ namespace Ks
                         }
                     }
 
-                    // A block for limiting the scope of variables.
-                    do
                     {
                         var Unit = Units[I];
                         var UnitTicks = Unit.Item2.Ticks;
@@ -119,10 +117,7 @@ namespace Ks
                                 Res.Append(" ");
                             Res.Append(Value / Prec).Append(Unit.Item1.ToLowerInvariant());
                         }
-
-                        break;
                     }
-                    while (true);
 
                     return Res.ToString();
                 }

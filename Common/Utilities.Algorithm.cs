@@ -177,7 +177,6 @@ namespace Ks
                     }
 
                     var Res = new List<(int, int)>();
-                    do
                     {
                         var I = 0;
                         var J = 0;
@@ -194,9 +193,7 @@ namespace Ks
                             Assert.True(((Cur.Item2 & (2 + 4)) == (2 + 4)).Implies((Cur.Item2 & 1) == 1));
                         }
                         while ((Cur.Item2 & (2 + 4)) != 0);
-                        break;
                     }
-                    while (true);
 
                     return Res.AsReadOnly();
                 }

@@ -129,7 +129,7 @@ if (this.LastActivityTime > Now)
                         {
                             ShouldRunTask = this.IsInstantSet;
                             var Now = this.StopWatch.Elapsed;
-                            do
+
                             {
                                 if (ShouldRunTask)
                                 {
@@ -175,9 +175,8 @@ if (this.LastActivityTime > Now)
 #if WriteDebugInfo
                                 Console.WriteLine("{0}: Wait -> Regular wait.", nameof(TaskThreadProcedure));
 #endif
-                                break;
                             }
-                            while (true);
+
                             if (ShouldRunTask)
                             {
                                 // ToDo Isn't DelayWaitHandle always reset at this point?
