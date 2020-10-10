@@ -341,13 +341,7 @@ namespace Ks.Common.MVVM
             set => this.SetProperty(ref this._CanNavigateBack, value);
         }
 
-        public virtual NavigationViewModel DefaultNavigationView
-        {
-            get
-            {
-                return this.Window;
-            }
-        }
+        public virtual NavigationViewModel DefaultNavigationView => this.Window;
 
         private NavigationFrame _DefaultNavigationFrame;
 
@@ -403,17 +397,7 @@ namespace Ks.Common.MVVM
 
         public string Name { get; }
 
-#pragma warning disable CS0169 // The field is never used
-        private readonly string _Version; // ToDo
-#pragma warning restore CS0169 // The field is never used
-
-        public string Version
-        {
-            get
-            {
-                return System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
-            }
-        }
+        public string Version => System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
 
         public NavigationViewModel Window { get; }
 

@@ -8,29 +8,11 @@ namespace Ks.Common
     {
         public abstract int Count { get; }
 
-        protected virtual bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        protected virtual bool IsReadOnly => false;
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
-        {
-            get
-            {
-                return this.IsReadOnly;
-            }
-        }
+        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => this.IsReadOnly;
 
-        bool IDictionary.IsReadOnly
-        {
-            get
-            {
-                return this.IsReadOnly;
-            }
-        }
+        bool IDictionary.IsReadOnly => this.IsReadOnly;
 
         object IDictionary.this[object key]
         {
@@ -38,37 +20,13 @@ namespace Ks.Common
             set => this[(TKey) key] = (TValue) value;
         }
 
-        TValue IReadOnlyDictionary<TKey, TValue>.this[TKey key]
-        {
-            get
-            {
-                return this[key];
-            }
-        }
+        TValue IReadOnlyDictionary<TKey, TValue>.this[TKey key] => this[key];
 
-        bool IDictionary.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IDictionary.IsFixedSize => false;
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        object ICollection.SyncRoot => throw new NotSupportedException();
 
         bool IReadOnlyDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value)
         {
@@ -147,53 +105,17 @@ namespace Ks.Common
 
         public abstract TValue this[TKey key] { get; set; }
 
-        protected virtual ICollection IDictionary_Keys
-        {
-            get
-            {
-                return (ICollection) this.Keys;
-            }
-        }
+        protected virtual ICollection IDictionary_Keys => (ICollection) this.Keys;
 
-        protected virtual ICollection IDictionary_Values
-        {
-            get
-            {
-                return (ICollection) this.Values;
-            }
-        }
+        protected virtual ICollection IDictionary_Values => (ICollection) this.Values;
 
-        ICollection IDictionary.Keys
-        {
-            get
-            {
-                return this.IDictionary_Keys;
-            }
-        }
+        ICollection IDictionary.Keys => this.IDictionary_Keys;
 
-        ICollection IDictionary.Values
-        {
-            get
-            {
-                return this.IDictionary_Values;
-            }
-        }
+        ICollection IDictionary.Values => this.IDictionary_Values;
 
-        IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys
-        {
-            get
-            {
-                return this.Keys;
-            }
-        }
+        IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => this.Keys;
 
-        IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values
-        {
-            get
-            {
-                return this.Values;
-            }
-        }
+        IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => this.Values;
 
         public abstract ICollection<TKey> Keys { get; }
 

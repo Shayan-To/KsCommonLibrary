@@ -6,37 +6,13 @@ namespace Ks.Common
 {
     public class JsonDynamicDictionary : JsonDynamicBase, IReadOnlyDictionary<string, JsonDynamicBase>, IDictionary<string, JsonDynamicBase>, IDictionary
     {
-        public int Count
-        {
-            get
-            {
-                return this.Base.Count;
-            }
-        }
+        public int Count => this.Base.Count;
 
-        protected virtual bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        protected virtual bool IsReadOnly => false;
 
-        bool ICollection<KeyValuePair<string, JsonDynamicBase>>.IsReadOnly
-        {
-            get
-            {
-                return this.IsReadOnly;
-            }
-        }
+        bool ICollection<KeyValuePair<string, JsonDynamicBase>>.IsReadOnly => this.IsReadOnly;
 
-        bool IDictionary.IsReadOnly
-        {
-            get
-            {
-                return this.IsReadOnly;
-            }
-        }
+        bool IDictionary.IsReadOnly => this.IsReadOnly;
 
         object IDictionary.this[object key]
         {
@@ -44,37 +20,13 @@ namespace Ks.Common
             set => this[(string) key] = (JsonDynamicBase) value;
         }
 
-        JsonDynamicBase IReadOnlyDictionary<string, JsonDynamicBase>.this[string key]
-        {
-            get
-            {
-                return this[key];
-            }
-        }
+        JsonDynamicBase IReadOnlyDictionary<string, JsonDynamicBase>.this[string key] => this[key];
 
-        bool IDictionary.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IDictionary.IsFixedSize => false;
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        object ICollection.SyncRoot => throw new NotSupportedException();
 
         bool IReadOnlyDictionary<string, JsonDynamicBase>.TryGetValue(string key, out JsonDynamicBase value)
         {
@@ -142,53 +94,17 @@ namespace Ks.Common
             set => this.Base[key] = value;
         }
 
-        ICollection IDictionary.Keys
-        {
-            get
-            {
-                return (ICollection) this.Keys;
-            }
-        }
+        ICollection IDictionary.Keys => (ICollection) this.Keys;
 
-        ICollection IDictionary.Values
-        {
-            get
-            {
-                return (ICollection) this.Values;
-            }
-        }
+        ICollection IDictionary.Values => (ICollection) this.Values;
 
-        IEnumerable<string> IReadOnlyDictionary<string, JsonDynamicBase>.Keys
-        {
-            get
-            {
-                return this.Keys;
-            }
-        }
+        IEnumerable<string> IReadOnlyDictionary<string, JsonDynamicBase>.Keys => this.Keys;
 
-        IEnumerable<JsonDynamicBase> IReadOnlyDictionary<string, JsonDynamicBase>.Values
-        {
-            get
-            {
-                return this.Values;
-            }
-        }
+        IEnumerable<JsonDynamicBase> IReadOnlyDictionary<string, JsonDynamicBase>.Values => this.Values;
 
-        public ICollection<string> Keys
-        {
-            get
-            {
-                return this.Base.Keys;
-            }
-        }
+        public ICollection<string> Keys => this.Base.Keys;
 
-        public ICollection<JsonDynamicBase> Values
-        {
-            get
-            {
-                return this.Base.Values;
-            }
-        }
+        public ICollection<JsonDynamicBase> Values => this.Base.Values;
 
         public void Add(string key, JsonDynamicBase value)
         {

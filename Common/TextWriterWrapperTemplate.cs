@@ -255,13 +255,7 @@ namespace Ks.Common
             return string.Concat(nameof(TextWriterWrapper), "{", this.Base.ToString(), "}");
         }
 
-        public override System.Text.Encoding Encoding
-        {
-            get
-            {
-                return this.Base.Encoding;
-            }
-        }
+        public override System.Text.Encoding Encoding => this.Base.Encoding;
 
         public override string NewLine
         {
@@ -269,13 +263,7 @@ namespace Ks.Common
             set => this.Base.NewLine = value;
         }
 
-        public override IFormatProvider FormatProvider
-        {
-            get
-            {
-                return this.Base.FormatProvider;
-            }
-        }
+        public override IFormatProvider FormatProvider => this.Base.FormatProvider;
 
         private readonly System.IO.TextWriter Base;
     }

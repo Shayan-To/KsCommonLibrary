@@ -158,13 +158,7 @@ namespace Ks.Common
 
         public class Container
         {
-            public string Name
-            {
-                get
-                {
-                    return this.Path[this.Path.Count - 1];
-                }
-            }
+            public string Name => this.Path[this.Path.Count - 1];
 
             public ComparableCollection<string> Path { get; set; }
             public Type TypeInfo { get; set; }

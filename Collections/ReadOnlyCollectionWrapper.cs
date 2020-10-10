@@ -11,37 +11,13 @@ namespace Ks.Common
             this.Collection = Collection;
         }
 
-        public int Count
-        {
-            get
-            {
-                return this.Collection.Count;
-            }
-        }
+        public int Count => this.Collection.Count;
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool IsReadOnly => true;
 
-        public bool IsSynchronized
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool IsSynchronized => true;
 
-        public object SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        public object SyncRoot => throw new NotSupportedException();
 
         public void Add(T item)
         {

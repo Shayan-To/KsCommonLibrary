@@ -104,13 +104,7 @@ namespace Ks.Common
             this.Sort(List, System.Collections.Generic.Comparer<T>.Default);
         }
 
-        public static MergeSorter<T> Instance
-        {
-            get
-            {
-                return DefaultCacher<MergeSorter<T>>.Value;
-            }
-        }
+        public static MergeSorter<T> Instance => DefaultCacher<MergeSorter<T>>.Value;
 
         private IList<T> List, Temp;
         private IComparer<T> Comparer;

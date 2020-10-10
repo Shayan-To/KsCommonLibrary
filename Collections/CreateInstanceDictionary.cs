@@ -56,13 +56,7 @@ namespace Ks.Common
             this.Dic.Clear();
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.Dic.Count;
-            }
-        }
+        public override int Count => this.Dic.Count;
 
         public override void Add(TKey key, TValue value)
         {
@@ -88,13 +82,7 @@ namespace Ks.Common
             set => this.Dic[key] = value;
         }
 
-        public override ICollection<TKey> Keys
-        {
-            get
-            {
-                return this.Dic.Keys;
-            }
-        }
+        public override ICollection<TKey> Keys => this.Dic.Keys;
 
         public override bool Remove(TKey key)
         {
@@ -106,13 +94,7 @@ namespace Ks.Common
             return this.Dic.TryGetValue(key, out value);
         }
 
-        public override ICollection<TValue> Values
-        {
-            get
-            {
-                return this.Dic.Values;
-            }
-        }
+        public override ICollection<TValue> Values => this.Dic.Values;
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {

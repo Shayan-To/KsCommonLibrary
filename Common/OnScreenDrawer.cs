@@ -116,13 +116,7 @@ namespace Ks.Common
 
         private readonly DrawingsCollection _Drawings;
 
-        public IList<Drawing> Drawings
-        {
-            get
-            {
-                return this._Drawings;
-            }
-        }
+        public IList<Drawing> Drawings => this._Drawings;
 
         private bool _IsDrawing;
 
@@ -216,13 +210,7 @@ namespace Ks.Common
                 }
             }
 
-            public override int Count
-            {
-                get
-                {
-                    return this.Base.Count;
-                }
-            }
+            public override int Count => this.Base.Count;
 
             private readonly List<Drawing> Base = new List<Drawing>();
             private readonly OnScreenDrawer Parent;

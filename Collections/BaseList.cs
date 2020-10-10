@@ -73,61 +73,19 @@ namespace Ks.Common
             set => this[index] = (T) value;
         }
 
-        T IReadOnlyList<T>.this[int index]
-        {
-            get
-            {
-                return this[index];
-            }
-        }
+        T IReadOnlyList<T>.this[int index] => this[index];
 
-        protected virtual bool IList_IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        protected virtual bool IList_IsReadOnly => false;
 
-        bool IList.IsReadOnly
-        {
-            get
-            {
-                return this.IList_IsReadOnly;
-            }
-        }
+        bool IList.IsReadOnly => this.IList_IsReadOnly;
 
-        bool ICollection<T>.IsReadOnly
-        {
-            get
-            {
-                return this.IList_IsReadOnly;
-            }
-        }
+        bool ICollection<T>.IsReadOnly => this.IList_IsReadOnly;
 
-        bool IList.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsFixedSize => false;
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        object ICollection.SyncRoot => throw new NotSupportedException();
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
         public bool Contains(T item)
         {

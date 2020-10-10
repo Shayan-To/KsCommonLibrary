@@ -61,13 +61,7 @@ namespace Ks.Common
             this.Stream.Flush();
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.BaseDic.Count;
-            }
-        }
+        public override int Count => this.BaseDic.Count;
 
         public override string this[string key]
         {
@@ -79,37 +73,13 @@ namespace Ks.Common
             }
         }
 
-        public override ICollection<string> Keys
-        {
-            get
-            {
-                return (ICollection<string>) this.KeysList;
-            }
-        }
+        public override ICollection<string> Keys => (ICollection<string>) this.KeysList;
 
-        public override ICollection<string> Values
-        {
-            get
-            {
-                return (ICollection<string>) this.ValuesList;
-            }
-        }
+        public override ICollection<string> Values => (ICollection<string>) this.ValuesList;
 
-        public IReadOnlyList<string> KeysList
-        {
-            get
-            {
-                return this.BaseDic.KeysList;
-            }
-        }
+        public IReadOnlyList<string> KeysList => this.BaseDic.KeysList;
 
-        public IReadOnlyList<string> ValuesList
-        {
-            get
-            {
-                return this.BaseDic.ValuesList;
-            }
-        }
+        public IReadOnlyList<string> ValuesList => this.BaseDic.ValuesList;
 
         public KeyValuePair<string, string> this[int index]
         {
@@ -121,21 +91,9 @@ namespace Ks.Common
             }
         }
 
-        bool IList.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsReadOnly => false;
 
-        bool IList.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsFixedSize => false;
 
         public override void Add(string key, string value)
         {

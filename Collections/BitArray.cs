@@ -143,23 +143,11 @@ namespace Ks.Common
             }
         );
 
-        public int BytesCount
-        {
-            get
-            {
-                return this._Bytes.Count();
-            }
-        }
+        public int BytesCount => this._Bytes.Count();
 
         private readonly int _Count;
 
-        public override int Count
-        {
-            get
-            {
-                return this._Count;
-            }
-        }
+        public override int Count => this._Count;
 
         private byte[] _Bytes;
     }

@@ -16,21 +16,9 @@ namespace Ks.Common
             this.KeySelector = KeySelector;
         }
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => false;
 
-        bool IDictionary.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IDictionary.IsReadOnly => false;
 
         object IDictionary.this[object key]
         {
@@ -38,29 +26,11 @@ namespace Ks.Common
             set => throw new NotSupportedException();
         }
 
-        bool IDictionary.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IDictionary.IsFixedSize => false;
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        object ICollection.SyncRoot => throw new NotSupportedException();
 
         void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
         {
@@ -117,21 +87,9 @@ namespace Ks.Common
             return this.ContainsKey((TKey) key);
         }
 
-        ICollection IDictionary.Keys
-        {
-            get
-            {
-                return (ICollection) this.Keys;
-            }
-        }
+        ICollection IDictionary.Keys => (ICollection) this.Keys;
 
-        ICollection IDictionary.Values
-        {
-            get
-            {
-                return (ICollection) this.Values;
-            }
-        }
+        ICollection IDictionary.Values => (ICollection) this.Values;
 
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
@@ -158,21 +116,9 @@ namespace Ks.Common
             return new DictionaryEnumerator<TKey, TValue, IEnumerator<KeyValuePair<TKey, TValue>>>(this.GetEnumerator());
         }
 
-        public virtual int Count
-        {
-            get
-            {
-                return this.BaseDictionary.Count;
-            }
-        }
+        public virtual int Count => this.BaseDictionary.Count;
 
-        public virtual TValue this[TKey key]
-        {
-            get
-            {
-                return this.BaseDictionary[key];
-            }
-        }
+        public virtual TValue this[TKey key] => this.BaseDictionary[key];
 
         TValue IDictionary<TKey, TValue>.this[TKey key]
         {
@@ -180,21 +126,9 @@ namespace Ks.Common
             set => throw new NotSupportedException();
         }
 
-        public virtual ICollection<TKey> Keys
-        {
-            get
-            {
-                return this.BaseDictionary.Keys;
-            }
-        }
+        public virtual ICollection<TKey> Keys => this.BaseDictionary.Keys;
 
-        public virtual ICollection<TValue> Values
-        {
-            get
-            {
-                return this.BaseDictionary.Values;
-            }
-        }
+        public virtual ICollection<TValue> Values => this.BaseDictionary.Values;
 
         // ToDo Keys and Values may have not implemented ICollection and cause problems when using IDictionary.
 

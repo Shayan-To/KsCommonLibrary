@@ -145,21 +145,9 @@ namespace Ks.Common
             return this.List.Contains(Entry);
         }
 
-        public int Count
-        {
-            get
-            {
-                return this.List.Count;
-            }
-        }
+        public int Count => this.List.Count;
 
-        public CsvEntry this[int Index]
-        {
-            get
-            {
-                return this.List[Index];
-            }
-        }
+        public CsvEntry this[int Index] => this.List[Index];
 
         public CsvData Parent { get; }
 

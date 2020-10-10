@@ -92,42 +92,18 @@ namespace Ks.Common.MVVM
             return !(Left == Right);
         }
 
-        public bool IsOpenEnded
-        {
-            get
-            {
-                return this.Tip.IsNavigation();
-            }
-        }
+        public bool IsOpenEnded => this.Tip.IsNavigation();
 
-        public ViewModel Tip
-        {
-            get
-            {
-                return this[this.Count - 1];
-            }
-        }
+        public ViewModel Tip => this[this.Count - 1];
 
         public NavigationViewModel GetParent(int Index)
         {
             return (NavigationViewModel) this[this.Count - 2 - Index];
         }
 
-        public ViewModel this[int Index]
-        {
-            get
-            {
-                return this.List[Index];
-            }
-        }
+        public ViewModel this[int Index] => this.List[Index];
 
-        public int Count
-        {
-            get
-            {
-                return this.List.Length;
-            }
-        }
+        public int Count => this.List.Length;
 
         private readonly ViewModel[] List;
     }

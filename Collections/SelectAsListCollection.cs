@@ -27,21 +27,9 @@ namespace Ks.Common
             return this.FuncIndexed.Invoke(Inp, Index);
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.List.Count;
-            }
-        }
+        public override int Count => this.List.Count;
 
-        public override TOut this[int Index]
-        {
-            get
-            {
-                return this.GetMappedElement(this.List[Index], Index);
-            }
-        }
+        public override TOut this[int Index] => this.GetMappedElement(this.List[Index], Index);
 
         public override IEnumerator<TOut> GetEnumerator()
         {

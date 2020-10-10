@@ -375,13 +375,7 @@ namespace Ks.Common
             return string.Concat(nameof(TextWriterTimeStampAdder), "{", this.Base.ToString(), "}");
         }
 
-        public override System.Text.Encoding Encoding
-        {
-            get
-            {
-                return this.Base.Encoding;
-            }
-        }
+        public override System.Text.Encoding Encoding => this.Base.Encoding;
 
         public override string NewLine
         {
@@ -389,13 +383,7 @@ namespace Ks.Common
             set => this.Base.NewLine = value;
         }
 
-        public override IFormatProvider FormatProvider
-        {
-            get
-            {
-                return this.Base.FormatProvider;
-            }
-        }
+        public override IFormatProvider FormatProvider => this.Base.FormatProvider;
 
         public bool AutoFlush { get; set; } = true;
 

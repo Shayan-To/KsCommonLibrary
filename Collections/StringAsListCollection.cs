@@ -9,21 +9,9 @@ namespace Ks.Common
             this.Base = Str;
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.Base.Length;
-            }
-        }
+        public override int Count => this.Base.Length;
 
-        public override char this[int Index]
-        {
-            get
-            {
-                return this.Base[Index];
-            }
-        }
+        public override char this[int Index] => this.Base[Index];
 
         public override IEnumerator<char> GetEnumerator()
         {

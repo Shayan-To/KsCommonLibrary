@@ -223,45 +223,15 @@ namespace Ks.Common
             set => this[index] = (TValue) value;
         }
 
-        bool IList.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsReadOnly => false;
 
-        bool ICollection<TValue>.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection<TValue>.IsReadOnly => false;
 
-        bool IList.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsFixedSize => false;
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        object ICollection.SyncRoot => throw new NotSupportedException();
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
         public MultiDictionary<TKey, TValue> Parent { get; }
 

@@ -10,21 +10,9 @@ namespace Ks.Common
     [TypeDescriptionProvider(typeof(ValueBagTypeDescriptionProvider))]
     public class ValueBag<T> : BindableBase, IDictionary<string, T>, IDictionary, IFormattable
     {
-        public int Count
-        {
-            get
-            {
-                return this.Dic.Count;
-            }
-        }
+        public int Count => this.Dic.Count;
 
-        private bool IsReadOnly
-        {
-            get
-            {
-                return ((ICollection<KeyValuePair<string, T>>) this.Dic).IsReadOnly;
-            }
-        }
+        private bool IsReadOnly => ((ICollection<KeyValuePair<string, T>>) this.Dic).IsReadOnly;
 
         public T this[string Key]
         {
@@ -36,37 +24,13 @@ namespace Ks.Common
             }
         }
 
-        ICollection<string> IDictionary<string, T>.Keys
-        {
-            get
-            {
-                return this.Dic.Keys;
-            }
-        }
+        ICollection<string> IDictionary<string, T>.Keys => this.Dic.Keys;
 
-        public Dictionary<string, T>.KeyCollection Keys
-        {
-            get
-            {
-                return this.Dic.Keys;
-            }
-        }
+        public Dictionary<string, T>.KeyCollection Keys => this.Dic.Keys;
 
-        ICollection<T> IDictionary<string, T>.Values
-        {
-            get
-            {
-                return this.Dic.Values;
-            }
-        }
+        ICollection<T> IDictionary<string, T>.Values => this.Dic.Values;
 
-        public Dictionary<string, T>.ValueCollection Values
-        {
-            get
-            {
-                return this.Dic.Values;
-            }
-        }
+        public Dictionary<string, T>.ValueCollection Values => this.Dic.Values;
 
         object IDictionary.this[object key]
         {
@@ -74,69 +38,21 @@ namespace Ks.Common
             set => this[(string) key] = (T) value;
         }
 
-        ICollection IDictionary.Keys
-        {
-            get
-            {
-                return this.Keys;
-            }
-        }
+        ICollection IDictionary.Keys => this.Keys;
 
-        ICollection IDictionary.Values
-        {
-            get
-            {
-                return this.Values;
-            }
-        }
+        ICollection IDictionary.Values => this.Values;
 
-        bool IDictionary.IsReadOnly
-        {
-            get
-            {
-                return this.IsReadOnly;
-            }
-        }
+        bool IDictionary.IsReadOnly => this.IsReadOnly;
 
-        bool ICollection<KeyValuePair<string, T>>.IsReadOnly
-        {
-            get
-            {
-                return this.IsReadOnly;
-            }
-        }
+        bool ICollection<KeyValuePair<string, T>>.IsReadOnly => this.IsReadOnly;
 
-        bool IDictionary.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IDictionary.IsFixedSize => false;
 
-        int ICollection.Count
-        {
-            get
-            {
-                return this.Count;
-            }
-        }
+        int ICollection.Count => this.Count;
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        object ICollection.SyncRoot => throw new NotSupportedException();
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
         void ICollection<KeyValuePair<string, T>>.Add(KeyValuePair<string, T> Item)
         {
@@ -336,29 +252,11 @@ namespace Ks.Common
             this.PropType = Type;
         }
 
-        public override Type ComponentType
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public override Type ComponentType => throw new NotImplementedException();
 
-        public override bool IsReadOnly
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool IsReadOnly => true;
 
-        public override Type PropertyType
-        {
-            get
-            {
-                return this.PropType;
-            }
-        }
+        public override Type PropertyType => this.PropType;
 
         public override void ResetValue(object component)
         {

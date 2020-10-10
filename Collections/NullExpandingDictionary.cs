@@ -21,21 +21,9 @@ namespace Ks.Common
         {
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.Dic.Count;
-            }
-        }
+        public override int Count => this.Dic.Count;
 
-        protected override bool IsReadOnly
-        {
-            get
-            {
-                return this.Dic.IsReadOnly;
-            }
-        }
+        protected override bool IsReadOnly => this.Dic.IsReadOnly;
 
         public override TValue this[TKey key]
         {
@@ -51,21 +39,9 @@ namespace Ks.Common
             set => this.Dic[key] = value;
         }
 
-        public override ICollection<TKey> Keys
-        {
-            get
-            {
-                return this.Dic.Keys;
-            }
-        }
+        public override ICollection<TKey> Keys => this.Dic.Keys;
 
-        public override ICollection<TValue> Values
-        {
-            get
-            {
-                return this.Dic.Values;
-            }
-        }
+        public override ICollection<TValue> Values => this.Dic.Values;
 
         public override void Add(TKey key, TValue value)
         {

@@ -16,23 +16,11 @@ namespace Ks.Common
 
         private readonly ChildComplementCollection<T> _Collection1;
 
-        public INotifyingCollection<T> Collection1
-        {
-            get
-            {
-                return this._Collection1;
-            }
-        }
+        public INotifyingCollection<T> Collection1 => this._Collection1;
 
         private readonly ChildComplementCollection<T> _Collection2;
 
-        public INotifyingCollection<T> Collection2
-        {
-            get
-            {
-                return this._Collection2;
-            }
-        }
+        public INotifyingCollection<T> Collection2 => this._Collection2;
 
         public event NotifyCollectionChangedEventHandler<T> CollectionChanged;
         event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
@@ -48,21 +36,9 @@ namespace Ks.Common
             INotifyCollectionChanged_CollectionChanged?.Invoke(this, E);
         }
 
-        public int Count
-        {
-            get
-            {
-                return this._Collection1.Count + this._Collection2.Count;
-            }
-        }
+        public int Count => this._Collection1.Count + this._Collection2.Count;
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         public void CopyTo(T[] array, int arrayIndex)
         {
@@ -227,21 +203,9 @@ namespace Ks.Common
 
         public ComplementingCollectionMaster<T> Master { get; }
 
-        public int Count
-        {
-            get
-            {
-                return this.InnerList.Count;
-            }
-        }
+        public int Count => this.InnerList.Count;
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         public void CopyTo(T[] array, int arrayIndex)
         {

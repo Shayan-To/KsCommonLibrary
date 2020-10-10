@@ -392,13 +392,7 @@ namespace Ks.Common
             return Res.ToString();
         }
 
-        public override System.Text.Encoding Encoding
-        {
-            get
-            {
-                return this.Bases.FirstOrDefault()?.Encoding;
-            }
-        }
+        public override System.Text.Encoding Encoding => this.Bases.FirstOrDefault()?.Encoding;
 
         public override string NewLine
         {
@@ -412,13 +406,7 @@ namespace Ks.Common
             }
         }
 
-        public override IFormatProvider FormatProvider
-        {
-            get
-            {
-                return this.Bases.FirstOrDefault()?.FormatProvider;
-            }
-        }
+        public override IFormatProvider FormatProvider => this.Bases.FirstOrDefault()?.FormatProvider;
 
         private readonly System.IO.TextWriter[] Bases;
     }

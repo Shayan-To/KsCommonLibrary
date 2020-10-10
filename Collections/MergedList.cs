@@ -15,13 +15,7 @@ namespace Ks.Common
         {
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.Lists.Sum(L => L.Count);
-            }
-        }
+        public override int Count => this.Lists.Sum(L => L.Count);
 
         public override T this[int Index]
         {

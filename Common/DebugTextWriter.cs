@@ -260,13 +260,7 @@ namespace Ks.Common
             return nameof(DebugTextWriter);
         }
 
-        public override System.Text.Encoding Encoding
-        {
-            get
-            {
-                return System.Text.Encoding.UTF8;
-            }
-        }
+        public override System.Text.Encoding Encoding => System.Text.Encoding.UTF8;
 
         public override string NewLine
         {
@@ -274,13 +268,7 @@ namespace Ks.Common
             set => throw new NotSupportedException();
         }
 
-        public override IFormatProvider FormatProvider
-        {
-            get
-            {
-                return System.Globalization.CultureInfo.InvariantCulture;
-            }
-        }
+        public override IFormatProvider FormatProvider => System.Globalization.CultureInfo.InvariantCulture;
 
         public static DebugTextWriter Instance { get; } = new DebugTextWriter();
     }

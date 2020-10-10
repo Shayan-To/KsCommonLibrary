@@ -27,13 +27,7 @@ namespace Ks.Common
             set => this.Base[index] = value;
         }
 
-        public int Count
-        {
-            get
-            {
-                return this.Base.Count;
-            }
-        }
+        public int Count => this.Base.Count;
 
         protected IEnumerator<JsonDynamicBase> _GetEnumerator()
         {
@@ -101,53 +95,17 @@ namespace Ks.Common
             set => this[index] = (JsonDynamicBase) value;
         }
 
-        JsonDynamicBase IReadOnlyList<JsonDynamicBase>.this[int index]
-        {
-            get
-            {
-                return this[index];
-            }
-        }
+        JsonDynamicBase IReadOnlyList<JsonDynamicBase>.this[int index] => this[index];
 
-        bool IList.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsReadOnly => false;
 
-        bool ICollection<JsonDynamicBase>.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection<JsonDynamicBase>.IsReadOnly => false;
 
-        bool IList.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsFixedSize => false;
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        object ICollection.SyncRoot => throw new NotSupportedException();
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
         public bool Contains(JsonDynamicBase item)
         {

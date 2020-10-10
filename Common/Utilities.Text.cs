@@ -444,13 +444,7 @@ namespace Ks.Common
                 return Res.ToString();
             }
 
-            public static IFormatProvider CurruntFormatProvider
-            {
-                get
-                {
-                    return null;
-                }
-            }
+            public static IFormatProvider CurruntFormatProvider => null;
 
             public static string FirstCapitalized(string Str)
             {

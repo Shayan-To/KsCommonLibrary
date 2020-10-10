@@ -25,13 +25,7 @@ namespace Ks.Common
         {
         }
 
-        protected override bool IsReadOnly
-        {
-            get
-            {
-                return this.Dic.IsReadOnly;
-            }
-        }
+        protected override bool IsReadOnly => this.Dic.IsReadOnly;
 
         public override int Count
         {

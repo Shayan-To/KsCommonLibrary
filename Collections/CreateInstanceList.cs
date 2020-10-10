@@ -44,13 +44,7 @@ namespace Ks.Common
             this.List.Clear();
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.List.Count;
-            }
-        }
+        public override int Count => this.List.Count;
 
         public override void Insert(int Index, T Item)
         {

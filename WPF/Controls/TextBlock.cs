@@ -172,13 +172,7 @@ namespace Ks.Common.Controls
             return S;
         }
 
-        protected override IEnumerator LogicalChildren
-        {
-            get
-            {
-                return this.Objs.GetEnumerator();
-            }
-        }
+        protected override IEnumerator LogicalChildren => this.Objs.GetEnumerator();
 
         public static readonly DependencyProperty KsLanguageProperty = DependencyProperty.RegisterAttached("KsLanguage", typeof(KsLanguage), typeof(TextBlock), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits, KsLanguage_Changed, KsLanguage_Coerce));
 

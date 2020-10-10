@@ -31,13 +31,7 @@ namespace Ks.Common
             this.IncrementVersion();
         }
 
-        public int Count
-        {
-            get
-            {
-                return this.Dic.Count;
-            }
-        }
+        public int Count => this.Dic.Count;
 
         public MultiDictionaryList<TKey, TValue> this[TKey key]
         {
@@ -52,13 +46,7 @@ namespace Ks.Common
             }
         }
 
-        public IEnumerable<TKey> Keys
-        {
-            get
-            {
-                return this.Dic.Keys;
-            }
-        }
+        public IEnumerable<TKey> Keys => this.Dic.Keys;
 
         public IEnumerable<MultiDictionaryList<TKey, TValue>> Values
         {

@@ -63,45 +63,15 @@ namespace Ks.Common
             set => throw new NotSupportedException();
         }
 
-        bool IList.IsReadOnly
-        {
-            get
-            {
-                return true;
-            }
-        }
+        bool IList.IsReadOnly => true;
 
-        bool ICollection<T>.IsReadOnly
-        {
-            get
-            {
-                return true;
-            }
-        }
+        bool ICollection<T>.IsReadOnly => true;
 
-        bool IList.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsFixedSize => false;
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        object ICollection.SyncRoot => throw new NotSupportedException();
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return true;
-            }
-        }
+        bool ICollection.IsSynchronized => true;
 
         void IList<T>.Insert(int index, T item)
         {

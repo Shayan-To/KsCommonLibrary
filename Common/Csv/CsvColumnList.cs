@@ -165,13 +165,7 @@ namespace Ks.Common
             return this.GetEnumerator();
         }
 
-        public CsvColumn this[int Index]
-        {
-            get
-            {
-                return this.List[Index];
-            }
-        }
+        public CsvColumn this[int Index] => this.List[Index];
 
         public CsvColumn this[string HeaderName]
         {
@@ -182,13 +176,7 @@ namespace Ks.Common
             }
         }
 
-        public int Count
-        {
-            get
-            {
-                return this.List.Count;
-            }
-        }
+        public int Count => this.List.Count;
 
         public CsvData Parent { get; }
 

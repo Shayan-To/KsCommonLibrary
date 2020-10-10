@@ -21,13 +21,7 @@ namespace Ks.Common
             this._Dic = new Dictionary<TKey, TValue>(Comparer);
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this._Keys.Count;
-            }
-        }
+        public override int Count => this._Keys.Count;
 
         /// <summary>
         /// When setting, adds the value to the end of collection if not present.
@@ -46,21 +40,9 @@ namespace Ks.Common
             }
         }
 
-        public override ICollection<TKey> Keys
-        {
-            get
-            {
-                return (ICollection<TKey>) this.KeysList;
-            }
-        }
+        public override ICollection<TKey> Keys => (ICollection<TKey>) this.KeysList;
 
-        public override ICollection<TValue> Values
-        {
-            get
-            {
-                return (ICollection<TValue>) this.ValuesList;
-            }
-        }
+        public override ICollection<TValue> Values => (ICollection<TValue>) this.ValuesList;
 
         private IReadOnlyList<TKey> _KeysList;
 
@@ -114,21 +96,9 @@ namespace Ks.Common
             set => this[index] = (KeyValuePair<TKey, TValue>) value;
         }
 
-        bool IList.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsReadOnly => false;
 
-        bool IList.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsFixedSize => false;
 
         public override void Add(TKey key, TValue value)
         {

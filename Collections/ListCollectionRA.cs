@@ -113,21 +113,9 @@ namespace Ks.Common
             return this.GetEnumerator();
         }
 
-        public int Count
-        {
-            get
-            {
-                return this.InnerList.Count;
-            }
-        }
+        public int Count => this.InnerList.Count;
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool IsReadOnly => true;
 
         public void CopyTo(TList[] Array, int ArrayIndex)
         {

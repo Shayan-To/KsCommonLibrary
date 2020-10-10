@@ -207,13 +207,7 @@ namespace Ks.Common
 
         public bool IsShuttingDown { get; private set; }
 
-        public static Dispatcher Current
-        {
-            get
-            {
-                return (SynchronizationContext.Current as DispatcherSynchronizationContext)?.Dispatcher;
-            }
-        }
+        public static Dispatcher Current => (SynchronizationContext.Current as DispatcherSynchronizationContext)?.Dispatcher;
 
         public Thread Thread { get; private set; }
 

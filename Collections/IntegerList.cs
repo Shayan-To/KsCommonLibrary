@@ -42,13 +42,7 @@ namespace Ks.Common
             set => throw new NotSupportedException();
         }
 
-        public int Count
-        {
-            get
-            {
-                return (this.End - this.Start) / this.Step;
-            }
-        }
+        public int Count => (this.End - this.Start) / this.Step;
 
         public int IndexOf(int item)
         {
@@ -83,13 +77,7 @@ namespace Ks.Common
             }
         }
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool IsReadOnly => true;
 
         IEnumerator IEnumerable.GetEnumerator()
         {

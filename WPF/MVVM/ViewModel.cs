@@ -76,12 +76,6 @@ namespace Ks.Common.MVVM
 
         public ViewModelMetadataAttribute Metadata { get; }
 
-        public Type Type
-        {
-            get
-            {
-                return this.GetType();
-            }
-        }
+        public Type Type => this.GetType();
     }
 }

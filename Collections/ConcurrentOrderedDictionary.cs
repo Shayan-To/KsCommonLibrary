@@ -49,21 +49,9 @@ namespace Ks.Common
             }
         }
 
-        public override ICollection<TKey> Keys
-        {
-            get
-            {
-                return (ICollection<TKey>) this.KeysList;
-            }
-        }
+        public override ICollection<TKey> Keys => (ICollection<TKey>) this.KeysList;
 
-        public override ICollection<TValue> Values
-        {
-            get
-            {
-                return (ICollection<TValue>) this.ValuesList;
-            }
-        }
+        public override ICollection<TValue> Values => (ICollection<TValue>) this.ValuesList;
 
         private IReadOnlyList<TKey> _KeysList;
 
@@ -117,21 +105,9 @@ namespace Ks.Common
             }
         }
 
-        bool IList.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsReadOnly => false;
 
-        bool IList.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsFixedSize => false;
 
         public override void Add(TKey key, TValue value)
         {

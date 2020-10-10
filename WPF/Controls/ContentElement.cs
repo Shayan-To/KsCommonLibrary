@@ -35,13 +35,7 @@ namespace Ks.Common.Controls
             return this.Content;
         }
 
-        protected override int VisualChildrenCount
-        {
-            get
-            {
-                return this.Content == null ? 0 : 1;
-            }
-        }
+        protected override int VisualChildrenCount => this.Content == null ? 0 : 1;
 
         protected override IEnumerator LogicalChildren
         {

@@ -24,13 +24,7 @@ namespace Ks.Common
             this.LockedKeys.Clear();
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.BaseDic.Count;
-            }
-        }
+        public override int Count => this.BaseDic.Count;
 
         public override TValue this[TKey key]
         {
@@ -42,21 +36,9 @@ namespace Ks.Common
             }
         }
 
-        public override ICollection<TKey> Keys
-        {
-            get
-            {
-                return this.BaseDic.Keys;
-            }
-        }
+        public override ICollection<TKey> Keys => this.BaseDic.Keys;
 
-        public override ICollection<TValue> Values
-        {
-            get
-            {
-                return this.BaseDic.Values;
-            }
-        }
+        public override ICollection<TValue> Values => this.BaseDic.Values;
 
         public override void Add(TKey key, TValue value)
         {

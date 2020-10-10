@@ -27,13 +27,7 @@ namespace Ks.Common
             }
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.List.Count;
-            }
-        }
+        public override int Count => this.List.Count;
 
         public override void Insert(int index, T item)
         {

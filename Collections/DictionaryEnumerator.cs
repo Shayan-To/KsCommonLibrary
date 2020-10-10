@@ -10,13 +10,7 @@ namespace Ks.Common
             this.BaseEnumerator = BaseEnumerator;
         }
 
-        public KeyValuePair<TKey, TValue> Current
-        {
-            get
-            {
-                return this.BaseEnumerator.Current;
-            }
-        }
+        public KeyValuePair<TKey, TValue> Current => this.BaseEnumerator.Current;
 
         public DictionaryEntry Entry
         {
@@ -27,29 +21,11 @@ namespace Ks.Common
             }
         }
 
-        public object Key
-        {
-            get
-            {
-                return this.Current.Key;
-            }
-        }
+        public object Key => this.Current.Key;
 
-        public object Value
-        {
-            get
-            {
-                return this.Current.Value;
-            }
-        }
+        public object Value => this.Current.Value;
 
-        object IEnumerator.Current
-        {
-            get
-            {
-                return this.Current;
-            }
-        }
+        object IEnumerator.Current => this.Current;
 
         public void Dispose()
         {

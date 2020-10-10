@@ -104,13 +104,7 @@ namespace Ks.Common
             this.Sort(0, List.Count);
         }
 
-        public static QuickSorter<T> Instance
-        {
-            get
-            {
-                return DefaultCacher<QuickSorter<T>>.Value;
-            }
-        }
+        public static QuickSorter<T> Instance => DefaultCacher<QuickSorter<T>>.Value;
 
         private Random Random;
         private IList<T> List;

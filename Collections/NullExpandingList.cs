@@ -14,21 +14,9 @@ namespace Ks.Common
 
     public class NullExpandingList<T> : IList<T>
     {
-        public int Count
-        {
-            get
-            {
-                return this.List.Count;
-            }
-        }
+        public int Count => this.List.Count;
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         public T this[int Index]
         {

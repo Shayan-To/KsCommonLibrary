@@ -12,12 +12,6 @@ namespace Ks.Common
 
         private static readonly System.Threading.ThreadLocal<T> _Value = new System.Threading.ThreadLocal<T>(() => new T());
 
-        public static T Value
-        {
-            get
-            {
-                return _Value.Value;
-            }
-        }
+        public static T Value => _Value.Value;
     }
 }

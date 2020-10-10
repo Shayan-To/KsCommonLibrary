@@ -12,21 +12,9 @@ namespace Ks.Common
             this.List = List;
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.List.Count;
-            }
-        }
+        public override int Count => this.List.Count;
 
-        public override T this[int Index]
-        {
-            get
-            {
-                return (T) this.List[Index];
-            }
-        }
+        public override T this[int Index] => (T) this.List[Index];
 
         public override IEnumerator<T> GetEnumerator()
         {

@@ -16,45 +16,15 @@ namespace Ks.Common
         {
         }
 
-        public int Count
-        {
-            get
-            {
-                return this.Collections.Sum(L => L.Count);
-            }
-        }
+        public int Count => this.Collections.Sum(L => L.Count);
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool IsReadOnly => true;
 
-        int ICollection.Count
-        {
-            get
-            {
-                return this.Count;
-            }
-        }
+        int ICollection.Count => this.Count;
 
-        public object SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        public object SyncRoot => throw new NotSupportedException();
 
-        public bool IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsSynchronized => false;
 
         public void Add(T item)
         {

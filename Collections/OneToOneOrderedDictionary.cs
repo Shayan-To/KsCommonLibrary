@@ -19,13 +19,7 @@ namespace Ks.Common
             this._Values = this._Items.AsReadOnly();
         }
 
-        public virtual ICollection<TValue> Values
-        {
-            get
-            {
-                return this._Values;
-            }
-        }
+        public virtual ICollection<TValue> Values => this._Values;
 
         public virtual TValue this[int index]
         {
@@ -97,13 +91,7 @@ namespace Ks.Common
             return this._Items.Select(V => new KeyValuePair<TKey, TValue>(this.KeySelector.Invoke(V), V)).GetEnumerator();
         }
 
-        public virtual TValue this[TKey key]
-        {
-            get
-            {
-                return this._Dic[key];
-            }
-        }
+        public virtual TValue this[TKey key] => this._Dic[key];
 
         TValue IDictionary<TKey, TValue>.this[TKey key]
         {
@@ -111,21 +99,9 @@ namespace Ks.Common
             set => throw new NotSupportedException();
         }
 
-        public virtual int Count
-        {
-            get
-            {
-                return this._Items.Count;
-            }
-        }
+        public virtual int Count => this._Items.Count;
 
-        public virtual ICollection<TKey> Keys
-        {
-            get
-            {
-                return this._Keys;
-            }
-        }
+        public virtual ICollection<TKey> Keys => this._Keys;
 
         void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
         {
@@ -157,37 +133,13 @@ namespace Ks.Common
             this.Insert(this.Count, Value);
         }
 
-        bool IList.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsReadOnly => false;
 
-        bool IDictionary.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IDictionary.IsReadOnly => false;
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => false;
 
-        bool IList.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsFixedSize => false;
 
         object IList.this[int index]
         {
@@ -276,13 +228,7 @@ namespace Ks.Common
             return this.ICollection_Contains((KeyValuePair<TKey, TValue>) value);
         }
 
-        private bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        private bool IsReadOnly => false;
 
         object IDictionary.this[object key]
         {
@@ -290,29 +236,11 @@ namespace Ks.Common
             set => throw new NotSupportedException();
         }
 
-        bool IDictionary.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IDictionary.IsFixedSize => false;
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
+        object ICollection.SyncRoot => throw new NotSupportedException();
 
         void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
         {
@@ -379,21 +307,9 @@ namespace Ks.Common
             return this.ContainsKey((TKey) key);
         }
 
-        ICollection IDictionary.Keys
-        {
-            get
-            {
-                return (ICollection) this.Keys;
-            }
-        }
+        ICollection IDictionary.Keys => (ICollection) this.Keys;
 
-        ICollection IDictionary.Values
-        {
-            get
-            {
-                return (ICollection) this.Values;
-            }
-        }
+        ICollection IDictionary.Values => (ICollection) this.Values;
 
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {

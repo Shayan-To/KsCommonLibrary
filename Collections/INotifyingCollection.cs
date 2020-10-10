@@ -387,13 +387,7 @@ namespace Ks.Common
             return this.BaseList.GetEnumerator();
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.BaseList.Count;
-            }
-        }
+        public override int Count => this.BaseList.Count;
 
         public override T this[int index]
         {

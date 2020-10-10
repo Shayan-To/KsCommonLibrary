@@ -11,21 +11,9 @@ namespace Ks.Common
             this.List = Items.ToArray();
         }
 
-        public int Count
-        {
-            get
-            {
-                return this.List.Length;
-            }
-        }
+        public int Count => this.List.Length;
 
-        public JsonObject this[int Index]
-        {
-            get
-            {
-                return this.List[Index];
-            }
-        }
+        public JsonObject this[int Index] => this.List[Index];
 
         public IEnumerator<JsonObject> GetEnumerator()
         {

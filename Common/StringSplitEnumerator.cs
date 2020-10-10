@@ -80,25 +80,13 @@ namespace Ks.Common
 
         public string Current { get; private set; }
 
-        object IEnumerator.Current
-        {
-            get
-            {
-                return this.Current;
-            }
-        }
+        object IEnumerator.Current => this.Current;
 
         public string String { get; }
 
         private readonly char[] _Chars;
 
-        public char Chars
-        {
-            get
-            {
-                return this._Chars[this.Index];
-            }
-        }
+        public char Chars => this._Chars[this.Index];
 
         public StringSplitOptions Options { get; }
 

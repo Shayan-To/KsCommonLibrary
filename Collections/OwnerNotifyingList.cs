@@ -16,13 +16,7 @@ namespace Ks.Common
             set => this.Base[index] = value;
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.Base.Count;
-            }
-        }
+        public override int Count => this.Base.Count;
 
         public override void Insert(int index, T item)
         {

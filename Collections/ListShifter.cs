@@ -14,21 +14,9 @@ namespace Ks.Common
             this.Shift = Shift;
         }
 
-        public int Count
-        {
-            get
-            {
-                return this.InnerList.Count;
-            }
-        }
+        public int Count => this.InnerList.Count;
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return this.InnerList.IsReadOnly;
-            }
-        }
+        public bool IsReadOnly => this.InnerList.IsReadOnly;
 
         public T this[int index]
         {

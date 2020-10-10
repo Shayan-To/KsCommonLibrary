@@ -18,13 +18,7 @@ namespace Ks.Common
             }
         }
 
-        public int Count
-        {
-            get
-            {
-                return this.List.Length;
-            }
-        }
+        public int Count => this.List.Length;
 
         public JsonObject this[string Key]
         {
@@ -41,21 +35,9 @@ namespace Ks.Common
             return Value;
         }
 
-        public IEnumerable<string> Keys
-        {
-            get
-            {
-                return this.List.Select(KV => KV.Key);
-            }
-        }
+        public IEnumerable<string> Keys => this.List.Select(KV => KV.Key);
 
-        public IEnumerable<JsonObject> Values
-        {
-            get
-            {
-                return this.List.Select(KV => KV.Value);
-            }
-        }
+        public IEnumerable<JsonObject> Values => this.List.Select(KV => KV.Value);
 
         public bool ContainsKey(string key)
         {

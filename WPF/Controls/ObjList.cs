@@ -31,13 +31,7 @@ namespace Ks.Common.Controls
             this.Parent.ReportObjWentOut(Obj);
         }
 
-        public override int Count
-        {
-            get
-            {
-                return this.List.Count;
-            }
-        }
+        public override int Count => this.List.Count;
 
         public override Obj this[int index]
         {
