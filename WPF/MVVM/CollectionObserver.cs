@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Collections;
-using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 
 namespace Ks.Common.MVVM

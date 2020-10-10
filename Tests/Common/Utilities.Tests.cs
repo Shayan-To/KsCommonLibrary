@@ -1,6 +1,8 @@
-﻿using Xunit;
+﻿using FsCheck.Xunit;
+
+using Xunit;
+
 using Assert = Xunit.Assert;
-using FsCheck.Xunit;
 
 namespace Ks.Tests.Common
 {

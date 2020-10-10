@@ -1,6 +1,7 @@
-﻿using System.Diagnostics;
-using System;
+﻿using System;
+using System.Diagnostics;
 using System.Text;
+
 using Media = System.Windows.Media;
 using Reflect = System.Reflection;
 using SIO = System.IO;

@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using System;
+﻿using System;
+using System.Windows;
+
 using Ks.Common.MVVM;
 
 namespace Ks.Common.Controls

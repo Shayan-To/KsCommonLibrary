@@ -1,7 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
-using System;
 using System.Windows.Media;
+
 using Ks.Common;
 
 namespace Ks.Common.Controls

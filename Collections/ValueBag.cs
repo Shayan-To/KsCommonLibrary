@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Collections;
-using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+
 using Ks.Common.MVVM;
 
 namespace Ks.Common

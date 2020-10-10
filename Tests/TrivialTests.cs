@@ -1,15 +1,19 @@
-﻿using System.Threading.Tasks;
-using Xunit;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using Assert = Xunit.Assert;
 using System.Linq;
-using System.Collections.Generic;
-using System.Collections;
-using System;
+using System.Threading.Tasks;
 using System.Xml.Linq;
-using Ks.Common;
+
 using FsCheck.Xunit;
+
+using Ks.Common;
+
+using Xunit;
+
+using Assert = Xunit.Assert;
 
 namespace Ks.Tests
 {

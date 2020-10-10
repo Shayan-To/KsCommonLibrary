@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using System.Windows;
 
 namespace Ks.Common.Controls
 {

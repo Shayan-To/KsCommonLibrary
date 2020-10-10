@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Markup;
+
 using Ks.Common.MVVM;
 
 namespace Ks.Common.Controls

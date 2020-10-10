@@ -1,17 +1,20 @@
-﻿using System.Windows;
-using System.Threading.Tasks;
-using Mono;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
-using System.Collections.Generic;
-using System.Collections;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
-using System;
 using System.Xml.Linq;
+
 using Ks.Common.Controls;
-using Window = Ks.Common.Controls.Window;
+
+using Mono;
+
 using Page = Ks.Common.Controls.Page;
+using Window = Ks.Common.Controls.Window;
 
 namespace Ks.Common.MVVM
 {

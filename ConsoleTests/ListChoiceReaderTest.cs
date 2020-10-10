@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+
 using Ks.Common;
 
 namespace Ks.ConsoleTests

@@ -1,5 +1,6 @@
-﻿using Ks.Common;
-using System.Drawing;
+﻿using System.Drawing;
+
+using Ks.Common;
 
 namespace Ks.ConsoleTests
 {
