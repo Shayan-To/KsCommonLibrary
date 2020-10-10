@@ -38,25 +38,17 @@ namespace Ks
                 switch (KeyInfo.Key)
                 {
                     case ConsoleKey.Tab:
-                        {
-                            this.OnTabKeyPressed();
-                            break;
-                        }
-
+                        this.OnTabKeyPressed();
+                        break;
                     case ConsoleKey.Enter:
-                        {
-                            this.OnEnterKeyPressed();
-                            break;
-                        }
-
+                        this.OnEnterKeyPressed();
+                        break;
                     default:
-                        {
-                            if (KeyInfo.KeyChar != default(char))
-                                this.OnCharacterKeyPressed(KeyInfo);
-                            else
-                                this.OnOtherKeyPressed(KeyInfo);
-                            break;
-                        }
+                        if (KeyInfo.KeyChar != default(char))
+                            this.OnCharacterKeyPressed(KeyInfo);
+                        else
+                            this.OnOtherKeyPressed(KeyInfo);
+                        break;
                 }
             }
 

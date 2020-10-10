@@ -213,38 +213,14 @@ namespace Ks
 
             private static readonly Dictionary<char, char> EscapeDic = new Dictionary<char, char>()
             {
-                {
-                    '"',
-                    '"'
-                },
-                {
-                    '/',
-                    '/'
-                },
-                {
-                    '\\',
-                    '\\'
-                },
-                {
-                    'b',
-                    (char)0x8
-                },
-                {
-                    'f',
-                    (char)0xC
-                },
-                {
-                    'n',
-                    (char)0xA
-                },
-                {
-                    'r',
-                    (char)0xD
-                },
-                {
-                    't',
-                    (char)0x9
-                }
+                {'"', '"'},
+                {'/', '/'},
+                {'\\', '\\'},
+                {'b', (char)0x08},
+                {'f', (char)0x0C},
+                {'n', (char)0x0A},
+                {'r', (char)0x0D},
+                {'t', (char)0x09}
             };
             private static readonly char[] Operators = "{}[],:".ToCharArray();
 

@@ -984,8 +984,7 @@ namespace Ks
                 {
                     yield return Self;
                     Self = Self.BaseType;
-                }
-                while (Self != null);
+                } while (Self != null);
             }
 
             public static IEnumerable<System.Reflection.Assembly> GetRecursiveReferencedAssemblies(this System.Reflection.Assembly Assembly)

@@ -44,37 +44,23 @@ namespace Ks
 
                     switch (Key)
                     {
-                        case var @case when @case == nameof(this.Id).ToLower():
-                            {
-                                this._Id = Value;
-                                break;
-                            }
-
-                        case var case1 when case1 == nameof(this.Name).ToLower():
-                            {
-                                this._Name = Value;
-                                break;
-                            }
-
-                        case var case2 when case2 == nameof(this.NativeName).ToLower():
-                            {
-                                this._NativeName = Value;
-                                break;
-                            }
-
-                        case var case3 when case3 == nameof(this.Direction).ToLower():
-                            {
-                                Value = Value.ToLower();
-                                Verify.True((Value == nameof(FlowDirection.LeftToRight).ToLower()) | (Value == nameof(FlowDirection.RightToLeft).ToLower()) | (Value == "rtl") | (Value == "ltr"));
-                                this._Direction = ((Value == "ltr") | (Value == nameof(FlowDirection.LeftToRight).ToLower())) ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
-                                break;
-                            }
-
+                        case var k when k == nameof(this.Id).ToLower():
+                            this._Id = Value;
+                            break;
+                        case var k when k == nameof(this.Name).ToLower():
+                            this._Name = Value;
+                            break;
+                        case var k when k == nameof(this.NativeName).ToLower():
+                            this._NativeName = Value;
+                            break;
+                        case var k when k == nameof(this.Direction).ToLower():
+                            Value = Value.ToLower();
+                            Verify.True((Value == nameof(FlowDirection.LeftToRight).ToLower()) | (Value == nameof(FlowDirection.RightToLeft).ToLower()) | (Value == "rtl") | (Value == "ltr"));
+                            this._Direction = ((Value == "ltr") | (Value == nameof(FlowDirection.LeftToRight).ToLower())) ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+                            break;
                         default:
-                            {
-                                Verify.Fail("Invalid language property.");
-                                break;
-                            }
+                            Verify.Fail("Invalid language property.");
+                            break;
                     }
 
                     I += 1;

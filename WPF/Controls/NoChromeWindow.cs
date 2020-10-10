@@ -28,11 +28,8 @@ namespace Ks
             {
                 switch (msg)
                 {
-                    case 0x0084 // NCHitTest
-                   :
-                        {
-                            return this.NCHitTest(wParam, lParam, ref handled);
-                        }
+                    case 0x0084: // NCHitTest
+                        return this.NCHitTest(wParam, lParam, ref handled);
                 }
 
                 return default;

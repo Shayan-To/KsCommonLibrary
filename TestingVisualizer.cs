@@ -182,59 +182,27 @@ namespace Ks
                 switch (Color)
                 {
                     case Color.Transparent:
-                        {
-                            return DColor.Transparent;
-                        }
-
+                        return DColor.Transparent;
                     case Color.Black:
-                        {
-                            return DColor.Black;
-                        }
-
+                        return DColor.Black;
                     case Color.White:
-                        {
-                            return DColor.White;
-                        }
-
+                        return DColor.White;
                     case Color.Red:
-                        {
-                            return DColor.Red;
-                        }
-
+                        return DColor.Red;
                     case Color.Green:
-                        {
-                            return DColor.Green;
-                        }
-
+                        return DColor.Green;
                     case Color.Blue:
-                        {
-                            return DColor.Blue;
-                        }
-
+                        return DColor.Blue;
                     case Color.Cyan:
-                        {
-                            return DColor.Cyan;
-                        }
-
+                        return DColor.Cyan;
                     case Color.Magenta:
-                        {
-                            return DColor.Magenta;
-                        }
-
+                        return DColor.Magenta;
                     case Color.Yellow:
-                        {
-                            return DColor.Yellow;
-                        }
-
+                        return DColor.Yellow;
                     case Color.Gray:
-                        {
-                            return DColor.Gray;
-                        }
-
+                        return DColor.Gray;
                     case Color.Orange:
-                        {
-                            return DColor.Orange;
-                        }
+                        return DColor.Orange;
                 }
                 Verify.Fail();
                 return default;

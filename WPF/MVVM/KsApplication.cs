@@ -291,22 +291,14 @@ namespace Ks
                 switch (Count)
                 {
                     case 0:
-                        {
-                            this.CanNavigateBack = false;
-                            break;
-                        }
-
+                        this.CanNavigateBack = false;
+                        break;
                     case 1:
-                        {
-                            this.CanNavigateBack = this.CanNavigateBackToEmpty();
-                            break;
-                        }
-
+                        this.CanNavigateBack = this.CanNavigateBackToEmpty();
+                        break;
                     default:
-                        {
-                            this.CanNavigateBack = true;
-                            break;
-                        }
+                        this.CanNavigateBack = true;
+                        break;
                 }
             }
 

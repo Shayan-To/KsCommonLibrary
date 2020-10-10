@@ -36,22 +36,14 @@ namespace Ks
                     switch (Ch)
                     {
                         case '\r':
-                            {
-                                return @"\r";
-                            }
-
+                            return @"\r";
                         case '\n':
-                            {
-                                return @"\n";
-                            }
-
+                            return @"\n";
                         default:
-                            {
-                                var s = Ch.ToString();
-                                if (EscapeChars.Contains(s))
-                                    return "\\" + s;
-                                return s;
-                            }
+                            var s = Ch.ToString();
+                            if (EscapeChars.Contains(s))
+                                return "\\" + s;
+                            return s;
                     }
                 }
 
@@ -60,21 +52,13 @@ namespace Ks
                     switch (Ch)
                     {
                         case 'r':
-                            {
-                                return '\r';
-                            }
-
+                            return '\r';
                         case 'n':
-                            {
-                                return '\n';
-                            }
-
+                            return '\n';
                         default:
-                            {
-                                if (EscapeChars.Contains(Ch.ToString()))
-                                    return Ch;
-                                throw new Exception("Invalid escape character.");
-                            }
+                            if (EscapeChars.Contains(Ch.ToString()))
+                                return Ch;
+                            throw new Exception("Invalid escape character.");
                     }
                 }
 

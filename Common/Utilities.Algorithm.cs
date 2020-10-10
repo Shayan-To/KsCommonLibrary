@@ -191,8 +191,7 @@ namespace Ks
                             if ((Cur.Item2 & 4) == 4)
                                 J += 1;
                             Assert.True(((Cur.Item2 & (2 + 4)) == (2 + 4)).Implies((Cur.Item2 & 1) == 1));
-                        }
-                        while ((Cur.Item2 & (2 + 4)) != 0);
+                        } while ((Cur.Item2 & (2 + 4)) != 0);
                     }
 
                     return Res.AsReadOnly();

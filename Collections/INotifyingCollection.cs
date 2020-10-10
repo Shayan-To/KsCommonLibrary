@@ -216,29 +216,15 @@ namespace Ks
                 switch (E.Action)
                 {
                     case NotifyCollectionChangedAction.Move:
-                        {
-                            return CreateMove(E.NewItems.Cast<T>().ToArray(), E.NewStartingIndex, E.OldStartingIndex);
-                        }
-
+                        return CreateMove(E.NewItems.Cast<T>().ToArray(), E.NewStartingIndex, E.OldStartingIndex);
                     case NotifyCollectionChangedAction.Replace:
-                        {
-                            return CreateReplace(E.NewItems.Cast<T>().ToArray(), E.OldItems.Cast<T>().ToArray(), E.NewStartingIndex);
-                        }
-
+                        return CreateReplace(E.NewItems.Cast<T>().ToArray(), E.OldItems.Cast<T>().ToArray(), E.NewStartingIndex);
                     case NotifyCollectionChangedAction.Reset:
-                        {
-                            return CreateReset();
-                        }
-
+                        return CreateReset();
                     case NotifyCollectionChangedAction.Add:
-                        {
-                            return CreateAdd(E.NewItems.Cast<T>().ToArray(), E.NewStartingIndex);
-                        }
-
+                        return CreateAdd(E.NewItems.Cast<T>().ToArray(), E.NewStartingIndex);
                     case NotifyCollectionChangedAction.Remove:
-                        {
-                            return CreateRemove(E.OldItems.Cast<T>().ToArray(), E.OldStartingIndex);
-                        }
+                        return CreateRemove(E.OldItems.Cast<T>().ToArray(), E.OldStartingIndex);
                 }
 
                 Assert.Fail();
@@ -250,29 +236,15 @@ namespace Ks
                 switch (E.Action)
                 {
                     case NotifyCollectionChangedAction.Move:
-                        {
-                            return CreateMove(E.NewItems.Cast<T>().ToArray());
-                        }
-
+                        return CreateMove(E.NewItems.Cast<T>().ToArray());
                     case NotifyCollectionChangedAction.Replace:
-                        {
-                            return CreateReplace(E.NewItems.Cast<T>().ToArray(), E.OldItems.Cast<T>().ToArray());
-                        }
-
+                        return CreateReplace(E.NewItems.Cast<T>().ToArray(), E.OldItems.Cast<T>().ToArray());
                     case NotifyCollectionChangedAction.Reset:
-                        {
-                            return CreateReset();
-                        }
-
+                        return CreateReset();
                     case NotifyCollectionChangedAction.Add:
-                        {
-                            return CreateAdd(E.NewItems.Cast<T>().ToArray());
-                        }
-
+                        return CreateAdd(E.NewItems.Cast<T>().ToArray());
                     case NotifyCollectionChangedAction.Remove:
-                        {
-                            return CreateRemove(E.OldItems.Cast<T>().ToArray());
-                        }
+                        return CreateRemove(E.OldItems.Cast<T>().ToArray());
                 }
 
                 Assert.Fail();

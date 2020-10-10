@@ -39,8 +39,7 @@
                         T[I] = (byte)((2 << 6) | (Ch & ((1 << 6) - 1)));
                         Ch >>= 6;
                         I += 1;
-                    }
-                    while (Ch >= (1 << (6 - I)));
+                    } while (Ch >= (1 << (6 - I)));
 
                     // We are having 6 - I bits remaining.
                     // So we have to make 7 - I zeros at the end of the byte.

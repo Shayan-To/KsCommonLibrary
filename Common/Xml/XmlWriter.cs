@@ -226,26 +226,11 @@ namespace Ks
 
             private static readonly Dictionary<char, string> EscapeDic = new Dictionary<char, string>()
             {
-                {
-                    '"',
-                    "&quot;"
-                },
-                {
-                    '\'',
-                    "&apos;"
-                },
-                {
-                    '&',
-                    "&amp;"
-                },
-                {
-                    '<',
-                    "&lt;"
-                },
-                {
-                    '>',
-                    "&gt;"
-                }
+                {'"', "&quot;"},
+                {'\'', "&apos;"},
+                {'&', "&amp;"},
+                {'<', "&lt;"},
+                {'>', "&gt;"}
             };
 
             private readonly System.IO.TextWriter Out;

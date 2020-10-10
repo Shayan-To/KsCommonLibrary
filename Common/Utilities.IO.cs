@@ -80,8 +80,7 @@ namespace Ks
                         if (T == 0)
                             return Length - N;
                         N -= T;
-                    }
-                    while (N != 0);
+                    } while (N != 0);
 
                     return Length;
                 }

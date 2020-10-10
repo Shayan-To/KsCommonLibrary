@@ -31,78 +31,44 @@ namespace Ks
                     switch (E.Action)
                     {
                         case NotifyCollectionChangedAction.Move:
-                            {
-                                NE = NotifyCollectionChangedEventArgs<TOut>.CreateMove(E.NewItems.CastAsList<TIn>().SelectAsList(this.Func), E.NewStartingIndex, E.OldStartingIndex);
-                                break;
-                            }
-
+                            NE = NotifyCollectionChangedEventArgs<TOut>.CreateMove(E.NewItems.CastAsList<TIn>().SelectAsList(this.Func), E.NewStartingIndex, E.OldStartingIndex);
+                            break;
                         case NotifyCollectionChangedAction.Replace:
-                            {
-                                NE = NotifyCollectionChangedEventArgs<TOut>.CreateReplace(E.NewItems.CastAsList<TIn>().SelectAsList(this.Func), E.OldItems.CastAsList<TIn>().SelectAsList(this.Func), E.NewStartingIndex);
-                                break;
-                            }
-
+                            NE = NotifyCollectionChangedEventArgs<TOut>.CreateReplace(E.NewItems.CastAsList<TIn>().SelectAsList(this.Func), E.OldItems.CastAsList<TIn>().SelectAsList(this.Func), E.NewStartingIndex);
+                            break;
                         case NotifyCollectionChangedAction.Reset:
-                            {
-                                NE = NotifyCollectionChangedEventArgs<TOut>.CreateReset();
-                                break;
-                            }
-
+                            NE = NotifyCollectionChangedEventArgs<TOut>.CreateReset();
+                            break;
                         case NotifyCollectionChangedAction.Add:
-                            {
-                                NE = NotifyCollectionChangedEventArgs<TOut>.CreateAdd(E.NewItems.CastAsList<TIn>().SelectAsList(this.Func), E.NewStartingIndex);
-                                break;
-                            }
-
+                            NE = NotifyCollectionChangedEventArgs<TOut>.CreateAdd(E.NewItems.CastAsList<TIn>().SelectAsList(this.Func), E.NewStartingIndex);
+                            break;
                         case NotifyCollectionChangedAction.Remove:
-                            {
-                                NE = NotifyCollectionChangedEventArgs<TOut>.CreateRemove(E.OldItems.CastAsList<TIn>().SelectAsList(this.Func), E.OldStartingIndex);
-                                break;
-                            }
-
+                            NE = NotifyCollectionChangedEventArgs<TOut>.CreateRemove(E.OldItems.CastAsList<TIn>().SelectAsList(this.Func), E.OldStartingIndex);
+                            break;
                         default:
-                            {
-                                throw new InvalidOperationException("Action not supported.");
-                            }
+                            throw new InvalidOperationException("Action not supported.");
                     }
                 }
                 else
                     switch (E.Action)
                     {
                         case NotifyCollectionChangedAction.Move:
-                            {
-                                NE = NotifyCollectionChangedEventArgs<TOut>.CreateMove(E.NewItems.CastAsList<TIn>().SelectAsList(this.FuncIndexed), E.NewStartingIndex, E.OldStartingIndex);
-                                break;
-                            }
-
+                            NE = NotifyCollectionChangedEventArgs<TOut>.CreateMove(E.NewItems.CastAsList<TIn>().SelectAsList(this.FuncIndexed), E.NewStartingIndex, E.OldStartingIndex);
+                            break;
                         case NotifyCollectionChangedAction.Replace:
-                            {
-                                NE = NotifyCollectionChangedEventArgs<TOut>.CreateReplace(E.NewItems.CastAsList<TIn>().SelectAsList(this.FuncIndexed), E.OldItems.CastAsList<TIn>().SelectAsList(this.FuncIndexed), E.NewStartingIndex);
-                                break;
-                            }
-
+                            NE = NotifyCollectionChangedEventArgs<TOut>.CreateReplace(E.NewItems.CastAsList<TIn>().SelectAsList(this.FuncIndexed), E.OldItems.CastAsList<TIn>().SelectAsList(this.FuncIndexed), E.NewStartingIndex);
+                            break;
                         case NotifyCollectionChangedAction.Reset:
-                            {
-                                NE = NotifyCollectionChangedEventArgs<TOut>.CreateReset();
-                                break;
-                            }
-
+                            NE = NotifyCollectionChangedEventArgs<TOut>.CreateReset();
+                            break;
                         case NotifyCollectionChangedAction.Add:
-                            {
-                                NE = NotifyCollectionChangedEventArgs<TOut>.CreateAdd(E.NewItems.CastAsList<TIn>().SelectAsList(this.FuncIndexed), E.NewStartingIndex);
-                                break;
-                            }
-
+                            NE = NotifyCollectionChangedEventArgs<TOut>.CreateAdd(E.NewItems.CastAsList<TIn>().SelectAsList(this.FuncIndexed), E.NewStartingIndex);
+                            break;
                         case NotifyCollectionChangedAction.Remove:
-                            {
-                                NE = NotifyCollectionChangedEventArgs<TOut>.CreateRemove(E.OldItems.CastAsList<TIn>().SelectAsList(this.FuncIndexed), E.OldStartingIndex);
-                                break;
-                            }
-
+                            NE = NotifyCollectionChangedEventArgs<TOut>.CreateRemove(E.OldItems.CastAsList<TIn>().SelectAsList(this.FuncIndexed), E.OldStartingIndex);
+                            break;
                         default:
-                            {
-                                throw new InvalidOperationException("Action not supported.");
-                            }
+                            throw new InvalidOperationException("Action not supported.");
                     }
 
                 this.OnCollectionChanged(NE);

@@ -16,54 +16,18 @@ namespace Ks
 
                 private static readonly Dictionary<char, char> EscapeDic = new Dictionary<char, char>()
                 {
-                    {
-                        '0',
-                        (char)0x0
-                    },
-                    {
-                        '"',
-                        (char)0x27
-                    },
-                    {
-                        '\'',
-                        (char)0x22
-                    },
-                    {
-                        '?',
-                        (char)0x3F
-                    },
-                    {
-                        '\\',
-                        (char)0x5C
-                    },
-                    {
-                        'a',
-                        (char)0x7
-                    },
-                    {
-                        'b',
-                        (char)0x8
-                    },
-                    {
-                        'f',
-                        (char)0xC
-                    },
-                    {
-                        'n',
-                        (char)0xA
-                    },
-                    {
-                        'r',
-                        (char)0xD
-                    },
-                    {
-                        't',
-                        (char)0x9
-                    },
-                    {
-                        'v',
-                        (char)0xB
-                    }
+                    {'0', (char)0x00},
+                    {'"', (char)0x27},
+                    {'\'', (char)0x22},
+                    {'?', (char)0x3F},
+                    {'\\', (char)0x5C},
+                    {'a', (char)0x07},
+                    {'b', (char)0x08},
+                    {'f', (char)0x0C},
+                    {'n', (char)0x0A},
+                    {'r', (char)0x0D},
+                    {'t', (char)0x09},
+                    {'v', (char)0x0B}
                 };
 
                 public static bool IsBinaryDigit(char C)
@@ -362,28 +326,17 @@ namespace Ks
                         switch (Ch)
                         {
                             case '\r':
-                                {
-                                    Res.Append(@"\r");
-                                    break;
-                                }
-
+                                Res.Append(@"\r");
+                                break;
                             case '\n':
-                                {
-                                    Res.Append(@"\n");
-                                    break;
-                                }
-
+                                Res.Append(@"\n");
+                                break;
                             case '\\':
-                                {
-                                    Res.Append(@"\\");
-                                    break;
-                                }
-
+                                Res.Append(@"\\");
+                                break;
                             default:
-                                {
-                                    Res.Append(Ch);
-                                    break;
-                                }
+                                Res.Append(Ch);
+                                break;
                         }
                     }
 
@@ -407,27 +360,16 @@ namespace Ks
                             switch (Ch)
                             {
                                 case 'r':
-                                    {
-                                        Res.Append('\r');
-                                        break;
-                                    }
-
+                                    Res.Append('\r');
+                                    break;
                                 case 'n':
-                                    {
-                                        Res.Append('\n');
-                                        break;
-                                    }
-
+                                    Res.Append('\n');
+                                    break;
                                 case '\\':
-                                    {
-                                        Res.Append(@"\");
-                                        break;
-                                    }
-
+                                    Res.Append(@"\");
+                                    break;
                                 default:
-                                    {
-                                        throw new Exception("Invalid escape character.");
-                                    }
+                                    throw new Exception("Invalid escape character.");
                             }
                         }
 
@@ -477,28 +419,17 @@ namespace Ks
                     switch (Alignment)
                     {
                         case TextAlignment.Left:
-                            {
-                                Res = Str.PadRight(Length, Ch);
-                                break;
-                            }
-
+                            Res = Str.PadRight(Length, Ch);
+                            break;
                         case TextAlignment.Center:
-                            {
-                                Res = Str.PadRight(Length - (N / 2), Ch).PadLeft(Length, Ch);
-                                break;
-                            }
-
+                            Res = Str.PadRight(Length - (N / 2), Ch).PadLeft(Length, Ch);
+                            break;
                         case TextAlignment.Right:
-                            {
-                                Res = Str.PadLeft(Length, Ch);
-                                break;
-                            }
-
+                            Res = Str.PadLeft(Length, Ch);
+                            break;
                         default:
-                            {
-                                Verify.FailArg(nameof(Alignment), "Invalid Alignment.");
-                                break;
-                            }
+                            Verify.FailArg(nameof(Alignment), "Invalid Alignment.");
+                            break;
                     }
 
                     return Res;

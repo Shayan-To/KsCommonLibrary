@@ -65,8 +65,7 @@ namespace Ks
                     WriteColored($"StackTrace: {Ex.StackTrace}");
                     Console.WriteLine();
                     Ex = Ex.InnerException;
-                }
-                while (Ex != null);
+                } while (Ex != null);
             }
 
             public static void WriteTypes(IEnumerable<Type> Types)
