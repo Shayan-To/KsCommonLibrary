@@ -26,7 +26,7 @@ namespace Ks
 
             public void Initialize(Color BorderRectangleColor)
             {
-                // Me.Form?.Dispose()
+                // this.Form?.Dispose();
                 var Bl = this.Form == null;
                 if (Bl)
                     this.Form = new Form();

@@ -20,7 +20,7 @@ namespace Ks
                 var Helper = new WindowInteropHelper(this);
                 var Handle = Helper.EnsureHandle();
                 var HandleSource = HwndSource.FromHwnd(Handle);
-                // Dim HandleSource = HwndSource.FromVisual(Me)
+                // var HandleSource = HwndSource.FromVisual(this);
                 HandleSource.AddHook(this.WindowProcess);
             }
 

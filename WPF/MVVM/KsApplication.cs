@@ -121,7 +121,7 @@ namespace Ks
 
                 this.Application.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 this.Application.MainWindow = null;
-                // Me.Application.StartupUri = Nothing
+                // this.Application.StartupUri = null;
 
                 var Window = (Controls.Window)this.Window.View;
                 Window.Resources.MergedDictionaries.Add(this.Application.Resources);
