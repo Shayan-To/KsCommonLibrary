@@ -131,8 +131,7 @@ namespace Ks
                     var M = List1.Count;
                     var N = List2.Count;
 
-                    // The tuple is (Length, Mode). See below.
-                    var Dyn = new (int, int)[M, N];
+                    var Dyn = new (int Length, int Mode)[M, N];
 
                     // Mode:
                     // 1 -> Did equal?
@@ -148,13 +147,13 @@ namespace Ks
 
                             if ((I != (M - 1)) & (J != (N - 1)))
                             {
-                                Length += Dyn[I + 1, J + 1].Item1;
+                                Length += Dyn[I + 1, J + 1].Length;
                                 Mode += 2 + 4;
                             }
 
                             if (I != (M - 1))
                             {
-                                var L = Dyn[I + 1, J].Item1;
+                                var L = Dyn[I + 1, J].Length;
                                 if (L > Length)
                                 {
                                     Length = L;
@@ -164,7 +163,7 @@ namespace Ks
 
                             if (J != (N - 1))
                             {
-                                var L = Dyn[I, J + 1].Item1;
+                                var L = Dyn[I, J + 1].Length;
                                 if (L > Length)
                                 {
                                     Length = L;
@@ -180,18 +179,18 @@ namespace Ks
                     {
                         var I = 0;
                         var J = 0;
-                        var Cur = default((int, int));
+                        var Cur = default((int Length, int Mode));
                         do
                         {
                             Cur = Dyn[I, J];
-                            if ((Cur.Item2 & 1) == 1)
+                            if ((Cur.Mode & 1) == 1)
                                 Res.Add((I, J));
-                            if ((Cur.Item2 & 2) == 2)
+                            if ((Cur.Mode & 2) == 2)
                                 I += 1;
-                            if ((Cur.Item2 & 4) == 4)
+                            if ((Cur.Mode & 4) == 4)
                                 J += 1;
-                            Assert.True(((Cur.Item2 & (2 + 4)) == (2 + 4)).Implies((Cur.Item2 & 1) == 1));
-                        } while ((Cur.Item2 & (2 + 4)) != 0);
+                            Assert.True(((Cur.Mode & (2 + 4)) == (2 + 4)).Implies((Cur.Mode & 1) == 1));
+                        } while ((Cur.Mode & (2 + 4)) != 0);
                     }
 
                     return Res.AsReadOnly();
