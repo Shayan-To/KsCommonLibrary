@@ -47,10 +47,7 @@ namespace Ks.Common.MVVM
 
         public bool IsWorkDone
         {
-            get
-            {
-                return this._IsWorkDone;
-            }
+            get => this._IsWorkDone;
             protected set
             {
                 if (this.SetProperty(ref this._IsWorkDone, value))

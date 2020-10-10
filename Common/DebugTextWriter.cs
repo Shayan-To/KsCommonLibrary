@@ -270,14 +270,8 @@ namespace Ks.Common
 
         public override string NewLine
         {
-            get
-            {
-                return Environment.NewLine;
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            get => Environment.NewLine;
+            set => throw new NotSupportedException();
         }
 
         public override IFormatProvider FormatProvider

@@ -28,10 +28,7 @@ namespace Ks.Common
 
         public T this[string Key]
         {
-            get
-            {
-                return this.Dic[Key];
-            }
+            get => this.Dic[Key];
             set
             {
                 this.Dic[Key] = value;
@@ -73,14 +70,8 @@ namespace Ks.Common
 
         object IDictionary.this[object key]
         {
-            get
-            {
-                return this[(string) key];
-            }
-            set
-            {
-                this[(string) key] = (T) value;
-            }
+            get => this[(string) key];
+            set => this[(string) key] = (T) value;
         }
 
         ICollection IDictionary.Keys

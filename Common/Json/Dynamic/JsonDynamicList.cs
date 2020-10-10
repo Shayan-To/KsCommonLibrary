@@ -23,14 +23,8 @@ namespace Ks.Common
 
         public JsonDynamicBase this[int index]
         {
-            get
-            {
-                return this.Base[index];
-            }
-            set
-            {
-                this.Base[index] = value;
-            }
+            get => this.Base[index];
+            set => this.Base[index] = value;
         }
 
         public int Count
@@ -103,14 +97,8 @@ namespace Ks.Common
 
         object IList.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                this[index] = (JsonDynamicBase) value;
-            }
+            get => this[index];
+            set => this[index] = (JsonDynamicBase) value;
         }
 
         JsonDynamicBase IReadOnlyList<JsonDynamicBase>.this[int index]

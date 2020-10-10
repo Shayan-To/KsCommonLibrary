@@ -115,14 +115,8 @@ namespace Ks.Common.Controls
 
         public bool IsShown
         {
-            get
-            {
-                return (bool) this.GetValue(IsShownProperty);
-            }
-            set
-            {
-                this.SetValue(IsShownProperty, value);
-            }
+            get => (bool) this.GetValue(IsShownProperty);
+            set => this.SetValue(IsShownProperty, value);
         }
 
         public static readonly DependencyProperty HasShelterProperty = DependencyProperty.Register("HasShelter", typeof(bool), typeof(Popup), new PropertyMetadata(true, HasShelter_Changed));
@@ -142,14 +136,8 @@ namespace Ks.Common.Controls
 
         public bool HasShelter
         {
-            get
-            {
-                return (bool) this.GetValue(HasShelterProperty);
-            }
-            set
-            {
-                this.SetValue(HasShelterProperty, value);
-            }
+            get => (bool) this.GetValue(HasShelterProperty);
+            set => this.SetValue(HasShelterProperty, value);
         }
 
         public static readonly DependencyProperty DimShelterProperty = DependencyProperty.Register("DimShelter", typeof(bool), typeof(Popup), new PropertyMetadata(true, DimShelter_Changed));
@@ -169,14 +157,8 @@ namespace Ks.Common.Controls
 
         public bool DimShelter
         {
-            get
-            {
-                return (bool) this.GetValue(DimShelterProperty);
-            }
-            set
-            {
-                this.SetValue(DimShelterProperty, value);
-            }
+            get => (bool) this.GetValue(DimShelterProperty);
+            set => this.SetValue(DimShelterProperty, value);
         }
 
         public static readonly DependencyProperty LayerProperty = DependencyProperty.Register("Layer", typeof(int), typeof(Popup), new PropertyMetadata(0, Layer_Changed));
@@ -199,14 +181,8 @@ namespace Ks.Common.Controls
 
         public int Layer
         {
-            get
-            {
-                return (int) this.GetValue(LayerProperty);
-            }
-            set
-            {
-                this.SetValue(LayerProperty, value);
-            }
+            get => (int) this.GetValue(LayerProperty);
+            set => this.SetValue(LayerProperty, value);
         }
 
         public static readonly DependencyProperty IsShelterSensitiveProperty = DependencyProperty.Register("IsShelterSensitive", typeof(bool), typeof(PopupShelter), new PropertyMetadata(true, IsShelterSensitive_Changed));
@@ -221,14 +197,8 @@ namespace Ks.Common.Controls
 
         public bool IsShelterSensitive
         {
-            get
-            {
-                return (bool) this.GetValue(IsShelterSensitiveProperty);
-            }
-            set
-            {
-                this.SetValue(IsShelterSensitiveProperty, value);
-            }
+            get => (bool) this.GetValue(IsShelterSensitiveProperty);
+            set => this.SetValue(IsShelterSensitiveProperty, value);
         }
 
         public static readonly DependencyProperty WindowProperty = DependencyProperty.Register("Window", typeof(Window), typeof(Popup), new PropertyMetadata(null, Window_Changed));
@@ -249,14 +219,8 @@ namespace Ks.Common.Controls
 
         public Window Window
         {
-            get
-            {
-                return (Window) this.GetValue(WindowProperty);
-            }
-            set
-            {
-                this.SetValue(WindowProperty, value);
-            }
+            get => (Window) this.GetValue(WindowProperty);
+            set => this.SetValue(WindowProperty, value);
         }
 
         private static Window GetWindow(Window Window)

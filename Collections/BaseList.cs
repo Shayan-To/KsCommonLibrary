@@ -69,14 +69,8 @@ namespace Ks.Common
 
         object IList.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                this[index] = (T) value;
-            }
+            get => this[index];
+            set => this[index] = (T) value;
         }
 
         T IReadOnlyList<T>.this[int index]

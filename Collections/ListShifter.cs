@@ -32,14 +32,8 @@ namespace Ks.Common
 
         public T this[int index]
         {
-            get
-            {
-                return this.InnerList[index + this.Shift];
-            }
-            set
-            {
-                this.InnerList[index + this.Shift] = value;
-            }
+            get => this.InnerList[index + this.Shift];
+            set => this.InnerList[index + this.Shift] = value;
         }
 
         public void Add(T item)

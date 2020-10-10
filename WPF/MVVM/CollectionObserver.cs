@@ -143,10 +143,7 @@ namespace Ks.Common.MVVM
 
         public IEnumerable Collection
         {
-            get
-            {
-                return this._Collection;
-            }
+            get => this._Collection;
             set
             {
                 var Obs = this._Collection as INotifyCollectionChanged;

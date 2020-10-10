@@ -28,14 +28,8 @@ namespace Ks.Common.NonUI
 
         public object Input
         {
-            get
-            {
-                return (object) this.GetValue(InputProperty);
-            }
-            set
-            {
-                this.SetValue(InputProperty, value);
-            }
+            get => (object) this.GetValue(InputProperty);
+            set => this.SetValue(InputProperty, value);
         }
 
         public static readonly DependencyProperty OutputProperty = DependencyProperty.Register("Output", typeof(object), typeof(OneWaySetter), new PropertyMetadata(null, Output_Changed, Output_Coerce));
@@ -63,14 +57,8 @@ namespace Ks.Common.NonUI
 
         public object Output
         {
-            get
-            {
-                return (object) this.GetValue(OutputProperty);
-            }
-            set
-            {
-                this.SetValue(OutputProperty, value);
-            }
+            get => (object) this.GetValue(OutputProperty);
+            set => this.SetValue(OutputProperty, value);
         }
     }
 }

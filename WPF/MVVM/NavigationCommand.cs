@@ -47,28 +47,16 @@ namespace Ks.Common.MVVM
 
         public bool AddToStack
         {
-            get
-            {
-                return (bool) this.GetValue(AddToStackProperty);
-            }
-            set
-            {
-                this.SetValue(AddToStackProperty, value);
-            }
+            get => (bool) this.GetValue(AddToStackProperty);
+            set => this.SetValue(AddToStackProperty, value);
         }
 
         public static readonly DependencyProperty ForceToStackProperty = DependencyProperty.Register("ForceToStack", typeof(bool), typeof(NavigationCommand), new PropertyMetadata(false));
 
         public bool ForceToStack
         {
-            get
-            {
-                return (bool) this.GetValue(ForceToStackProperty);
-            }
-            set
-            {
-                this.SetValue(ForceToStackProperty, value);
-            }
+            get => (bool) this.GetValue(ForceToStackProperty);
+            set => this.SetValue(ForceToStackProperty, value);
         }
 
         public static readonly DependencyProperty ViewTypeProperty = DependencyProperty.Register("ViewType", typeof(Type), typeof(NavigationCommand), new PropertyMetadata(null, null, ViewType_Coerce));
@@ -87,14 +75,8 @@ namespace Ks.Common.MVVM
 
         public Type ViewType
         {
-            get
-            {
-                return (Type) this.GetValue(ViewTypeProperty);
-            }
-            set
-            {
-                this.SetValue(ViewTypeProperty, value);
-            }
+            get => (Type) this.GetValue(ViewTypeProperty);
+            set => this.SetValue(ViewTypeProperty, value);
         }
 
         public static readonly DependencyProperty ParentTypeProperty = DependencyProperty.Register("ParentType", typeof(Type), typeof(NavigationCommand), new PropertyMetadata(null, null, ParentType_Coerce));
@@ -119,14 +101,8 @@ namespace Ks.Common.MVVM
 
         public Type ParentType
         {
-            get
-            {
-                return (Type) this.GetValue(ParentTypeProperty);
-            }
-            set
-            {
-                this.SetValue(ParentTypeProperty, value);
-            }
+            get => (Type) this.GetValue(ParentTypeProperty);
+            set => this.SetValue(ParentTypeProperty, value);
         }
 
         public static readonly DependencyProperty ParentProperty = DependencyProperty.Register("Parent", typeof(NavigationViewModel), typeof(NavigationCommand), new PropertyMetadata(null, null, Parent_Coerce));
@@ -145,28 +121,16 @@ namespace Ks.Common.MVVM
 
         public NavigationViewModel Parent
         {
-            get
-            {
-                return (NavigationViewModel) this.GetValue(ParentProperty);
-            }
-            set
-            {
-                this.SetValue(ParentProperty, value);
-            }
+            get => (NavigationViewModel) this.GetValue(ParentProperty);
+            set => this.SetValue(ParentProperty, value);
         }
 
         public static readonly DependencyProperty KsApplicationProperty = DependencyProperty.Register("KsApplication", typeof(KsApplication), typeof(NavigationCommand), new PropertyMetadata(null));
 
         public KsApplication KsApplication
         {
-            get
-            {
-                return (KsApplication) this.GetValue(KsApplicationProperty);
-            }
-            set
-            {
-                this.SetValue(KsApplicationProperty, value);
-            }
+            get => (KsApplication) this.GetValue(KsApplicationProperty);
+            set => this.SetValue(KsApplicationProperty, value);
         }
     }
 }

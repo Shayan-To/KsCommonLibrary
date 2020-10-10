@@ -53,26 +53,14 @@ namespace Ks.Common
 
         T IList<T>.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            get => this[index];
+            set => throw new NotSupportedException();
         }
 
         object IList.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            get => this[index];
+            set => throw new NotSupportedException();
         }
 
         bool IList.IsReadOnly

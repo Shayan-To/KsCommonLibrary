@@ -15,14 +15,8 @@ namespace Ks.Common.Controls
 
         public bool IsShelterShown
         {
-            get
-            {
-                return (bool) this.GetValue(IsShelterShownProperty);
-            }
-            internal set
-            {
-                this.SetValue(IsShelterShownPropertyKey, value);
-            }
+            get => (bool) this.GetValue(IsShelterShownProperty);
+            internal set => this.SetValue(IsShelterShownPropertyKey, value);
         }
     }
 }

@@ -117,10 +117,7 @@ namespace Ks.Common
 
         public bool HasHeaders
         {
-            get
-            {
-                return this._HasHeaders;
-            }
+            get => this._HasHeaders;
             set
             {
                 if (this._HasHeaders != value)

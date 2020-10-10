@@ -8,10 +8,7 @@ namespace Ks.Common
     {
         public override T this[int index]
         {
-            get
-            {
-                return this.List[index];
-            }
+            get => this.List[index];
             set
             {
                 var Elem = this.List[index];

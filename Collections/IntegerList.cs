@@ -39,10 +39,7 @@ namespace Ks.Common
 
                 return Res;
             }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            set => throw new NotSupportedException();
         }
 
         public int Count

@@ -79,14 +79,8 @@ namespace Ks.Common.Controls
 
         public UIElement Content
         {
-            get
-            {
-                return (UIElement) this.GetValue(ContentProperty);
-            }
-            set
-            {
-                this.SetValue(ContentProperty, value);
-            }
+            get => (UIElement) this.GetValue(ContentProperty);
+            set => this.SetValue(ContentProperty, value);
         }
 
         public static readonly DependencyProperty TargetProperty = DependencyProperty.Register("Target", typeof(FrameworkElement), typeof(PopupHolder), new PropertyMetadata(null, Target_Changed));
@@ -98,14 +92,8 @@ namespace Ks.Common.Controls
 
         public FrameworkElement Target
         {
-            get
-            {
-                return (FrameworkElement) this.GetValue(TargetProperty);
-            }
-            set
-            {
-                this.SetValue(TargetProperty, value);
-            }
+            get => (FrameworkElement) this.GetValue(TargetProperty);
+            set => this.SetValue(TargetProperty, value);
         }
 
         private FrameworkElement GetTarget()
@@ -137,14 +125,8 @@ namespace Ks.Common.Controls
 
         public Popup Popup
         {
-            get
-            {
-                return (Popup) this.GetValue(PopupProperty);
-            }
-            private set
-            {
-                this.SetValue(PopupPropertyKey, value);
-            }
+            get => (Popup) this.GetValue(PopupProperty);
+            private set => this.SetValue(PopupPropertyKey, value);
         }
 
         public static readonly DependencyProperty IsPopupShownProperty = DependencyProperty.Register("IsPopupShown", typeof(bool), typeof(PopupHolder), new PropertyMetadata(false, IsPopupShown_Changed));
@@ -174,14 +156,8 @@ namespace Ks.Common.Controls
 
         public bool IsPopupShown
         {
-            get
-            {
-                return (bool) this.GetValue(IsPopupShownProperty);
-            }
-            set
-            {
-                this.SetValue(IsPopupShownProperty, value);
-            }
+            get => (bool) this.GetValue(IsPopupShownProperty);
+            set => this.SetValue(IsPopupShownProperty, value);
         }
 
         public static readonly DependencyProperty TargetHorizontalAnchorProperty = DependencyProperty.Register("TargetHorizontalAnchor", typeof(double), typeof(PopupHolder), new PropertyMetadata(0.5, TargetHorizontalAnchor_Changed));
@@ -196,14 +172,8 @@ namespace Ks.Common.Controls
 
         public double TargetHorizontalAnchor
         {
-            get
-            {
-                return (double) this.GetValue(TargetHorizontalAnchorProperty);
-            }
-            set
-            {
-                this.SetValue(TargetHorizontalAnchorProperty, value);
-            }
+            get => (double) this.GetValue(TargetHorizontalAnchorProperty);
+            set => this.SetValue(TargetHorizontalAnchorProperty, value);
         }
 
         public static readonly DependencyProperty TargetVerticalAnchorProperty = DependencyProperty.Register("TargetVerticalAnchor", typeof(double), typeof(PopupHolder), new PropertyMetadata(0.5, TargetVerticalAnchor_Changed));
@@ -218,14 +188,8 @@ namespace Ks.Common.Controls
 
         public double TargetVerticalAnchor
         {
-            get
-            {
-                return (double) this.GetValue(TargetVerticalAnchorProperty);
-            }
-            set
-            {
-                this.SetValue(TargetVerticalAnchorProperty, value);
-            }
+            get => (double) this.GetValue(TargetVerticalAnchorProperty);
+            set => this.SetValue(TargetVerticalAnchorProperty, value);
         }
 
         public static readonly DependencyProperty PopupHorizontalAnchorProperty = DependencyProperty.Register("PopupHorizontalAnchor", typeof(double), typeof(PopupHolder), new PropertyMetadata(0.5, PopupHorizontalAnchor_Changed));
@@ -240,14 +204,8 @@ namespace Ks.Common.Controls
 
         public double PopupHorizontalAnchor
         {
-            get
-            {
-                return (double) this.GetValue(PopupHorizontalAnchorProperty);
-            }
-            set
-            {
-                this.SetValue(PopupHorizontalAnchorProperty, value);
-            }
+            get => (double) this.GetValue(PopupHorizontalAnchorProperty);
+            set => this.SetValue(PopupHorizontalAnchorProperty, value);
         }
 
         public static readonly DependencyProperty PopupVerticalAnchorProperty = DependencyProperty.Register("PopupVerticalAnchor", typeof(double), typeof(PopupHolder), new PropertyMetadata(0.5, PopupVerticalAnchor_Changed));
@@ -262,14 +220,8 @@ namespace Ks.Common.Controls
 
         public double PopupVerticalAnchor
         {
-            get
-            {
-                return (double) this.GetValue(PopupVerticalAnchorProperty);
-            }
-            set
-            {
-                this.SetValue(PopupVerticalAnchorProperty, value);
-            }
+            get => (double) this.GetValue(PopupVerticalAnchorProperty);
+            set => this.SetValue(PopupVerticalAnchorProperty, value);
         }
     }
 }

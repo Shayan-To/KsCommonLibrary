@@ -65,14 +65,8 @@ namespace Ks.Common.Controls
 
         public string Text
         {
-            get
-            {
-                return (string) this.GetValue(TextProperty);
-            }
-            set
-            {
-                this.SetValue(TextProperty, value);
-            }
+            get => (string) this.GetValue(TextProperty);
+            set => this.SetValue(TextProperty, value);
         }
     }
 }

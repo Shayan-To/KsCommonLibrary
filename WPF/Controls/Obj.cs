@@ -32,14 +32,8 @@ namespace Ks.Common.Controls
 
         public object Objt
         {
-            get
-            {
-                return (object) this.GetValue(ObjtProperty);
-            }
-            set
-            {
-                this.SetValue(ObjtProperty, value);
-            }
+            get => (object) this.GetValue(ObjtProperty);
+            set => this.SetValue(ObjtProperty, value);
         }
 
         public TextBlock TextBlock { get; private set; }

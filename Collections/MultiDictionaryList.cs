@@ -219,14 +219,8 @@ namespace Ks.Common
 
         object IList.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                this[index] = (TValue) value;
-            }
+            get => this[index];
+            set => this[index] = (TValue) value;
         }
 
         bool IList.IsReadOnly

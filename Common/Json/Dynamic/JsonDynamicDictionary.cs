@@ -40,14 +40,8 @@ namespace Ks.Common
 
         object IDictionary.this[object key]
         {
-            get
-            {
-                return this[(string) key];
-            }
-            set
-            {
-                this[(string) key] = (JsonDynamicBase) value;
-            }
+            get => this[(string) key];
+            set => this[(string) key] = (JsonDynamicBase) value;
         }
 
         JsonDynamicBase IReadOnlyDictionary<string, JsonDynamicBase>.this[string key]
@@ -144,14 +138,8 @@ namespace Ks.Common
 
         public JsonDynamicBase this[string key]
         {
-            get
-            {
-                return this.Base[key];
-            }
-            set
-            {
-                this.Base[key] = value;
-            }
+            get => this.Base[key];
+            set => this.Base[key] = value;
         }
 
         ICollection IDictionary.Keys

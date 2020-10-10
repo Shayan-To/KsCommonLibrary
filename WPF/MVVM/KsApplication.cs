@@ -337,14 +337,8 @@ namespace Ks.Common.MVVM
 
         public bool CanNavigateBack
         {
-            get
-            {
-                return this._CanNavigateBack;
-            }
-            set
-            {
-                this.SetProperty(ref this._CanNavigateBack, value);
-            }
+            get => this._CanNavigateBack;
+            set => this.SetProperty(ref this._CanNavigateBack, value);
         }
 
         public virtual NavigationViewModel DefaultNavigationView
@@ -379,14 +373,8 @@ namespace Ks.Common.MVVM
 
         public NavigationFrame CurrentNavigationFrame
         {
-            get
-            {
-                return this._CurrentNavigationFrame;
-            }
-            private set
-            {
-                this.SetProperty(ref this._CurrentNavigationFrame, value);
-            }
+            get => this._CurrentNavigationFrame;
+            private set => this.SetProperty(ref this._CurrentNavigationFrame, value);
         }
 
         public PushPopList<NavigationFrame> NavigationFrames { get; } = new PushPopList<NavigationFrame>();
@@ -435,14 +423,8 @@ namespace Ks.Common.MVVM
 
         public KsApplicationState State
         {
-            get
-            {
-                return this._State;
-            }
-            private set
-            {
-                this.SetProperty(ref this._State, value);
-            }
+            get => this._State;
+            private set => this.SetProperty(ref this._State, value);
         }
 
         public IReadOnlyDictionary<string, KsLanguage> Languages { get; private set; }
@@ -451,10 +433,7 @@ namespace Ks.Common.MVVM
 
         public KsLanguage Language
         {
-            get
-            {
-                return this._Language;
-            }
+            get => this._Language;
             set
             {
                 if (this.SetProperty(ref this._Language, value))

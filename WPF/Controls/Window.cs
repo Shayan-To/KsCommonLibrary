@@ -152,14 +152,8 @@ namespace Ks.Common.Controls
 
         Page INavigationView.Content
         {
-            get
-            {
-                return this.Content as Page;
-            }
-            set
-            {
-                this.Content = value;
-            }
+            get => this.Content as Page;
+            set => this.Content = value;
         }
 
         public static readonly DependencyProperty WindowStartupPositionProperty = DependencyProperty.Register("WindowStartupPosition", typeof(WindowStartupLocation), typeof(Window), new PropertyMetadata(WindowStartupLocation.Manual, WindowStartupPosition_Changed, WindowStartupPosition_Coerce));
@@ -185,14 +179,8 @@ namespace Ks.Common.Controls
 
         public WindowStartupLocation WindowStartupPosition
         {
-            get
-            {
-                return (WindowStartupLocation) this.GetValue(WindowStartupPositionProperty);
-            }
-            set
-            {
-                this.SetValue(WindowStartupPositionProperty, value);
-            }
+            get => (WindowStartupLocation) this.GetValue(WindowStartupPositionProperty);
+            set => this.SetValue(WindowStartupPositionProperty, value);
         }
 
         public static readonly DependencyProperty ShelterStyleProperty = DependencyProperty.Register("ShelterStyle", typeof(Style), typeof(Window), new PropertyMetadata(null, ShelterStyle_Changed));
@@ -209,14 +197,8 @@ namespace Ks.Common.Controls
 
         public Style ShelterStyle
         {
-            get
-            {
-                return (Style) this.GetValue(ShelterStyleProperty);
-            }
-            set
-            {
-                this.SetValue(ShelterStyleProperty, value);
-            }
+            get => (Style) this.GetValue(ShelterStyleProperty);
+            set => this.SetValue(ShelterStyleProperty, value);
         }
 
         public override void OnApplyTemplate()

@@ -34,14 +34,8 @@ namespace Ks.Common
 
         object IDictionary.this[object key]
         {
-            get
-            {
-                return this[(TKey) key];
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            get => this[(TKey) key];
+            set => throw new NotSupportedException();
         }
 
         bool IDictionary.IsFixedSize
@@ -182,14 +176,8 @@ namespace Ks.Common
 
         TValue IDictionary<TKey, TValue>.this[TKey key]
         {
-            get
-            {
-                return this[key];
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            get => this[key];
+            set => throw new NotSupportedException();
         }
 
         public virtual ICollection<TKey> Keys

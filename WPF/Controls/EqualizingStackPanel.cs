@@ -114,14 +114,8 @@ namespace Ks.Common.Controls
 
         public Orientation Orientation
         {
-            get
-            {
-                return (Orientation) this.GetValue(OrientationProperty);
-            }
-            set
-            {
-                this.SetValue(OrientationProperty, value);
-            }
+            get => (Orientation) this.GetValue(OrientationProperty);
+            set => this.SetValue(OrientationProperty, value);
         }
 
         private Orientation OrientationCache = Orientation.Vertical;

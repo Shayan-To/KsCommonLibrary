@@ -64,10 +64,7 @@ namespace Ks.Common.MVVM
 
         public Type ViewType
         {
-            get
-            {
-                return this._ViewType;
-            }
+            get => this._ViewType;
             set
             {
                 if (value == null || !typeof(ViewModel).IsAssignableFrom(value))
@@ -83,10 +80,7 @@ namespace Ks.Common.MVVM
 
         public Type ParentType
         {
-            get
-            {
-                return this._ParentType;
-            }
+            get => this._ParentType;
             set
             {
                 if (this.Parent != null)
@@ -107,10 +101,7 @@ namespace Ks.Common.MVVM
 
         public NavigationViewModel Parent
         {
-            get
-            {
-                return this._Parent;
-            }
+            get => this._Parent;
             set
             {
                 if (this.ParentType != null)

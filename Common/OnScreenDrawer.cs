@@ -128,10 +128,7 @@ namespace Ks.Common
 
         public bool IsDrawing
         {
-            get
-            {
-                return this._IsDrawing;
-            }
+            get => this._IsDrawing;
             set
             {
                 if (value != this._IsDrawing)
@@ -209,10 +206,7 @@ namespace Ks.Common
 
             public override Drawing this[int index]
             {
-                get
-                {
-                    return this.Base[index];
-                }
+                get => this.Base[index];
                 set
                 {
                     this.ItemGotOut(this.Base[index]);
@@ -338,10 +332,7 @@ namespace Ks.Common
 
             public TimeSpan Interval
             {
-                get
-                {
-                    return this._Interval;
-                }
+                get => this._Interval;
                 set
                 {
                     var Old = this._Interval;
@@ -354,10 +345,7 @@ namespace Ks.Common
 
             public Rectangle Bounds
             {
-                get
-                {
-                    return this._Bounds;
-                }
+                get => this._Bounds;
                 set
                 {
                     var ShouldRecreate = (this._Bounds.Width != value.Width) | (this._Bounds.Height != value.Height);
@@ -375,10 +363,7 @@ namespace Ks.Common
 
             public bool IsVisible
             {
-                get
-                {
-                    return this._IsVisible;
-                }
+                get => this._IsVisible;
                 set
                 {
                     if (this._IsVisible != value)

@@ -107,14 +107,8 @@ namespace Ks.Common.MVVM.Converters
 
         public Color Background
         {
-            get
-            {
-                return (Color) this.GetValue(BackgroundProperty);
-            }
-            set
-            {
-                this.SetValue(BackgroundProperty, value);
-            }
+            get => (Color) this.GetValue(BackgroundProperty);
+            set => this.SetValue(BackgroundProperty, value);
         }
 
         public static readonly DependencyProperty ForegroundProperty = DependencyProperty.Register("Foreground", typeof(Color), typeof(BrightnessConverter), new PropertyMetadata(Colors.Black, Foreground_Changed));
@@ -127,14 +121,8 @@ namespace Ks.Common.MVVM.Converters
 
         public Color Foreground
         {
-            get
-            {
-                return (Color) this.GetValue(ForegroundProperty);
-            }
-            set
-            {
-                this.SetValue(ForegroundProperty, value);
-            }
+            get => (Color) this.GetValue(ForegroundProperty);
+            set => this.SetValue(ForegroundProperty, value);
         }
 
         private double Coeff = 1;

@@ -15,14 +15,8 @@ namespace Ks.Common.Controls
 
         public string Title
         {
-            get
-            {
-                return (string) this.GetValue(TitleProperty);
-            }
-            set
-            {
-                this.SetValue(TitleProperty, value);
-            }
+            get => (string) this.GetValue(TitleProperty);
+            set => this.SetValue(TitleProperty, value);
         }
 
         internal MVVM.INavigationView ParentView { get; set; }

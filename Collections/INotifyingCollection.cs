@@ -397,10 +397,7 @@ namespace Ks.Common
 
         public override T this[int index]
         {
-            get
-            {
-                return this.BaseList[index];
-            }
+            get => this.BaseList[index];
             set
             {
                 var OldItem = this.BaseList[index];

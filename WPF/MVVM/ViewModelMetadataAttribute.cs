@@ -34,10 +34,7 @@ namespace Ks.Common.MVVM
 
         public bool IsSingleInstance
         {
-            get
-            {
-                return this._IsSingleInstance;
-            }
+            get => this._IsSingleInstance;
             set
             {
                 if (this._IsSingleInstance_Set)
@@ -54,10 +51,7 @@ namespace Ks.Common.MVVM
 
         public Type KsApplicationType
         {
-            get
-            {
-                return this._KsApplicationType.Value;
-            }
+            get => this._KsApplicationType.Value;
             set
             {
                 if (this._KsApplicationType.HasValue)

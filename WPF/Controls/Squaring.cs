@@ -84,14 +84,8 @@ namespace Ks.Common.Controls
 
         public bool FillAvailableSpace
         {
-            get
-            {
-                return (bool) this.GetValue(FillAvailableSpaceProperty);
-            }
-            set
-            {
-                this.SetValue(FillAvailableSpaceProperty, value);
-            }
+            get => (bool) this.GetValue(FillAvailableSpaceProperty);
+            set => this.SetValue(FillAvailableSpaceProperty, value);
         }
     }
 }

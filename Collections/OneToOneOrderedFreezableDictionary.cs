@@ -41,10 +41,7 @@ namespace Ks.Common
 
         public override TValue this[int index]
         {
-            get
-            {
-                return base[index];
-            }
+            get => base[index];
             set
             {
                 this.VerifyWrite();

@@ -267,14 +267,8 @@ namespace Ks.Common.Controls
 
         public IList CheckedItems
         {
-            get
-            {
-                return (IList) this.GetValue(CheckedItemsProperty);
-            }
-            set
-            {
-                this.SetValue(CheckedItemsProperty, value);
-            }
+            get => (IList) this.GetValue(CheckedItemsProperty);
+            set => this.SetValue(CheckedItemsProperty, value);
         }
 
         private readonly CollectionObserver<object> CollectionObserver = new CollectionObserver<object>() { AssumeSettingOfCollectionAsReset = false };
@@ -312,24 +306,15 @@ namespace Ks.Common.Controls
 
         public bool IsChecked
         {
-            get
-            {
-                return (bool) this.GetValue(IsCheckedProperty);
-            }
-            set
-            {
-                this.SetValue(IsCheckedProperty, value);
-            }
+            get => (bool) this.GetValue(IsCheckedProperty);
+            set => this.SetValue(IsCheckedProperty, value);
         }
 
         private CNullable<CheckListBox> _ParentListBox;
 
         public CheckListBox ParentListBox
         {
-            get
-            {
-                return this._ParentListBox.Value;
-            }
+            get => this._ParentListBox.Value;
             internal set
             {
                 Verify.False(this._ParentListBox.HasValue, "Cannot set the ParentListBox property multiple times.");

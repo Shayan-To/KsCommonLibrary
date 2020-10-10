@@ -79,14 +79,8 @@ namespace Ks.Common.Controls
 
         public UIElement Content
         {
-            get
-            {
-                return (UIElement) this.GetValue(ContentProperty);
-            }
-            set
-            {
-                this.SetValue(ContentProperty, value);
-            }
+            get => (UIElement) this.GetValue(ContentProperty);
+            set => this.SetValue(ContentProperty, value);
         }
     }
 }

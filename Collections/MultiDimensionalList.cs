@@ -43,14 +43,8 @@ namespace Ks.Common
 
         public T this[params int[] Indexes]
         {
-            get
-            {
-                return this.Arr[this.GetIndex(Indexes)];
-            }
-            set
-            {
-                this.Arr[this.GetIndex(Indexes)] = value;
-            }
+            get => this.Arr[this.GetIndex(Indexes)];
+            set => this.Arr[this.GetIndex(Indexes)] = value;
         }
 
         private readonly int[] _Lengths;

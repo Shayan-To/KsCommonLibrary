@@ -34,14 +34,8 @@ namespace Ks.Common
 
         object IDictionary.this[object key]
         {
-            get
-            {
-                return this[(TKey) key];
-            }
-            set
-            {
-                this[(TKey) key] = (TValue) value;
-            }
+            get => this[(TKey) key];
+            set => this[(TKey) key] = (TValue) value;
         }
 
         TValue IReadOnlyDictionary<TKey, TValue>.this[TKey key]

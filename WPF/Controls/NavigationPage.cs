@@ -14,14 +14,8 @@ namespace Ks.Common.Controls
 
         Page INavigationView.Content
         {
-            get
-            {
-                return (Page) this.Content;
-            }
-            set
-            {
-                this.Content = value;
-            }
+            get => (Page) this.Content;
+            set => this.Content = value;
         }
     }
 }

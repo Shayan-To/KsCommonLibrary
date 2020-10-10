@@ -46,24 +46,15 @@ namespace Ks.Common
 
         public TimeSpan Interval
         {
-            get
-            {
-                return this._Interval;
-            }
-            set
-            {
-                this._Interval = value;
-            }
+            get => this._Interval;
+            set => this._Interval = value;
         }
 
         private bool _IsRunning;
 
         public bool IsRunning
         {
-            get
-            {
-                return this._IsRunning;
-            }
+            get => this._IsRunning;
             set
             {
                 if (value != this._IsRunning)

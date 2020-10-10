@@ -133,14 +133,8 @@ namespace Ks.Common.Controls
 
         public Rect ViewingRectangle
         {
-            get
-            {
-                return (Rect) this.GetValue(ViewingRectangleProperty);
-            }
-            set
-            {
-                this.SetValue(ViewingRectangleProperty, value);
-            }
+            get => (Rect) this.GetValue(ViewingRectangleProperty);
+            set => this.SetValue(ViewingRectangleProperty, value);
         }
 
         // #Region "MaxViewingRectangle Property"
@@ -173,14 +167,8 @@ namespace Ks.Common.Controls
 
         public bool KeepAspectRatio
         {
-            get
-            {
-                return (bool) this.GetValue(KeepAspectRatioProperty);
-            }
-            set
-            {
-                this.SetValue(KeepAspectRatioProperty, value);
-            }
+            get => (bool) this.GetValue(KeepAspectRatioProperty);
+            set => this.SetValue(KeepAspectRatioProperty, value);
         }
 
         public static readonly DependencyProperty PaddingProperty = DependencyProperty.Register("Padding", typeof(Thickness), typeof(ResizableCanvas), new PropertyMetadata(new Thickness(), Padding_Changed));
@@ -193,14 +181,8 @@ namespace Ks.Common.Controls
 
         public Thickness Padding
         {
-            get
-            {
-                return (Thickness) this.GetValue(PaddingProperty);
-            }
-            set
-            {
-                this.SetValue(PaddingProperty, value);
-            }
+            get => (Thickness) this.GetValue(PaddingProperty);
+            set => this.SetValue(PaddingProperty, value);
         }
 
         public static readonly DependencyProperty YProperty = DependencyProperty.RegisterAttached("Y", typeof(double), typeof(ResizableCanvas), new PropertyMetadata(0.0, Y_Changed));

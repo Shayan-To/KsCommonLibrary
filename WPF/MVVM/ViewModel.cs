@@ -70,14 +70,8 @@ namespace Ks.Common.MVVM
 
         public NavigationFrame NavigationFrame
         {
-            get
-            {
-                return this._NavigationFrame;
-            }
-            internal set
-            {
-                this.SetProperty(ref this._NavigationFrame, value);
-            }
+            get => this._NavigationFrame;
+            internal set => this.SetProperty(ref this._NavigationFrame, value);
         }
 
         public ViewModelMetadataAttribute Metadata { get; }

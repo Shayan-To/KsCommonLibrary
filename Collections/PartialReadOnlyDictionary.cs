@@ -34,10 +34,7 @@ namespace Ks.Common
 
         public override TValue this[TKey key]
         {
-            get
-            {
-                return this.BaseDic[key];
-            }
+            get => this.BaseDic[key];
             set
             {
                 Verify.False(this.LockedKeys.Contains(key), "Key is locked.");

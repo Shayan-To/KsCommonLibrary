@@ -215,26 +215,14 @@ namespace Ks.Common
 
         object IOrderedDictionary.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                this[index] = (KeyValuePair<TKey, TValue>) value;
-            }
+            get => this[index];
+            set => this[index] = (KeyValuePair<TKey, TValue>) value;
         }
 
         object IList.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                this[index] = (KeyValuePair<TKey, TValue>) value;
-            }
+            get => this[index];
+            set => this[index] = (KeyValuePair<TKey, TValue>) value;
         }
 
         int IList.Add(object value)

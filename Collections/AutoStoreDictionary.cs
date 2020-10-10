@@ -71,10 +71,7 @@ namespace Ks.Common
 
         public override string this[string key]
         {
-            get
-            {
-                return this.BaseDic[key];
-            }
+            get => this.BaseDic[key];
             set
             {
                 this.BaseDic[key] = value;
@@ -116,10 +113,7 @@ namespace Ks.Common
 
         public KeyValuePair<string, string> this[int index]
         {
-            get
-            {
-                return this.BaseDic[index];
-            }
+            get => this.BaseDic[index];
             set
             {
                 this.BaseDic[index] = value;
@@ -232,26 +226,14 @@ namespace Ks.Common
 
         object IList.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                this[index] = (KeyValuePair<string, string>) value;
-            }
+            get => this[index];
+            set => this[index] = (KeyValuePair<string, string>) value;
         }
 
         object IOrderedDictionary.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                this[index] = (KeyValuePair<string, string>) value;
-            }
+            get => this[index];
+            set => this[index] = (KeyValuePair<string, string>) value;
         }
 
         int IList.Add(object value)

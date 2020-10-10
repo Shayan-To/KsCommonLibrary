@@ -12,14 +12,8 @@ namespace Ks.Common
 
         public override T this[int index]
         {
-            get
-            {
-                return this.Base[index];
-            }
-            set
-            {
-                this.Base[index] = value;
-            }
+            get => this.Base[index];
+            set => this.Base[index] = value;
         }
 
         public override int Count

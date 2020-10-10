@@ -41,10 +41,7 @@ namespace Ks.Common.Controls
 
         public override Obj this[int index]
         {
-            get
-            {
-                return this.List[index];
-            }
+            get => this.List[index];
             set
             {
                 this.WentOut(this.List[index]);

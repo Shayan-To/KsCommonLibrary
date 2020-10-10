@@ -34,10 +34,7 @@ namespace Ks.Common
         /// </summary>
         public override TValue this[TKey key]
         {
-            get
-            {
-                return this._Dic[key];
-            }
+            get => this._Dic[key];
             set
             {
                 if (!this._Dic.ContainsKey(key))
@@ -113,14 +110,8 @@ namespace Ks.Common
 
         object IOrderedDictionary.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                this[index] = (KeyValuePair<TKey, TValue>) value;
-            }
+            get => this[index];
+            set => this[index] = (KeyValuePair<TKey, TValue>) value;
         }
 
         bool IList.IsReadOnly
@@ -211,14 +202,8 @@ namespace Ks.Common
 
         object IList.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                this[index] = (KeyValuePair<TKey, TValue>) value;
-            }
+            get => this[index];
+            set => this[index] = (KeyValuePair<TKey, TValue>) value;
         }
 
         int IList.Add(object value)

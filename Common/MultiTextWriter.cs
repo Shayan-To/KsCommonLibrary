@@ -402,10 +402,7 @@ namespace Ks.Common
 
         public override string NewLine
         {
-            get
-            {
-                return this.Bases.FirstOrDefault()?.NewLine;
-            }
+            get => this.Bases.FirstOrDefault()?.NewLine;
             set
             {
                 foreach (var B in this.Bases)

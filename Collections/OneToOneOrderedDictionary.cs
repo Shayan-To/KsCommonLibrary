@@ -29,10 +29,7 @@ namespace Ks.Common
 
         public virtual TValue this[int index]
         {
-            get
-            {
-                return this._Items[index];
-            }
+            get => this._Items[index];
             set
             {
                 var PKey = this._Keys[index];
@@ -110,14 +107,8 @@ namespace Ks.Common
 
         TValue IDictionary<TKey, TValue>.this[TKey key]
         {
-            get
-            {
-                return this[key];
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            get => this[key];
+            set => throw new NotSupportedException();
         }
 
         public virtual int Count
@@ -200,26 +191,14 @@ namespace Ks.Common
 
         object IList.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            get => this[index];
+            set => throw new NotSupportedException();
         }
 
         object IOrderedDictionary.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            get => this[index];
+            set => throw new NotSupportedException();
         }
 
         KeyValuePair<TKey, TValue> IList<KeyValuePair<TKey, TValue>>.this[int index]
@@ -229,10 +208,7 @@ namespace Ks.Common
                 var Value = this[index];
                 return new KeyValuePair<TKey, TValue>(this.KeySelector.Invoke(Value), Value);
             }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            set => throw new NotSupportedException();
         }
 
         int IList.Add(object value)
@@ -310,14 +286,8 @@ namespace Ks.Common
 
         object IDictionary.this[object key]
         {
-            get
-            {
-                return this[(TKey) key];
-            }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            get => this[(TKey) key];
+            set => throw new NotSupportedException();
         }
 
         bool IDictionary.IsFixedSize

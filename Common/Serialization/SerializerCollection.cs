@@ -47,10 +47,7 @@ namespace Ks.Common
 
         public override Serializer this[int index]
         {
-            get
-            {
-                return base[index];
-            }
+            get => base[index];
             set
             {
                 Verify.False(this.LockedItems.Contains(value), "Serializer is locked.");

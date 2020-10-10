@@ -51,10 +51,7 @@ namespace Ks.Common
                 Verify.False(this.IsDetached, "Header is detached.");
                 return this._Index;
             }
-            internal set
-            {
-                this._Index = value;
-            }
+            internal set => this._Index = value;
         }
 
         private readonly CsvData _Parent;

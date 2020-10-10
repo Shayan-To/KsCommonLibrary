@@ -48,10 +48,7 @@ namespace Ks.Common
 
                 return default;
             }
-            set
-            {
-                this.Dic[key] = value;
-            }
+            set => this.Dic[key] = value;
         }
 
         public override ICollection<TKey> Keys

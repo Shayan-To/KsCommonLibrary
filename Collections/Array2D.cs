@@ -9,14 +9,8 @@ namespace Ks.Common
 
         public T this[int I, int J]
         {
-            get
-            {
-                return this.Array[I, J];
-            }
-            set
-            {
-                this.Array[I, J] = value;
-            }
+            get => this.Array[I, J];
+            set => this.Array[I, J] = value;
         }
 
         private readonly T[,] Array;

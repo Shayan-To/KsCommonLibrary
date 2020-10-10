@@ -40,10 +40,7 @@ namespace Ks.Common
                 this.EnsureFits(Index);
                 return this.InnerList[Index];
             }
-            set
-            {
-                throw new NotSupportedException();
-            }
+            set => throw new NotSupportedException();
         }
 
         protected ListCollectionRA(SerializationInfo info, StreamingContext context)

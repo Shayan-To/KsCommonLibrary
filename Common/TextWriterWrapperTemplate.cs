@@ -265,14 +265,8 @@ namespace Ks.Common
 
         public override string NewLine
         {
-            get
-            {
-                return this.Base.NewLine;
-            }
-            set
-            {
-                this.Base.NewLine = value;
-            }
+            get => this.Base.NewLine;
+            set => this.Base.NewLine = value;
         }
 
         public override IFormatProvider FormatProvider

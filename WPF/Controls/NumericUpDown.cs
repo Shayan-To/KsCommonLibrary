@@ -55,14 +55,8 @@ namespace Ks.Common.Controls
 
         public double Step
         {
-            get
-            {
-                return (double) this.GetValue(StepProperty);
-            }
-            set
-            {
-                this.SetValue(StepProperty, value);
-            }
+            get => (double) this.GetValue(StepProperty);
+            set => this.SetValue(StepProperty, value);
         }
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(NumericUpDown), new PropertyMetadata(0.0, Value_Changed, Value_Coerce));
@@ -86,14 +80,8 @@ namespace Ks.Common.Controls
 
         public double Value
         {
-            get
-            {
-                return (double) this.GetValue(ValueProperty);
-            }
-            set
-            {
-                this.SetValue(ValueProperty, value);
-            }
+            get => (double) this.GetValue(ValueProperty);
+            set => this.SetValue(ValueProperty, value);
         }
 
 #pragma warning disable CS0169 // The field is never used

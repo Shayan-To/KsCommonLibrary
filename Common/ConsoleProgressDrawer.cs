@@ -168,10 +168,7 @@ namespace Ks.Common
 
         public string Text
         {
-            get
-            {
-                return this._Text;
-            }
+            get => this._Text;
             set
             {
                 this._Text = value;
@@ -183,10 +180,7 @@ namespace Ks.Common
 
         public bool ShowSpeed
         {
-            get
-            {
-                return this._ShowSpeed;
-            }
+            get => this._ShowSpeed;
             set
             {
                 Verify.False(value & this.StopWatch == null, "Speed is not supported.");
@@ -199,10 +193,7 @@ namespace Ks.Common
 
         public bool ShowAmount
         {
-            get
-            {
-                return this._ShowAmount;
-            }
+            get => this._ShowAmount;
             set
             {
                 this._ShowAmount = value;
@@ -214,10 +205,7 @@ namespace Ks.Common
 
         public bool ShowTotal
         {
-            get
-            {
-                return this._ShowTotal;
-            }
+            get => this._ShowTotal;
             set
             {
                 this._ShowTotal = value;
@@ -229,10 +217,7 @@ namespace Ks.Common
 
         public bool ShowPercentage
         {
-            get
-            {
-                return this._ShowPercentage;
-            }
+            get => this._ShowPercentage;
             set
             {
                 this._ShowPercentage = value;
@@ -244,10 +229,7 @@ namespace Ks.Common
 
         public bool ShowProgressBar
         {
-            get
-            {
-                return this._ShowProgressBar;
-            }
+            get => this._ShowProgressBar;
             set
             {
                 value = value & this.IsSingleLine;
@@ -260,10 +242,7 @@ namespace Ks.Common
 
         public bool AddMultiplier
         {
-            get
-            {
-                return this._AddMultiplier;
-            }
+            get => this._AddMultiplier;
             set
             {
                 this._AddMultiplier = value;
@@ -275,10 +254,7 @@ namespace Ks.Common
 
         public long Amount
         {
-            get
-            {
-                return this._Amount;
-            }
+            get => this._Amount;
             private set
             {
                 this._Amount = value;
@@ -295,10 +271,7 @@ namespace Ks.Common
 
         public long Total
         {
-            get
-            {
-                return this._Total;
-            }
+            get => this._Total;
             set
             {
                 this._Total = value;
@@ -310,10 +283,7 @@ namespace Ks.Common
 
         public bool IsSingleLine
         {
-            get
-            {
-                return this._IsSingleLine;
-            }
+            get => this._IsSingleLine;
             set
             {
                 this._IsSingleLine = value;
@@ -332,10 +302,7 @@ namespace Ks.Common
 
         public bool IsDrawing
         {
-            get
-            {
-                return this._IsDrawing;
-            }
+            get => this._IsDrawing;
             set
             {
                 if (this._IsDrawing != value)

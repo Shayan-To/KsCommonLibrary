@@ -52,14 +52,8 @@ namespace Ks.Common
 
         public string this[string HeaderName]
         {
-            get
-            {
-                return this[this.Parent.Columns[HeaderName].Index];
-            }
-            set
-            {
-                this[this.Parent.Columns[HeaderName].Index] = value;
-            }
+            get => this[this.Parent.Columns[HeaderName].Index];
+            set => this[this.Parent.Columns[HeaderName].Index] = value;
         }
 
         public string this[CsvColumn Column]

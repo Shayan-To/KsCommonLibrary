@@ -226,14 +226,8 @@ namespace Ks.Common.Controls
 
         public string OutText
         {
-            get
-            {
-                return (string) this.GetValue(OutTextProperty);
-            }
-            private set
-            {
-                this.SetValue(OutTextPropertyKey, value);
-            }
+            get => (string) this.GetValue(OutTextProperty);
+            private set => this.SetValue(OutTextPropertyKey, value);
         }
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(TextBlock), new PropertyMetadata(null, Text_Changed, Text_Coerce));
@@ -261,14 +255,8 @@ namespace Ks.Common.Controls
 
         public string Text
         {
-            get
-            {
-                return (string) this.GetValue(TextProperty);
-            }
-            set
-            {
-                this.SetValue(TextProperty, value);
-            }
+            get => (string) this.GetValue(TextProperty);
+            set => this.SetValue(TextProperty, value);
         }
 
         public static readonly DependencyProperty FTextProperty = DependencyProperty.Register("FText", typeof(string), typeof(TextBlock), new PropertyMetadata(null, FText_Changed, FText_Coerce));
@@ -296,14 +284,8 @@ namespace Ks.Common.Controls
 
         public string FText
         {
-            get
-            {
-                return (string) this.GetValue(FTextProperty);
-            }
-            set
-            {
-                this.SetValue(FTextProperty, value);
-            }
+            get => (string) this.GetValue(FTextProperty);
+            set => this.SetValue(FTextProperty, value);
         }
 
         public static readonly DependencyProperty ObjProperty = DependencyProperty.Register("Obj", typeof(object), typeof(TextBlock), new PropertyMetadata(null, Obj_Changed, Obj_Coerce));
@@ -329,14 +311,8 @@ namespace Ks.Common.Controls
 
         public object Obj
         {
-            get
-            {
-                return (object) this.GetValue(ObjProperty);
-            }
-            set
-            {
-                this.SetValue(ObjProperty, value);
-            }
+            get => (object) this.GetValue(ObjProperty);
+            set => this.SetValue(ObjProperty, value);
         }
 
         public ObjList Objs { get; }
@@ -358,14 +334,8 @@ namespace Ks.Common.Controls
 
         public TextAlignment TextAlignment
         {
-            get
-            {
-                return (TextAlignment) this.GetValue(TextAlignmentProperty);
-            }
-            set
-            {
-                this.SetValue(TextAlignmentProperty, value);
-            }
+            get => (TextAlignment) this.GetValue(TextAlignmentProperty);
+            set => this.SetValue(TextAlignmentProperty, value);
         }
 
         public static readonly DependencyProperty TextWrappingProperty = DependencyProperty.Register("TextWrapping", typeof(TextWrapping), typeof(TextBlock), new PropertyMetadata(TextWrapping.NoWrap, TextWrapping_Changed, TextWrapping_Coerce));
@@ -385,14 +355,8 @@ namespace Ks.Common.Controls
 
         public TextWrapping TextWrapping
         {
-            get
-            {
-                return (TextWrapping) this.GetValue(TextWrappingProperty);
-            }
-            set
-            {
-                this.SetValue(TextWrappingProperty, value);
-            }
+            get => (TextWrapping) this.GetValue(TextWrappingProperty);
+            set => this.SetValue(TextWrappingProperty, value);
         }
 
         private readonly Obj[] Obj1Array = new[] { new Obj() };
