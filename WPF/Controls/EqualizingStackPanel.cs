@@ -14,7 +14,9 @@ namespace Ks.Common.Controls
             var ChildCount = this.Children.Count;
 
             if (ChildCount == 0)
+            {
                 return Size.Empty;
+            }
 
             var MaxHeight = 0.0;
             var MaxWidth = 0.0;
@@ -53,26 +55,38 @@ namespace Ks.Common.Controls
         private Size CreateSize(double Width, double Height)
         {
             if (this.OrientationCache == Orientation.Horizontal)
+            {
                 return new Size(Width, Height);
+            }
             else
+            {
                 return new Size(Height, Width);
+            }
         }
 
         private Point CreatePoint(double X, double Y)
         {
             if (this.OrientationCache == Orientation.Horizontal)
+            {
                 return new Point(X, Y);
+            }
             else
+            {
                 return new Point(Y, X);
+            }
         }
 
         private double Dimension(Size Size, Orientation Orientation)
         {
             Orientation = Orientation ^ this.OrientationCache;
             if (Orientation == Orientation.Horizontal)
+            {
                 return Size.Width;
+            }
             else
+            {
                 return Size.Height;
+            }
         }
 
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(EqualizingStackPanel), new PropertyMetadata(Orientation.Vertical, Orientation_Changed, Orientation_Coerce));

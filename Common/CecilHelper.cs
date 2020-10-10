@@ -15,16 +15,24 @@ namespace Ks.Common
                 {
                     var ID = I.InterfaceType.Resolve();
                     if (this.Equals(Base, ID))
+                    {
                         return true;
+                    }
                 }
             }
             else
+            {
                 while (Derived != null)
                 {
                     if (this.Equals(Base, Derived))
+                    {
                         return true;
+                    }
+
                     Base = Derived.BaseType?.Resolve();
                 }
+            }
+
             return false;
         }
 
@@ -62,7 +70,9 @@ namespace Ks.Common
             {
                 var T = M.GetType(FName);
                 if (T != null)
+                {
                     return T;
+                }
             }
             throw new Exception();
         }
@@ -84,7 +94,9 @@ namespace Ks.Common
             foreach (var M in Assembly.Modules)
             {
                 foreach (var A in M.AssemblyReferences)
+                {
                     this.AssemblyNames.Add(A);
+                }
             }
 
             return this.AssemblyNames;
@@ -102,7 +114,9 @@ namespace Ks.Common
             foreach (var M in Assembly.Modules)
             {
                 foreach (var A in M.AssemblyReferences)
+                {
                     this.Assemblies.Add(this.Resolver.Resolve(A));
+                }
             }
 
             return this.Assemblies;
@@ -123,11 +137,16 @@ namespace Ks.Common
         private void CollectReferences(Mono.Cecil.AssemblyDefinition Assembly)
         {
             if (!this.Assemblies.Add(Assembly))
+            {
                 return;
+            }
+
             foreach (var M in Assembly.Modules)
             {
                 foreach (var A in M.AssemblyReferences)
+                {
                     this.CollectReferences(this.Resolver.Resolve(A));
+                }
             }
         }
 

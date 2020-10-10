@@ -11,17 +11,26 @@
             var BytesInitialIndex = BytesIndex;
             var T = new byte[6];
             if (BeginningOfFile)
+            {
                 CharsIndex -= 1;
+            }
+
             for (; CharsIndex < CharsLenght; CharsIndex++)
             {
                 if (BytesIndex == BytesLength)
+                {
                     break;
+                }
 
                 var Ch = default(int);
                 if (BeginningOfFile & (CharsIndex == (CharsInitialIndex - 1)))
+                {
                     Ch = 0xFEFF;
+                }
                 else
+                {
                     Ch = CharsArray[CharsIndex];
+                }
 
                 if (Ch < 128)
                 {
@@ -45,7 +54,9 @@
                 I += 1;
 
                 if ((BytesIndex + I) >= BytesLength)
+                {
                     break;
+                }
 
                 for (I -= 1; I >= 0; I--)
                 {
@@ -74,7 +85,9 @@
                 for (; BytesIndex < BytesLength; BytesIndex++)
                 {
                     if (CharsIndex == CharsLength)
+                    {
                         break;
+                    }
 
                     var B = BytesArray[BytesIndex];
 
@@ -86,20 +99,26 @@
                     }
 
                     if (((B >> 6) & 1) == 0)
+                    {
                         return false;
+                    }
 
                     var I = 5;
                     while (((B >> I) & 1) != 0)
                     {
                         I -= 1;
                         if (I == 0)
+                        {
                             return false;
+                        }
                     }
 
                     I = 7 - I;
 
                     if ((BytesIndex + I) >= BytesLength)
+                    {
                         break;
+                    }
 
                     var Ch = (B << (I + 1)) >> (I + 1);
                     for (var J = 1; J < I; J++)
@@ -107,7 +126,10 @@
                         BytesIndex += 1;
                         B = BytesArray[BytesIndex];
                         if ((B >> 6) != 2)
+                        {
                             return false;
+                        }
+
                         Ch = (Ch << 6) | ((B << 2) >> 2);
                     }
 

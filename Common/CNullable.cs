@@ -27,7 +27,10 @@ namespace Ks.Common
             get
             {
                 if (!this.HasValue)
+                {
                     throw new NullReferenceException();
+                }
+
                 return this._Value;
             }
         }

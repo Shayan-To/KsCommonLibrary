@@ -16,13 +16,17 @@ namespace Ks.Common.MVVM
         protected internal override void OnNavigatedTo(NavigationEventArgs E)
         {
             if (E.NavigationType == NavigationType.NewNavigation)
+            {
                 this.IsWorkDone = false;
+            }
         }
 
         protected internal override void OnNavigatedFrom(NavigationEventArgs E)
         {
             if (E.NavigationType == NavigationType.NewNavigation)
+            {
                 this.IsWorkDone = true;
+            }
         }
 
         public Task WhenWorkDone()
@@ -31,7 +35,9 @@ namespace Ks.Common.MVVM
             {
                 this.WhenWorkDoneTaskSource = new TaskCompletionSource<Void>();
                 if (this.IsWorkDone)
+                {
                     this.WhenWorkDoneTaskSource.SetResult(null);
+                }
             }
 
             return this.WhenWorkDoneTaskSource.Task;
@@ -50,9 +56,13 @@ namespace Ks.Common.MVVM
                 if (this.SetProperty(ref this._IsWorkDone, value))
                 {
                     if (value)
+                    {
                         this.WhenWorkDoneTaskSource?.SetResult(null);
+                    }
                     else
+                    {
                         this.WhenWorkDoneTaskSource = null;
+                    }
                 }
             }
         }

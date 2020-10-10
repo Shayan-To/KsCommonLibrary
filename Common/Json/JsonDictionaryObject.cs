@@ -13,7 +13,9 @@ namespace Ks.Common
             this.List = Items.ToArray();
             Array.Sort(this.List, CompareKeyHash);
             for (var I = 0; I < this.List.Length - 1; I++)
+            {
                 Verify.False(this.List[I].Key == this.List[I + 1].Key, "Cannot have two items with the same key.");
+            }
         }
 
         public int Count

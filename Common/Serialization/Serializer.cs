@@ -52,14 +52,20 @@ namespace Ks.Common
             public override object Get(FormatterGetProxy Formatter)
             {
                 if (this.GetDelegate == null)
+                {
                     throw new NotSupportedException();
+                }
+
                 return this.GetDelegate.Invoke(Formatter);
             }
 
             public override void Get(FormatterGetProxy Formatter, object Obj)
             {
                 if (this.GetDelegate2 == null)
+                {
                     throw new NotSupportedException();
+                }
+
                 this.GetDelegate2.Invoke(Formatter, Obj);
             }
 
@@ -135,14 +141,20 @@ namespace Ks.Common
             public override T GetT(FormatterGetProxy Formatter)
             {
                 if (this.GetDelegate == null)
+                {
                     throw new NotSupportedException();
+                }
+
                 return this.GetDelegate.Invoke(Formatter);
             }
 
             public override void GetT(FormatterGetProxy Formatter, T Obj)
             {
                 if (this.GetDelegate2 == null)
+                {
                     throw new NotSupportedException();
+                }
+
                 this.GetDelegate2.Invoke(Formatter, Obj);
             }
 

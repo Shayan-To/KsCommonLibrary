@@ -25,7 +25,9 @@ namespace Ks.Common.MVVM
 
             Verify.True(this.Csv.Columns.Count <= 2, "Invalid language file.");
             while (this.Csv.Columns.Count < 2)
+            {
                 this.Csv.Columns.Add();
+            }
 
             var HeaderSet = new HashSet<string>();
             var I = 0;
@@ -36,7 +38,9 @@ namespace Ks.Common.MVVM
                 var Value = E[1];
 
                 if ((Key.Length == 0) & (Value.Length == 0))
+                {
                     break;
+                }
 
                 Verify.True(HeaderSet.Add(Key), "Duplicate language property.");
 
@@ -65,17 +69,27 @@ namespace Ks.Common.MVVM
             }
 
             if (this.Id == null)
+            {
                 this.Id = "";
+            }
+
             if (this.Name == null & this.NativeName == null)
+            {
                 this.Name = "Default";
+            }
+
             if (this.NativeName == null)
+            {
                 this.NativeName = "";
+            }
 
             if (I == this.Csv.Entries.Count)
             {
                 var E = this.Csv.Entries.LastOrDefault();
                 if (E == null || !((E[0].Length == 0) & (E[1].Length == 0)))
+                {
                     this.Csv.Entries.Add();
+                }
             }
 
             I += 1;
@@ -86,9 +100,13 @@ namespace Ks.Common.MVVM
                 var Value = E[1];
 
                 if (Key.Length == 0)
+                {
                     Verify.True(Value.Length == 0, "Cannot set a translation to an empty string.");
+                }
                 else
+                {
                     this.Dictionary.Add(Key, Value);
+                }
 
                 I += 1;
             }
@@ -99,11 +117,14 @@ namespace Ks.Common.MVVM
         public string GetTranslation(string Text)
         {
             if (Text == null || Text.Length == 0)
+            {
                 return Text;
-
+            }
 
             if (this.Dictionary.TryGetValue(Text, out var R))
+            {
                 return R;
+            }
 
             this.Dictionary.Add(Text, Text);
 
@@ -130,7 +151,10 @@ namespace Ks.Common.MVVM
                     var H = this.Csv.Entries[HeaderSize];
 
                     if ((H[0].Length == 0) & (H[1].Length == 0))
+                    {
                         break;
+                    }
+
                     HeaderSize += 1;
                 }
 

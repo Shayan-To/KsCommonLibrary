@@ -48,14 +48,19 @@ namespace Ks.Common.MVVM
 
             var Dir = System.IO.Path.Combine(".", "Languages");
             if (!System.IO.Directory.Exists(Dir))
+            {
                 System.IO.Directory.CreateDirectory(Dir);
+            }
 
             var Languages = new OneToOneDictionary<string, KsLanguage>(new Dictionary<string, KsLanguage>(StringComparer.InvariantCultureIgnoreCase), L => L.Id);
 
             foreach (var F in System.IO.Directory.EnumerateFiles(Dir))
             {
                 if (!F.ToLowerInvariant().EndsWith(".csv"))
+                {
                     continue;
+                }
+
                 var File = System.IO.File.Open(F, System.IO.FileMode.Open, System.IO.FileAccess.ReadWrite, System.IO.FileShare.Read);
                 Languages.Add(new KsLanguage(File));
             }
@@ -70,7 +75,9 @@ namespace Ks.Common.MVVM
             this.Languages = Languages.AsReadOnly();
 
             if (!this.Settings.TryGetValue(nameof(this.Language), out var LangId))
+            {
                 LangId = "";
+            }
 
             if (!this.Languages.TryGetValue(LangId, out this._Language))
             {
@@ -101,14 +108,18 @@ namespace Ks.Common.MVVM
         {
             (this.Settings as IDisposable)?.Dispose();
             foreach (var L in this.Languages.Values)
+            {
                 L.Dispose();
+            }
         }
 
         [DebuggerHidden()]
         public void Run()
         {
             if (this.State != KsApplicationState.NotStarted)
+            {
                 throw new InvalidOperationException("Cannot run an already run KsApplication.");
+            }
 
             Current = this;
 
@@ -139,7 +150,9 @@ namespace Ks.Common.MVVM
             Verify.True(this.State == KsApplicationState.Started, "The KsApplication has to be started to be able to be shut down.");
 
             if (Current == this)
+            {
                 Current = null;
+            }
 
             this.State = KsApplicationState.ShuttingDown;
             this.OnShuttingDown();
@@ -170,7 +183,9 @@ namespace Ks.Common.MVVM
             if (Metadata.IsSingleInstance)
             {
                 if (this.SingleInstanceViewModels.TryGetValue(ViewModelType, out var T))
+                {
                     return T;
+                }
             }
 
             var ApplicationType = this.GetType();
@@ -191,7 +206,9 @@ namespace Ks.Common.MVVM
             var R = (ViewModel) Constructor.Invoke(new[] { this });
 
             if (Metadata.IsSingleInstance)
+            {
                 this.SingleInstanceViewModels[ViewModelType] = R;
+            }
 
             return R;
         }
@@ -208,10 +225,14 @@ namespace Ks.Common.MVVM
             var Tip = Frame.Tip;
 
             if (Tip.NavigationFrame != null)
+            {
                 this.NavigationFrames.Remove(Tip.NavigationFrame);
+            }
 
             if (ForceToStack | (AddToStack & !Frame.IsOpenEnded))
+            {
                 this.NavigationFrames.Push(Frame);
+            }
 
             this.DoNavigation(Frame, NavigationType.NewNavigation);
         }
@@ -220,10 +241,14 @@ namespace Ks.Common.MVVM
         {
             // See UpdateCanNavigateBack.
             if (!this.CanNavigateBack)
+            {
                 return;
+            }
 
             if (this.NavigationFrames.PeekOrDefault() == this.CurrentNavigationFrame)
+            {
                 this.NavigationFrames.Pop();
+            }
 
             if (!this.NavigationFrames.CanPop())
             {
@@ -247,7 +272,9 @@ namespace Ks.Common.MVVM
             for (; I < count; I++)
             {
                 if (NewFrame[I] != OldFrame[I])
+                {
                     break;
+                }
             }
 
             var NavigationEventArgs = new NavigationEventArgs(NavigationType);
@@ -257,7 +284,9 @@ namespace Ks.Common.MVVM
 
                 VM.NavigationFrame = null;
                 if (VM.IsNavigation())
+                {
                     VM.SetView(null);
+                }
 
                 VM.OnNavigatedFrom(NavigationEventArgs);
             }
@@ -268,7 +297,9 @@ namespace Ks.Common.MVVM
                 var Current = (J != NewFrame.Count) ? NewFrame[J] : null;
 
                 if (Current != null)
+                {
                     Current.NavigationFrame = NewFrame.SubFrame(J + 1);
+                }
 
                 Parent?.SetView(Current);
                 Current?.OnNavigatedTo(NavigationEventArgs);
@@ -329,9 +360,15 @@ namespace Ks.Common.MVVM
             get
             {
                 if (this.DefaultNavigationView == this.Window)
+                {
                     return this.EmptyNavigationFrame;
+                }
+
                 if (this._DefaultNavigationFrame?.Tip != this.DefaultNavigationView)
+                {
                     this._DefaultNavigationFrame = this.EmptyNavigationFrame.AddViewModel(this.DefaultNavigationView);
+                }
+
                 return this._DefaultNavigationFrame;
             }
         }

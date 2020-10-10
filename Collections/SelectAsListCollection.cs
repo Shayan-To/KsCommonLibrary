@@ -20,7 +20,10 @@ namespace Ks.Common
         protected TOut GetMappedElement(TIn Inp, int Index)
         {
             if (this.Func != null)
+            {
                 return this.Func.Invoke(Inp);
+            }
+
             return this.FuncIndexed.Invoke(Inp, Index);
         }
 

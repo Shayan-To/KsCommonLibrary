@@ -13,7 +13,9 @@ namespace Ks.Common
         {
             Formatter.Set(nameof(Enumerable.Count), Obj.Count());
             foreach (var I in Obj)
+            {
                 Formatter.Set(null, I);
+            }
         }
 
         public override IEnumerable<KeyValuePair<TKey, TValue>> GetT(FormatterGetProxy Formatter)

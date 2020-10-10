@@ -13,13 +13,25 @@
         public int Compare(double Value)
         {
             if (Value < this.Start)
+            {
                 return -1;
+            }
+
             if (this.End < Value)
+            {
                 return 1;
+            }
+
             if ((this.Start == Value) & !this.IsStartInclusive)
+            {
                 return -1;
+            }
+
             if ((Value == this.End) & !this.IsEndInclusive)
+            {
                 return 1;
+            }
+
             return 0;
         }
 

@@ -38,7 +38,10 @@ namespace Ks.Common.MVVM
             set
             {
                 if (this._IsSingleInstance_Set)
+                {
                     throw new InvalidOperationException("Cannot set the IsSingleInstance property multiple times.");
+                }
+
                 this._IsSingleInstance_Set = true;
                 this._IsSingleInstance = value;
             }
@@ -55,7 +58,10 @@ namespace Ks.Common.MVVM
             set
             {
                 if (this._KsApplicationType.HasValue)
+                {
                     throw new InvalidOperationException("Cannot set the KsApplicationType property multiple times.");
+                }
+
                 this._KsApplicationType = value;
             }
         }

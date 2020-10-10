@@ -28,9 +28,15 @@ namespace Ks.Common
             {
                 A = A % B;
                 if (A >= 0)
+                {
                     return A;
+                }
+
                 if (B > 0)
+                {
                     return A + B;
+                }
+
                 return A - B;
             }
 
@@ -48,9 +54,15 @@ namespace Ks.Common
             {
                 A = A % B;
                 if (A > 0)
+                {
                     return A;
+                }
+
                 if (B > 0)
+                {
                     return A + B;
+                }
+
                 return A - B;
             }
 
@@ -101,7 +113,10 @@ namespace Ks.Common
                 while (B != 0)
                 {
                     if ((B & 1) == 1)
+                    {
                         R *= A;
+                    }
+
                     A *= A;
                     B >>= 1;
                 }
@@ -115,7 +130,10 @@ namespace Ks.Common
                 while (B != 0)
                 {
                     if ((B & 1) == 1)
+                    {
                         R *= A;
+                    }
+
                     A *= A;
                     B >>= 1;
                 }
@@ -193,19 +211,27 @@ namespace Ks.Common
             public static int LeastPowerOfTwoOnMin(int Min)
             {
                 if (Min < 1)
+                {
                     return 1;
+                }
 
                 // If Min is a power of two, we should return Min, otherwise, Min * 2
                 var T = (Min - 1) & Min;
                 if (T == 0)
+                {
                     return Min;
+                }
+
                 Min = T;
 
                 while (true)
                 {
                     T = (Min - 1) & Min;
                     if (T == 0)
+                    {
                         return Min << 1;
+                    }
+
                     Min = T;
                 }
             }
@@ -213,19 +239,27 @@ namespace Ks.Common
             public static long LeastPowerOfTwoOnMin(long Min)
             {
                 if (Min < 1)
+                {
                     return 1;
+                }
 
                 // If Min is a power of two, we should return Min, otherwise, Min * 2
                 var T = (Min - 1) & Min;
                 if (T == 0)
+                {
                     return Min;
+                }
+
                 Min = T;
 
                 while (true)
                 {
                     T = (Min - 1) & Min;
                     if (T == 0)
+                    {
                         return Min << 1;
+                    }
+
                     Min = T;
                 }
             }
@@ -238,7 +272,10 @@ namespace Ks.Common
                     B = -B;
                 }
                 if ((A >= 0) | ((A % B) == 0))
+                {
                     return A / B;
+                }
+
                 return (A / B) - 1;
             }
 
@@ -250,7 +287,10 @@ namespace Ks.Common
                     B = -B;
                 }
                 if ((A >= 0) | ((A % B) == 0))
+                {
                     return A / B;
+                }
+
                 return (A / B) - 1;
             }
 
@@ -262,7 +302,10 @@ namespace Ks.Common
                     B = -B;
                 }
                 if ((A < 0) | ((A % B) == 0))
+                {
                     return A / B;
+                }
+
                 return (A / B) + 1;
             }
 
@@ -274,16 +317,25 @@ namespace Ks.Common
                     B = -B;
                 }
                 if ((A < 0) | ((A % B) == 0))
+                {
                     return A / B;
+                }
+
                 return (A / B) + 1;
             }
 
             public static int GreatestCommonDivisor(int A, int B)
             {
                 if (B < 0)
+                {
                     B = -B;
+                }
+
                 if (A < 0)
+                {
                     A = -A;
+                }
+
                 while (B != 0)
                 {
                     var C = A % B;
@@ -296,9 +348,15 @@ namespace Ks.Common
             public static long GreatestCommonDivisor(long A, long B)
             {
                 if (B < 0)
+                {
                     B = -B;
+                }
+
                 if (A < 0)
+                {
                     A = -A;
+                }
+
                 while (B != 0)
                 {
                     var C = A % B;
@@ -342,7 +400,9 @@ namespace Ks.Common
             {
                 var IsNegative = N < 0;
                 if (IsNegative)
+                {
                     N = -N;
+                }
 
                 var Res = new List<char>();
                 var Base = Digits.Length;
@@ -354,7 +414,9 @@ namespace Ks.Common
                 }
 
                 if (IsNegative)
+                {
                     Res.Add(NegativeSign);
+                }
 
                 Res.Reverse();
 
@@ -366,7 +428,9 @@ namespace Ks.Common
                 var I = 0;
                 var IsNegative = N[I] == NegativeSign;
                 if (IsNegative)
+                {
                     I += 1;
+                }
 
                 var Res = 0L;
                 var Base = Digits.Length;
@@ -378,7 +442,9 @@ namespace Ks.Common
                 }
 
                 if (IsNegative)
+                {
                     Res = -Res;
+                }
 
                 return Res;
             }

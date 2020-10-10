@@ -11,7 +11,10 @@ namespace Ks.Common
             this.Lengths = Lengths.AsReadOnly();
             var Length = 1;
             foreach (var L in Lengths)
+            {
                 Length *= L;
+            }
+
             this.Arr = new T[Length];
         }
 

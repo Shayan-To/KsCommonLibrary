@@ -26,7 +26,9 @@ namespace Ks.Common
             {
                 var T = this.Comparer.Compare(x[I], y[I]);
                 if (T != 0)
+                {
                     return T;
+                }
             }
             return x.Length - y.Length;
         }
@@ -37,7 +39,9 @@ namespace Ks.Common
             for (var I = 0; I < count; I++)
             {
                 if (!this.EqualityComparer.Equals(x[I], y[I]))
+                {
                     return false;
+                }
             }
             return x.Length == y.Length;
         }
@@ -46,7 +50,10 @@ namespace Ks.Common
         {
             var R = unchecked((int) 0xFAB43DC8);
             for (var I = 0; I < obj.Length; I++)
+            {
                 R = Utilities.CombineHashCodes(R, this.EqualityComparer.GetHashCode(obj[I]));
+            }
+
             return R;
         }
 

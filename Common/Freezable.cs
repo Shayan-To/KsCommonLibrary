@@ -5,7 +5,10 @@
         public void Freeze()
         {
             if (this.FreezeCalled)
+            {
                 return;
+            }
+
             this.FreezeCalled = true;
 
             this.OnFreezing();

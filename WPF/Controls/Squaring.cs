@@ -21,7 +21,10 @@ namespace Ks.Common.Controls
             if (this.FillAvailableSpace)
             {
                 if (double.IsPositiveInfinity(Dimension))
+                {
                     return new Size();
+                }
+
                 return Size;
             }
 
@@ -39,13 +42,19 @@ namespace Ks.Common.Controls
         {
             var Content = this.Content;
             if (Content == null)
+            {
                 return arrangeBounds;
+            }
 
             Rect Rect;
             if (arrangeBounds.Height < arrangeBounds.Width)
+            {
                 Rect = new Rect((arrangeBounds.Width - arrangeBounds.Height) / 2, 0, arrangeBounds.Height, arrangeBounds.Height);
+            }
             else
+            {
                 Rect = new Rect(0, (arrangeBounds.Height - arrangeBounds.Width) / 2, arrangeBounds.Width, arrangeBounds.Width);
+            }
 
             Content.Arrange(Rect);
 

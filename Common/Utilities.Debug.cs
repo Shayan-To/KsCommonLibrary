@@ -23,13 +23,18 @@ namespace Ks.Common
                 var F = ST.GetFrames();
 
                 if (Count >= F.Length)
+                {
                     Count = F.Length - 1;
+                }
 
                 var R = new StringBuilder();
                 for (var I = 0; I < Count; I++)
                 {
                     if (I > 1)
+                    {
                         R.Append('>');
+                    }
+
                     var M = F[I].GetMethod();
                     R.Append(M.DeclaringType.Name)
                      .Append('.')
@@ -52,7 +57,9 @@ namespace Ks.Common
                 F = new StackFrame(2, true);
 
                 if ((Args.Length != 0) & (P.Length != Args.Length))
+                {
                     throw new ArgumentException();
+                }
 
                 R.Append(F.GetFileLineNumber())
                  .Append(":")
@@ -66,7 +73,9 @@ namespace Ks.Common
                 if (Args.Length == 0)
                 {
                     if (P.Length != 0)
+                    {
                         R.Append("...");
+                    }
                 }
                 else
                 {
@@ -74,9 +83,14 @@ namespace Ks.Common
                     for (var I = 0; I < Args.Length; I++)
                     {
                         if (Bl)
+                        {
                             Bl = false;
+                        }
                         else
+                        {
                             R.Append(", ");
+                        }
+
                         R.Append(P[I].Name).Append('=').Append(Args[I]);
                     }
                 }
@@ -96,7 +110,9 @@ namespace Ks.Common
                 F = new StackFrame(2, true);
 
                 if ((Args.Length != 0) & (P.Length != Args.Length))
+                {
                     throw new ArgumentException();
+                }
 
                 R.Append(F.GetFileLineNumber())
                  .Append(":")
@@ -109,7 +125,9 @@ namespace Ks.Common
                 if (Args.Length == 0)
                 {
                     if (P.Length != 0)
+                    {
                         R.Append("...");
+                    }
                 }
                 else
                 {
@@ -117,9 +135,14 @@ namespace Ks.Common
                     foreach (var A in Args)
                     {
                         if (Bl)
+                        {
                             Bl = false;
+                        }
                         else
+                        {
                             R.Append(", ");
+                        }
+
                         R.Append(A);
                     }
                 }

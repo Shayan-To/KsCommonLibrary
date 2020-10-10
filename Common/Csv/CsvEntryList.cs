@@ -22,7 +22,9 @@ namespace Ks.Common
             foreach (var E in this.List)
             {
                 if (Index < E.Data.Count)
+                {
                     E.Data.Insert(Index, "");
+                }
             }
         }
 
@@ -31,14 +33,18 @@ namespace Ks.Common
             foreach (var E in this.List)
             {
                 if (Index < E.Data.Count)
+                {
                     E.Data.RemoveAt(Index);
+                }
             }
         }
 
         internal void ReportColumnsClear()
         {
             foreach (var E in this.List)
+            {
                 E.Data.Clear();
+            }
         }
 
         internal void ReportColumnMove(int OldIndex, int NewIndex)
@@ -50,12 +56,18 @@ namespace Ks.Common
                     var T = E.Data[OldIndex];
                     E.Data.RemoveAt(OldIndex);
                     if (NewIndex < E.Data.Count)
+                    {
                         E.Data.Insert(NewIndex, T);
+                    }
                     else
+                    {
                         E[NewIndex] = T;
+                    }
                 }
                 else if (NewIndex < E.Data.Count)
+                {
                     E.Data.Insert(NewIndex, "");
+                }
             }
         }
 
@@ -114,7 +126,10 @@ namespace Ks.Common
         public void Clear()
         {
             foreach (var E in this.List)
+            {
                 E.Detach();
+            }
+
             this.List.Clear();
         }
 

@@ -14,7 +14,10 @@ namespace Ks.Common
             this.Serializers.Add(GenericSerializer.Create(nameof(Array), typeof(ArraySerializer<>), T =>
             {
                 if (!T.IsArray || T.GetArrayRank() != 1)
+                {
                     return null;
+                }
+
                 return new[] { T.GetElementType() };
             }));
             this.Serializers.Add(GenericSerializer.Create(nameof(List<object>), typeof(ListSerializer<>), T =>
@@ -42,16 +45,25 @@ namespace Ks.Common
                    }
                }
                if (IT == null)
+               {
                    return null;
+               }
+
                T = IT.GetGenericArguments().Single();
                if (!T.IsGenericType || T.GetGenericTypeDefinition() != typeof(KeyValuePair<,>))
+               {
                    return null;
+               }
+
                return T.GetGenericArguments();
            }));
             this.Serializers.Add(GenericSerializer.Create(nameof(KeyValuePair<object, object>), typeof(KeyValuePairSerializer<,>), T =>
            {
                if (!T.IsGenericType || T.GetGenericTypeDefinition() != typeof(KeyValuePair<,>))
+               {
                    return null;
+               }
+
                return T.GetGenericArguments();
            }));
 
@@ -80,7 +92,10 @@ namespace Ks.Common
                 var IsObject = default(bool);
                 IsObject = F.Get<bool>(nameof(IsObject));
                 if (IsObject)
+                {
                     return new object();
+                }
+
                 return F.Get(null);
             }, null, (F, O) =>
             {
@@ -88,7 +103,9 @@ namespace Ks.Common
                 F.Set(nameof(IsObject), IsObject);
 
                 if (!IsObject)
+                {
                     F.Set(null, O);
+                }
             }));
 
             this.Initialize();

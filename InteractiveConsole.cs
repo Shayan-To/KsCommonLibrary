@@ -12,7 +12,9 @@ namespace Ks.Common
             Console.TreatControlCAsInput = true;
             this.OnLoad();
             while (true)
+            {
                 this.OnKeyPressed(Console.ReadKey(true));
+            }
         }
 
         protected virtual void OnLoad()
@@ -43,9 +45,14 @@ namespace Ks.Common
                     break;
                 default:
                     if (KeyInfo.KeyChar != default(char))
+                    {
                         this.OnCharacterKeyPressed(KeyInfo);
+                    }
                     else
+                    {
                         this.OnOtherKeyPressed(KeyInfo);
+                    }
+
                     break;
             }
         }
@@ -81,13 +88,19 @@ namespace Ks.Common
         private void AddAssemblyContainers(Assembly AssemblyInfo)
         {
             if (!this.Assemblies.Add(AssemblyInfo))
+            {
                 return;
+            }
 
             foreach (var T in AssemblyInfo.GetTypes())
+            {
                 this.AddTypeContainers(new ComparableCollection<string>(T.FullName.Split('.', '+')), T);
+            }
 
             foreach (var A in AssemblyInfo.GetReferencedAssemblies())
+            {
                 this.AddAssemblyContainers(Assembly.Load(A));
+            }
         }
 
         private Container AddTypeContainers(ComparableCollection<string> Path, Type TypeInfo)
@@ -96,7 +109,10 @@ namespace Ks.Common
             {
                 Debug.Assert(C.TypeInfo == null | TypeInfo == null);
                 if (C.TypeInfo == null)
+                {
                     C.TypeInfo = TypeInfo;
+                }
+
                 return C;
             }
 
@@ -111,9 +127,13 @@ namespace Ks.Common
             C.Parent.Children.Add(C.Name, C);
 
             if (this.Names.ContainsKey(C.Name))
+            {
                 this.Names[C.Name] = Container.Ambiguous;
+            }
             else
+            {
                 this.Names[C.Name] = C;
+            }
 
             return C;
         }

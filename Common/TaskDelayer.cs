@@ -61,15 +61,19 @@ namespace Ks.Common
 #endif
                             }
                             else
+                            {
                                 this.LastActivityTime = Now;
+                            }
                         }
                         return;
                     }
                 }
             }
             else
+            {
                 // We can skip locking as the other thread is locked at TaskWaitHandle. See the comment below.
                 Now = this.StopWatch.Elapsed;
+            }
 
             // If IsTaskPending is REALLY false, then the other thread is for sure locked at TaskWaitHandle.
             // So we safely can set it to true.

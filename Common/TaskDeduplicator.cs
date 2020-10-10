@@ -33,7 +33,10 @@ namespace Ks.Common
         public Task WaitTillDoneAsync()
         {
             if (!this.IsTaskGoingOn)
+            {
                 return System.Threading.Tasks.Task.FromResult<Void>(null);
+            }
+
             this.TaskDoneTaskSource = new TaskCompletionSource<Void>();
             return this.TaskDoneTaskSource.Task;
         }

@@ -67,7 +67,10 @@ namespace Ks.Common
         public void CopyTo(T[] array, int arrayIndex)
         {
             if ((array.Length - arrayIndex) < this.Count)
+            {
                 throw new ArgumentException("The number of elements in the source System.Collections.Generic.ICollection`1 is greater than the available space from arrayIndex to the end of the destination array.");
+            }
+
             this._Collection1.CopyTo(array, arrayIndex);
             this._Collection2.CopyTo(array, arrayIndex + this._Collection1.Count);
         }
@@ -92,13 +95,20 @@ namespace Ks.Common
             if (C2 == null)
             {
                 if (C1 == this._Collection1)
+                {
                     C2 = this._Collection2;
+                }
                 else
+                {
                     C2 = this._Collection1;
+                }
             }
 
             if (!C2.RemoveI(Item))
+            {
                 throw new ArgumentException();
+            }
+
             C1.AddI(Item);
 
             C1.OnCollectionChanged(NotifyCollectionChangedEventArgs<T>.CreateAdd(Item));
@@ -112,9 +122,13 @@ namespace Ks.Common
             if (C2 == null)
             {
                 if (C1 == this._Collection1)
+                {
                     C2 = this._Collection2;
+                }
                 else
+                {
                     C2 = this._Collection1;
+                }
             }
 
             C1Clone = new T[C1.Count];
@@ -136,13 +150,20 @@ namespace Ks.Common
             if (C2 == null)
             {
                 if (C1 == this._Collection1)
+                {
                     C2 = this._Collection2;
+                }
                 else
+                {
                     C2 = this._Collection1;
+                }
             }
 
             if (!C1.RemoveI(Item))
+            {
                 throw new ArgumentException();
+            }
+
             C2.AddI(Item);
 
             C1.OnCollectionChanged(NotifyCollectionChangedEventArgs<T>.CreateRemove(Item));
@@ -154,7 +175,9 @@ namespace Ks.Common
         public void Add(T item)
         {
             if (this._Collection1.Contains(item) || this._Collection2.Contains(item))
+            {
                 return;
+            }
 
             this._Collection1.Add(item);
             this.OnCollectionChanged(NotifyCollectionChangedEventArgs<T>.CreateAdd(item));

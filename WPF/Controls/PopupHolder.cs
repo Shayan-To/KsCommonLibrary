@@ -29,7 +29,9 @@ namespace Ks.Common.Controls
             var Target = this.GetTarget();
 
             if (Target == null)
+            {
                 return default;
+            }
 
             var Transform = Target.TransformToVisual(Panel);
             var TargetSize = new Size(Target.ActualWidth, Target.ActualHeight);
@@ -65,9 +67,13 @@ namespace Ks.Common.Controls
             var Popup = NewValue as Popup;
 
             if (Popup != null)
+            {
                 Self.Popup = Popup;
+            }
             else if (Self.Popup != null)
+            {
                 Self.Popup.Content = NewValue;
+            }
         }
 
         public UIElement Content
@@ -116,9 +122,14 @@ namespace Ks.Common.Controls
             var NewValue = (Popup) E.NewValue;
 
             if (OldValue != null)
+            {
                 OldValue.ArrangeCallBack = null;
+            }
+
             if (NewValue != null)
+            {
                 NewValue.ArrangeCallBack = Self.ArrangePopup;
+            }
         }
 
         public static readonly DependencyProperty PopupProperty = PopupPropertyKey.DependencyProperty;
@@ -152,10 +163,12 @@ namespace Ks.Common.Controls
             }
 
             if (Popup != null)
+            {
                 // If NewValue Then
                 // Self.OnBeforeShowPopup()
                 // End If
                 Popup.IsShown = NewValue;
+            }
         }
 
         public bool IsPopupShown

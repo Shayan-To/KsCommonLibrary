@@ -41,7 +41,9 @@ namespace Ks.Common
             {
                 var C = Comparer.Compare(this[I], O[I]);
                 if (C != 0)
+                {
                     return C;
+                }
             }
 
             return this.Count - O.Count;
@@ -50,15 +52,23 @@ namespace Ks.Common
         public bool Equals(object Other, IEqualityComparer Comparer)
         {
             if (!(Other is ComparableCollection<T>))
+            {
                 return false;
+            }
+
             var O = (ComparableCollection<T>) Other;
 
             if (this.Count != O.Count)
+            {
                 return false;
+            }
+
             for (var I = 0; I < this.Count; I++)
             {
                 if (!Comparer.Equals(this[I], O[I]))
+                {
                     return false;
+                }
             }
 
             return true;
@@ -76,7 +86,9 @@ namespace Ks.Common
                     Bl = false;
                 }
                 else
+                {
                     R = Utilities.CombineHashCodes(R, Comparer.GetHashCode(I));
+                }
             }
             return R;
         }

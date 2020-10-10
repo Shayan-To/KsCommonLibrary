@@ -21,7 +21,10 @@ namespace Ks.Common
                 Verify.False(this.IsDetached, "Entry is detached.");
                 Verify.TrueArg(Index < this._Parent.Columns.Count, "Index was outside range.");
                 if (Index >= this.Data.Count)
+                {
                     return "";
+                }
+
                 return this.Data[Index];
             }
             set
@@ -29,11 +32,20 @@ namespace Ks.Common
                 Verify.False(this.IsDetached, "Entry is detached.");
                 Verify.TrueArg(Index < this._Parent.Columns.Count, "Index was outside range.");
                 if (value == null)
+                {
                     value = "";
+                }
+
                 if ((value.Length == 0) & (Index >= this.Data.Count))
+                {
                     return;
+                }
+
                 while (Index >= this.Data.Count)
+                {
                     this.Data.Add("");
+                }
+
                 this.Data[Index] = value;
             }
         }

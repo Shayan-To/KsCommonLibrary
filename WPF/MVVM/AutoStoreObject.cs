@@ -39,7 +39,9 @@ namespace Ks.Common.MVVM
                 foreach (var KV in MetadataDic[T])
                 {
                     if (Dictionary.TryGetValue(this.GetStoreKey(KV.Key), out var V))
+                    {
                         KV.Value.SetCallback.Invoke(this, V);
+                    }
                 }
             }
 
@@ -94,7 +96,9 @@ namespace Ks.Common.MVVM
         protected static object RegisterProperty(Type OwnerType, string Name, Action<AutoStoreObject, string> SetCallback = null, Func<object, string> ToStringCallBack = null)
         {
             foreach (var T in OwnerType.GetBaseTypes())
+            {
                 Verify.False(MetadataDic[T].ContainsKey(Name), "Name already eists.");
+            }
 
             if (SetCallback == null)
             {
@@ -104,7 +108,10 @@ namespace Ks.Common.MVVM
                 };
             }
             if (ToStringCallBack == null)
+            {
                 ToStringCallBack = O => string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}", O);
+            }
+
             MetadataDic[OwnerType].Add(Name, new PropertyMetadata(SetCallback, ToStringCallBack));
             return null;
         }

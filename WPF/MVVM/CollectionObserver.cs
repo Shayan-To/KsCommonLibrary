@@ -18,12 +18,18 @@ namespace Ks.Common.MVVM
             {
                 case NotifyCollectionChangedAction.Add:
                     foreach (T I in E.NewItems)
+                    {
                         this.OnElementGotIn(new ElementEventArgs<T>(I));
+                    }
+
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
                     foreach (T I in E.OldItems)
+                    {
                         this.OnElementGotOut(new ElementEventArgs<T>(I));
+                    }
+
                     break;
 
                 case NotifyCollectionChangedAction.Move:
@@ -31,16 +37,28 @@ namespace Ks.Common.MVVM
 
                 case NotifyCollectionChangedAction.Replace:
                     foreach (T I in E.OldItems)
+                    {
                         this.OnElementGotOut(new ElementEventArgs<T>(I));
+                    }
+
                     foreach (T I in E.NewItems)
+                    {
                         this.OnElementGotIn(new ElementEventArgs<T>(I));
+                    }
+
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
                     foreach (T I in this.Clone)
+                    {
                         this.OnElementGotOut(new ElementEventArgs<T>(I));
+                    }
+
                     foreach (T I in this.Collection)
+                    {
                         this.OnElementGotIn(new ElementEventArgs<T>(I));
+                    }
+
                     break;
             }
 
@@ -50,33 +68,52 @@ namespace Ks.Common.MVVM
             {
                 case NotifyCollectionChangedAction.Add:
                     for (var I = 0; I < E.NewItems.Count; I++)
+                    {
                         this.Clone.Insert(E.NewStartingIndex + I, E.NewItems[I]);
+                    }
+
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     for (var I = E.OldItems.Count - 1; I >= 0; I--)
+                    {
                         this.Clone.RemoveAt(E.OldStartingIndex + I);
+                    }
+
                     break;
 
                 case NotifyCollectionChangedAction.Move:
                     if (E.NewStartingIndex < E.OldStartingIndex)
                     {
                         for (var I = 0; I < E.NewItems.Count; I++)
+                        {
                             this.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I);
+                        }
                     }
                     else
+                    {
                         for (var I = E.NewItems.Count - 1; I >= 0; I--)
+                        {
                             this.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I);
+                        }
+                    }
+
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
                     for (var I = 0; I < E.NewItems.Count; I++)
+                    {
                         this.Clone[E.NewStartingIndex + I] = E.NewItems[I];
+                    }
+
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
                     this.Clone.Clear();
                     if (this.Collection != null)
+                    {
                         this.Clone.AddRange(this.Collection);
+                    }
+
                     break;
             }
         }
@@ -114,21 +151,29 @@ namespace Ks.Common.MVVM
             {
                 var Obs = this._Collection as INotifyCollectionChanged;
                 if (Obs != null)
+                {
                     Obs.CollectionChanged -= this._Collection_CollectionChanged;
+                }
 
                 this._Collection = value;
 
                 Obs = this._Collection as INotifyCollectionChanged;
                 if (Obs != null)
+                {
                     Obs.CollectionChanged += this._Collection_CollectionChanged;
+                }
 
                 if (this.AssumeSettingOfCollectionAsReset)
+                {
                     this.Collection_CollectionChanged(this.Collection, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                }
                 else
                 {
                     this.Clone.Clear();
                     if (this.Collection != null)
+                    {
                         this.Clone.AddRange(this.Collection);
+                    }
                 }
             }
         }

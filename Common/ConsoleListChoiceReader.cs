@@ -26,7 +26,10 @@ namespace Ks.Common
                 for (var I = 0; I < PageLength; I++)
                 {
                     if (!this.List.TryGetValue(this.ChoiceOffset + I, out var Tmp))
+                    {
                         break;
+                    }
+
                     Choices.Add(Tmp);
                 }
 
@@ -43,10 +46,16 @@ namespace Ks.Common
                 Console.WriteLine();
                 var S = "<- Previous page  |  Page {0:D2}  |  Next page ->  |  (Q)uit".Split('|');
                 if (!PrevPagePossible)
+                {
                     S[0] = new string(' ', S[0].Length);
+                }
+
                 S[1] = string.Format(S[1], (this.ChoiceOffset / PageLength) + 1);
                 if (!NextPagePossible)
+                {
                     S[2] = new string(' ', S[2].Length);
+                }
+
                 ConsoleUtilities.WriteColored(S.Aggregate((A, B) => A + "|" + B));
                 Console.WriteLine();
                 Console.WriteLine();
@@ -79,9 +88,15 @@ namespace Ks.Common
 
                     var N = 0;
                     if ((ConsoleKey.D1 <= Key) & (Key <= ConsoleKey.D9))
+                    {
                         N = Key - ConsoleKey.D0;
+                    }
+
                     if ((ConsoleKey.NumPad1 <= Key) & (Key <= ConsoleKey.NumPad9))
+                    {
                         N = Key - ConsoleKey.NumPad0;
+                    }
+
                     if ((1 <= N) & (N <= Choices.Count))
                     {
                         ConsoleUtilities.WriteColored($" {N.ToStringInv()}");

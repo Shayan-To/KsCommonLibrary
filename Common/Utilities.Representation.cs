@@ -21,7 +21,9 @@ namespace Ks.Common
                 for (I = 0; I < Prefixes.Count; I++)
                 {
                     if (string.IsNullOrEmpty(Prefixes[I].Prefix))
+                    {
                         break;
+                    }
                 }
 
                 while (true)
@@ -40,7 +42,9 @@ namespace Ks.Common
                         Value /= Prefix.Multiplier;
                     }
                     else
+                    {
                         break;
+                    }
                 }
 
                 return (Value, Prefixes[I].Prefix);
@@ -76,9 +80,15 @@ namespace Ks.Common
                     if (Value != 0)
                     {
                         if (Count == 1)
+                        {
                             break;
+                        }
+
                         if (Res.Length != 0)
+                        {
                             Res.Append(" ");
+                        }
+
                         Res.Append(Value).Append(Unit.Item1.ToLowerInvariant());
                         Count -= 1;
                     }
@@ -98,20 +108,27 @@ namespace Ks.Common
                     {
                         Prec /= 10;
                         if (Prec == 0)
+                        {
                             // We will end up here only if the unit equals the error.
                             break;
+                        }
                     }
 
                     Prec = (Prec == 0) ? 1 : (Prec * 10);
                     if (Prec > 100)
+                    {
                         Prec = 100;
+                    }
 
                     // We assume (Unit / Prec) to be another unit, but print the result divided by Prec.
                     var Value = System.Math.Round(Ticks / (double) (UnitTicks / Prec));
                     if ((Value != 0) | (Res.Length == 0))
                     {
                         if (Res.Length != 0)
+                        {
                             Res.Append(" ");
+                        }
+
                         Res.Append(Value / Prec).Append(Unit.Item1.ToLowerInvariant());
                     }
                 }
@@ -125,11 +142,16 @@ namespace Ks.Common
             {
                 DateTime Now;
                 if (Time.HasValue)
+                {
                     Now = Time.Value;
+                }
                 else
+                {
                     Now = DateTime.Now;
+                }
 
                 if (Compact)
+                {
                     Builder.Clear()
 .Append(Now.Year.ToStringInv().PadLeft(4, '0'))
 .Append(Now.Month.ToStringInv().PadLeft(2, '0'))
@@ -138,7 +160,9 @@ namespace Ks.Common
 .Append(Now.Minute.ToStringInv().PadLeft(2, '0'))
 .Append(Now.Second.ToStringInv().PadLeft(2, '0'))
 .Append(Now.Millisecond.ToStringInv().PadLeft(3, '0'));
+                }
                 else
+                {
                     Builder.Clear()
                   .Append(Now.Year.ToStringInv().PadLeft(4, '0'))
                   .Append('-')
@@ -153,6 +177,7 @@ namespace Ks.Common
                   .Append(Now.Second.ToStringInv().PadLeft(2, '0'))
                   .Append('.')
                   .Append(Now.Millisecond.ToStringInv().PadLeft(3, '0'));
+                }
 
                 var Stamp = Builder.ToString();
                 return Stamp;
@@ -168,7 +193,9 @@ namespace Ks.Common
                     IsPm = true;
                 }
                 if (Hour == 0)
+                {
                     Hour = 12;
+                }
 
                 return (Hour, IsPm);
             }
@@ -176,9 +203,14 @@ namespace Ks.Common
             public static int Hour12To24(int Hour, bool IsPm)
             {
                 if (Hour == 12)
+                {
                     Hour = 0;
+                }
+
                 if (IsPm)
+                {
                     Hour += 12;
+                }
 
                 return Hour;
             }

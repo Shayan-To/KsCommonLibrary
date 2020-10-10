@@ -20,7 +20,9 @@ namespace Ks.Common
                     return true;
                 }
                 else
+                {
                     return false;
+                }
             }
 
             public static string DownloadURL(string URL)
@@ -54,9 +56,13 @@ namespace Ks.Common
                 foreach (var Ch in Name)
                 {
                     if (Invalids.Contains(Ch))
+                    {
                         Res.Append('_');
+                    }
                     else
+                    {
                         Res.Append(Ch);
+                    }
                 }
 
                 return Res.ToString().Trim();
@@ -70,7 +76,10 @@ namespace Ks.Common
                 {
                     var T = Reader.Invoke(Buffer, (Offset + Length) - N, N);
                     if (T == 0)
+                    {
                         return Length - N;
+                    }
+
                     N -= T;
                 } while (N != 0);
 

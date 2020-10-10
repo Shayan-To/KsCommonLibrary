@@ -33,7 +33,9 @@ namespace Ks.Common
                 Res = this.Start + (Index * this.Step);
 
                 if (Res >= this.End || Res < this.Start)
+                {
                     throw new ArgumentOutOfRangeException(nameof(Index));
+                }
 
                 return Res;
             }
@@ -54,7 +56,10 @@ namespace Ks.Common
         public int IndexOf(int item)
         {
             if (this.Contains(item))
+            {
                 return (item - this.Start) / this.Step;
+            }
+
             return -1;
         }
 
@@ -76,7 +81,9 @@ namespace Ks.Common
         public IEnumerator<int> GetEnumerator()
         {
             for (var I = this.Start; I < this.End; I += this.Step)
+            {
                 yield return I;
+            }
         }
 
         public bool IsReadOnly

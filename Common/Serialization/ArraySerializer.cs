@@ -12,7 +12,9 @@ namespace Ks.Common
         {
             Formatter.Set(nameof(Obj.Length), Obj.Length);
             for (var I = 0; I < Obj.Length; I++)
+            {
                 Formatter.Set(null, Obj[I]);
+            }
         }
 
         public override T[] GetT(FormatterGetProxy Formatter)
@@ -22,7 +24,9 @@ namespace Ks.Common
 
             var R = new T[Length];
             for (var I = 0; I < Length; I++)
+            {
                 R[I] = Formatter.Get<T>(null);
+            }
 
             return R;
         }

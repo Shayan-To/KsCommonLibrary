@@ -23,7 +23,9 @@ namespace Ks.Common
             for (var I = 0; I < this.Count; I++)
             {
                 if (object.Equals(item, this[I]))
+                {
                     return I;
+                }
             }
             return -1;
         }

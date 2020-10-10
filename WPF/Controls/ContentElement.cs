@@ -48,7 +48,9 @@ namespace Ks.Common.Controls
             get
             {
                 if (this.Content != null)
+                {
                     yield return this.Content;
+                }
             }
         }
 

@@ -16,7 +16,9 @@ namespace Ks.Common
 
                 bool ML;
                 if (MultiLine.HasValue)
+                {
                     ML = MultiLine.Value;
+                }
                 else
                 {
                     ML = T.Count > 1;
@@ -24,11 +26,13 @@ namespace Ks.Common
                 }
 
                 using (Writer.OpenDictionary(ML))
+                {
                     foreach (var I in T.OrderBy(KV => KV.Key))
                     {
                         Writer.WriteKey(I.Key);
                         Writer.WriteValue(I.Value, MultiLine);
                     }
+                }
 
                 return;
             }
@@ -39,7 +43,9 @@ namespace Ks.Common
 
                 bool ML;
                 if (MultiLine.HasValue)
+                {
                     ML = MultiLine.Value;
+                }
                 else
                 {
                     ML = T.Count > 10;
@@ -48,8 +54,12 @@ namespace Ks.Common
                 }
 
                 using (Writer.OpenList(ML))
+                {
                     foreach (var I in T)
+                    {
                         Writer.WriteValue(I, MultiLine);
+                    }
+                }
 
                 return;
             }

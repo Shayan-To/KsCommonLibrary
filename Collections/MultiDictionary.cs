@@ -44,7 +44,10 @@ namespace Ks.Common
             get
             {
                 if (this.Dic.TryGetValue(key, out var L))
+                {
                     return new MultiDictionaryList<TKey, TValue>(this, key, L);
+                }
+
                 return new MultiDictionaryList<TKey, TValue>(this, key, null);
             }
         }
@@ -62,7 +65,9 @@ namespace Ks.Common
             get
             {
                 foreach (var KV in this.Dic)
+                {
                     yield return new MultiDictionaryList<TKey, TValue>(this, KV.Key, KV.Value);
+                }
             }
         }
 
@@ -74,7 +79,9 @@ namespace Ks.Common
         public IEnumerator<KeyValuePair<TKey, MultiDictionaryList<TKey, TValue>>> GetEnumerator()
         {
             foreach (var KV in this.Dic)
+            {
                 yield return new KeyValuePair<TKey, MultiDictionaryList<TKey, TValue>>(KV.Key, new MultiDictionaryList<TKey, TValue>(this, KV.Key, KV.Value));
+            }
         }
 
         IEnumerator<KeyValuePair<TKey, MultiDictionaryList<TKey, TValue>>> IEnumerable<KeyValuePair<TKey, MultiDictionaryList<TKey, TValue>>>.GetEnumerator()

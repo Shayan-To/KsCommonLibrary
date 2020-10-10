@@ -60,7 +60,9 @@ namespace Ks.Common.Win32
         {
             var R = Unsafe.CreateHardLinkW(FileName, ExistingFileName, IntPtr.Zero);
             if (!R)
+            {
                 Common.ThrowError();
+            }
         }
     }
 }

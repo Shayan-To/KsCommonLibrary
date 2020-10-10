@@ -25,7 +25,9 @@ namespace Ks.Common
             get
             {
                 lock (this.LockObject)
+                {
                     return this.BaseDic.Count;
+                }
             }
         }
 
@@ -34,12 +36,16 @@ namespace Ks.Common
             get
             {
                 lock (this.LockObject)
+                {
                     return this.BaseDic[key];
+                }
             }
             set
             {
                 lock (this.LockObject)
+                {
                     this.BaseDic[key] = value;
+                }
             }
         }
 
@@ -98,12 +104,16 @@ namespace Ks.Common
             get
             {
                 lock (this.LockObject)
+                {
                     return this.BaseDic[index];
+                }
             }
             set
             {
                 lock (this.LockObject)
+                {
                     this.BaseDic[index] = value;
+                }
             }
         }
 
@@ -126,49 +136,65 @@ namespace Ks.Common
         public override void Add(TKey key, TValue value)
         {
             lock (this.LockObject)
+            {
                 this.BaseDic.Add(key, value);
+            }
         }
 
         public override void Clear()
         {
             lock (this.LockObject)
+            {
                 this.BaseDic.Clear();
+            }
         }
 
         public void Insert(int index, TKey key, TValue value)
         {
             lock (this.LockObject)
+            {
                 this.BaseDic.Insert(index, key, value);
+            }
         }
 
         public void RemoveAt(int index)
         {
             lock (this.LockObject)
+            {
                 this.BaseDic.RemoveAt(index);
+            }
         }
 
         public override bool ContainsKey(TKey key)
         {
             lock (this.LockObject)
+            {
                 return this.BaseDic.ContainsKey(key);
+            }
         }
 
         public int IndexOf(TKey key)
         {
             lock (this.LockObject)
+            {
                 return this.BaseDic.IndexOf(key);
+            }
         }
 
         public override bool Remove(TKey key)
         {
             lock (this.LockObject)
+            {
                 return this.BaseDic.Remove(key);
+            }
         }
 
         public override bool TryGetValue(TKey key, out TValue value)
         {
             lock (this.LockObject)
+            {
                 return this.BaseDic.TryGetValue(key, out value);
+            }
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
@@ -176,7 +202,9 @@ namespace Ks.Common
             lock (this.LockObject)
             {
                 foreach (var KV in this.BaseDic)
+                {
                     yield return KV;
+                }
             }
         }
 
@@ -251,9 +279,15 @@ namespace Ks.Common
             }
 
             if (R == -1)
+            {
                 return -1;
+            }
+
             if (!object.Equals(item.Value, T))
+            {
                 return -1;
+            }
+
             return R;
         }
 

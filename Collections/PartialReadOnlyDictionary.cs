@@ -14,7 +14,9 @@ namespace Ks.Common
         public void LockCurrentElements()
         {
             foreach (var K in this.Keys)
+            {
                 this.LockedKeys.Add(K);
+            }
         }
 
         public void ResetLock()
@@ -69,7 +71,9 @@ namespace Ks.Common
             var CurrentState = this.BaseDic.Where(KV => this.LockedKeys.Contains(KV.Key)).ToArray();
             this.BaseDic.Clear();
             foreach (var KV in CurrentState)
+            {
                 this.BaseDic.Add(KV.Key, KV.Value);
+            }
         }
 
         public override bool ContainsKey(TKey key)

@@ -86,7 +86,9 @@ namespace Ks.Common
         public virtual bool RemoveKey(TKey key)
         {
             if (!this._Dic.TryGetValue(key, out var Value))
+            {
                 return false;
+            }
 
             Assert.True(this._Dic.Remove(key));
             Assert.True(this._Items.Remove(Value));
@@ -267,9 +269,15 @@ namespace Ks.Common
         {
             var R = this.IndexOf(item.Key);
             if (R == -1)
+            {
                 return -1;
+            }
+
             if (!object.Equals(item.Value, this[R]))
+            {
                 return -1;
+            }
+
             return R;
         }
         int IList<KeyValuePair<TKey, TValue>>.IndexOf(KeyValuePair<TKey, TValue> item)
@@ -349,9 +357,15 @@ namespace Ks.Common
         private bool ICollection_Remove(KeyValuePair<TKey, TValue> item)
         {
             if (!this.TryGetValue(item.Key, out var V))
+            {
                 return false;
+            }
+
             if (!object.Equals(V, item.Value))
+            {
                 return false;
+            }
+
             return this.RemoveKey(item.Key);
         }
 
@@ -378,7 +392,10 @@ namespace Ks.Common
         private bool ICollection_Contains(KeyValuePair<TKey, TValue> item)
         {
             if (!this.TryGetValue(item.Key, out var V))
+            {
                 return false;
+            }
+
             return object.Equals(V, item.Value);
         }
 

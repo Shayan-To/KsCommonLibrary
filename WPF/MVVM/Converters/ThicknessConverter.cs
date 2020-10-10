@@ -12,7 +12,10 @@ namespace Ks.Common.MVVM.Converters
             var V = System.Convert.ToDouble(Value);
             var P = 1.0;
             if (Parameter != null)
+            {
                 P = System.Convert.ToDouble(Parameter);
+            }
+
             return new Thickness(P * V * this.Coefficients.Left, P * V * this.Coefficients.Top, P * V * this.Coefficients.Right, P * V * this.Coefficients.Bottom);
         }
 
@@ -24,30 +27,48 @@ namespace Ks.Common.MVVM.Converters
             // ToDo Correct the double equality checks. (It should somehow just check the significant digits, and not the order of magnitude...)
 
             if (this.Coefficients.Left != 0)
+            {
                 V = Th.Left / this.Coefficients.Left;
+            }
+
             if (this.Coefficients.Top != 0)
             {
                 if (V.HasValue & (V.Value != (Th.Top / this.Coefficients.Top)))
+                {
                     return 0;
+                }
+
                 V = Th.Top / this.Coefficients.Top;
             }
             if (this.Coefficients.Right != 0)
             {
                 if (V.HasValue & (V.Value != (Th.Right / this.Coefficients.Right)))
+                {
                     return 0;
+                }
+
                 V = Th.Right / this.Coefficients.Right;
             }
             if (this.Coefficients.Bottom != 0)
             {
                 if (V.HasValue & (V.Value != (Th.Bottom / this.Coefficients.Bottom)))
+                {
                     return 0;
+                }
+
                 V = Th.Bottom / this.Coefficients.Bottom;
             }
             if (!V.HasValue)
+            {
                 return 0;
+            }
+
             var P = 1.0;
             if (Parameter != null)
+            {
                 P = System.Convert.ToDouble(Parameter);
+            }
+
             return V.Value * P;
         }
 

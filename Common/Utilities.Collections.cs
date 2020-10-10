@@ -12,7 +12,9 @@ namespace Ks.Common
                 foreach (var L in Collections)
                 {
                     foreach (var I in L)
+                    {
                         yield return I;
+                    }
                 }
             }
 
@@ -26,7 +28,9 @@ namespace Ks.Common
                 Verify.TrueArg(Step != 0, "Step");
                 var End = Start + Length;
                 for (; Start != End; Start += Step)
+                {
                     yield return Start;
+                }
             }
 
             public static IEnumerable<int> Range(int Length)
@@ -37,13 +41,17 @@ namespace Ks.Common
             public static IEnumerable<T> Repeat<T>(T I1, int Count)
             {
                 for (var I = 0; I < Count; I++)
+                {
                     yield return I1;
+                }
             }
 
             public static IEnumerable<Void> InfiniteEnumerable()
             {
                 while (true)
+                {
                     yield return default;
+                }
             }
 
             public static JoinElement<T, T, TKey>[] Join<T, TKey>(IEnumerable<T> Items1, IEnumerable<T> Items2, Func<T, TKey> KeySelector, JoinDirection JoinType)
@@ -65,7 +73,9 @@ namespace Ks.Common
             {
                 var Dic = new Dictionary<TKey, T2>(Comparer);
                 foreach (var I in Items2)
+                {
                     Dic.Add(KeySelector2.Invoke(I), I);
+                }
 
                 var Res = new List<JoinElement<T1, T2, TKey>>();
 
@@ -78,13 +88,17 @@ namespace Ks.Common
                         Dic.Remove(Key);
                     }
                     else if ((JoinType & JoinDirection.Left) == JoinDirection.Left)
+                    {
                         Res.Add(new JoinElement<T1, T2, TKey>(Key, JoinDirection.Left, I1, default));
+                    }
                 }
 
                 if ((JoinType & JoinDirection.Right) == JoinDirection.Right)
                 {
                     foreach (var KI2 in Dic)
+                    {
                         Res.Add(new JoinElement<T1, T2, TKey>(KI2.Key, JoinDirection.Left, default, KI2.Value));
+                    }
                 }
 
                 return Res.ToArray();

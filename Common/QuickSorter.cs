@@ -17,7 +17,9 @@ namespace Ks.Common
         private void Sort(int Start, int Length)
         {
             if (Length < 2)
+            {
                 return;
+            }
 
             var Ptr1 = Start;
             var Ptr2 = (Start + Length) - 1;
@@ -29,9 +31,14 @@ namespace Ks.Common
             {
                 // L[PivotPtr] is never moved, as it is always >= and <= to Pivot.
                 while ((Ptr1 < Ptr2) & (this.Comparer.Compare(this.List[Ptr1], Pivot) <= 0))
+                {
                     Ptr1 += 1;
+                }
+
                 while ((Ptr1 < Ptr2) & (this.Comparer.Compare(this.List[Ptr2], Pivot) >= 0))
+                {
                     Ptr2 -= 1;
+                }
 
                 var C = this.List[Ptr1];
                 this.List[Ptr1] = this.List[Ptr2];

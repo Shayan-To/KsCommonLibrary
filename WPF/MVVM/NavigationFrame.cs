@@ -41,7 +41,9 @@ namespace Ks.Common.MVVM
             for (var I = 0; I < this.Count; I++)
             {
                 if (this[I] == ViewModel)
+                {
                     return I;
+                }
             }
             return -1;
         }
@@ -50,23 +52,36 @@ namespace Ks.Common.MVVM
         {
             var Frame = obj as NavigationFrame;
             if (obj == null)
+            {
                 return false;
+            }
+
             return this == Frame;
         }
 
         public static bool operator ==(NavigationFrame Left, NavigationFrame Right)
         {
             if (Left == null)
+            {
                 return Right == null;
+            }
+
             if (Right == null)
+            {
                 return false;
+            }
 
             if (Left.List.Length != Right.List.Length)
+            {
                 return false;
+            }
+
             for (var I = 0; I < Left.List.Length; I++)
             {
                 if (Left.List[I] != Right.List[I])
+                {
                     return false;
+                }
             }
 
             return true;

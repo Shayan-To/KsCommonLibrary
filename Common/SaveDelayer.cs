@@ -12,7 +12,9 @@ namespace Ks.Common
             this.TaskDelayer = new TaskDelayer(this.DoSave, TimeSpan.FromSeconds(10));
 
             if (Encoding == null)
+            {
                 Encoding = System.Text.Encoding.UTF8;
+            }
 
             this.Stream = Stream;
             this.Encoding = Encoding;

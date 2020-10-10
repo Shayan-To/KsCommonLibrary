@@ -19,7 +19,10 @@ namespace Ks.Common
             {
                 var MinIndex = LeftChild(Index);
                 if (MinIndex >= Count)
+                {
                     break;
+                }
+
                 var Min = List[MinIndex];
                 var I = RightChild(Index);
                 var T = default(T);
@@ -41,14 +44,18 @@ namespace Ks.Common
                     Index = MinIndex;
                 }
                 else
+                {
                     break;
+                }
             }
         }
 
         public void MakeHeap(IList<T> List, int Count)
         {
             for (var I = Parent(Count - 1); I >= 0; I--)
+            {
                 this.Heapify(List, Count, I);
+            }
         }
 
         public void BubbleUp(IList<T> List, int Count, int Index)
@@ -56,7 +63,10 @@ namespace Ks.Common
             while (true)
             {
                 if (Index == 0)
+                {
                     break;
+                }
+
                 var T = List[Index];
                 var PI = Parent(Index);
                 var P = List[PI];
@@ -67,7 +77,9 @@ namespace Ks.Common
                     Index = PI;
                 }
                 else
+                {
                     break;
+                }
             }
         }
 

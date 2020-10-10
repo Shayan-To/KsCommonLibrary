@@ -154,25 +154,36 @@ namespace Ks.Common.Controls
         {
             var Items = this.CheckedItems;
             if (Items == null | this.Dirty)
+            {
                 return;
+            }
 
             var Item = this.ItemContainerGenerator.ItemFromContainer(Container);
             if (Container.IsChecked)
+            {
                 Items.Add(Item);
+            }
             else
+            {
                 Items.Remove(Item);
+            }
         }
 
         private void CheckedItems_ItemGotOut(object sender, ElementEventArgs<object> e)
         {
             var Items = this.CheckedItems;
             if (Items == null | this.Dirty)
+            {
                 return;
+            }
 
             this.Dirty = true;
             var Container = (CheckListBoxItem) this.ItemContainerGenerator.ContainerFromItem(e.Element);
             if (Container != null)
+            {
                 Container.IsChecked = false;
+            }
+
             this.Dirty = false;
         }
 
@@ -180,12 +191,17 @@ namespace Ks.Common.Controls
         {
             var Items = this.CheckedItems;
             if (Items == null | this.Dirty)
+            {
                 return;
+            }
 
             this.Dirty = true;
             var Container = (CheckListBoxItem) this.ItemContainerGenerator.ContainerFromItem(e.Element);
             if (Container != null)
+            {
                 Container.IsChecked = true;
+            }
+
             this.Dirty = false;
         }
 
@@ -200,7 +216,9 @@ namespace Ks.Common.Controls
             {
                 var Container = (CheckListBoxItem) ICGen.ContainerFromItem(I);
                 if (Container != null)
+                {
                     Container.IsChecked = false;
+                }
             }
             if (ChItems != null)
             {
@@ -209,7 +227,9 @@ namespace Ks.Common.Controls
                 {
                     var Container = (CheckListBoxItem) ICGen.ContainerFromItem(ChItems[I]);
                     if (Container != null)
+                    {
                         Container.IsChecked = true;
+                    }
                     else if (!Items.Contains(ChItems[I]))
                     {
                         ChItems.RemoveAt(I);
@@ -271,7 +291,9 @@ namespace Ks.Common.Controls
 
             var ParItems = Self.ParentListBox.CheckedItems;
             if (ParItems == null || ParItems.IsReadOnly)
+            {
                 return Self.IsChecked;
+            }
 
             return BaseValue;
         }

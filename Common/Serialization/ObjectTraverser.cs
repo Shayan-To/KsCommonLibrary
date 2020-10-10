@@ -22,7 +22,9 @@ namespace Ks.Common
 
             ObjectContainer<T> C = null;
             if (this.Containers.TryGetValue(this.Type, out this.Container))
+            {
                 C = (ObjectContainer<T>) this.Container;
+            }
             else
             {
                 C = new ObjectContainer<T>();

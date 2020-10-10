@@ -16,9 +16,14 @@ namespace Ks.Common.Controls
                 var Sz = C.DesiredSize;
 
                 if (MaxHeight < Sz.Height)
+                {
                     MaxHeight = Sz.Height;
+                }
+
                 if (MaxWidth < Sz.Width)
+                {
                     MaxWidth = Sz.Width;
+                }
             }
 
             return new Size(MaxWidth, MaxHeight);
@@ -32,10 +37,14 @@ namespace Ks.Common.Controls
                 var Rect = default(Rect?);
 
                 if (Popup != null)
+                {
                     Rect = Popup.ArrangeCallBack?.Invoke(this, FinalSize, Popup.DesiredSize);
+                }
 
                 if (!Rect.HasValue)
+                {
                     Rect = new Rect(FinalSize);
+                }
 
                 C.Arrange(Rect.Value);
             }

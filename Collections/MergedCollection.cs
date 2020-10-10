@@ -80,7 +80,9 @@ namespace Ks.Common
             foreach (var L in this.Collections)
             {
                 if (L.Contains(item))
+                {
                     return true;
+                }
             }
             return false;
         }
@@ -90,7 +92,9 @@ namespace Ks.Common
             foreach (var L in this.Collections)
             {
                 foreach (var I in L)
+                {
                     yield return I;
+                }
             }
         }
 

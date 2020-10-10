@@ -10,9 +10,13 @@ namespace Ks.Common.MVVM.Converters
         public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
             if ((System.Convert.ToString(Parameter) == "~") ^ System.Convert.ToBoolean(Value))
+            {
                 return Visibility.Visible;
+            }
             else
+            {
                 return Visibility.Collapsed;
+            }
         }
 
         public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)

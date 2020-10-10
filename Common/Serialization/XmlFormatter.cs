@@ -23,7 +23,9 @@ namespace Ks.Common
         {
             Name = Name ?? "Value";
             if (Name != null)
+            {
                 this.XmlReader.ReadStartElement(Name);
+            }
         }
 
         internal string OnGetString()
@@ -35,7 +37,9 @@ namespace Ks.Common
         {
             Name = Name ?? "Value";
             if (Name != null)
+            {
                 this.XmlReader.ReadEndElement();
+            }
         }
 
         protected override void OnGetFinished()
@@ -50,7 +54,9 @@ namespace Ks.Common
         {
             Name = Name ?? "Value";
             if (Name != null)
+            {
                 this.XmlWriter.WriteStartElement(Name);
+            }
         }
 
         internal void OnSetString(string Str)
@@ -62,7 +68,9 @@ namespace Ks.Common
         {
             Name = Name ?? "Value";
             if (Name != null)
+            {
                 this.XmlWriter.WriteEndElement();
+            }
         }
 
         protected override void OnSetFinished()

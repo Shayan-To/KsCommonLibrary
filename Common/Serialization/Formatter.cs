@@ -42,14 +42,18 @@ namespace Ks.Common
         {
             var Type = typeof(T);
             if (!IsGeneric & Obj.HasValue)
+            {
                 Type = Obj.Value.GetType();
+            }
 
             for (var I = this.Serializers.Count - 1; I >= 0; I--)
             {
                 var S = this.Serializers[I];
 
                 if (!S.CanSerializeType(Type))
+                {
                     continue;
+                }
 
                 // We will also return the non-generic serializers for generic serialization. The users have to check whether the returned serializer is generic or not.
 
@@ -84,14 +88,18 @@ namespace Ks.Common
 
                     var IsDone = Tmp.Item2;
                     if (WasInCache)
+                    {
                         Id = Tmp.Item1;
+                    }
 
                     // We allow more than one serialization iterations on the same object. See the serializer for Object for a use case.
 
                     this.Set(nameof(Id), Id);
 
                     if (IsDone)
+                    {
                         return;
+                    }
                     else if (!WasInCache)
                     {
                         this.SetCache.Add(Obj, (Id, false));
@@ -104,9 +112,13 @@ namespace Ks.Common
                 {
                     var ST = S as Serializer<T>;
                     if (ST != null)
+                    {
                         ST.SetT(this.SetProxy, Obj);
+                    }
                     else
+                    {
                         S.Set(this.SetProxy, Obj);
+                    }
                 }
                 else
                 {
@@ -162,16 +174,22 @@ namespace Ks.Common
                     Id = this.Get<int>(nameof(Id));
 
                     if (this.GetCache.TryGetValue(Id, out var Obj) && Obj != null)
+                    {
                         return (T) Obj;
+                    }
 
                     this.GetCache.Add(Id, null);
                 }
 
                 var S = default(Serializer);
                 if (IsGeneric)
+                {
                     S = this.GetSerializer<T>(default, true);
+                }
                 else
+                {
                     S = this.Get<Serializer>(nameof(Serializer));
+                }
 
                 var ST = S as Serializer<T>;
                 var R = default(T);
@@ -184,7 +202,9 @@ namespace Ks.Common
                         R = GObj.Value;
                     }
                     else
+                    {
                         R = ST.GetT(this.GetProxy);
+                    }
                 }
                 else if (GObj.HasValue)
                 {
@@ -192,15 +212,21 @@ namespace Ks.Common
                     R = GObj.Value;
                 }
                 else
+                {
                     R = (T) S.Get(this.GetProxy);
+                }
 
                 if (IsRefType)
                 {
                     var Obj = this.GetCache[Id];
                     if (Obj != null)
+                    {
                         Verify.True(Obj == (object) R, "Two different objects returned for the same id.");
+                    }
                     else
+                    {
                         this.GetCache[Id] = R;
+                    }
                 }
 
                 return R;

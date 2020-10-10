@@ -13,18 +13,27 @@ namespace Ks.Common.MVVM.Converters
             var B = Value as SolidColorBrush;
             Color C;
             if (B != null)
+            {
                 C = B.Color;
+            }
             else
+            {
                 C = (Color) Value;
+            }
 
             var P = 0.0;
             if (Parameter != null)
+            {
                 P = System.Convert.ToDouble(Parameter);
+            }
 
             C = this.Convert(C, P);
 
             if (TargetType == typeof(Color))
+            {
                 return C;
+            }
+
             return new SolidColorBrush(C);
         }
 
@@ -33,27 +42,42 @@ namespace Ks.Common.MVVM.Converters
             var B = Value as SolidColorBrush;
             Color C;
             if (B != null)
+            {
                 C = B.Color;
+            }
             else
+            {
                 C = (Color) Value;
+            }
 
             var P = 0.0;
             if (Parameter != null)
+            {
                 P = System.Convert.ToDouble(Parameter);
+            }
 
             C = this.Convert(C, -P);
 
             if (TargetType == typeof(Color))
+            {
                 return C;
+            }
+
             return new SolidColorBrush(C);
         }
 
         private static byte GetByte(int N)
         {
             if (N < 0)
+            {
                 N = 0;
+            }
+
             if (N > 255)
+            {
                 N = 255;
+            }
+
             return (byte) N;
         }
 

@@ -39,7 +39,9 @@ namespace Ks.Common
 
             var K = default(ConsoleKey);
             do
+            {
                 K = Console.ReadKey(true).Key;
+            }
             while (!((K == ConsoleKey.Y) | (K == ConsoleKey.N)));
 
             var Res = K == ConsoleKey.Y;
@@ -69,7 +71,9 @@ namespace Ks.Common
         public static void WriteTypes(IEnumerable<Type> Types)
         {
             foreach (var T in Types)
+            {
                 Console.WriteLine(T.FullName + "\t" + T.Attributes.ToString());
+            }
         }
 
         public static void Pause()

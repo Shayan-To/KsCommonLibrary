@@ -44,9 +44,13 @@ namespace Ks.Common.Controls
             var LastIndex = -1;
 
             if (NextLayerFirst == null)
+            {
                 LastIndex = PanelChildren.Count;
+            }
             else
+            {
                 LastIndex = PanelChildren.IndexOf(NextLayerFirst);
+            }
 
             var Layer = this.ShelterLayers[LayerIndex];
             PopupShelter Shelter = null;
@@ -67,7 +71,9 @@ namespace Ks.Common.Controls
         internal void RemovePopup(Popup Popup, int LayerIndex = -1)
         {
             if (LayerIndex == -1)
+            {
                 LayerIndex = Popup.Layer;
+            }
 
             var Shelter = this.PopupShelterDic[Popup];
             this.PopupShelterDic.Remove(Popup);
@@ -117,12 +123,16 @@ namespace Ks.Common.Controls
                     {
                         var Shelter = this.PopupShelterDic[Popup];
                         if (DimmedSeen)
+                        {
                             Shelter.IsShelterShown = false;
+                        }
                         else
                         {
                             Shelter.IsShelterShown = true;
                             if (Popup.DimShelter)
+                            {
                                 DimmedSeen = true;
+                            }
                         }
                     }
                 }
@@ -133,7 +143,9 @@ namespace Ks.Common.Controls
         {
             var ShelterStyle = this.ShelterStyle;
             foreach (var KV in this.PopupShelterDic)
+            {
                 KV.Value.Style = ShelterStyle;
+            }
         }
 
         Page INavigationView.Content

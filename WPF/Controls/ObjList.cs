@@ -56,7 +56,10 @@ namespace Ks.Common.Controls
         public override void Clear()
         {
             foreach (var O in this.List)
+            {
                 this.WentOut(O);
+            }
+
             this.List.Clear();
             this.Parent.ReportObjChanged();
         }

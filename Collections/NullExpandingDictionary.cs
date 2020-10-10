@@ -42,7 +42,10 @@ namespace Ks.Common
             get
             {
                 if (this.Dic.TryGetValue(key, out var R))
+                {
                     return R;
+                }
+
                 return default;
             }
             set

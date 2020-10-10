@@ -10,14 +10,18 @@ namespace Ks.Common
         {
             var Notifying = List as INotifyCollectionChanged;
             if (Notifying != null)
+            {
                 Notifying.CollectionChanged += this.List_CollectionChanged;
+            }
         }
 
         public SelectAsNotifyingListCollection(IReadOnlyList<TIn> List, Func<TIn, int, TOut> Func) : base(List, Func)
         {
             var Notifying = List as INotifyCollectionChanged;
             if (Notifying != null)
+            {
                 Notifying.CollectionChanged += this.List_CollectionChanged;
+            }
         }
 
         private void List_CollectionChanged(object Sender, NotifyCollectionChangedEventArgs E)
@@ -48,6 +52,7 @@ namespace Ks.Common
                 }
             }
             else
+            {
                 switch (E.Action)
                 {
                     case NotifyCollectionChangedAction.Move:
@@ -68,6 +73,7 @@ namespace Ks.Common
                     default:
                         throw new InvalidOperationException("Action not supported.");
                 }
+            }
 
             this.OnCollectionChanged(NE);
         }

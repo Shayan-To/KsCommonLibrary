@@ -44,7 +44,10 @@ namespace Ks.Common.Controls
 
             var ViewingRectangleQ = this.GetViewingArea(AvailableSize);
             if (!ViewingRectangleQ.HasValue)
+            {
                 return AvailableSize;
+            }
+
             var ViewingRectangle = ViewingRectangleQ.Value;
 
             var Sz0 = new Point();
@@ -57,7 +60,9 @@ namespace Ks.Common.Controls
                 var Sz = new Vector(GetW(C), GetH(C));
 
                 if (Sz == new Vector())
+                {
                     C.Measure(InfSize);
+                }
                 else
                 {
                     var Szz = Sz.ToPoint();
@@ -67,7 +72,9 @@ namespace Ks.Common.Controls
 
                     var Size = (Szz - Sz0).ToSize();
                     if (double.IsNaN(Size.Width) | double.IsNaN(Size.Height))
+                    {
                         Size = new Size();
+                    }
 
                     C.Measure(Size);
                 }
@@ -82,7 +89,10 @@ namespace Ks.Common.Controls
 
             var ViewingRectangleQ = this.GetViewingArea(FinalSize);
             if (!ViewingRectangleQ.HasValue)
+            {
                 return FinalSize;
+            }
+
             var ViewingRectangle = ViewingRectangleQ.Value;
 
             foreach (UIElement C in this.Children)
@@ -95,7 +105,9 @@ namespace Ks.Common.Controls
                 Pt1 = Client.FromLocal01(Pt1);
 
                 if (Sz == new Vector())
+                {
                     C.Arrange(new Rect(Pt1, C.DesiredSize));
+                }
                 else
                 {
                     var Pt2 = Pt + Sz;
@@ -196,7 +208,9 @@ namespace Ks.Common.Controls
         {
             var C = VisualTreeHelper.GetParent(D) as ResizableCanvas;
             if (C != null)
+            {
                 C.InvalidateMeasure();
+            }
         }
 
         public static double GetY(UIElement O)
@@ -215,7 +229,9 @@ namespace Ks.Common.Controls
         {
             var C = VisualTreeHelper.GetParent(D) as ResizableCanvas;
             if (C != null)
+            {
                 C.InvalidateMeasure();
+            }
         }
 
         public static double GetX(UIElement O)
@@ -234,7 +250,9 @@ namespace Ks.Common.Controls
         {
             var C = VisualTreeHelper.GetParent(D) as ResizableCanvas;
             if (C != null)
+            {
                 C.InvalidateMeasure();
+            }
         }
 
         public static double GetH(UIElement O)
@@ -253,7 +271,9 @@ namespace Ks.Common.Controls
         {
             var C = VisualTreeHelper.GetParent(D) as ResizableCanvas;
             if (C != null)
+            {
                 C.InvalidateMeasure();
+            }
         }
 
         public static double GetW(UIElement O)

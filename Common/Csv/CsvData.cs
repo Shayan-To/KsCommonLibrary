@@ -34,19 +34,27 @@
         private static void WriteField(string Field, bool UseQuotes, System.Text.StringBuilder Out)
         {
             if (Field.StartsWith("\"") | Field.Contains("\r") | Field.Contains("\n"))
+            {
                 UseQuotes = true;
+            }
 
             if (!UseQuotes)
+            {
                 Out.Append(Field);
+            }
 
             Out.Append('"');
 
             foreach (var C in Field)
             {
                 if (C == '"')
+                {
                     Out.Append("\"\"");
+                }
                 else
+                {
                     Out.Append(C);
+                }
             }
 
             Out.Append('"');
@@ -62,9 +70,14 @@
                 foreach (var C in this.Columns)
                 {
                     if (Bl)
+                    {
                         Bl = false;
+                    }
                     else
+                    {
                         Res.Append(Delimiter);
+                    }
+
                     WriteField(C.HeaderName, UseQuotes, Res);
                 }
                 Res.AppendLine();
@@ -78,9 +91,14 @@
                 for (var I = 0; I < ColsCount; I++)
                 {
                     if (Bl)
+                    {
                         Bl = false;
+                    }
                     else
+                    {
                         Res.Append(Delimiter);
+                    }
+
                     WriteField(E[I], UseQuotes, Res);
                 }
                 Res.AppendLine();

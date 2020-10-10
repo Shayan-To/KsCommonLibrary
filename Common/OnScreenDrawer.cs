@@ -37,7 +37,9 @@ namespace Ks.Common
                 this.Groups[Interval] = Group;
 
                 if (this.IsDrawing)
+                {
                     Group.StartDrawing();
+                }
             }
 
             Group.Drawings.Add(Drawing);
@@ -66,23 +68,31 @@ namespace Ks.Common
         private void ReportIsVisibleChange(Drawing Drawing)
         {
             if (Drawing.IsVisible)
+            {
                 this.AddToGroup(Drawing.Interval, Drawing);
+            }
             else
+            {
                 this.RemoveFromGroup(Drawing.Interval, Drawing);
+            }
         }
 
         private void ReportDrawingGotIn(Drawing Drawing)
         {
             Drawing.SetParent(this);
             if (Drawing.IsVisible)
+            {
                 this.AddToGroup(Drawing.Interval, Drawing);
+            }
         }
 
         private void ReportDrawingGotOut(Drawing Drawing)
         {
             Drawing.SetParent(null);
             if (Drawing.IsVisible)
+            {
                 this.RemoveFromGroup(Drawing.Interval, Drawing);
+            }
         }
 
         private void StartDrawing()
@@ -90,14 +100,18 @@ namespace Ks.Common
             Verify.False(this.IsDrawing, "Already drawing.");
             this._IsDrawing = true;
             foreach (var D in this.Groups.Values)
+            {
                 D.StartDrawing();
+            }
         }
 
         private void StopDrawing()
         {
             this._IsDrawing = false;
             foreach (var D in this.Groups.Values)
+            {
                 D.StopDrawing();
+            }
         }
 
         private readonly DrawingsCollection _Drawings;
@@ -123,9 +137,13 @@ namespace Ks.Common
                 if (value != this._IsDrawing)
                 {
                     if (value)
+                    {
                         this.StartDrawing();
+                    }
                     else
+                    {
                         this.StopDrawing();
+                    }
                 }
             }
         }
@@ -157,7 +175,10 @@ namespace Ks.Common
             public override void Clear()
             {
                 foreach (var I in this)
+                {
                     this.ItemGotOut(I);
+                }
+
                 this.Base.Clear();
                 this.OnChanged();
             }
@@ -226,7 +247,10 @@ namespace Ks.Common
                 Assert.True(this.Parent.IsDrawing);
 
                 if (this.IsDrawing)
+                {
                     return;
+                }
+
                 this.IsDrawing = true;
 
                 var Graphics = this.Parent.Graphics;
@@ -235,7 +259,10 @@ namespace Ks.Common
                 {
                     await Task.Delay(this.Interval);
                     if (!this.IsDrawing)
+                    {
                         break;
+                    }
+
                     foreach (var D in this.Drawings)
                     {
                         Assert.True(D.Interval == this.Interval);
@@ -336,7 +363,9 @@ namespace Ks.Common
                     var ShouldRecreate = (this._Bounds.Width != value.Width) | (this._Bounds.Height != value.Height);
                     this._Bounds = value;
                     if (ShouldRecreate)
+                    {
                         this.RecreateBitmap();
+                    }
                 }
             }
 
@@ -355,9 +384,13 @@ namespace Ks.Common
                     if (this._IsVisible != value)
                     {
                         if (value)
+                        {
                             this.Show();
+                        }
                         else
+                        {
                             this.Hide();
+                        }
                     }
                 }
             }

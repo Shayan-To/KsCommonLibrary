@@ -29,7 +29,10 @@
                 Verify.False(this.IsDetached, "Header is detached.");
                 Verify.True(this.Parent.HasHeaders, "The CSV does not have headers.");
                 if (value == null)
+                {
                     value = "";
+                }
+
                 if (this._HeaderName != value)
                 {
                     var OldValue = this._HeaderName;

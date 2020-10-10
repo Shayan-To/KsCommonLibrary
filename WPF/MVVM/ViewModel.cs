@@ -17,7 +17,9 @@ namespace Ks.Common.MVVM
 
             this.Metadata = this.GetMetadata();
             if (this.Metadata.KsApplicationType != null)
+            {
                 this.KsApplicationBase = (KsApplication) this.Metadata.KsApplicationType.CreateInstance();
+            }
         }
 
         private ViewModelMetadataAttribute GetMetadata()

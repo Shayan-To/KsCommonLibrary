@@ -99,9 +99,15 @@ namespace Ks.Common
         protected bool ICollection_Remove(KeyValuePair<TKey, TValue> item)
         {
             if (!this.TryGetValue(item.Key, out var V))
+            {
                 return false;
+            }
+
             if (!object.Equals(V, item.Value))
+            {
                 return false;
+            }
+
             return this.Remove(item.Key);
         }
 
@@ -123,7 +129,10 @@ namespace Ks.Common
         protected bool ICollection_Contains(KeyValuePair<TKey, TValue> item)
         {
             if (!this.TryGetValue(item.Key, out var V))
+            {
                 return false;
+            }
+
             return object.Equals(V, item.Value);
         }
 

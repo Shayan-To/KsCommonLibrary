@@ -17,7 +17,10 @@ namespace Ks.ConsoleTests
             {
                 var I = ChoiceReader.ReadChoice();
                 if (!I.HasValue)
+                {
                     break;
+                }
+
                 Console.WriteLine($"{I} was chosen!!");
             }
         }

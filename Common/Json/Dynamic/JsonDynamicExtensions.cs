@@ -14,7 +14,9 @@ namespace Ks.Common
 
                 bool ML;
                 if (MultiLine.HasValue)
+                {
                     ML = MultiLine.Value;
+                }
                 else
                 {
                     ML = T.Count > 1;
@@ -22,11 +24,13 @@ namespace Ks.Common
                 }
 
                 using (Writer.OpenDictionary(ML))
+                {
                     foreach (var I in T.OrderBy(KV => KV.Key))
                     {
                         Writer.WriteKey(I.Key);
                         Writer.WriteValue(I.Value, MultiLine);
                     }
+                }
 
                 return;
             }
@@ -37,7 +41,9 @@ namespace Ks.Common
 
                 bool ML;
                 if (MultiLine.HasValue)
+                {
                     ML = MultiLine.Value;
+                }
                 else
                 {
                     ML = T.Count > 10;
@@ -46,8 +52,12 @@ namespace Ks.Common
                 }
 
                 using (Writer.OpenList(ML))
+                {
                     foreach (var I in T)
+                    {
                         Writer.WriteValue(I, MultiLine);
+                    }
+                }
 
                 return;
             }
@@ -69,7 +79,10 @@ namespace Ks.Common
             {
                 var Res = new JsonDynamicDictionary();
                 foreach (var T in (JsonDictionaryObject) Self)
+                {
                     Res.Add(T.Key, T.Value.ToDynamic());
+                }
+
                 return Res;
             }
 
@@ -77,7 +90,10 @@ namespace Ks.Common
             {
                 var Res = new JsonDynamicList();
                 foreach (var T in (JsonListObject) Self)
+                {
                     Res.Add(T.ToDynamic());
+                }
+
                 return Res;
             }
 
@@ -97,7 +113,10 @@ namespace Ks.Common
             {
                 var Res = new List<KeyValuePair<string, JsonObject>>();
                 foreach (var T in (JsonDynamicDictionary) Self)
+                {
                     Res.Add(new KeyValuePair<string, JsonObject>(T.Key, T.Value.ToConstant()));
+                }
+
                 return new JsonDictionaryObject(Res);
             }
 
@@ -105,7 +124,10 @@ namespace Ks.Common
             {
                 var Res = new List<JsonObject>();
                 foreach (var T in (JsonDynamicList) Self)
+                {
                     Res.Add(T.ToConstant());
+                }
+
                 return new JsonListObject(Res);
             }
 

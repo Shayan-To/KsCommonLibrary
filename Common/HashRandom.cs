@@ -104,7 +104,10 @@ namespace Ks.Common
             while (Length != 0)
             {
                 if (this.Index == this.Buffer.Length)
+                {
                     this.RenewBuffer();
+                }
+
                 var Len = Math.Min(this.Buffer.Length - this.Index, Length);
                 System.Array.Copy(this.Buffer, this.Index, Array, Index, Len);
                 Length -= Len;

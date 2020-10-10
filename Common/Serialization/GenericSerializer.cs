@@ -15,12 +15,16 @@ namespace Ks.Common
         private Serializer GetSerializer(Type[] TypeArguments)
         {
             if (this.Cache.TryGetValue(TypeArguments, out var S))
+            {
                 return S;
+            }
 
             S = (Serializer) this.SerializerType.MakeGenericType(TypeArguments).CreateInstance();
 
             while (this.Cache.Count >= CacheLimit)
+            {
                 this.Cache.RemoveAt(0);
+            }
 
             this.Cache.Add(TypeArguments, S);
             return S;
@@ -40,9 +44,14 @@ namespace Ks.Common
             Formatter.Set(nameof(IsSingle), IsSingle);
 
             if (IsSingle)
+            {
                 Formatter.Set(nameof(TypeArguments), TypeArguments[0]);
+            }
             else
+            {
                 Formatter.Set(nameof(TypeArguments), TypeArguments);
+            }
+
             S.Set(Formatter, Obj);
         }
 
@@ -52,9 +61,13 @@ namespace Ks.Common
             var IsSingle = default(bool);
             IsSingle = Formatter.Get<bool>(nameof(IsSingle));
             if (IsSingle)
+            {
                 TypeArguments = new[] { Formatter.Get<Type>(nameof(TypeArguments)) };
+            }
             else
+            {
                 TypeArguments = Formatter.Get<Type[]>(nameof(TypeArguments));
+            }
 
             var S = this.GetSerializer(TypeArguments);
             return S.Get(Formatter);

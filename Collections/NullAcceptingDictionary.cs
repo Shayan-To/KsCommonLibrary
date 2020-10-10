@@ -38,7 +38,10 @@ namespace Ks.Common
             get
             {
                 if (this.HasNullValue)
+                {
                     return this.Dic.Count + 1;
+                }
+
                 return this.Dic.Count;
             }
         }
@@ -50,7 +53,10 @@ namespace Ks.Common
                 if (key == null)
                 {
                     if (!this.HasNullValue)
+                    {
                         throw new KeyNotFoundException();
+                    }
+
                     return this.NullValue[0];
                 }
                 return this.Dic[key];
@@ -60,7 +66,10 @@ namespace Ks.Common
                 if (key == null)
                 {
                     if (this.IsReadOnly)
+                    {
                         throw new NotSupportedException("Collection is read only.");
+                    }
+
                     this.NullValue[0] = value;
                     this.HasNullValue = true;
                     return;
@@ -74,7 +83,10 @@ namespace Ks.Common
             get
             {
                 if (!this.HasNullValue)
+                {
                     return this.Dic.Keys;
+                }
+
                 return this.KeysCollection;
             }
         }
@@ -84,7 +96,10 @@ namespace Ks.Common
             get
             {
                 if (!this.HasNullValue)
+                {
                     return this.Dic.Values;
+                }
+
                 return this.ValuesCollection;
             }
         }
@@ -116,7 +131,10 @@ namespace Ks.Common
             if (key == null)
             {
                 if (this.IsReadOnly)
+                {
                     throw new NotSupportedException();
+                }
+
                 this.NullValue[0] = value;
                 this.HasNullValue = true;
                 return;
@@ -127,7 +145,10 @@ namespace Ks.Common
         public override void Clear()
         {
             if (this.IsReadOnly)
+            {
                 throw new NotSupportedException();
+            }
+
             this.NullValue[0] = default;
             this.HasNullValue = false;
             this.Dic.Clear();
@@ -136,7 +157,10 @@ namespace Ks.Common
         public override bool ContainsKey(TKey key)
         {
             if (key == null)
+            {
                 return this.HasNullValue;
+            }
+
             return this.Dic.ContainsKey(key);
         }
 
@@ -145,9 +169,15 @@ namespace Ks.Common
             if (key == null)
             {
                 if (this.IsReadOnly)
+                {
                     throw new NotSupportedException();
+                }
+
                 if (!this.HasNullValue)
+                {
                     return false;
+                }
+
                 this.NullValue[0] = default;
                 this.HasNullValue = false;
                 return true;
@@ -175,13 +205,18 @@ namespace Ks.Common
         {
             yield return new KeyValuePair<TKey, TValue>(null, this.NullValue[0]);
             foreach (var KV in this.Dic)
+            {
                 yield return KV;
+            }
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
             if (this.HasNullValue)
+            {
                 return this.GetEnumeratorWithNull();
+            }
+
             return this.Dic.GetEnumerator();
         }
 

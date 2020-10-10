@@ -12,20 +12,27 @@ namespace Ks.Common
         public ConsoleProgressDrawer(bool SpeedSupported = true)
         {
             if (SpeedSupported)
+            {
                 this.StopWatch = new Stopwatch();
+            }
+
             this.ShowSpeed = SpeedSupported;
         }
 
         private void Draw(string TextBefore, string TextAfter)
         {
             if (this.IsSingleLine)
+            {
                 Console.Write('\r');
+            }
 
             Console.Write(TextBefore);
 
             Console.Write('[');
             if (this.Total == -1)
+            {
                 Console.Write("...");
+            }
             else
             {
                 var Width = Console.WindowWidth - 1;
@@ -44,10 +51,14 @@ namespace Ks.Common
         private string GetString(double Value)
         {
             if (double.IsNaN(Value))
+            {
                 return string.Format("{0,6} {1,1}", "???", "");
+            }
 
             if (!this.AddMultiplier)
+            {
                 return string.Format("{0,6:F2} {1,1}", Value, "");
+            }
 
             var Rep = Utilities.Representation.GetPrefixedRepresentation(Value, Utilities.Representation.BinaryPrefixes);
 
@@ -57,7 +68,9 @@ namespace Ks.Common
         private void Draw()
         {
             if (!this.IsDrawing)
+            {
                 return;
+            }
 
             var T = new System.Text.StringBuilder(this.Text);
 
@@ -66,42 +79,60 @@ namespace Ks.Common
             if (this.ShowAmount | ShowTotal)
             {
                 if (T.Length != 0)
+                {
                     T.Append(" ");
+                }
+
                 T.Append("(");
                 if (this.ShowAmount)
                 {
                     T.Append(this.GetString(this.Amount));
                     if (ShowTotal)
+                    {
                         T.Append(" / ").Append(this.GetString(this.Total));
+                    }
                 }
                 else
+                {
                     T.Append("Total ").Append(this.GetString(this.Total));
+                }
+
                 T.Append(")");
             }
 
             if ((T.Length != 0) & this.ShowProgressBar)
+            {
                 T.Append(" ");
+            }
 
             var Bef = T.ToString();
 
             T.Clear();
 
             if (Bef.Length != 0)
+            {
                 T.Append(" ");
+            }
 
             if (this.ShowPercentage & (this.Total != -1))
             {
                 var Per = ((double) this.Amount / this.Total) * 100;
                 var Tmp = Per.ToString("F2").PadLeft(5);
                 if (Tmp.Length > 5)
+                {
                     Tmp = Tmp.Substring(0, 5);
+                }
+
                 T.Append(Tmp).Append("%");
             }
 
             if (this.ShowSpeed)
             {
                 if (T.Length != 0)
+                {
                     T.Append(" ");
+                }
+
                 T.AppendFormat("at ")
                  .Append(this.GetString(this.Amount / this.StopWatch.Elapsed.TotalSeconds))
                  .Append("/s");
@@ -252,7 +283,10 @@ namespace Ks.Common
             {
                 this._Amount = value;
                 if (!this.StopWatch.IsRunning)
+                {
                     this.StopWatch.Start();
+                }
+
                 this.Draw();
             }
         }
@@ -284,9 +318,13 @@ namespace Ks.Common
             {
                 this._IsSingleLine = value;
                 if (!value)
+                {
                     this.ShowProgressBar = false;
+                }
                 else
+                {
                     this.Draw();
+                }
             }
         }
 
@@ -305,9 +343,13 @@ namespace Ks.Common
                     this._IsDrawing = value;
 
                     if (value)
+                    {
                         this.Draw();
+                    }
                     else if (this.IsSingleLine)
+                    {
                         Console.WriteLine();
+                    }
                 }
             }
         }

@@ -14,9 +14,14 @@ namespace Ks.Common
         internal void ReportHeaderNameChanged(CsvColumn Column, string OldName, string NewName)
         {
             if (NewName != null)
+            {
                 this.Names[NewName].Add(Column);
+            }
+
             if (OldName != null)
+            {
                 Assert.True(this.Names[OldName].Remove(Column));
+            }
         }
 
         internal void ReportHasHeadersChanged(bool HasHeaders)
@@ -25,16 +30,23 @@ namespace Ks.Common
             {
                 this.Names.Clear();
                 foreach (var C in this.List)
+                {
                     C._HeaderName = "";
+                }
             }
         }
 
         private void UpdateIndexes(int Start, int End = -1)
         {
             if (End == -1)
+            {
                 End = this.Count;
+            }
+
             for (; Start < End; Start++)
+            {
                 this.List[Start].Index = Start;
+            }
         }
 
         public CsvColumn Insert(int Index, string HeaderName)
@@ -74,7 +86,10 @@ namespace Ks.Common
         public void Clear()
         {
             foreach (var C in this.List)
+            {
                 C.Detach();
+            }
+
             this.List.Clear();
             this.Parent.Entries.ReportColumnsClear();
         }
@@ -86,7 +101,9 @@ namespace Ks.Common
             Assert.True(this.List[OldIndex] == Column);
 
             if (OldIndex == NewIndex)
+            {
                 return;
+            }
 
             this.List.Move(OldIndex, NewIndex);
 

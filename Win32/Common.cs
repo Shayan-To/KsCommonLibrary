@@ -13,7 +13,9 @@ namespace Ks.Common.Win32
         {
             var ErrorCode = Marshal.GetLastWin32Error();
             if (ErrorCode != 0)
+            {
                 throw new Win32Exception(ErrorCode);
+            }
         }
 
         internal static void ThrowError()

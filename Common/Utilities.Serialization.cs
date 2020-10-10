@@ -15,11 +15,19 @@ namespace Ks.Common
             public static Media.Color HexToColor(string Hex)
             {
                 if (Hex.StartsWith("#"))
+                {
                     Hex = Hex.Substring(1);
+                }
+
                 if (Hex.Length == 8)
+                {
                     return System.Windows.Media.Color.FromArgb(byte.Parse(Hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber));
+                }
+
                 if (Hex.Length == 6)
+                {
                     return System.Windows.Media.Color.FromRgb(byte.Parse(Hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+                }
 
                 throw new ArgumentException("Invalid hex color.");
             }
@@ -40,7 +48,10 @@ namespace Ks.Common
                     default:
                         var s = Ch.ToString();
                         if (EscapeChars.Contains(s))
+                        {
                             return "\\" + s;
+                        }
+
                         return s;
                 }
             }
@@ -55,7 +66,10 @@ namespace Ks.Common
                         return '\n';
                     default:
                         if (EscapeChars.Contains(Ch.ToString()))
+                        {
                             return Ch;
+                        }
+
                         throw new Exception("Invalid escape character.");
                 }
             }
@@ -67,7 +81,9 @@ namespace Ks.Common
                 foreach (var Str in List)
                 {
                     foreach (var Ch in Str)
+                    {
                         Res.Append(EscapeChar(Ch, @",\{}"));
+                    }
 
                     // We always append a comma to the end of a list.
                     // This Is to distinguish {} from {""}.
@@ -89,7 +105,10 @@ namespace Ks.Common
                     if (I == 0)
                     {
                         if (Ch != '{')
+                        {
                             throw new Exception("Invalid list string.");
+                        }
+
                         continue;
                     }
 
@@ -97,7 +116,9 @@ namespace Ks.Common
                     {
                         I += 1;
                         if (I == Str.Length)
+                        {
                             throw new Exception("Invalid list string.");
+                        }
 
                         R.Append(UnescapeChar(Str[I], @",\{}"));
                         continue;
@@ -114,7 +135,9 @@ namespace Ks.Common
                         }
 
                         if ((Ch == '}') & (I != (Str.Length - 1)))
+                        {
                             throw new Exception("Invalid list string.");
+                        }
 
                         continue;
                     }
@@ -132,7 +155,9 @@ namespace Ks.Common
                 foreach (var Str in List)
                 {
                     foreach (var Ch in Str)
+                    {
                         Res.Append(EscapeChar(Ch, @"\"));
+                    }
 
                     Res.AppendLine();
                 }
@@ -152,7 +177,9 @@ namespace Ks.Common
                     {
                         I += 1;
                         if (I == Str.Length)
+                        {
                             Verify.Fail("Invalid list string.");
+                        }
 
                         R.Append(UnescapeChar(Str[I], @"\"));
                         continue;
@@ -161,13 +188,17 @@ namespace Ks.Common
                     if ((Ch == '\r') | (Ch == '\n'))
                     {
                         if (((Ch == '\r') & ((I + 1) < Str.Length)) && Str[I + 1] == '\n')
+                        {
                             I += 1;
+                        }
 
                         Res.Add(R.ToString());
                         R.Clear();
 
                         if ((I + 1) == Str.Length)
+                        {
                             return Res;
+                        }
 
                         continue;
                     }
@@ -176,7 +207,9 @@ namespace Ks.Common
                 }
 
                 if (Str.Length == 0)
+                {
                     return Res;
+                }
 
                 Verify.Fail("Invalid list string.");
                 return null;
@@ -190,15 +223,24 @@ namespace Ks.Common
                 foreach (var KV in Dic)
                 {
                     if (Bl)
+                    {
                         Bl = false;
+                    }
                     else
+                    {
                         Res.Append(",");
+                    }
 
                     foreach (var Ch in KV.Key)
+                    {
                         Res.Append(EscapeChar(Ch, @",\{}:"));
+                    }
+
                     Res.Append(':');
                     foreach (var Ch in KV.Value)
+                    {
                         Res.Append(EscapeChar(Ch, @",\{}"));
+                    }
                 }
 
                 return Res.Append("}").ToString();
@@ -216,7 +258,10 @@ namespace Ks.Common
                     if (I == 0)
                     {
                         if (Ch != '{')
+                        {
                             throw new Exception("Invalid dictionary string.");
+                        }
+
                         continue;
                     }
 
@@ -224,7 +269,9 @@ namespace Ks.Common
                     {
                         I += 1;
                         if (I == Str.Length)
+                        {
                             throw new Exception("Invalid dictionary string.");
+                        }
 
                         R.Append(UnescapeChar(Str[I], @",\{}:"));
                         continue;
@@ -251,7 +298,9 @@ namespace Ks.Common
                         }
 
                         if ((Ch == '}') & (I != (Str.Length - 1)))
+                        {
                             throw new Exception("Invalid dictionary string.");
+                        }
 
                         continue;
                     }
@@ -269,10 +318,15 @@ namespace Ks.Common
                 foreach (var KV in Dic)
                 {
                     foreach (var Ch in KV.Key)
+                    {
                         Res.Append(EscapeChar(Ch, @"\:"));
+                    }
+
                     Res.Append(':');
                     foreach (var Ch in KV.Value)
+                    {
                         Res.Append(EscapeChar(Ch, @"\"));
+                    }
 
                     Res.AppendLine();
                 }
@@ -309,7 +363,9 @@ namespace Ks.Common
                     if ((Ch == '\r') | (Ch == '\n'))
                     {
                         if (((Ch == '\r') & ((I + 1) < Str.Length)) && Str[I + 1] == '\n')
+                        {
                             I += 1;
+                        }
 
                         Verify.False(Key == null, "Invalid dictionary string.");
                         Res.Add(Key, R.ToString());
@@ -317,7 +373,9 @@ namespace Ks.Common
                         Key = null;
 
                         if ((I + 1) == Str.Length)
+                        {
                             return Res;
+                        }
 
                         continue;
                     }
@@ -326,7 +384,9 @@ namespace Ks.Common
                 }
 
                 if (Str.Length == 0)
+                {
                     return Res;
+                }
 
                 Verify.Fail("Invalid dictionary string.");
                 return null;

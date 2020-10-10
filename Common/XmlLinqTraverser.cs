@@ -33,7 +33,9 @@ namespace Ks.Common
                 {
                     ChangedChild = this.Traverse(Child);
                     if (ChangedChild != null)
+                    {
                         break;
+                    }
                 }
 
                 while (ChangedChild != null)
@@ -44,13 +46,17 @@ namespace Ks.Common
                     {
                         ChangedChild = this.Traverse(Child);
                         if (ChangedChild != null)
+                        {
                             break;
+                        }
                     }
                 }
             }
 
             if (NodeReplaced)
+            {
                 return Node;
+            }
 
             return null;
         }

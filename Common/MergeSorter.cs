@@ -7,9 +7,14 @@ namespace Ks.Common
         private void Merge(int Start, int Mid, int End)
         {
             if (Start == Mid || this.Comparer.Compare(this.List[Mid - 1], this.List[Mid]) <= 0)
+            {
                 return;
+            }
+
             for (var I = 0; I < Mid - Start; I++)
+            {
                 this.Temp[I] = this.List[I + Start];
+            }
 
             Merge(this.List, Start, this.Temp, 0, Mid - Start, this.List, Mid, End - Mid, this.Comparer);
         }
@@ -53,7 +58,9 @@ namespace Ks.Common
             int Mid;
 
             if ((End - Start) < 2)
+            {
                 return;
+            }
 
             Mid = (Start + End) / 2;
 
@@ -76,10 +83,14 @@ namespace Ks.Common
 
                 var I = 0;
                 for (; I <= Size - Length2; I += Length2)
+                {
                     this.Merge(I, I + Length, I + Length2);
+                }
 
                 if ((I + Length) < Size)
+                {
                     this.Merge(I, I + Length, Size);
+                }
 
                 Length = Length2;
             }

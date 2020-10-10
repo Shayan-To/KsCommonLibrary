@@ -7,7 +7,9 @@ namespace Ks.Common.MVVM
         public NavigationViewModel(KsApplication KsApplication) : base(KsApplication)
         {
             if (!typeof(INavigationView).IsAssignableFrom(this.Metadata.ViewType))
+            {
                 throw new InvalidOperationException("Navigation views must implement INavigationView.");
+            }
         }
 
         public NavigationViewModel() : base()

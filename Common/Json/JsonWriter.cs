@@ -45,7 +45,9 @@ namespace Ks.Common
         {
             this.Out.WriteLine();
             for (var I = 0; I < this.CurrentIndent; I++)
+            {
                 this.Out.Write(this.IndentString);
+            }
         }
 
         private void WriteSeparator(bool NewLineRequired = false)
@@ -54,15 +56,21 @@ namespace Ks.Common
             {
                 this.Out.Write(',');
                 if (!NewLineRequired & !this.MultiLine & this.AddSpaces)
+                {
                     this.Out.Write(' ');
+                }
             }
             if (this.HasKeyBefore & this.AddSpaces)
+            {
                 this.Out.Write(' ');
+            }
 
             if ((this.MultiLine & !this.HasKeyBefore) | NewLineRequired)
             {
                 if (this.State != WriterState.Begin)
+                {
                     this.WriteNewLine();
+                }
             }
         }
 
@@ -80,10 +88,15 @@ namespace Ks.Common
                 this.Out.Write('"');
             }
             else
+            {
                 this.Out.Write(Value);
+            }
 
             if (this.State == WriterState.Begin)
+            {
                 this.State = WriterState.End;
+            }
+
             this.HasKeyBefore = false;
             this.HasValueBefore = true;
         }
@@ -120,7 +133,9 @@ namespace Ks.Common
             this.State = WriterState.List;
 
             if (MultiLine)
+            {
                 this.CurrentIndent += 1;
+            }
 
             return R;
         }
@@ -141,7 +156,9 @@ namespace Ks.Common
             this.State = WriterState.Dictionary;
 
             if (MultiLine)
+            {
                 this.CurrentIndent += 1;
+            }
 
             return R;
         }
@@ -201,7 +218,9 @@ namespace Ks.Common
                 if (Disposing)
                 {
                     if (!this.LeaveOpen)
+                    {
                         this.Out.Dispose();
+                    }
                 }
             }
             this.IsDisposed = true;

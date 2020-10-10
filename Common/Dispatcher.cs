@@ -18,9 +18,13 @@ namespace Ks.Common
             catch (Exception Ex)
             {
                 if (WaitingData.WaitHandle == null)
+                {
                     this.OnExceptionUnhandled(new ExceptionUnhandledEventArgs(Ex));
+                }
                 else
+                {
                     WaitingData = (WaitingData.WaitHandle, Ex);
+                }
             }
 
             if (WaitingData.WaitHandle != null)
@@ -72,13 +76,17 @@ namespace Ks.Common
             Assert.True(this.WaitingActions.Remove(Id));
 
             if (WaitingData.Exception != null)
+            {
                 throw new InvocationException("Action invocation threw an exception. See InnerException for more details.", WaitingData.Exception);
+            }
         }
 
         public void SetSynchronizationContext()
         {
             if (this.Thread == null)
+            {
                 this.Thread = Thread.CurrentThread;
+            }
 
             Verify.True(this.IsSameThread(), $"You can only call `{nameof(this.SetSynchronizationContext)}` from the thread of the dispatcher.");
 
@@ -88,7 +96,9 @@ namespace Ks.Common
         public void DoActions()
         {
             if (this.Thread == null)
+            {
                 this.Thread = Thread.CurrentThread;
+            }
 
             Verify.True(this.IsSameThread(), this.IsDispatching ? $"You can only call `{nameof(this.DoActions)}` from the same thread the dispatcher is running on." : "The dispatcher cannot be run from two different threads.");
 
@@ -99,12 +109,17 @@ namespace Ks.Common
             while (true)
             {
                 if (!this.Queue.TryTake(out var AI))
+                {
                     break;
+                }
+
                 List.Add(AI);
             }
 
             foreach (var AI in List)
+            {
                 this.RunAction(AI);
+            }
 
             this.IsRunning = IsRunning;
         }
@@ -115,7 +130,9 @@ namespace Ks.Common
             Verify.False(this.IsRunning, $"The dispatcher is already running something on {(this.IsSameThread() ? "the same" : "another")} thread.");
 
             if (this.Thread != null)
+            {
                 Verify.True(this.IsSameThread(), "The dispatcher cannot be run from two different threads.");
+            }
 
             this.Thread = Thread.CurrentThread;
 

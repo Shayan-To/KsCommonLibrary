@@ -41,7 +41,10 @@ namespace Ks.Common
             set
             {
                 if (!this._Dic.ContainsKey(key))
+                {
                     this._Keys.Add(key);
+                }
+
                 this._Dic[key] = value;
             }
         }
@@ -171,7 +174,9 @@ namespace Ks.Common
             for (var I = 0; I < this._Keys.Count; I++)
             {
                 if (this.Comparer.Equals(key, this._Keys[I]))
+                {
                     return I;
+                }
             }
             return -1;
         }
@@ -179,7 +184,10 @@ namespace Ks.Common
         public override bool Remove(TKey key)
         {
             if (!this._Dic.Remove(key))
+            {
                 return false;
+            }
+
             var I = this.IndexOf(key);
             Assert.True(I != -1);
             this._Keys.RemoveAt(I);
@@ -244,9 +252,15 @@ namespace Ks.Common
         {
             var R = this.IndexOf(item.Key);
             if (R == -1)
+            {
                 return -1;
+            }
+
             if (!object.Equals(item.Value, this[R].Value))
+            {
                 return -1;
+            }
+
             return R;
         }
 

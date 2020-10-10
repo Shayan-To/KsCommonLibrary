@@ -24,7 +24,9 @@ namespace Ks.Common
             Verify.False(Token.Type == TokenType.None, "Invalid JSON format. Unexpected end of data.");
 
             if ((Token.Type & TokenType.Value) == TokenType.Value)
+            {
                 return new JsonValueObject(Token.Value, Token.Type == TokenType.QuotedValue);
+            }
 
             Assert.True(Token.Type == TokenType.Operator);
 
@@ -57,7 +59,9 @@ namespace Ks.Common
                     Token = this.ReadToken();
                     Verify.True((Token.Type == TokenType.Operator) & ((Token.Value == ",") | (Token.Value == "}")), "Invalid JSON format. Expected ',' or '}'.");
                     if (Token.Value == "}")
+                    {
                         break;
+                    }
                 }
 
                 return new JsonDictionaryObject(List);
@@ -80,7 +84,9 @@ namespace Ks.Common
                     Token = this.ReadToken();
                     Verify.True((Token.Type == TokenType.Operator) & ((Token.Value == ",") | (Token.Value == "]")), "Invalid JSON format. Expected ',' or ']'.");
                     if (Token.Value == "]")
+                    {
                         break;
+                    }
                 }
 
                 return new JsonListObject(List);
@@ -90,7 +96,10 @@ namespace Ks.Common
         private Token PeekToken()
         {
             if (!this._PeekedToken.HasValue)
+            {
                 this._PeekedToken = this.ReadToken();
+            }
+
             return this._PeekedToken.Value;
         }
 
@@ -106,7 +115,9 @@ namespace Ks.Common
             this.SkipWhiteSpace();
 
             if (this.Index == this.Input.Length)
+            {
                 return default;
+            }
 
             var Ch = this.Input[this.Index];
 
@@ -117,7 +128,9 @@ namespace Ks.Common
             }
 
             if (Ch == '"')
+            {
                 return new Token(this.ReadQuotedValue(), TokenType.QuotedValue);
+            }
 
             return new Token(this.ReadNonQuotedValue(), TokenType.Value);
         }
@@ -176,13 +189,21 @@ namespace Ks.Common
                 var Ch = this.Input[I];
                 R *= 16;
                 if (('0' <= Ch) & (Ch <= '9'))
+                {
                     R += Ch - '0';
+                }
                 else if (('a' <= Ch) & (Ch <= 'f'))
+                {
                     R += Ch - 'a' + 10;
+                }
                 else if (('A' <= Ch) & (Ch <= 'F'))
+                {
                     R += Ch - 'A' + 10;
+                }
                 else
+                {
                     Verify.Fail("Invalid JSON format. Invalid escape sequence.");
+                }
             }
 
             return (char) R;
@@ -194,9 +215,14 @@ namespace Ks.Common
             for (; this.Index < this.Input.Length; this.Index++)
             {
                 if (char.IsWhiteSpace(this.Input[this.Index]))
+                {
                     break;
+                }
+
                 if (Array.IndexOf(Operators, this.Input[this.Index]) != -1)
+                {
                     break;
+                }
             }
 
             return new string(this.Input, StartIndex, this.Index - StartIndex);
@@ -205,7 +231,9 @@ namespace Ks.Common
         private void SkipWhiteSpace()
         {
             while (this.Index < this.Input.Length && char.IsWhiteSpace(this.Input[this.Index]))
+            {
                 this.Index += 1;
+            }
         }
 
         private static readonly Dictionary<char, char> EscapeDic = new Dictionary<char, char>()

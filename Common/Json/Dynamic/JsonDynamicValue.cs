@@ -66,7 +66,10 @@
         {
             var T = obj as JsonDynamicValue;
             if (T == null)
+            {
                 return false;
+            }
+
             return this == T;
         }
 

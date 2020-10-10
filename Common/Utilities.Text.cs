@@ -53,14 +53,19 @@ namespace Ks.Common
                 char T1, T2;
 
                 if (Input.Length == 0)
+                {
                     throw new ArgumentException();
+                }
 
                 T2 = Input[0];
 
                 if (T2 != '\\')
                 {
                     if (DoesThrow && Input.Length != 1)
+                    {
                         throw new ArgumentException("Invalid escaped character.");
+                    }
+
                     return T2;
                 }
 
@@ -79,16 +84,24 @@ namespace Ks.Common
                     if (Input.Length != 4)
                     {
                         if (DoesThrow)
+                        {
                             throw new ArgumentException("Invalid escaped string.");
+                        }
                         else
+                        {
                             return T1;
+                        }
                     }
                     if (!(IsHexadecimalDigit(Input[2]) && IsHexadecimalDigit(Input[3])))
                     {
                         if (DoesThrow)
+                        {
                             throw new ArgumentException("Invalid escaped string.");
+                        }
                         else
+                        {
                             return T1;
+                        }
                     }
 
                     return (char) Math.ConvertFromBase(Input.Substring(2, 2), 16);
@@ -99,16 +112,24 @@ namespace Ks.Common
                     if (Input.Length != 6)
                     {
                         if (DoesThrow)
+                        {
                             throw new ArgumentException("Invalid escaped string.");
+                        }
                         else
+                        {
                             return T1;
+                        }
                     }
                     if (!(IsHexadecimalDigit(Input[2]) && IsHexadecimalDigit(Input[3]) && IsHexadecimalDigit(Input[4]) && IsHexadecimalDigit(Input[5])))
                     {
                         if (DoesThrow)
+                        {
                             throw new ArgumentException("Invalid escaped string.");
+                        }
                         else
+                        {
                             return T1;
+                        }
                     }
 
                     return (char) Math.ConvertFromBase(Input.Substring(2, 4), 16);
@@ -119,16 +140,24 @@ namespace Ks.Common
                     if (Input.Length != 10)
                     {
                         if (DoesThrow)
+                        {
                             throw new ArgumentException("Invalid escaped string.");
+                        }
                         else
+                        {
                             return T1;
+                        }
                     }
                     if (!(IsHexadecimalDigit(Input[2]) && IsHexadecimalDigit(Input[3]) && IsHexadecimalDigit(Input[4]) && IsHexadecimalDigit(Input[5]) && IsHexadecimalDigit(Input[6]) && IsHexadecimalDigit(Input[7]) && IsHexadecimalDigit(Input[8]) && IsHexadecimalDigit(Input[9])))
                     {
                         if (DoesThrow)
+                        {
                             throw new ArgumentException("Invalid escaped string.");
+                        }
                         else
+                        {
                             return T1;
+                        }
                     }
 
                     return (char) Math.ConvertFromBase(Input.Substring(2, 8), 16);
@@ -139,25 +168,37 @@ namespace Ks.Common
                     if (Input.Length != 4)
                     {
                         if (DoesThrow)
+                        {
                             throw new ArgumentException("Invalid escaped string.");
+                        }
                         else
+                        {
                             return T1;
+                        }
                     }
                     if (!(IsOctalDigit(Input[2]) && IsOctalDigit(Input[3])))
                     {
                         if (DoesThrow)
+                        {
                             throw new ArgumentException("Invalid escaped string.");
+                        }
                         else
+                        {
                             return T1;
+                        }
                     }
 
                     return (char) Math.ConvertFromBase(Input.Substring(1, 3), 8);
                 }
 
                 if (DoesThrow)
+                {
                     throw new ArgumentException("Invalid escaped string.");
+                }
                 else
+                {
                     return T1;
+                }
             }
 
             public static string CEscape(string Input, bool DoesThrow = true)
@@ -176,9 +217,13 @@ namespace Ks.Common
                         if (I == Input.Length)
                         {
                             if (DoesThrow)
+                            {
                                 throw new ArgumentException("Invalid escaped string.");
+                            }
                             else
+                            {
                                 break;
+                            }
                         }
 
                         T1 = Input[I];
@@ -194,7 +239,9 @@ namespace Ks.Common
                             if ((I + 2) >= Input.Length)
                             {
                                 if (DoesThrow)
+                                {
                                     throw new ArgumentException("Invalid escaped string.");
+                                }
                                 else
                                 {
                                     Res.Append(T1);
@@ -204,7 +251,9 @@ namespace Ks.Common
                             if (!(IsHexadecimalDigit(Input[I + 1]) && IsHexadecimalDigit(Input[I + 2])))
                             {
                                 if (DoesThrow)
+                                {
                                     throw new ArgumentException("Invalid escaped string.");
+                                }
                                 else
                                 {
                                     Res.Append(T1);
@@ -222,7 +271,9 @@ namespace Ks.Common
                             if ((I + 4) >= Input.Length)
                             {
                                 if (DoesThrow)
+                                {
                                     throw new ArgumentException("Invalid escaped string.");
+                                }
                                 else
                                 {
                                     Res.Append(T1);
@@ -232,7 +283,9 @@ namespace Ks.Common
                             if (!(IsHexadecimalDigit(Input[I + 1]) && IsHexadecimalDigit(Input[I + 2]) && IsHexadecimalDigit(Input[I + 3]) && IsHexadecimalDigit(Input[I + 4])))
                             {
                                 if (DoesThrow)
+                                {
                                     throw new ArgumentException("Invalid escaped string.");
+                                }
                                 else
                                 {
                                     Res.Append(T1);
@@ -250,7 +303,9 @@ namespace Ks.Common
                             if ((I + 8) >= Input.Length)
                             {
                                 if (DoesThrow)
+                                {
                                     throw new ArgumentException("Invalid escaped string.");
+                                }
                                 else
                                 {
                                     Res.Append(T1);
@@ -260,7 +315,9 @@ namespace Ks.Common
                             if (!(IsHexadecimalDigit(Input[I + 1]) && IsHexadecimalDigit(Input[I + 2]) && IsHexadecimalDigit(Input[I + 3]) && IsHexadecimalDigit(Input[I + 4]) && IsHexadecimalDigit(Input[I + 5]) && IsHexadecimalDigit(Input[I + 6]) && IsHexadecimalDigit(Input[I + 7]) && IsHexadecimalDigit(Input[I + 8])))
                             {
                                 if (DoesThrow)
+                                {
                                     throw new ArgumentException("Invalid escaped string.");
+                                }
                                 else
                                 {
                                     Res.Append(T1);
@@ -278,7 +335,9 @@ namespace Ks.Common
                             if ((I + 2) >= Input.Length)
                             {
                                 if (DoesThrow)
+                                {
                                     throw new ArgumentException("Invalid escaped string.");
+                                }
                                 else
                                 {
                                     Res.Append(T1);
@@ -288,7 +347,9 @@ namespace Ks.Common
                             if (!(IsOctalDigit(Input[I + 1]) && IsOctalDigit(Input[I + 2])))
                             {
                                 if (DoesThrow)
+                                {
                                     throw new ArgumentException("Invalid escaped string.");
+                                }
                                 else
                                 {
                                     Res.Append(T1);
@@ -302,7 +363,9 @@ namespace Ks.Common
                         }
 
                         if (DoesThrow)
+                        {
                             throw new ArgumentException("Invalid escaped string.");
+                        }
                         else
                         {
                             Res.Append(T1);
@@ -352,7 +415,10 @@ namespace Ks.Common
                     {
                         I += 1;
                         if (I == Str.Length)
+                        {
                             throw new Exception("Invalid list string.");
+                        }
+
                         Ch = Str[I];
 
                         switch (Ch)
@@ -398,9 +464,14 @@ namespace Ks.Common
                 foreach (var I in Enumerable)
                 {
                     if (Bl)
+                    {
                         Bl = false;
+                    }
                     else
+                    {
                         Res.Append(", ");
+                    }
+
                     Res.Append(I);
                 }
 

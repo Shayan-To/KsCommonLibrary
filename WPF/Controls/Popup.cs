@@ -134,7 +134,9 @@ namespace Ks.Common.Controls
             // Dim NewValue = DirectCast(E.NewValue, Boolean)
 
             if (Self.IsShown)
+            {
                 Self.GetWindow()?.RefreshPopup(Self);
+            }
         }
 
         public bool HasShelter
@@ -159,7 +161,9 @@ namespace Ks.Common.Controls
             // Dim NewValue = DirectCast(E.NewValue, Boolean)
 
             if (Self.IsShown)
+            {
                 Self.GetWindow()?.UpdateDims();
+            }
         }
 
         public bool DimShelter
@@ -257,7 +261,10 @@ namespace Ks.Common.Controls
         private static Window GetWindow(Window Window)
         {
             if (Window != null)
+            {
                 return Window;
+            }
+
             return KsApplication.Current.Window.View as Window;
         }
 

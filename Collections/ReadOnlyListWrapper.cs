@@ -19,9 +19,13 @@ namespace Ks.Common
             get
             {
                 if (this.List != null)
+                {
                     return this.List.Count;
+                }
                 else
+                {
                     return this.ROList.Count;
+                }
             }
         }
 
@@ -30,18 +34,26 @@ namespace Ks.Common
             get
             {
                 if (this.List != null)
+                {
                     return this.List[Index];
+                }
                 else
+                {
                     return this.ROList[Index];
+                }
             }
         }
 
         public override IEnumerator<T> GetEnumerator()
         {
             if (this.List != null)
+            {
                 return this.List.GetEnumerator();
+            }
             else
+            {
                 return this.ROList.GetEnumerator();
+            }
         }
 
         private readonly IList<T> List;

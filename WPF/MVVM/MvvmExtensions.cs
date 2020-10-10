@@ -25,15 +25,22 @@ namespace Ks.Common.MVVM
         {
             var Prev = NavigationView.Content;
             if (Prev == View)
+            {
                 return;
+            }
 
             if (Prev != null)
+            {
                 Prev.ParentView = null;
+            }
 
             if (View != null)
             {
                 if (View.ParentView != null)
+                {
                     View.ParentView.Content = null;
+                }
+
                 View.ParentView = NavigationView;
             }
 

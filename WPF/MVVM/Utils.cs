@@ -47,7 +47,9 @@ namespace Ks.Common.MVVM
         {
             var Self = D as RichTextBox;
             if (Self == null)
+            {
                 return DocumentProperty.DefaultMetadata.DefaultValue;
+            }
 
             var Value = (FlowDocument) BaseValue;
 
@@ -97,7 +99,9 @@ namespace Ks.Common.MVVM
         public static ViewModel GetViewModel(DependencyObject Element)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             return (ViewModel) Element.GetValue(ViewModelProperty);
         }
@@ -105,7 +109,9 @@ namespace Ks.Common.MVVM
         public static void SetViewModel(DependencyObject Element, ViewModel Value)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             Element.SetValue(ViewModelProperty, Value);
         }
@@ -123,7 +129,9 @@ namespace Ks.Common.MVVM
         {
             var Self = D as FrameworkElement;
             if (Self == null)
+            {
                 return DesignViewModelTypeProperty.DefaultMetadata.DefaultValue;
+            }
 
             // Dim Value = DirectCast(BaseValue, Type)
 
@@ -133,7 +141,9 @@ namespace Ks.Common.MVVM
         private static void DesignViewModelType_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
             if (!KsApplication.IsInDesignMode)
+            {
                 return;
+            }
 
             var Self = (FrameworkElement) D;
 
@@ -150,7 +160,9 @@ namespace Ks.Common.MVVM
         public static Type GetDesignViewModelType(DependencyObject Element)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             return (Type) Element.GetValue(DesignViewModelTypeProperty);
         }
@@ -158,7 +170,9 @@ namespace Ks.Common.MVVM
         public static void SetDesignViewModelType(DependencyObject Element, Type Value)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             Element.SetValue(DesignViewModelTypeProperty, Value);
         }
@@ -174,7 +188,9 @@ namespace Ks.Common.MVVM
 
             var Parent = LogicalTreeHelper.GetParent(Self);
             if (!CheckedParents.Add(Parent))
+            {
                 return BaseValue;
+            }
 
             var Res = -1;
             var I = 0;
@@ -186,7 +202,10 @@ namespace Ks.Common.MVVM
                     Res = I;
                 }
                 else
+                {
                     SetIndexInParent(C, I);
+                }
+
                 I += 1;
             }
 
@@ -206,7 +225,9 @@ namespace Ks.Common.MVVM
         public static int GetIndexInParent(DependencyObject Element)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             return (int) Element.GetValue(IndexInParentProperty);
         }
@@ -214,7 +235,9 @@ namespace Ks.Common.MVVM
         public static void SetIndexInParent(DependencyObject Element, int Value)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             Element.SetValue(IndexInParentProperty, Value);
         }
@@ -232,13 +255,17 @@ namespace Ks.Common.MVVM
             var NewValue = (object) E.NewValue;
 
             if (Self.TemplatedParent != null)
+            {
                 SetUpTPProp1(Self.TemplatedParent, NewValue);
+            }
         }
 
         public static object GetUpTPProp1(DependencyObject Element)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             return (object) Element.GetValue(UpTPProp1Property);
         }
@@ -246,7 +273,9 @@ namespace Ks.Common.MVVM
         public static void SetUpTPProp1(DependencyObject Element, object Value)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             Element.SetValue(UpTPProp1Property, Value);
         }
@@ -261,13 +290,17 @@ namespace Ks.Common.MVVM
             var NewValue = (object) E.NewValue;
 
             if (Self.TemplatedParent != null)
+            {
                 SetUpTPProp2(Self.TemplatedParent, NewValue);
+            }
         }
 
         public static object GetUpTPProp2(DependencyObject Element)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             return (object) Element.GetValue(UpTPProp2Property);
         }
@@ -275,7 +308,9 @@ namespace Ks.Common.MVVM
         public static void SetUpTPProp2(DependencyObject Element, object Value)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             Element.SetValue(UpTPProp2Property, Value);
         }
@@ -290,13 +325,17 @@ namespace Ks.Common.MVVM
             var NewValue = (object) E.NewValue;
 
             if (Self.TemplatedParent != null)
+            {
                 SetUpTPProp3(Self.TemplatedParent, NewValue);
+            }
         }
 
         public static object GetUpTPProp3(DependencyObject Element)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             return (object) Element.GetValue(UpTPProp3Property);
         }
@@ -304,7 +343,9 @@ namespace Ks.Common.MVVM
         public static void SetUpTPProp3(DependencyObject Element, object Value)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             Element.SetValue(UpTPProp3Property, Value);
         }
@@ -314,7 +355,9 @@ namespace Ks.Common.MVVM
         public static object GetProp1(DependencyObject Element)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             return (object) Element.GetValue(Prop1Property);
         }
@@ -322,7 +365,9 @@ namespace Ks.Common.MVVM
         public static void SetProp1(DependencyObject Element, object Value)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             Element.SetValue(Prop1Property, Value);
         }
@@ -332,7 +377,9 @@ namespace Ks.Common.MVVM
         public static object GetProp2(DependencyObject Element)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             return (object) Element.GetValue(Prop2Property);
         }
@@ -340,7 +387,9 @@ namespace Ks.Common.MVVM
         public static void SetProp2(DependencyObject Element, object Value)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             Element.SetValue(Prop2Property, Value);
         }
@@ -350,7 +399,9 @@ namespace Ks.Common.MVVM
         public static object GetProp3(DependencyObject Element)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             return (object) Element.GetValue(Prop3Property);
         }
@@ -358,7 +409,9 @@ namespace Ks.Common.MVVM
         public static void SetProp3(DependencyObject Element, object Value)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             Element.SetValue(Prop3Property, Value);
         }
@@ -368,7 +421,9 @@ namespace Ks.Common.MVVM
         public static object GetProp4(DependencyObject Element)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             return (object) Element.GetValue(Prop4Property);
         }
@@ -376,7 +431,9 @@ namespace Ks.Common.MVVM
         public static void SetProp4(DependencyObject Element, object Value)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             Element.SetValue(Prop4Property, Value);
         }
@@ -386,7 +443,9 @@ namespace Ks.Common.MVVM
         public static object GetProp5(DependencyObject Element)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             return (object) Element.GetValue(Prop5Property);
         }
@@ -394,7 +453,9 @@ namespace Ks.Common.MVVM
         public static void SetProp5(DependencyObject Element, object Value)
         {
             if (Element == null)
+            {
                 throw new ArgumentNullException(nameof(Element));
+            }
 
             Element.SetValue(Prop5Property, Value);
         }
@@ -418,7 +479,9 @@ namespace Ks.Common.MVVM
             var Self = D as UIElement;
 
             if (Self == null)
+            {
                 return;
+            }
 
             // Dim OldValue = DirectCast(E.OldValue, Boolean)
             var NewValue = (bool) E.NewValue;
@@ -457,7 +520,9 @@ namespace Ks.Common.MVVM
             var Self = D as UIElement;
 
             if (Self == null)
+            {
                 return;
+            }
 
             // Dim OldValue = DirectCast(E.OldValue, Media.Brush)
             var NewValue = (System.Windows.Media.Brush) E.NewValue;
@@ -466,7 +531,10 @@ namespace Ks.Common.MVVM
 
             Self = (Self as ContentPresenter)?.Content as UIElement;
             if (Self == null)
+            {
                 return;
+            }
+
             System.Windows.Documents.TextElement.SetForeground(Self, NewValue);
         }
 
@@ -488,7 +556,9 @@ namespace Ks.Common.MVVM
         {
             var Self = D as FrameworkElement;
             if (Self == null)
+            {
                 return DescriptionToolTipProperty.DefaultMetadata.DefaultValue;
+            }
 
             var Value = (string) BaseValue;
 
@@ -523,7 +593,9 @@ namespace Ks.Common.MVVM
         {
             var Self = D as FrameworkElement;
             if (Self == null)
+            {
                 return ToolTipProperty.DefaultMetadata.DefaultValue;
+            }
 
             var Value = (string) BaseValue;
 
@@ -559,7 +631,9 @@ namespace Ks.Common.MVVM
         {
             var Self = D as PasswordBox;
             if (Self == null)
+            {
                 return PasswordProperty.DefaultMetadata.DefaultValue;
+            }
 
             var Value = (string) BaseValue;
 

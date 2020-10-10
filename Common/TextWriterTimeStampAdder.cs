@@ -111,7 +111,10 @@ namespace Ks.Common
             {
                 this.Base.WriteLine(this.GetTimeStamp());
                 if (this.AutoFlush)
+                {
                     this.Base.Flush();
+                }
+
                 return;
             }
 
@@ -125,33 +128,50 @@ namespace Ks.Common
             {
                 var Ch = default(char);
                 if (I < (index + count))
+                {
                     Ch = buffer[I];
+                }
                 else
+                {
                     Ch = '\n';
+                }
+
                 if ((Ch == '\r') | (Ch == '\n'))
                 {
                     if (Bl)
+                    {
                         this.Base.Write(new string(' ', StampLength));
+                    }
+
                     Bl = true;
                     this.Base.WriteLine(buffer, SI, I - SI);
 
                     if (I < ((index + count) - 1) && ((Ch == '\r') & (buffer[I + 1] == '\n')))
+                    {
                         I += 1;
+                    }
+
                     SI = I + 1;
                 }
             }
 
             if (this.AutoFlush)
+            {
                 this.Base.Flush();
+            }
         }
 
         public override void WriteLine(object value)
         {
             var Formattable = value as IFormattable;
             if (Formattable != null)
+            {
                 this.WriteLine(Formattable.ToString(null, this.Base.FormatProvider));
+            }
             else
+            {
                 this.WriteLine(value?.ToString());
+            }
         }
 
         public override void WriteLine()
@@ -255,7 +275,10 @@ namespace Ks.Common
             {
                 await this.Base.WriteLineAsync(this.GetTimeStamp());
                 if (this.AutoFlush)
+                {
                     await this.Base.FlushAsync();
+                }
+
                 return;
             }
 
@@ -269,24 +292,37 @@ namespace Ks.Common
             {
                 var Ch = default(char);
                 if (I < (index + count))
+                {
                     Ch = buffer[I];
+                }
                 else
+                {
                     Ch = '\n';
+                }
+
                 if ((Ch == '\r') | (Ch == '\n'))
                 {
                     if (Bl)
+                    {
                         await this.Base.WriteAsync(new string(' ', StampLength));
+                    }
+
                     Bl = true;
                     await this.Base.WriteLineAsync(buffer, SI, I - SI);
 
                     if (I < ((index + count) - 1) && ((Ch == '\r') & (buffer[I + 1] == '\n')))
+                    {
                         I += 1;
+                    }
+
                     SI = I + 1;
                 }
             }
 
             if (this.AutoFlush)
+            {
                 await this.Base.FlushAsync();
+            }
         }
 
         public override async Task WriteLineAsync()

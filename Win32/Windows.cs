@@ -99,13 +99,21 @@ namespace Ks.Common.Win32
             IntPtr R = default;
 
             if (Kind == AncestorKind.ParentOrOwner)
+            {
                 R = Unsafe.GetParent(hwnd);
+            }
             else if ((GetAncestorConstant <= (uint) Kind) & ((uint) Kind < GetWindowConstant))
+            {
                 R = Unsafe.GetAncestor(hwnd, (Unsafe.GetAncestorFlags) ((uint) Kind - GetAncestorConstant));
+            }
             else if (GetWindowConstant <= (long) Kind)
+            {
                 R = Unsafe.GetWindow(hwnd, (Unsafe.GetWindowCommand) ((uint) Kind - GetWindowConstant));
+            }
             else
+            {
                 Verify.FailArg(nameof(Kind), "Invalid kind.");
+            }
 
             Common.VerifyError();
             return R;

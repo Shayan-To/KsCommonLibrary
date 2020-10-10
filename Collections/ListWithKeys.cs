@@ -63,7 +63,9 @@ namespace Ks.Common
         {
             this.List.Clear();
             foreach (var KInd in this.Indexes)
+            {
                 KInd.Value.Clear();
+            }
         }
 
         protected override IEnumerator<T> _GetEnumerator()
@@ -97,7 +99,10 @@ namespace Ks.Common
         {
             var Res = this.GetIndexList(Condition);
             if (Res == null)
+            {
                 return Enumerable.Empty<T>();
+            }
+
             return Res.ToEnumerable();
         }
 
@@ -130,7 +135,10 @@ namespace Ks.Common
         {
             var Res = this.GetIndexList(Condition);
             if (Res == null || Res.Count == 0)
+            {
                 return (false, default(T));
+            }
+
             return (true, Res[0]);
         }
 
@@ -141,7 +149,10 @@ namespace Ks.Common
         {
             var Res = this.GetIndexList(Condition);
             if (Res == null || Res.Count != 1)
+            {
                 return (false, default(T));
+            }
+
             return (true, Res[0]);
         }
 
@@ -152,7 +163,10 @@ namespace Ks.Common
         {
             var Res = this.GetIndexList(Condition);
             if (Res == null)
+            {
                 return Enumerable.Empty<T>();
+            }
+
             return Res.ToEnumerable();
         }
 
@@ -185,7 +199,10 @@ namespace Ks.Common
         {
             var Res = this.GetIndexList(Condition);
             if (Res == null || Res.Count == 0)
+            {
                 return (false, default(T));
+            }
+
             return (true, Res[0]);
         }
 
@@ -196,7 +213,10 @@ namespace Ks.Common
         {
             var Res = this.GetIndexList(Condition);
             if (Res == null || Res.Count != 1)
+            {
                 return (false, default(T));
+            }
+
             return (true, Res[0]);
         }
 

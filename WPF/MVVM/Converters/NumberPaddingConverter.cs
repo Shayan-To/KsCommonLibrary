@@ -17,7 +17,9 @@ namespace Ks.Common.MVVM.Converters
             for (var I = 0; I < S.Length; I++)
             {
                 if (S[I] != '0')
+                {
                     return S.Substring(I);
+                }
             }
             return "0";
         }

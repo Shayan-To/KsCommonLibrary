@@ -11,11 +11,17 @@ namespace Ks.Common
             if (O == null)
             {
                 if (Name == null)
+                {
                     throw new ArgumentNullException();
+                }
                 else if (Message == null)
+                {
                     throw new ArgumentNullException(Name);
+                }
                 else
+                {
                     throw new ArgumentNullException(Name, Message);
+                }
             }
         }
 
@@ -25,9 +31,13 @@ namespace Ks.Common
             if (!T)
             {
                 if (Name == null & Message == null)
+                {
                     throw new ArgumentException();
+                }
                 else
+                {
                     throw new ArgumentException(Message, Name);
+                }
             }
         }
 
@@ -37,11 +47,17 @@ namespace Ks.Common
             if (Start.CompareTo(V) > 0 || V.CompareTo(End) > 0)
             {
                 if (Name == null)
+                {
                     throw new ArgumentOutOfRangeException();
+                }
                 else if (Message == null)
+                {
                     throw new ArgumentOutOfRangeException(Name, V, string.Format("Argument must be between '{0}' and '{1}'.", Start, End));
+                }
                 else
+                {
                     throw new ArgumentOutOfRangeException(Name, V, Message);
+                }
             }
         }
 
@@ -51,9 +67,13 @@ namespace Ks.Common
             if (T)
             {
                 if (Name == null & Message == null)
+                {
                     throw new ArgumentException();
+                }
                 else
+                {
                     throw new ArgumentException(Message, Name);
+                }
             }
         }
 
@@ -63,9 +83,13 @@ namespace Ks.Common
             if (O == null)
             {
                 if (Name == null)
+                {
                     throw new NullReferenceException(string.Format("Object reference '{0}' not set to an instance of an object.", Name));
+                }
                 else
+                {
                     throw new NullReferenceException();
+                }
             }
         }
 
@@ -73,14 +97,18 @@ namespace Ks.Common
         public static void True(bool T, string Message = null)
         {
             if (!T)
+            {
                 throw new InvalidOperationException(Message);
+            }
         }
 
         [DebuggerHidden()]
         public static void False(bool T, string Message = null)
         {
             if (T)
+            {
                 throw new InvalidOperationException(Message);
+            }
         }
 
         [DebuggerHidden()]
@@ -93,9 +121,13 @@ namespace Ks.Common
         public static void FailArg(string Name = null, string Message = null)
         {
             if (Name == null & Message == null)
+            {
                 throw new ArgumentException();
+            }
             else
+            {
                 throw new ArgumentException(Message, Name);
+            }
         }
     }
 }

@@ -128,7 +128,9 @@ namespace Ks.Common
                     First = false;
                 }
                 else
+                {
                     Res = Utilities.Math.LeastCommonMultiple(Res, I);
+                }
             }
 
             return Res;
@@ -147,7 +149,9 @@ namespace Ks.Common
                     First = false;
                 }
                 else
+                {
                     Res = Utilities.Math.LeastCommonMultiple(Res, I);
+                }
             }
 
             return Res;
@@ -165,7 +169,9 @@ namespace Ks.Common
                     First = false;
                 }
                 else
+                {
                     Res = Utilities.Math.GreatestCommonDivisor(Res, I);
+                }
             }
 
             return Res;
@@ -184,7 +190,9 @@ namespace Ks.Common
                     First = false;
                 }
                 else
+                {
                     Res = Utilities.Math.GreatestCommonDivisor(Res, I);
+                }
             }
 
             return Res;
@@ -193,18 +201,24 @@ namespace Ks.Common
         public static IEnumerable<T> ToEnumerable<T>(this IEnumerable<T> Self)
         {
             foreach (var I in Self)
+            {
                 yield return I;
+            }
         }
 
         public static int? FastCount<T>(this IEnumerable<T> Self)
         {
             var CollectionT = Self as ICollection<T>;
             if (CollectionT != null)
+            {
                 return CollectionT.Count;
+            }
 
             var Collection = Self as ICollection;
             if (Collection != null)
+            {
                 return Collection.Count;
+            }
 
             return default;
         }
@@ -213,16 +227,24 @@ namespace Ks.Common
         {
             var Cnt = Self.Count();
             if (Cnt >= Count)
+            {
                 return Self;
+            }
+
             return Self.PadBeginImpl(Cnt, Count, PaddingElement);
         }
 
         private static IEnumerable<T> PadBeginImpl<T>(this IEnumerable<T> Self, int SelfCount, int Count, T PaddingElement)
         {
             for (; SelfCount < Count; SelfCount++)
+            {
                 yield return PaddingElement;
+            }
+
             foreach (var I in Self)
+            {
                 yield return I;
+            }
         }
 
         public static IEnumerable<T> PadEnd<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default)
@@ -231,7 +253,9 @@ namespace Ks.Common
             if (Cnt.HasValue)
             {
                 if (Cnt.Value >= Count)
+                {
                     return Self;
+                }
             }
             return Self.PadEndImpl(Count, PaddingElement);
         }
@@ -246,7 +270,9 @@ namespace Ks.Common
             }
 
             for (; Cnt < Count; Cnt++)
+            {
                 yield return PaddingElement;
+            }
         }
 
         public static void Reverse<T>(this IList<T> Self)
@@ -260,7 +286,9 @@ namespace Ks.Common
         public static void Reverse<T>(this IList<T> Self, int Index, int Count = -1)
         {
             if (Count == -1)
+            {
                 Count = Self.Count;
+            }
 
             var Complement = (Count + (2 * Index)) - 1;
             for (var I = Index; I < Index + Count; I++)
@@ -283,11 +311,19 @@ namespace Ks.Common
             while (true)
             {
                 if (!Enum1.MoveNext())
+                {
                     return !Enum2.MoveNext();
+                }
+
                 if (!Enum2.MoveNext())
+                {
                     return false;
+                }
+
                 if (!Comparison.Invoke(Enum1.Current, Enum2.Current))
+                {
                     return false;
+                }
             }
         }
 
@@ -353,7 +389,9 @@ namespace Ks.Common
             for (var I = StartIndex; I < Self.Count; I++)
             {
                 if (Predicate.Invoke(Self[I], I))
+                {
                     return I;
+                }
             }
             return -1;
         }
@@ -364,7 +402,9 @@ namespace Ks.Common
             for (var I = (StartIndex != -1) ? StartIndex : (Self.Count - 1); I >= 0; I--)
             {
                 if (Predicate.Invoke(Self[I], I))
+                {
                     return I;
+                }
             }
             return -1;
         }
@@ -373,33 +413,52 @@ namespace Ks.Common
         {
             var Item = Self[OldIndex];
             for (var I = OldIndex; I < NewIndex; I++)
+            {
                 Self[I] = Self[I + 1];
+            }
+
             for (var I = OldIndex; I > NewIndex; I--)
+            {
                 Self[I] = Self[I - 1];
+            }
+
             Self[NewIndex] = Item;
         }
 
         public static void RemoveRange<T>(this IList<T> Self, int StartIndex, int Length = -1)
         {
             if (Length == -1)
+            {
                 Length = Self.Count - StartIndex;
+            }
             else if (Length == 0)
+            {
                 return;
+            }
 
             Verify.TrueArg(Length > 0, nameof(Length), "Length must be a non-negative number.");
             Verify.True((StartIndex + Length) <= Self.Count, "The given range must be inside the list.");
             for (var I = StartIndex; I < Self.Count - Length; I++)
+            {
                 Self[I] = Self[I + Length];
+            }
+
             for (var I = Self.Count - 1; I >= Self.Count - Length; I--)
+            {
                 Self.RemoveAt(I);
+            }
         }
 
         public static int RemoveWhere<T>(this IList<T> Self, Func<T, bool> Predicate, int StartIndex = 0, int Length = -1)
         {
             if (Length == -1)
+            {
                 Length = Self.Count - StartIndex;
+            }
             else if (Length == 0)
+            {
                 return 0;
+            }
 
             Verify.TrueArg(Length > 0, nameof(Length), "Length must be a non-negative number.");
             Verify.True((StartIndex + Length) <= Self.Count, "The given range must be inside the list.");
@@ -414,7 +473,9 @@ namespace Ks.Common
                     I += 1;
                 }
                 else
+                {
                     Count += 1;
+                }
             }
 
             Self.RemoveRange(I, Count);
@@ -492,9 +553,13 @@ namespace Ks.Common
                 {
                     var C = Comp.Invoke(Self[Offset1 + Count], Value);
                     if (C < 0)
+                    {
                         Offset1 += Count;
+                    }
                     else if (C == 0)
+                    {
                         break;
+                    }
                 }
                 Count /= 2;
             }
@@ -511,12 +576,16 @@ namespace Ks.Common
                     if ((Offset1 + Count) < Self.Count)
                     {
                         if (Comp.Invoke(Self[Offset1 + Count], Value) < 0)
+                        {
                             Offset1 += Count;
+                        }
                     }
                     if ((Offset2 + Count) < Self.Count)
                     {
                         if (Comp.Invoke(Self[Offset2 + Count], Value) <= 0)
+                        {
                             Offset2 += Count;
+                        }
                     }
                 }
             }
@@ -533,7 +602,10 @@ namespace Ks.Common
         {
             var R = Self as IReadOnlyList<T>;
             if (R != null)
+            {
                 return R;
+            }
+
             return new CastAsListCollection<T>(Self);
         }
 
@@ -616,10 +688,14 @@ namespace Ks.Common
                 {
                     Res[Cnt - 1] = I;
                     if (Cnt == Count)
+                    {
                         Res.RandomizeOrder();
+                    }
                 }
                 else if (Rand.Next(Cnt) < Count)
+                {
                     Res[Rand.Next(Count)] = I;
+                }
             }
 
             return Res;
@@ -632,7 +708,9 @@ namespace Ks.Common
             foreach (var I in Self)
             {
                 if (Rand.NextDouble() < Ratio)
+                {
                     yield return I;
+                }
             }
         }
 
@@ -643,7 +721,9 @@ namespace Ks.Common
             foreach (var I in Self)
             {
                 if (Rand.Next(Ratio.Denumenator) < Ratio.Numerator)
+                {
                     yield return I;
+                }
             }
         }
 
@@ -680,7 +760,9 @@ namespace Ks.Common
                     Index += 1;
                     Count -= 1;
                     if (Count == 0)
+                    {
                         break;
+                    }
                 }
             }
         }
@@ -688,13 +770,17 @@ namespace Ks.Common
         public static void AddRange<T>(this IList<T> Self, IEnumerable<T> Items)
         {
             foreach (var I in Items)
+            {
                 Self.Add(I);
+            }
         }
 
         public static void AddRange(this IList Self, IEnumerable Items)
         {
             foreach (var I in Items)
+            {
                 Self.Add(I);
+            }
         }
 
         public static void Sort<T>(this IList<T> Self)
@@ -715,7 +801,10 @@ namespace Ks.Common
             foreach (var I in Self)
             {
                 if (Bl)
+                {
                     Res.Append(", ");
+                }
+
                 Bl = true;
 
                 Res.Append(I);
@@ -742,7 +831,10 @@ namespace Ks.Common
         public static IEnumerable<T> Append<T>(this IEnumerable<T> Self, T Element)
         {
             foreach (var I in Self)
+            {
                 yield return I;
+            }
+
             yield return Element;
         }
 
@@ -750,7 +842,9 @@ namespace Ks.Common
         {
             yield return Element;
             foreach (var I in Self)
+            {
                 yield return I;
+            }
         }
 
         public static bool Any(this IEnumerable<bool> Self)
@@ -758,7 +852,9 @@ namespace Ks.Common
             foreach (var I in Self)
             {
                 if (I)
+                {
                     return true;
+                }
             }
             return false;
         }
@@ -768,7 +864,9 @@ namespace Ks.Common
             foreach (var I in Self)
             {
                 if (!I)
+                {
                     return false;
+                }
             }
             return true;
         }
@@ -848,7 +946,10 @@ namespace Ks.Common
         public static T PeekOrDefault<T>(this IPushPop<T> Self)
         {
             if (Self.CanPop())
+            {
                 return Self.Peek();
+            }
+
             return default;
         }
 
@@ -875,9 +976,15 @@ namespace Ks.Common
         public static Size ToSizeSafe(this Vector Self)
         {
             if (Self.X < 0)
+            {
                 Self.X = 0;
+            }
+
             if (Self.Y < 0)
+            {
                 Self.Y = 0;
+            }
+
             return new Size(Self.X, Self.Y);
         }
 
@@ -891,23 +998,37 @@ namespace Ks.Common
             bool? Bl = null;
 
             if (Self.IsEmpty)
+            {
                 return (Rect.Empty, Bl);
+            }
+
             if ((Size.Width == 0) & (Size.Height == 0))
+            {
                 return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
+            }
+
             if (Size.Width == 0)
             {
                 if (Self.Height == 0)
+                {
                     return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
+                }
+
                 Bl = false;
             }
             if (Size.Height == 0)
             {
                 if (Self.Width == 0)
+                {
                     return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
+                }
+
                 Bl = true;
             }
             if ((Self.Width == 0) | (Self.Height == 0))
+            {
                 return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
+            }
 
             if (!Bl.HasValue)
             {
@@ -936,23 +1057,37 @@ namespace Ks.Common
             bool? Bl = null;
 
             if (Self.IsEmpty)
+            {
                 return (Rect.Empty, Bl);
+            }
+
             if (Self.Size == new Size())
+            {
                 return (new Rect(Self.Location, new Size()), Bl);
+            }
+
             if (Self.Width == 0)
             {
                 if (Size.Height == 0)
+                {
                     return (Rect.Empty, Bl);
+                }
+
                 Bl = false;
             }
             if (Self.Height == 0)
             {
                 if (Size.Width == 0)
+                {
                     return (Rect.Empty, Bl);
+                }
+
                 Bl = true;
             }
             if ((Size.Width == 0) | (Size.Height == 0))
+            {
                 return (Rect.Empty, Bl);
+            }
 
             if (!Bl.HasValue)
             {
@@ -1154,7 +1289,9 @@ namespace Ks.Common
             var AttributeType = typeof(TAttribute);
             var Usage = AttributeType.GetCustomAttributeInternal<AttributeUsageAttribute>();
             if (Usage != null && Usage.AllowMultiple)
+            {
                 throw new ArgumentException("The attribute should not allow multiple.");
+            }
 
             return Self.GetCustomAttributeInternal<TAttribute>(Inherit);
         }
@@ -1163,7 +1300,9 @@ namespace Ks.Common
         {
             var Usage = AttributeType.GetCustomAttributeInternal<AttributeUsageAttribute>();
             if (Usage != null && Usage.AllowMultiple)
+            {
                 throw new ArgumentException("The attribute should not allow multiple.");
+            }
 
             return Self.GetCustomAttributeInternal(AttributeType, Inherit);
         }
@@ -1173,7 +1312,9 @@ namespace Ks.Common
             var AttributeType = typeof(TAttribute);
             var Usage = AttributeType.GetCustomAttributeInternal<AttributeUsageAttribute>();
             if (Usage != null && Usage.AllowMultiple)
+            {
                 throw new ArgumentException("The attribute should not allow multiple.");
+            }
 
             return Self.GetCustomAttributeInternal<TAttribute>(Inherit);
         }
@@ -1182,7 +1323,9 @@ namespace Ks.Common
         {
             var Usage = AttributeType.GetCustomAttributeInternal<AttributeUsageAttribute>();
             if (Usage != null && Usage.AllowMultiple)
+            {
                 throw new ArgumentException("The attribute should not allow multiple.");
+            }
 
             return Self.GetCustomAttributeInternal(AttributeType, Inherit);
         }
@@ -1195,16 +1338,23 @@ namespace Ks.Common
             if (Usage != null)
             {
                 if (Usage.AllowMultiple)
+                {
                     throw new ArgumentException("The attribute should not allow multiple.");
+                }
+
                 if ((Usage.ValidOn & (AttributeTargets.Class | AttributeTargets.Delegate | AttributeTargets.Enum | AttributeTargets.GenericParameter | AttributeTargets.Interface | AttributeTargets.Module | AttributeTargets.Struct)) == 0)
+                {
                     throw new ArgumentException("The attribute is not valid on types.");
+                }
             }
 
             foreach (var T in Types)
             {
                 var Attribute = T.GetCustomAttributeInternal<TAttribute>();
                 if (Attribute != null)
+                {
                     yield return (T, Attribute);
+                }
             }
         }
 
@@ -1216,16 +1366,23 @@ namespace Ks.Common
             if (Usage != null)
             {
                 if (Usage.AllowMultiple)
+                {
                     throw new ArgumentException("The attribute should not allow multiple.");
+                }
+
                 if ((Usage.ValidOn & AttributeTargets.Method) != AttributeTargets.Method)
+                {
                     throw new ArgumentException("The attribute is not valid on methods.");
+                }
             }
 
             foreach (var M in Methods)
             {
                 var Attribute = M.GetCustomAttributeInternal<TAttribute>();
                 if (Attribute != null)
+                {
                     yield return (M, Attribute);
+                }
             }
         }
 
@@ -1258,13 +1415,19 @@ namespace Ks.Common
                 {
                     var T = Self.Read(Buf, N, Buf.Length - N);
                     if (T == 0)
+                    {
                         break;
+                    }
+
                     TotalN += T;
                     N += T;
                     ProgressCallback?.Invoke(TotalN);
                 }
                 if (N != BufLength)
+                {
                     break;
+                }
+
                 Arrs.Add(Buf);
             }
 
@@ -1285,18 +1448,28 @@ namespace Ks.Common
             var Buffer = new byte[65536];
 
             if (Start != -1)
+            {
                 Stream.Seek(Start, System.IO.SeekOrigin.Begin);
+            }
 
             var TotalN = 0;
             while (true)
             {
                 var N = 0;
                 if (Length == -1)
+                {
                     N = Stream.Read(Buffer, 0, Buffer.Length);
+                }
                 else
+                {
                     N = Stream.Read(Buffer, 0, (int) Math.Min(Length, Buffer.Length));
+                }
+
                 if (N == 0)
+                {
                     break;
+                }
+
                 Self.Write(Buffer, 0, N);
                 TotalN += N;
                 ProgressCallback?.Invoke(TotalN);
@@ -1304,7 +1477,9 @@ namespace Ks.Common
                 {
                     Length -= N;
                     if (Length == 0)
+                    {
                         break;
+                    }
                 }
             }
 
@@ -1320,7 +1495,10 @@ namespace Ks.Common
             {
                 var N = Self.Read(Buffer, 0, Buffer.Length);
                 if (N == 0)
+                {
                     break;
+                }
+
                 Text.Append(Buffer, 0, N);
             }
 
@@ -1355,14 +1533,20 @@ namespace Ks.Common
         public static T NothingIfEmpty<T>(this T Self) where T : ICollection
         {
             if (Self.Count == 0)
+            {
                 return default;
+            }
+
             return Self;
         }
 
         public static string NothingIfEmpty(this string Self)
         {
             if (Self.Length == 0)
+            {
                 return null;
+            }
+
             return Self;
         }
 

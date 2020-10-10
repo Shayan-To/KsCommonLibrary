@@ -25,10 +25,16 @@ namespace Ks.Common.MVVM
         {
             var T = this.Parent;
             if (T != null)
+            {
                 return T;
+            }
+
             var T2 = this.ParentType;
             if (T2 != null)
+            {
                 return (NavigationViewModel) this.GetKsApplication().GetViewModel(T2);
+            }
+
             return this.GetKsApplication().DefaultNavigationView;
         }
 
@@ -72,7 +78,9 @@ namespace Ks.Common.MVVM
             var Value = BaseValue as Type;
 
             if (Value == null || !typeof(ViewModel).IsAssignableFrom(Value))
+            {
                 return null;
+            }
 
             return BaseValue;
         }
@@ -96,11 +104,15 @@ namespace Ks.Common.MVVM
             var Self = (NavigationCommand) D;
 
             if (Self.Parent != null)
+            {
                 return null;
+            }
 
             var Value = BaseValue as Type;
             if (Value == null || !typeof(NavigationViewModel).IsAssignableFrom(Value))
+            {
                 return null;
+            }
 
             return BaseValue;
         }
@@ -124,7 +136,9 @@ namespace Ks.Common.MVVM
             var Self = (NavigationCommand) D;
 
             if (Self.ParentType != null)
+            {
                 return null;
+            }
 
             return BaseValue;
         }

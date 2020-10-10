@@ -31,7 +31,10 @@ namespace Ks.Common
                 {
                     var Count = L.Count;
                     if (Index < Count)
+                    {
                         return L[Index];
+                    }
+
                     Index -= Count;
                 }
                 throw new ArgumentOutOfRangeException(nameof(Index));
@@ -55,7 +58,10 @@ namespace Ks.Common
                 foreach (var It in L)
                 {
                     if (It.Equals(item))
+                    {
                         return I;
+                    }
+
                     I += 1;
                 }
             }
@@ -67,7 +73,9 @@ namespace Ks.Common
             foreach (var L in this.Lists)
             {
                 foreach (var I in L)
+                {
                     yield return I;
+                }
             }
         }
 

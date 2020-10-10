@@ -36,7 +36,9 @@ namespace Ks
             var TY = (T) y;
 
             if (TX == null | TY == null)
+            {
                 return x == null & y == null;
+            }
 
             return this.Equals(TX, TY);
         }

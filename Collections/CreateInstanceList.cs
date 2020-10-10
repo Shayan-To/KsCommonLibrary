@@ -77,9 +77,13 @@ namespace Ks.Common
             set
             {
                 if (Index == this.List.Count)
+                {
                     this.List.Add(value);
+                }
                 else
+                {
                     this.List[Index] = value;
+                }
             }
         }
 

@@ -27,7 +27,9 @@ namespace Ks.Common
             for (var I = 0; I < this.Count; I++)
             {
                 if (object.Equals(item, this[I]))
+                {
                     return I;
+                }
             }
             return -1;
         }
@@ -57,7 +59,9 @@ namespace Ks.Common
         {
             var I = this.IndexOf(item);
             if (I == -1)
+            {
                 return false;
+            }
 
             this.RemoveAt(I);
             return true;

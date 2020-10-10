@@ -19,7 +19,9 @@ namespace Ks.Common
         private static void EnsureColumns(CsvData Data, int I)
         {
             while (I >= Data.Columns.Count)
+            {
                 Data.Columns.Add();
+            }
         }
 
         private void ParseCsv(bool HasHeaders)
@@ -45,15 +47,25 @@ namespace Ks.Common
 
                     Res.Columns.Add(D);
                     if (ShouldPeek)
+                    {
                         T = this.PeekToken();
+                    }
+
                     if ((T == NewLine) | T == null | (T == this.Delimiter))
                     {
                         if (ShouldPeek)
+                        {
                             this.ReadToken();
+                        }
+
                         if (T == this.Delimiter)
+                        {
                             continue;
+                        }
                         else
+                        {
                             break;
+                        }
                     }
 
                     throw new ArgumentException("Invalid CSV.");
@@ -81,7 +93,9 @@ namespace Ks.Common
 
                 // The last empty line. We have to remove the last entry from the data.
                 if (T == null & IsLastEntryEmpty)
+                {
                     break;
+                }
 
                 // If a delimiter happens right after another, then an empty field should be considered between them.
                 if (T == null | (T == NewLine) | (T == this.Delimiter))
@@ -95,15 +109,27 @@ namespace Ks.Common
                 I += 1;
                 IsLastEntryEmpty = false;
                 if (ShouldPeek)
+                {
                     T = this.PeekToken();
+                }
+
                 if (T == null)
+                {
                     break;
+                }
+
                 if ((T == NewLine) | (T == this.Delimiter))
                 {
                     if (ShouldPeek)
+                    {
                         this.ReadToken();
+                    }
+
                     if (T == NewLine)
+                    {
                         NewEntry = true;
+                    }
+
                     continue;
                 }
 
@@ -111,7 +137,9 @@ namespace Ks.Common
             }
 
             if (IsLastEntryEmpty)
+            {
                 Res.Entries.Remove(Res.Entries.Count - 1);
+            }
         }
 
         private bool ReadToken(string T)
@@ -142,7 +170,9 @@ namespace Ks.Common
         private string ReadToken()
         {
             if (this.IsFinished())
+            {
                 return null;
+            }
 
             if (this.ReadChar('\r'))
             {
@@ -151,10 +181,14 @@ namespace Ks.Common
             }
 
             if (this.ReadChar('\n'))
+            {
                 return NewLine;
+            }
 
             if (this.ReadChar(this.DelimiterChar))
+            {
                 return this.Delimiter;
+            }
 
             var Res = new System.Text.StringBuilder();
 
@@ -163,11 +197,17 @@ namespace Ks.Common
                 while (true)
                 {
                     if (this.IsFinished())
+                    {
                         throw new ArgumentException("Invalid CSV.");
+                    }
+
                     if (this.ReadChar('"'))
                     {
                         if (!this.ReadChar('"'))
+                        {
                             break;
+                        }
+
                         Res.Append('"');
                         continue;
                     }
@@ -189,13 +229,18 @@ namespace Ks.Common
                 }
             }
             else
+            {
                 while (true)
                 {
                     var T = this.PeekChar();
                     if (!T.HasValue | (T == this.DelimiterChar) | (T == '\r') | (T == '\n'))
+                    {
                         break;
+                    }
+
                     Res.Append(this.ReadChar());
                 }
+            }
 
             return Res.ToString();
         }
@@ -213,7 +258,10 @@ namespace Ks.Common
         private char? ReadChar()
         {
             if (this.IsFinished())
+            {
                 return default;
+            }
+
             var R = this.Str[this.Index];
             this.Index += 1;
             return R;
@@ -222,7 +270,10 @@ namespace Ks.Common
         private char? PeekChar()
         {
             if (this.IsFinished())
+            {
                 return default;
+            }
+
             return this.Str[this.Index];
         }
 

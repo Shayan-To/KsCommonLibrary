@@ -23,7 +23,9 @@ namespace Ks.Common
         public bool MoveNext()
         {
             if (this.Index == this.String.Length)
+            {
                 return false;
+            }
 
             var Start = this.Index;
             this.SkipText();
@@ -38,7 +40,9 @@ namespace Ks.Common
             this.Index = 0;
             this.GiveRest = false;
             if (this.Options == StringSplitOptions.RemoveEmptyEntries)
+            {
                 this.SkipDelimiter();
+            }
         }
 
         public void UnifyRest()
@@ -51,16 +55,23 @@ namespace Ks.Common
             if (this.Options == StringSplitOptions.RemoveEmptyEntries)
             {
                 while (this.Index != this.String.Length && Array.BinarySearch(this._Chars, this.String[this.Index]) != -1)
+                {
                     this.Index += 1;
+                }
             }
         }
 
         private void SkipText()
         {
             if (this.GiveRest)
+            {
                 this.Index = this.String.Length;
+            }
+
             while (this.Index != this.String.Length && Array.BinarySearch(this._Chars, this.String[this.Index]) == -1)
+            {
                 this.Index += 1;
+            }
         }
 
         public void Dispose()

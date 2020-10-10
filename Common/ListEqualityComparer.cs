@@ -16,11 +16,16 @@ namespace Ks.Common
         public override bool Equals(IList<T> x, IList<T> y)
         {
             if (x.Count != y.Count)
+            {
                 return false;
+            }
+
             for (var I = 0; I < x.Count; I++)
             {
                 if (this.EqualityComparer.Equals(x[I], y[I]))
+                {
                     return false;
+                }
             }
             return true;
         }
@@ -29,7 +34,10 @@ namespace Ks.Common
         {
             var Hash = 0;
             for (var I = 0; I < obj.Count; I++)
+            {
                 Hash = Utilities.CombineHashCodes(Hash, I, this.EqualityComparer.GetHashCode(obj[I]));
+            }
+
             return Hash;
         }
 

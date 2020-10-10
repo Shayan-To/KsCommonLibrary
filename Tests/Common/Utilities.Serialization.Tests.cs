@@ -23,7 +23,9 @@ namespace Ks.Tests.Common
                 for (var I = 0; I < List.Length; I++)
                 {
                     if (List[I] == null)
+                    {
                         List[I] = "";
+                    }
                 }
                 var Serialized = Utilities.Serialization.ListToString(List);
                 var Deserialized = Utilities.Serialization.ListFromString(Serialized);
@@ -54,7 +56,9 @@ namespace Ks.Tests.Common
                 for (var I = 0; I < List.Length; I++)
                 {
                     if (List[I] == null)
+                    {
                         List[I] = "";
+                    }
                 }
                 var Serialized = Utilities.Serialization.ListToStringMultiline(List);
                 var Deserialized = Utilities.Serialization.ListFromStringMultiline(Serialized);

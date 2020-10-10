@@ -19,7 +19,9 @@ namespace Ks.Common
             if (this._VisitAction.TraverseChildren)
             {
                 foreach (System.Xml.XmlNode Child in Node.ChildNodes)
+                {
                     this.Traverse(Child);
+                }
             }
         }
 

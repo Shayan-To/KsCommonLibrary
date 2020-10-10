@@ -23,7 +23,9 @@ namespace Ks.Common
             get
             {
                 lock (this.LockObject)
+                {
                     return this.BaseList.Count;
+                }
             }
         }
 
@@ -32,31 +34,41 @@ namespace Ks.Common
             get
             {
                 lock (this.LockObject)
+                {
                     return this.BaseList[index];
+                }
             }
             set
             {
                 lock (this.LockObject)
+                {
                     this.BaseList[index] = value;
+                }
             }
         }
 
         public override void Clear()
         {
             lock (this.LockObject)
+            {
                 this.BaseList.Clear();
+            }
         }
 
         public override void Insert(int index, T item)
         {
             lock (this.LockObject)
+            {
                 this.BaseList.Insert(index, item);
+            }
         }
 
         public override void RemoveAt(int index)
         {
             lock (this.LockObject)
+            {
                 this.BaseList.RemoveAt(index);
+            }
         }
 
         protected override IEnumerator<T> _GetEnumerator()
@@ -69,7 +81,9 @@ namespace Ks.Common
             lock (this.LockObject)
             {
                 foreach (var I in this.BaseList)
+                {
                     yield return I;
+                }
             }
         }
 

@@ -15,12 +15,18 @@
                 {
                     this.BufferSize = this.TextReader.Read(this.Buffer, 0, this.Buffer.Length);
                     if (this.BufferSize == 0)
+                    {
                         return null;
+                    }
+
                     this.Index = 0;
                 }
 
                 if (!char.IsWhiteSpace(this.Buffer[this.Index]))
+                {
                     break;
+                }
+
                 this.Index += 1;
             }
 
@@ -38,7 +44,10 @@
 
                     this.BufferSize = this.TextReader.Read(this.Buffer, 0, this.Buffer.Length);
                     if (this.BufferSize == 0)
+                    {
                         break;
+                    }
+
                     this.Index = 0;
                 }
 

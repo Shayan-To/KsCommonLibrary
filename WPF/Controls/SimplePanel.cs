@@ -16,9 +16,14 @@ namespace Ks.Common.Controls
                 var Sz = C.DesiredSize;
 
                 if (MaxHeight < Sz.Height)
+                {
                     MaxHeight = Sz.Height;
+                }
+
                 if (MaxWidth < Sz.Width)
+                {
                     MaxWidth = Sz.Width;
+                }
             }
 
             return new Size(MaxWidth, MaxHeight);
@@ -27,7 +32,9 @@ namespace Ks.Common.Controls
         protected override Size ArrangeOverride(Size FinalSize)
         {
             foreach (UIElement C in this.Children)
+            {
                 C.Arrange(new Rect(FinalSize));
+            }
 
             return FinalSize;
         }

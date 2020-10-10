@@ -12,7 +12,9 @@ namespace Ks.Common
         internal void LockCurrentElements()
         {
             foreach (var I in this.Values)
+            {
                 this.LockedItems.Add(I);
+            }
         }
 
         public override void Clear()
@@ -20,7 +22,9 @@ namespace Ks.Common
             var State = this.LockedItems.ToArray();
             base.Clear();
             foreach (var I in State)
+            {
                 this.Add(I);
+            }
         }
 
         public override void RemoveAt(int index)

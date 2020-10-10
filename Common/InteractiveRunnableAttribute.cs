@@ -47,7 +47,10 @@ namespace Ks.Common
             {
                 var M = ChoiceReader.ReadChoice();
                 if (M == null)
+                {
                     break;
+                }
+
                 M.Invoke(null, Utilities.Typed<object>.EmptyArray);
             }
 
@@ -84,7 +87,9 @@ namespace Ks.Common
                                 if (!JustTrue | Att.ShouldBeRun)
                                 {
                                     if (ConsoleUtilities.ReadYesNo($"Run {T.FullName}.{M.Name}? (Y/N)"))
+                                    {
                                         Helper.Convert(Mth).Invoke(null, Utilities.Typed<object>.EmptyArray);
+                                    }
                                 }
                             }
                         }

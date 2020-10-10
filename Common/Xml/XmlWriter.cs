@@ -22,7 +22,9 @@ namespace Ks.Common
             {
                 var Ch = S[I];
                 if (EscapeDic.ContainsKey(Ch) | char.IsControl(Ch) | (char.IsWhiteSpace(Ch) & (Ch != ' ')))
+                {
                     return true;
+                }
             }
             return false;
         }
@@ -58,20 +60,28 @@ namespace Ks.Common
 
             this.Out.WriteLine();
             for (var I = 0; I < this.CurrentIndent - 1; I++)
+            {
                 this.Out.Write(this.IndentString);
+            }
 
             if (IsAttribute)
             {
                 if (!AfterAttributes)
                 {
                     if (this.AttributeDynamicIndent)
+                    {
                         this.Out.Write(new string(' ', this.AttributeIndent));
+                    }
                     else
+                    {
                         this.Out.Write(this.IndentString);
+                    }
                 }
             }
             else if (this.CurrentIndent != 0)
+            {
                 this.Out.Write(this.IndentString);
+            }
         }
 
         private void GetOutOfTag()
@@ -79,7 +89,10 @@ namespace Ks.Common
             if (this.IsTagOpen)
             {
                 if (this.AttributeEachOnNewLine)
+                {
                     this.WriteNewLine(true, true);
+                }
+
                 this.Out.Write(">");
             }
 
@@ -111,7 +124,9 @@ namespace Ks.Common
             this.GetOutOfTag();
 
             if (this.MultiLine)
+            {
                 this.WriteNewLine(false);
+            }
 
             var T = $"<{Name}";
             this.Out.Write(T);
@@ -128,7 +143,9 @@ namespace Ks.Common
             this.State = WriterState.Document;
 
             if (MultiLine)
+            {
                 this.CurrentIndent += 1;
+            }
 
             return R;
         }
@@ -144,12 +161,18 @@ namespace Ks.Common
             if (this.MultiLineAttributes)
             {
                 if (!this.TagJustOpened | this.AttributeEachOnNewLine)
+                {
                     this.WriteNewLine(true);
+                }
                 else
+                {
                     this.Out.Write(' ');
+                }
             }
             else
+            {
                 this.Out.Write(' ');
+            }
 
             this.Out.Write(Key);
             this.Out.Write("=\"");
@@ -168,7 +191,10 @@ namespace Ks.Common
             this.GetOutOfTag();
 
             if (this.MultiLine)
+            {
                 this.WriteNewLine(false);
+            }
+
             this.WriteEscaped(Value);
 
             this.HasValueBefore = true;
@@ -181,7 +207,9 @@ namespace Ks.Common
             Verify.True(this.TagId == TagId, $"{this.TagId} {TagId}Invalid closing of tag. Nested structure is not respected.");
 
             if (this.MultiLine)
+            {
                 this.CurrentIndent -= 1;
+            }
 
             if (this.IsTagOpen)
             {
@@ -193,7 +221,9 @@ namespace Ks.Common
                 this.GetOutOfTag();
 
                 if (this.MultiLine)
+                {
                     this.WriteNewLine(false);
+                }
 
                 this.Out.Write($"</{Name}>");
             }
@@ -251,7 +281,9 @@ namespace Ks.Common
                 if (Disposing)
                 {
                     if (!this.LeaveOpen)
+                    {
                         this.Out.Dispose();
+                    }
                 }
             }
             this.IsDisposed = true;

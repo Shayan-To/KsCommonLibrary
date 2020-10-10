@@ -220,9 +220,13 @@ namespace Ks.Common
             foreach (var KV in this)
             {
                 if (Bl)
+                {
                     Bl = false;
+                }
                 else
+                {
                     R.Append(", ");
+                }
 
                 R.Append(KV.Key).Append(" : ").Append(string.Format(formatProvider, "{0:" + format + "}", KV.Value));
             }
@@ -316,7 +320,10 @@ namespace Ks.Common
                 I += 1;
             }
             if (this.Bag == null)
+            {
                 return new PropertyDescriptorCollection(R);
+            }
+
             foreach (var K in this.Bag.Keys)
             {
                 R[I] = new ValueBagPropertyDescriptor((string) K, this.Type);

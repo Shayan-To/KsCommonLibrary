@@ -19,9 +19,14 @@ namespace Ks.Common
             if (this.Version != this.Parent.Version)
             {
                 if (this.Parent.Dic.TryGetValue(this.Key, out var T))
+                {
                     this.List = T;
+                }
                 else
+                {
                     this.List = null;
+                }
+
                 this.Version = this.Parent.Version;
             }
         }
@@ -74,7 +79,10 @@ namespace Ks.Common
         {
             this.CheckChanges();
             if (this.List == null)
+            {
                 throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
             this.List.RemoveAt(index);
             this.AfterOut();
         }
@@ -83,7 +91,10 @@ namespace Ks.Common
         {
             this.CheckChanges();
             if (this.List == null)
+            {
                 return false;
+            }
+
             var R = this.List.Remove(item);
             this.AfterOut();
             return R;
@@ -93,7 +104,10 @@ namespace Ks.Common
         {
             this.CheckChanges();
             if (this.List == null)
+            {
                 return false;
+            }
+
             return this.List.Contains(item);
         }
 
@@ -107,14 +121,18 @@ namespace Ks.Common
         {
             this.CheckChanges();
             if (this.List != null)
+            {
                 this.List.CopyTo(array, arrayIndex);
+            }
         }
 
         void ICollection.CopyTo(Array array, int index)
         {
             this.CheckChanges();
             if (this.List != null)
+            {
                 ((IList) this.List).CopyTo(array, index);
+            }
         }
 
         public List<TValue>.Enumerator GetEnumerator()
@@ -129,14 +147,20 @@ namespace Ks.Common
             {
                 this.CheckChanges();
                 if (this.List == null)
+                {
                     throw new ArgumentOutOfRangeException(nameof(index));
+                }
+
                 return this.List[index];
             }
             set
             {
                 this.CheckChanges();
                 if (this.List == null)
+                {
                     throw new ArgumentOutOfRangeException(nameof(index));
+                }
+
                 this.List[index] = value;
             }
         }
@@ -147,7 +171,10 @@ namespace Ks.Common
             {
                 this.CheckChanges();
                 if (this.List == null)
+                {
                     return 0;
+                }
+
                 return this.List.Count;
             }
         }

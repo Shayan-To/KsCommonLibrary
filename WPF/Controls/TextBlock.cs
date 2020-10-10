@@ -67,7 +67,9 @@ namespace Ks.Common.Controls
         private void UpdateText(string S)
         {
             if (S == null)
+            {
                 S = "{0}";
+            }
 
             Verify.False(Regex.IsMatch(S, @"`[^`\[\]\{\}]"), "Invalid escape sequence.");
 
@@ -75,7 +77,9 @@ namespace Ks.Common.Controls
             Func<string, string> UnEscape = T => Regex.Replace(T, "`([0123])", M => "[]{}"[ParseInv.Integer(M.Groups[1].Value)].ToString());
 
             if (S.StartsWith("{}"))
+            {
                 S = S.Substring(2);
+            }
 
             var Lang = GetKsLanguage(this);
 
@@ -87,14 +91,18 @@ namespace Ks.Common.Controls
                 Objs[0].Objt = Obj;
             }
             else
+            {
                 Objs = this.Objs;
+            }
 
             // ToDo If the value returned by the object (by String.Format) contains braces or brackets, the code will break. Fix this.
             S = Regex.Replace(S, @"\{\{(\d+)((?:,[+-]?\d+)?(?::[^\{\}]*)?)\}\}", M =>
             {
                 var I = ParseInv.Integer(M.Groups[1].Value);
                 if (I >= Objs.Count)
+                {
                     return "";
+                }
 
                 var T = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0" + UnEscape.Invoke(M.Groups[2].Value) + "}", Objs[I].Objt);
                 return T;
@@ -103,7 +111,9 @@ namespace Ks.Common.Controls
             {
                 var I = ParseInv.Integer(M.Groups[1].Value);
                 if (I >= Objs.Count)
+                {
                     return "";
+                }
 
                 var T = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0" + UnEscape.Invoke(M.Groups[2].Value) + "}", Objs[I].Objt);
                 return CorrectString(T, Lang);
@@ -131,14 +141,19 @@ namespace Ks.Common.Controls
         private static string CorrectString(string S, KsLanguage Lang)
         {
             if (Lang == null)
+            {
                 return S;
+            }
 
             if (Lang.Id.ToLowerInvariant() == "pes")
             {
                 var OldDigits = "0123456789";
                 var NewDigits = "۰۱۲۳۴۵۶۷۸۹";
                 for (var I = 0; I < 10; I++)
+                {
                     S = S.Replace(OldDigits[I], NewDigits[I]);
+                }
+
                 return S;
             }
             if (Lang.Id.ToLowerInvariant() == "arb")
@@ -146,7 +161,10 @@ namespace Ks.Common.Controls
                 var OldDigits = "0123456789";
                 var NewDigits = "٠١٢٣٤٥٦٧٨٩";
                 for (var I = 0; I < 10; I++)
+                {
                     S = S.Replace(OldDigits[I], NewDigits[I]);
+                }
+
                 return S;
             }
 
@@ -180,7 +198,9 @@ namespace Ks.Common.Controls
             var Self = D as TextBlock;
 
             if (Self == null)
+            {
                 return;
+            }
 
             // Dim OldValue = DirectCast(E.OldValue, KsLanguage)
             // Dim NewValue = DirectCast(E.NewValue, KsLanguage)

@@ -17,7 +17,9 @@ namespace Ks.Common
                 {
                     MaxX = 8;
                     while (!Func.Invoke(MaxX))
+                    {
                         MaxX <<= 1;
+                    }
                 }
                 else
                 {
@@ -30,7 +32,9 @@ namespace Ks.Common
                 {
                     MaxX >>= 1;
                     if (!Func.Invoke(X + MaxX))
+                    {
                         X += MaxX;
+                    }
                 }
 
                 return X + 1;
@@ -80,17 +84,23 @@ namespace Ks.Common
                 {
                     MaxX = 8 * MaxError;
                     while (!Func.Invoke(MaxX))
+                    {
                         MaxX *= 2;
+                    }
                 }
                 else
+                {
                     Verify.True(Func.Invoke(MaxX));
+                }
 
                 var X = 0.0;
                 while (MaxX > MaxError)
                 {
                     MaxX /= 2;
                     if (!Func.Invoke(X + MaxX))
+                    {
                         X += MaxX;
+                    }
                 }
 
                 return X + MaxError;
@@ -182,11 +192,20 @@ namespace Ks.Common
                     {
                         Cur = Dyn[I, J];
                         if ((Cur.Mode & 1) == 1)
+                        {
                             Res.Add((I, J));
+                        }
+
                         if ((Cur.Mode & 2) == 2)
+                        {
                             I += 1;
+                        }
+
                         if ((Cur.Mode & 4) == 4)
+                        {
                             J += 1;
+                        }
+
                         Assert.True(((Cur.Mode & (2 + 4)) == (2 + 4)).Implies((Cur.Mode & 1) == 1));
                     } while ((Cur.Mode & (2 + 4)) != 0);
                 }
@@ -227,7 +246,9 @@ namespace Ks.Common
                             {
                                 var C = Dyn[I - 1, J - 1];
                                 if (C < Cost)
+                                {
                                     Cost = C;
+                                }
                             }
                         }
 
@@ -236,7 +257,9 @@ namespace Ks.Common
                         {
                             var C = 1 + Dyn[I - 1, J];
                             if (C < Cost)
+                            {
                                 Cost = C;
+                            }
                         }
 
                         // Add the last of second to here. Now the lasts are equal and are both remove.
@@ -244,7 +267,9 @@ namespace Ks.Common
                         {
                             var C = 1 + Dyn[I, J - 1];
                             if (C < Cost)
+                            {
                                 Cost = C;
+                            }
                         }
 
                         // Replace the last with the last of second. Now the lasts are equal and are both removed.
@@ -252,11 +277,15 @@ namespace Ks.Common
                         {
                             var C = 1 + Dyn[I - 1, J - 1];
                             if (C < Cost)
+                            {
                                 Cost = C;
+                            }
                         }
 
                         if (Cost == int.MaxValue)
+                        {
                             Cost = 0;
+                        }
 
                         Dyn[I, J] = Cost;
                     }

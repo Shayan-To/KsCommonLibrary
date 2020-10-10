@@ -32,21 +32,29 @@ namespace Ks.Common
         {
             var R = this.Count & 7;
             if (R == 0)
+            {
                 R = 8;
+            }
+
             return R;
         }
 
         public void Not()
         {
             for (var I = 0; I < this._Bytes.Length; I++)
+            {
                 this._Bytes[I] = (byte) ~this._Bytes[I];
+            }
         }
 
         /// <param name="Amount">Shift left if positive, right if negative.</param>
         public void Shift(int Amount)
         {
             for (var I = 0; I < this._Bytes.Length; I++)
+            {
                 this._Bytes[I] = (byte) ~this._Bytes[I];
+            }
+
             this._Bytes[this._Bytes.Length - 1] = (byte) (this._Bytes[this._Bytes.Length - 1] & ((1 << this.LastByteBitCount()) - 1));
         }
 
@@ -61,7 +69,9 @@ namespace Ks.Common
             {
                 var B = this._Bytes[I];
                 for (var J = 0; J < 8; J++)
+                {
                     yield return (B >> J & 1) == 1;
+                }
             }
 
             if (true)
@@ -69,7 +79,9 @@ namespace Ks.Common
                 var B = this._Bytes[this._Bytes.Length - 1];
                 var bits = this.LastByteBitCount();
                 for (var J = 0; J < bits; J++)
+                {
                     yield return (B >> J & 1) == 1;
+                }
             }
         }
 
@@ -123,7 +135,10 @@ namespace Ks.Common
             (self, Index, value) =>
             {
                 if (Index == (self._Bytes.Length - 1))
+                {
                     value = (byte) (value & ((1 << self.LastByteBitCount()) - 1));
+                }
+
                 self._Bytes[Index] = value;
             }
         );

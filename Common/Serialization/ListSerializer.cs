@@ -13,7 +13,9 @@ namespace Ks.Common
         {
             Formatter.Set(nameof(Enumerable.Count), Obj.Count());
             foreach (var I in Obj)
+            {
                 Formatter.Set(null, I);
+            }
         }
 
         public override IEnumerable<T> GetT(FormatterGetProxy Formatter)
@@ -23,7 +25,9 @@ namespace Ks.Common
 
             var R = new List<T>(Count);
             for (var I = 0; I < Count; I++)
+            {
                 R.Add(Formatter.Get<T>(null));
+            }
 
             return R;
         }

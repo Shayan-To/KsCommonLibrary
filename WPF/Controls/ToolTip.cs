@@ -24,7 +24,9 @@ namespace Ks.Common.Controls
         {
             var Text = this.Text;
             if (Text == null)
+            {
                 return;
+            }
 
             var Lang = TextBlock.GetKsLanguage(this);
             var OText = Lang?.GetTranslation(Text) ?? Text;

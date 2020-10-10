@@ -21,13 +21,18 @@ namespace Ks.Common
             this._IsRunning = true;
 
             if (this.RunAtStart)
+            {
                 this.Callback.Invoke();
+            }
 
             while (true)
             {
                 await Task.Delay(this.Interval);
                 if (!this.IsRunning)
+                {
                     break;
+                }
+
                 this.Callback.Invoke();
             }
         }
@@ -64,9 +69,13 @@ namespace Ks.Common
                 if (value != this._IsRunning)
                 {
                     if (value)
+                    {
                         this.Start();
+                    }
                     else
+                    {
                         this.Stop();
+                    }
                 }
             }
         }

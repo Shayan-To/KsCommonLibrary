@@ -10,9 +10,13 @@ namespace Ks.Common
             if (O == null)
             {
                 if (Name != null)
+                {
                     Fail(string.Format("Object reference '{0}' not set to an instance of an object.", Name));
+                }
                 else
+                {
                     Fail("Object reference not set to an instance of an object.");
+                }
             }
         }
 
@@ -20,14 +24,18 @@ namespace Ks.Common
         public static void True(bool T, string Message = null)
         {
             if (!T)
+            {
                 Fail(Message);
+            }
         }
 
         [DebuggerHidden()]
         public static void False(bool T, string Message = null)
         {
             if (T)
+            {
                 Fail(Message);
+            }
         }
 
         [DebuggerHidden()]

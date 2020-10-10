@@ -17,21 +17,29 @@ namespace Ks.Common
             IEnumerable Enumerable;
 
             if (Obj.GetType().Name == "NotifyingCollection`1")
+            {
                 this.A.Add(Obj);
+            }
 
             PropObj = Obj as INotifyPropertyChanged;
             if (PropObj != null)
+            {
                 PropObj.PropertyChanged += this.OnPropertyChanged;
+            }
 
             CollecObj = Obj as INotifyCollectionChanged;
             if (CollecObj != null)
+            {
                 CollecObj.CollectionChanged += this.OnCollectionChanged;
+            }
 
             Enumerable = Obj as IEnumerable;
             if (Enumerable != null)
             {
                 foreach (var O in Enumerable)
+                {
                     this.Add(O);
+                }
             }
         }
 
@@ -43,17 +51,23 @@ namespace Ks.Common
 
             PropObj = Obj as INotifyPropertyChanged;
             if (PropObj != null)
+            {
                 PropObj.PropertyChanged -= this.OnPropertyChanged;
+            }
 
             CollecObj = Obj as INotifyCollectionChanged;
             if (CollecObj != null)
+            {
                 CollecObj.CollectionChanged -= this.OnCollectionChanged;
+            }
 
             Enumerable = Obj as IEnumerable;
             if (Enumerable != null)
             {
                 foreach (var O in Enumerable)
+                {
                     this.Remove(O);
+                }
             }
         }
 
@@ -69,12 +83,16 @@ namespace Ks.Common
                 if (e.OldItems != null)
                 {
                     foreach (var O in e.OldItems)
+                    {
                         this.Remove(O);
+                    }
                 }
                 if (e.NewItems != null)
                 {
                     foreach (var O in e.NewItems)
+                    {
                         this.Add(O);
+                    }
                 }
             }
             this.OnObjectChanged();

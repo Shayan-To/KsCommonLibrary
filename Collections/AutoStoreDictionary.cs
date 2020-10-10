@@ -32,9 +32,13 @@ namespace Ks.Common
             // For backward compatibility.
             OrderedDictionary<string, string> T;
             if (Data[0] == '{')
+            {
                 T = Utilities.Serialization.DicFromString(Data);
+            }
             else
+            {
                 T = Utilities.Serialization.DicFromStringMultiline(Data);
+            }
 
             this.BaseDic = new ConcurrentOrderedDictionary<string, string>(T, StringComparer.InvariantCulture);
         }
@@ -212,9 +216,13 @@ namespace Ks.Common
             foreach (var KV in this)
             {
                 if (Bl)
+                {
                     Bl = false;
+                }
                 else
+                {
                     R.Append(", ");
+                }
 
                 R.Append(KV.Key).Append(" : ").Append(string.Format(formatProvider, "{0:" + format + "}", KV.Value));
             }
@@ -279,9 +287,15 @@ namespace Ks.Common
             var T = this[R].Value;
 
             if (R == -1)
+            {
                 return -1;
+            }
+
             if (!object.Equals(item.Value, T))
+            {
                 return -1;
+            }
+
             return R;
         }
 
@@ -318,7 +332,9 @@ namespace Ks.Common
                 {
                     // Dispose managed state (managed objects).
                     if (!this.LeaveOpen)
+                    {
                         this.Stream.Dispose();
+                    }
                 }
 
                 // Set large fields to null.
