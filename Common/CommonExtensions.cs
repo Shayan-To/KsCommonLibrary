@@ -562,12 +562,12 @@ namespace Ks
                 return new SelectAsNotifyingListCollection<TIn, TOut>(Self, Func);
             }
 
-            public static IEnumerable<T> DistinctNeighbours<T>(this IEnumerable<T> Self)
+            public static IEnumerable<T> DistinctNeighbors<T>(this IEnumerable<T> Self)
             {
-                return DistinctNeighbours(Self, EqualityComparer<T>.Default);
+                return DistinctNeighbors(Self, EqualityComparer<T>.Default);
             }
 
-            public static IEnumerable<T> DistinctNeighbours<T>(this IEnumerable<T> Self, IEqualityComparer<T> Comparer)
+            public static IEnumerable<T> DistinctNeighbors<T>(this IEnumerable<T> Self, IEqualityComparer<T> Comparer)
             {
                 var Bl = true;
                 var P = default(T);
