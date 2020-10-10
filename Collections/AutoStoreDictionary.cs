@@ -18,7 +18,7 @@ namespace Ks.Common
             this.TaskDelayer = new TaskDelayer(this.Store, TimeSpan.FromSeconds(10));
 
             this.Stream = Stream;
-            this._LeaveOpen = LeaveOpen;
+            this.LeaveOpen = LeaveOpen;
 
             if (Stream.Length == 0)
             {
@@ -307,9 +307,9 @@ namespace Ks.Common
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this._IsDisposed)
+            if (!this.IsDisposed)
             {
-                this._IsDisposed = true;
+                this.IsDisposed = true;
 
                 // This is more critical to be given over to the non-reliable GC.
                 this.TaskDelayer.Dispose();
@@ -331,25 +331,9 @@ namespace Ks.Common
             this.Dispose(true);
         }
 
-        private bool _IsDisposed;
+        public bool IsDisposed { get; private set; }
 
-        public bool IsDisposed
-        {
-            get
-            {
-                return this._IsDisposed;
-            }
-        }
-
-        private readonly bool _LeaveOpen;
-
-        public bool LeaveOpen
-        {
-            get
-            {
-                return this._LeaveOpen;
-            }
-        }
+        public bool LeaveOpen { get; }
 
         private ConcurrentOrderedDictionary<string, string> BaseDic;
         private readonly System.IO.Stream Stream;

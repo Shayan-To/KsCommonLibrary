@@ -29,8 +29,8 @@ namespace Ks.Common.MVVM
 
         public void Initialize(IDictionary<string, string> Dictionary)
         {
-            Verify.True(this._StoreDictionary == null, "Object has already been initialized.");
-            this._StoreDictionary = Dictionary;
+            Verify.True(this.StoreDictionary == null, "Object has already been initialized.");
+            this.StoreDictionary = Dictionary;
 
             this.OnBeforeInitialize();
 
@@ -46,7 +46,7 @@ namespace Ks.Common.MVVM
 
             this.OnInitialize();
 
-            this._IsInitialized = true;
+            this.IsInitialized = true;
         }
 
         protected virtual void OnInitialize()
@@ -111,25 +111,9 @@ namespace Ks.Common.MVVM
             return null;
         }
 
-        private bool _IsInitialized;
+        public bool IsInitialized { get; private set; }
 
-        public bool IsInitialized
-        {
-            get
-            {
-                return this._IsInitialized;
-            }
-        }
-
-        private IDictionary<string, string> _StoreDictionary;
-
-        protected IDictionary<string, string> StoreDictionary
-        {
-            get
-            {
-                return this._StoreDictionary;
-            }
-        }
+        protected IDictionary<string, string> StoreDictionary { get; private set; }
 
         private static readonly CreateInstanceDictionary<Type, Dictionary<string, PropertyMetadata>> MetadataDic = CreateInstanceDictionary.Create<Type, Dictionary<string, PropertyMetadata>>();
 
@@ -137,29 +121,13 @@ namespace Ks.Common.MVVM
         {
             public PropertyMetadata(Action<AutoStoreObject, string> SetCallback, Func<object, string> ToStringCallback)
             {
-                this._SetCallback = SetCallback;
-                this._ToStringCallback = ToStringCallback;
+                this.SetCallback = SetCallback;
+                this.ToStringCallback = ToStringCallback;
             }
 
-            private readonly Action<AutoStoreObject, string> _SetCallback;
+            public Action<AutoStoreObject, string> SetCallback { get; }
 
-            public Action<AutoStoreObject, string> SetCallback
-            {
-                get
-                {
-                    return this._SetCallback;
-                }
-            }
-
-            private readonly Func<object, string> _ToStringCallback;
-
-            public Func<object, string> ToStringCallback
-            {
-                get
-                {
-                    return this._ToStringCallback;
-                }
-            }
+            public Func<object, string> ToStringCallback { get; }
         }
     }
 }

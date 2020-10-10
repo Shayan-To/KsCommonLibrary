@@ -231,15 +231,7 @@ namespace Ks.Common
             return this.Index == this.Str.Length;
         }
 
-        private static readonly CsvParser _Instance = new CsvParser();
-
-        public static CsvParser Instance
-        {
-            get
-            {
-                return _Instance;
-            }
-        }
+        public static CsvParser Instance { get; } = new CsvParser();
 
         private static string NewLine = "\r\n";
 

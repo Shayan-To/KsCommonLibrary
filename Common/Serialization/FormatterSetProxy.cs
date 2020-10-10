@@ -4,7 +4,7 @@
     {
         public FormatterSetProxy(Formatter Formatter)
         {
-            this._Formatter = Formatter;
+            this.Formatter = Formatter;
         }
 
         protected internal void Set<T>(string Name, T Obj)
@@ -17,14 +17,6 @@
             this.Formatter.Set(Name, Obj);
         }
 
-        private readonly Formatter _Formatter;
-
-        public Formatter Formatter
-        {
-            get
-            {
-                return this._Formatter;
-            }
-        }
+        public Formatter Formatter { get; }
     }
 }

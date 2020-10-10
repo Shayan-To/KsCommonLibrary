@@ -50,33 +50,9 @@ namespace Ks.Common.MVVM
             return this;
         }
 
-        private bool _AddToStack = true;
+        public bool AddToStack { get; set; } = true;
 
-        public bool AddToStack
-        {
-            get
-            {
-                return this._AddToStack;
-            }
-            set
-            {
-                this._AddToStack = value;
-            }
-        }
-
-        private bool _ForceToStack = false;
-
-        public bool ForceToStack
-        {
-            get
-            {
-                return this._ForceToStack;
-            }
-            set
-            {
-                this._ForceToStack = value;
-            }
-        }
+        public bool ForceToStack { get; set; } = false;
 
         private Type _ViewType;
 
@@ -132,18 +108,6 @@ namespace Ks.Common.MVVM
             }
         }
 
-        private KsApplication _KsApplication;
-
-        public KsApplication KsApplication
-        {
-            get
-            {
-                return this._KsApplication;
-            }
-            set
-            {
-                this._KsApplication = value;
-            }
-        }
+        public KsApplication KsApplication { get; set; }
     }
 }

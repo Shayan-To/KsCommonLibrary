@@ -15,8 +15,8 @@ namespace Ks.Common.Controls
 
         public Popup()
         {
-            this._ShowCommand = new DelegateCommand(this.Show);
-            this._HideCommand = new DelegateCommand(this.Hide);
+            this.ShowCommand = new DelegateCommand(this.Show);
+            this.HideCommand = new DelegateCommand(this.Hide);
         }
 
         public static readonly RoutedEvent BeforeShowEvent = EventManager.RegisterRoutedEvent("BeforeShow", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(Popup));
@@ -79,35 +79,19 @@ namespace Ks.Common.Controls
             }
         }
 
-        private DelegateCommand _ShowCommand;
-
         public void Show()
         {
             this.IsShown = true;
         }
 
-        public DelegateCommand ShowCommand
-        {
-            get
-            {
-                return this._ShowCommand;
-            }
-        }
-
-        private DelegateCommand _HideCommand;
+        public DelegateCommand ShowCommand { get; }
 
         public void Hide()
         {
             this.IsShown = false;
         }
 
-        public DelegateCommand HideCommand
-        {
-            get
-            {
-                return this._HideCommand;
-            }
-        }
+        public DelegateCommand HideCommand { get; }
 
         public static readonly DependencyProperty IsShownProperty = DependencyProperty.Register("IsShown", typeof(bool), typeof(Popup), new PropertyMetadata(false, IsShown_Changed));
 

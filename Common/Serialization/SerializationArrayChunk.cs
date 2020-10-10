@@ -8,39 +8,15 @@
 
         public SerializationArrayChunk(T[] Array, int StartIndex, int Length)
         {
-            this._Array = Array;
-            this._StartIndex = StartIndex;
-            this._Length = Length;
+            this.Array = Array;
+            this.StartIndex = StartIndex;
+            this.Length = Length;
         }
 
-        private readonly T[] _Array;
+        public T[] Array { get; }
 
-        public T[] Array
-        {
-            get
-            {
-                return this._Array;
-            }
-        }
+        public int StartIndex { get; }
 
-        private readonly int _StartIndex;
-
-        public int StartIndex
-        {
-            get
-            {
-                return this._StartIndex;
-            }
-        }
-
-        private readonly int _Length;
-
-        public int Length
-        {
-            get
-            {
-                return this._Length;
-            }
-        }
+        public int Length { get; }
     }
 }

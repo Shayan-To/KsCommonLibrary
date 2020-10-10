@@ -37,19 +37,7 @@ namespace Ks.Common
                 this.TraverseChildren = true;
             }
 
-            private bool _TraverseChildren;
-
-            public bool TraverseChildren
-            {
-                get
-                {
-                    return this._TraverseChildren;
-                }
-                set
-                {
-                    this._TraverseChildren = value;
-                }
-            }
+            public bool TraverseChildren { get; set; }
         }
     }
 

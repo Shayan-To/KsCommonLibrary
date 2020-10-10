@@ -288,14 +288,6 @@ namespace Ks.Common
             }
         }
 
-        private static readonly DebugTextWriter _Instance = new DebugTextWriter();
-
-        public static DebugTextWriter Instance
-        {
-            get
-            {
-                return _Instance;
-            }
-        }
+        public static DebugTextWriter Instance { get; } = new DebugTextWriter();
     }
 }

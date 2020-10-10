@@ -71,19 +71,7 @@ namespace Ks.Common
             }
         }
 
-        private bool _RunAtStart;
-
-        public bool RunAtStart
-        {
-            get
-            {
-                return this._RunAtStart;
-            }
-            set
-            {
-                this._RunAtStart = value;
-            }
-        }
+        public bool RunAtStart { get; set; }
 
         private readonly Action Callback;
     }

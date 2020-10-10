@@ -206,131 +206,23 @@ namespace Ks.Common
             return default;
         }
 
-        private int _FormWidth;
+        public int FormWidth { get; set; }
 
-        public int FormWidth
-        {
-            get
-            {
-                return this._FormWidth;
-            }
-            set
-            {
-                this._FormWidth = value;
-            }
-        }
+        public int FormHeight { get; set; }
 
-        private int _FormHeight;
+        public int FormMargin { get; set; }
 
-        public int FormHeight
-        {
-            get
-            {
-                return this._FormHeight;
-            }
-            set
-            {
-                this._FormHeight = value;
-            }
-        }
+        public int FormLeft { get; set; }
 
-        private int _FormMargin;
+        public int FormTop { get; set; }
 
-        public int FormMargin
-        {
-            get
-            {
-                return this._FormMargin;
-            }
-            set
-            {
-                this._FormMargin = value;
-            }
-        }
+        public double XStart { get; set; }
 
-        private int _FormLeft;
+        public double XLength { get; set; }
 
-        public int FormLeft
-        {
-            get
-            {
-                return this._FormLeft;
-            }
-            set
-            {
-                this._FormLeft = value;
-            }
-        }
+        public double YStart { get; set; }
 
-        private int _FormTop;
-
-        public int FormTop
-        {
-            get
-            {
-                return this._FormTop;
-            }
-            set
-            {
-                this._FormTop = value;
-            }
-        }
-
-        private double _XStart;
-
-        public double XStart
-        {
-            get
-            {
-                return this._XStart;
-            }
-            set
-            {
-                this._XStart = value;
-            }
-        }
-
-        private double _XLength;
-
-        public double XLength
-        {
-            get
-            {
-                return this._XLength;
-            }
-            set
-            {
-                this._XLength = value;
-            }
-        }
-
-        private double _YStart;
-
-        public double YStart
-        {
-            get
-            {
-                return this._YStart;
-            }
-            set
-            {
-                this._YStart = value;
-            }
-        }
-
-        private double _YLength;
-
-        public double YLength
-        {
-            get
-            {
-                return this._YLength;
-            }
-            set
-            {
-                this._YLength = value;
-            }
-        }
+        public double YLength { get; set; }
 
         private Color BorderRectangleColor;
         private Graphics Graphics;

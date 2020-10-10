@@ -255,7 +255,7 @@ namespace Ks.Common
                         this.Out.Dispose();
                 }
             }
-            this._IsDisposed = true;
+            this.IsDisposed = true;
         }
 
         public void Dispose()
@@ -263,68 +263,16 @@ namespace Ks.Common
             this.Dispose(true);
         }
 
-        private bool _IsDisposed;
-
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public bool IsDisposed
-        {
-            get
-            {
-                return this._IsDisposed;
-            }
-        }
+        public bool IsDisposed { get; private set; }
 
-        private string _IndentString = "  ";
+        public string IndentString { get; set; } = "  ";
 
-        public string IndentString
-        {
-            get
-            {
-                return this._IndentString;
-            }
-            set
-            {
-                this._IndentString = value;
-            }
-        }
+        public bool AttributeDynamicIndent { get; set; } = true;
 
-        private bool _AttributeDynamicIndent = true;
+        public bool AttributeEachOnNewLine { get; } = false;
 
-        public bool AttributeDynamicIndent
-        {
-            get
-            {
-                return this._AttributeDynamicIndent;
-            }
-            set
-            {
-                this._AttributeDynamicIndent = value;
-            }
-        }
-
-        private readonly bool _AttributeEachOnNewLine = false;
-
-        public bool AttributeEachOnNewLine
-        {
-            get
-            {
-                return this._AttributeEachOnNewLine;
-            }
-        }
-
-        private bool _AddXmlDeclaration = true;
-
-        public bool AddXmlDeclaration
-        {
-            get
-            {
-                return this._AddXmlDeclaration;
-            }
-            set
-            {
-                this._AddXmlDeclaration = value;
-            }
-        }
+        public bool AddXmlDeclaration { get; set; } = true;
 
         public struct Opening : IDisposable
         {

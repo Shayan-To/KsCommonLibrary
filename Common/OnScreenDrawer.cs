@@ -252,15 +252,7 @@ namespace Ks.Common
                 this.IsDrawing = false;
             }
 
-            private readonly List<Drawing> _Drawings = new List<Drawing>();
-
-            public List<Drawing> Drawings
-            {
-                get
-                {
-                    return this._Drawings;
-                }
-            }
+            public List<Drawing> Drawings { get; } = new List<Drawing>();
 
             private bool IsDrawing;
             private readonly OnScreenDrawer Parent;
@@ -282,7 +274,7 @@ namespace Ks.Common
                 this._Interval = Interval;
                 this._Bounds = Bounds;
                 this.Bitmap = new Bitmap(Bounds.Width, Bounds.Height);
-                this._Graphics = Graphics.FromImage(this.Bitmap);
+                this.Graphics = Graphics.FromImage(this.Bitmap);
             }
 
             internal void SetParent(OnScreenDrawer Parent)
@@ -293,10 +285,10 @@ namespace Ks.Common
 
             private void RecreateBitmap()
             {
-                this._Graphics.Dispose();
+                this.Graphics.Dispose();
                 this.Bitmap.Dispose();
                 this.Bitmap = new Bitmap(this.Bounds.Width, this.Bounds.Height);
-                this._Graphics = Graphics.FromImage(this.Bitmap);
+                this.Graphics = Graphics.FromImage(this.Bitmap);
             }
 
             public void Show()
@@ -349,15 +341,7 @@ namespace Ks.Common
                 }
             }
 
-            private Graphics _Graphics;
-
-            public Graphics Graphics
-            {
-                get
-                {
-                    return this._Graphics;
-                }
-            }
+            public Graphics Graphics { get; private set; }
 
             private bool _IsVisible;
 

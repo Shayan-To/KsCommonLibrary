@@ -16,7 +16,7 @@ namespace Ks.Common.Controls
     {
         public ObjList(TextBlock Parent)
         {
-            this._Parent = Parent;
+            this.Parent = Parent;
         }
 
         private void GotIn(Obj Obj)
@@ -95,15 +95,7 @@ namespace Ks.Common.Controls
             throw new NotSupportedException();
         }
 
-        private readonly TextBlock _Parent;
-
-        public TextBlock Parent
-        {
-            get
-            {
-                return this._Parent;
-            }
-        }
+        public TextBlock Parent { get; }
 
         private readonly List<Obj> List = new List<Obj>();
     }

@@ -9,7 +9,7 @@
             this.FreezeCalled = true;
 
             this.OnFreezing();
-            this._IsFrozen = true;
+            this.IsFrozen = true;
             this.OnFrozen();
         }
 
@@ -31,15 +31,7 @@
             Verify.True(this.IsFrozen, "The object has to be frozen to perform this operation.");
         }
 
-        private bool _IsFrozen;
-
-        public bool IsFrozen
-        {
-            get
-            {
-                return this._IsFrozen;
-            }
-        }
+        public bool IsFrozen { get; private set; }
 
         private bool FreezeCalled;
     }

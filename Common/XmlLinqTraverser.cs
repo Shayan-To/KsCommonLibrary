@@ -70,33 +70,9 @@ namespace Ks.Common
                 this.ReplaceWithElement = Element;
             }
 
-            private bool _TraverseChildren;
+            public bool TraverseChildren { get; set; }
 
-            public bool TraverseChildren
-            {
-                get
-                {
-                    return this._TraverseChildren;
-                }
-                set
-                {
-                    this._TraverseChildren = value;
-                }
-            }
-
-            private XElement _ReplaceWithElement;
-
-            public XElement ReplaceWithElement
-            {
-                get
-                {
-                    return this._ReplaceWithElement;
-                }
-                set
-                {
-                    this._ReplaceWithElement = value;
-                }
-            }
+            public XElement ReplaceWithElement { get; set; }
         }
     }
 

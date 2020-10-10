@@ -4,14 +4,14 @@
     {
         public CsvData(int EntriesCapacity)
         {
-            this._Columns = new CsvColumnList(this);
-            this._Entries = new CsvEntryList(this, EntriesCapacity);
+            this.Columns = new CsvColumnList(this);
+            this.Entries = new CsvEntryList(this, EntriesCapacity);
         }
 
         public CsvData()
         {
-            this._Columns = new CsvColumnList(this);
-            this._Entries = new CsvEntryList(this);
+            this.Columns = new CsvColumnList(this);
+            this.Entries = new CsvEntryList(this);
         }
 
         public static CsvData Parse(string Str, bool HasHeaders = true, char Delimiter = ',', bool NormalizeLineEndings = true)
@@ -113,24 +113,8 @@
             }
         }
 
-        private readonly CsvColumnList _Columns;
+        public CsvColumnList Columns { get; }
 
-        public CsvColumnList Columns
-        {
-            get
-            {
-                return this._Columns;
-            }
-        }
-
-        private readonly CsvEntryList _Entries;
-
-        public CsvEntryList Entries
-        {
-            get
-            {
-                return this._Entries;
-            }
-        }
+        public CsvEntryList Entries { get; }
     }
 }

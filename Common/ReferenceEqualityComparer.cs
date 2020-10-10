@@ -14,14 +14,6 @@ namespace Ks.Common
             return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj);
         }
 
-        private static readonly ReferenceEqualityComparer<T> _Instance = new ReferenceEqualityComparer<T>();
-
-        public static ReferenceEqualityComparer<T> Instance
-        {
-            get
-            {
-                return _Instance;
-            }
-        }
+        public static ReferenceEqualityComparer<T> Instance { get; } = new ReferenceEqualityComparer<T>();
     }
 }

@@ -7,7 +7,7 @@ namespace Ks.Common
         public GenericSerializer(string Id, Type SerializerType) : base(Id)
         {
             Verify.True(SerializerType.IsGenericTypeDefinition);
-            this._SerializerType = SerializerType;
+            this.SerializerType = SerializerType;
         }
 
         protected abstract Type[] GetTypeArguments(Type Type);
@@ -66,15 +66,7 @@ namespace Ks.Common
             throw new NotSupportedException();
         }
 
-        private readonly Type _SerializerType;
-
-        public Type SerializerType
-        {
-            get
-            {
-                return this._SerializerType;
-            }
-        }
+        public Type SerializerType { get; }
 
         private const int CacheLimit = 10;
 

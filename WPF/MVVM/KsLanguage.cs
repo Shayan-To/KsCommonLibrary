@@ -43,18 +43,18 @@ namespace Ks.Common.MVVM
                 switch (Key)
                 {
                     case var k when k == nameof(this.Id).ToLower():
-                        this._Id = Value;
+                        this.Id = Value;
                         break;
                     case var k when k == nameof(this.Name).ToLower():
-                        this._Name = Value;
+                        this.Name = Value;
                         break;
                     case var k when k == nameof(this.NativeName).ToLower():
-                        this._NativeName = Value;
+                        this.NativeName = Value;
                         break;
                     case var k when k == nameof(this.Direction).ToLower():
                         Value = Value.ToLower();
                         Verify.True((Value == nameof(FlowDirection.LeftToRight).ToLower()) | (Value == nameof(FlowDirection.RightToLeft).ToLower()) | (Value == "rtl") | (Value == "ltr"));
-                        this._Direction = ((Value == "ltr") | (Value == nameof(FlowDirection.LeftToRight).ToLower())) ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+                        this.Direction = ((Value == "ltr") | (Value == nameof(FlowDirection.LeftToRight).ToLower())) ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
                         break;
                     default:
                         Verify.Fail("Invalid language property.");
@@ -65,11 +65,11 @@ namespace Ks.Common.MVVM
             }
 
             if (this.Id == null)
-                this._Id = "";
+                this.Id = "";
             if (this.Name == null & this.NativeName == null)
-                this._Name = "Default";
+                this.Name = "Default";
             if (this.NativeName == null)
-                this._NativeName = "";
+                this.NativeName = "";
 
             if (I == this.Csv.Entries.Count)
             {
@@ -170,9 +170,9 @@ namespace Ks.Common.MVVM
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this._IsDisposed)
+            if (!this.IsDisposed)
             {
-                this._IsDisposed = true;
+                this.IsDisposed = true;
 
                 // This is more critical to be given over to the non-reliable GC.
                 this.TaskDelayer.Dispose();
@@ -188,55 +188,15 @@ namespace Ks.Common.MVVM
             Dispose(true);
         }
 
-        private readonly string _Id;
+        public string Id { get; }
 
-        public string Id
-        {
-            get
-            {
-                return this._Id;
-            }
-        }
+        public string Name { get; }
 
-        private readonly string _Name;
+        public string NativeName { get; }
 
-        public string Name
-        {
-            get
-            {
-                return this._Name;
-            }
-        }
+        public FlowDirection Direction { get; }
 
-        private readonly string _NativeName;
-
-        public string NativeName
-        {
-            get
-            {
-                return this._NativeName;
-            }
-        }
-
-        private readonly FlowDirection _Direction;
-
-        public FlowDirection Direction
-        {
-            get
-            {
-                return this._Direction;
-            }
-        }
-
-        private bool _IsDisposed;
-
-        public bool IsDisposed
-        {
-            get
-            {
-                return this._IsDisposed;
-            }
-        }
+        public bool IsDisposed { get; private set; }
 
         private readonly object LockObject = new object();
 

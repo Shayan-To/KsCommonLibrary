@@ -7,7 +7,7 @@ namespace Ks.Common
         public CNullable(T Value)
         {
             this._Value = Value;
-            this._HasValue = true;
+            this.HasValue = true;
         }
 
         public static implicit operator CNullable<T>(T O)
@@ -32,14 +32,6 @@ namespace Ks.Common
             }
         }
 
-        private readonly bool _HasValue;
-
-        public bool HasValue
-        {
-            get
-            {
-                return this._HasValue;
-            }
-        }
+        public bool HasValue { get; }
     }
 }

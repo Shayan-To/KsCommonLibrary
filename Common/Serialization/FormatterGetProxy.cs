@@ -4,7 +4,7 @@
     {
         public FormatterGetProxy(Formatter Formatter)
         {
-            this._Formatter = Formatter;
+            this.Formatter = Formatter;
         }
 
         protected internal T Get<T>(string Name)
@@ -27,14 +27,6 @@
             this.Formatter.Get(Name, Obj);
         }
 
-        private readonly Formatter _Formatter;
-
-        public Formatter Formatter
-        {
-            get
-            {
-                return this._Formatter;
-            }
-        }
+        public Formatter Formatter { get; }
     }
 }

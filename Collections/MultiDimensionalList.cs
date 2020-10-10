@@ -8,7 +8,7 @@ namespace Ks.Common
         public MultiDimensionalList(params int[] Lengths)
         {
             this._Lengths = Lengths;
-            this._Lengths_RO = Lengths.AsReadOnly();
+            this.Lengths = Lengths.AsReadOnly();
             var Length = 1;
             foreach (var L in Lengths)
                 Length *= L;
@@ -51,15 +51,8 @@ namespace Ks.Common
         }
 
         private readonly int[] _Lengths;
-        private readonly IReadOnlyList<int> _Lengths_RO;
 
-        public IReadOnlyList<int> Lengths
-        {
-            get
-            {
-                return this._Lengths_RO;
-            }
-        }
+        public IReadOnlyList<int> Lengths { get; }
 
         private readonly T[] Arr;
     }

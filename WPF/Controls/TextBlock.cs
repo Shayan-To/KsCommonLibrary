@@ -31,7 +31,7 @@ namespace Ks.Common.Controls
 
         public TextBlock()
         {
-            this._Objs = new ObjList(this);
+            this.Objs = new ObjList(this);
         }
 
         internal void ReportObjGotIn(Obj Obj)
@@ -318,15 +318,7 @@ namespace Ks.Common.Controls
             }
         }
 
-        private readonly ObjList _Objs;
-
-        public ObjList Objs
-        {
-            get
-            {
-                return this._Objs;
-            }
-        }
+        public ObjList Objs { get; }
 
         public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register("TextAlignment", typeof(TextAlignment), typeof(TextBlock), new PropertyMetadata(TextAlignment.Left, TextAlignment_Changed, TextAlignment_Coerce));
 

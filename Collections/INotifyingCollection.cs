@@ -259,12 +259,12 @@ namespace Ks.Common
 
         private void InitializeAdd(NotifyCollectionChangedAction action, IList<T> newItems, int newStartingIndex)
         {
-            this._NewItems = (newItems == null) ? null : new List<T>(newItems).AsReadOnly();
+            this.NewItems = (newItems == null) ? null : new List<T>(newItems).AsReadOnly();
         }
 
         private void InitializeRemove(NotifyCollectionChangedAction action, IList<T> oldItems, int oldStartingIndex)
         {
-            this._OldItems = (oldItems == null) ? null : new List<T>(oldItems).AsReadOnly();
+            this.OldItems = (oldItems == null) ? null : new List<T>(oldItems).AsReadOnly();
         }
 
         private void InitializeMoveOrReplace(NotifyCollectionChangedAction action, IList<T> newItems, IList<T> oldItems, int startingIndex, int oldStartingIndex)
@@ -293,25 +293,9 @@ namespace Ks.Common
             }
         }
 
-        private IList<T> _NewItems;
+        public new IList<T> NewItems { get; private set; }
 
-        public new IList<T> NewItems
-        {
-            get
-            {
-                return this._NewItems;
-            }
-        }
-
-        private IList<T> _OldItems;
-
-        public new IList<T> OldItems
-        {
-            get
-            {
-                return this._OldItems;
-            }
-        }
+        public new IList<T> OldItems { get; private set; }
     }
 
     public interface INotifyCollectionChanged<T> : INotifyCollectionChanged

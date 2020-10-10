@@ -8,7 +8,7 @@
     {
         private Ratio(int Numerator, int Denumenator, Void NoSimplify)
         {
-            this._Numerator = Numerator;
+            this.Numerator = Numerator;
             this._Denumenator = Denumenator;
         }
 
@@ -21,7 +21,7 @@
                 Numerator = -Numerator;
                 Denumenator = -Denumenator;
             }
-            this._Numerator = Numerator / GCD;
+            this.Numerator = Numerator / GCD;
             this._Denumenator = Denumenator / GCD;
         }
 
@@ -230,15 +230,7 @@
             return this.Numerator.ToString() + ((this.Denumenator != 1) ? ("/" + this.Denumenator.ToString()) : "");
         }
 
-        private readonly int _Numerator;
-
-        public int Numerator
-        {
-            get
-            {
-                return this._Numerator;
-            }
-        }
+        public int Numerator { get; }
 
         private readonly int _Denumenator;
 
@@ -246,7 +238,7 @@
         {
             get
             {
-                if ((this._Denumenator == 0) & (this._Numerator == 0))
+                if ((this._Denumenator == 0) & (this.Numerator == 0))
                     return 1;
                 return this._Denumenator;
             }

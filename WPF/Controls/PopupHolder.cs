@@ -10,8 +10,8 @@ namespace Ks.Common.Controls
 
         public PopupHolder()
         {
-            this._ShowPopupCommand = new DelegateCommand(this.ShowPopup);
-            this._HidePopupCommand = new DelegateCommand(this.HidePopup);
+            this.ShowPopupCommand = new DelegateCommand(this.ShowPopup);
+            this.HidePopupCommand = new DelegateCommand(this.HidePopup);
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -40,35 +40,19 @@ namespace Ks.Common.Controls
             return new Rect(BasePoint, PopupSize);
         }
 
-        private DelegateCommand _ShowPopupCommand;
-
         public void ShowPopup()
         {
             this.IsPopupShown = true;
         }
 
-        public DelegateCommand ShowPopupCommand
-        {
-            get
-            {
-                return this._ShowPopupCommand;
-            }
-        }
-
-        private DelegateCommand _HidePopupCommand;
+        public DelegateCommand ShowPopupCommand { get; }
 
         public void HidePopup()
         {
             this.IsPopupShown = false;
         }
 
-        public DelegateCommand HidePopupCommand
-        {
-            get
-            {
-                return this._HidePopupCommand;
-            }
-        }
+        public DelegateCommand HidePopupCommand { get; }
 
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register("Content", typeof(UIElement), typeof(PopupHolder), new PropertyMetadata(null, Content_Changed));
 

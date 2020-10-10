@@ -79,7 +79,7 @@ namespace Ks.Common
         public void SetSynchronizationContext()
         {
             if (this.Thread == null)
-                this._Thread = Thread.CurrentThread;
+                this.Thread = Thread.CurrentThread;
 
             Verify.True(this.IsSameThread(), $"You can only call `{nameof(this.SetSynchronizationContext)}` from the thread of the dispatcher.");
 
@@ -89,12 +89,12 @@ namespace Ks.Common
         public void DoActions()
         {
             if (this.Thread == null)
-                this._Thread = Thread.CurrentThread;
+                this.Thread = Thread.CurrentThread;
 
             Verify.True(this.IsSameThread(), this.IsDispatching ? $"You can only call `{nameof(this.DoActions)}` from the same thread the dispatcher is running on." : "The dispatcher cannot be run from two different threads.");
 
             var IsRunning = this.IsRunning;
-            this._IsRunning = true;
+            this.IsRunning = true;
 
             var List = new List<(Action Action, int Id)>();
             while (true)
@@ -108,7 +108,7 @@ namespace Ks.Common
             foreach (var AI in List)
                 this.RunAction(AI);
 
-            this._IsRunning = IsRunning;
+            this.IsRunning = IsRunning;
         }
 
         public void Run()
@@ -119,10 +119,10 @@ namespace Ks.Common
             if (this.Thread != null)
                 Verify.True(this.IsSameThread(), "The dispatcher cannot be run from two different threads.");
 
-            this._Thread = Thread.CurrentThread;
+            this.Thread = Thread.CurrentThread;
 
-            this._IsDispatching = true;
-            this._IsRunning = true;
+            this.IsDispatching = true;
+            this.IsRunning = true;
 
             foreach (var AI in this.Queue.GetConsumingEnumerable())
             {
@@ -135,16 +135,16 @@ namespace Ks.Common
                 }
             }
 
-            this._IsDispatching = false;
-            this._IsRunning = false;
-            this._IsShutDown = true;
+            this.IsDispatching = false;
+            this.IsRunning = false;
+            this.IsShutDown = true;
 
             this.OnDispatcherShutDown();
         }
 
         public void ShutDown()
         {
-            this._IsShuttingDown = true;
+            this.IsShuttingDown = true;
         }
 
         private bool IsSameThread()
@@ -154,7 +154,7 @@ namespace Ks.Common
 
         protected virtual void Dispose(bool Disposing)
         {
-            if (!this._IsDisposed)
+            if (!this.IsDisposed)
             {
                 if (Disposing)
                 {
@@ -162,7 +162,7 @@ namespace Ks.Common
                     this.Queue.Dispose();
                 }
             }
-            this._IsDisposed = true;
+            this.IsDisposed = true;
         }
 
         public void Dispose()
@@ -184,45 +184,13 @@ namespace Ks.Common
             DispatcherShutDown?.Invoke(this, EventArgs.Empty);
         }
 
-        private bool _IsDispatching;
+        public bool IsDispatching { get; private set; }
 
-        public bool IsDispatching
-        {
-            get
-            {
-                return this._IsDispatching;
-            }
-        }
+        public bool IsRunning { get; private set; }
 
-        private bool _IsRunning;
+        public bool IsShutDown { get; private set; }
 
-        public bool IsRunning
-        {
-            get
-            {
-                return this._IsRunning;
-            }
-        }
-
-        private bool _IsShutDown;
-
-        public bool IsShutDown
-        {
-            get
-            {
-                return this._IsShutDown;
-            }
-        }
-
-        private bool _IsShuttingDown;
-
-        public bool IsShuttingDown
-        {
-            get
-            {
-                return this._IsShuttingDown;
-            }
-        }
+        public bool IsShuttingDown { get; private set; }
 
         public static Dispatcher Current
         {
@@ -232,25 +200,9 @@ namespace Ks.Common
             }
         }
 
-        private Thread _Thread;
+        public Thread Thread { get; private set; }
 
-        public Thread Thread
-        {
-            get
-            {
-                return this._Thread;
-            }
-        }
-
-        private bool _IsDisposed;
-
-        public bool IsDisposed
-        {
-            get
-            {
-                return this._IsDisposed;
-            }
-        }
+        public bool IsDisposed { get; private set; }
 
         private readonly object LockObject = new object();
         private int CurrentId;
@@ -287,17 +239,9 @@ namespace Ks.Common
     {
         public ExceptionUnhandledEventArgs(Exception Exception)
         {
-            this._Exception = Exception;
+            this.Exception = Exception;
         }
 
-        private readonly Exception _Exception;
-
-        public Exception Exception
-        {
-            get
-            {
-                return this._Exception;
-            }
-        }
+        public Exception Exception { get; }
     }
 }

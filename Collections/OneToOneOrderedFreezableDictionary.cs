@@ -15,7 +15,7 @@ namespace Ks.Common
                 return;
             this.FreezeCalled = true;
             this.OnFreezing();
-            this._IsFreezed = true;
+            this.IsFrozen = true;
             this.OnFroze();
         }
 
@@ -29,18 +29,10 @@ namespace Ks.Common
 
         protected void VerifyWrite()
         {
-            Verify.False(this._IsFreezed, "Cannot change a freezed object.");
+            Verify.False(this.IsFrozen, "Cannot change a freezed object.");
         }
 
-        private bool _IsFreezed;
-
-        public bool IsFrozen
-        {
-            get
-            {
-                return this._IsFreezed;
-            }
-        }
+        public bool IsFrozen { get; private set; }
 
         private bool FreezeCalled;
 

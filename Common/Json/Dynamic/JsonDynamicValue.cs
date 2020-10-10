@@ -4,8 +4,8 @@
     {
         public JsonDynamicValue(string Value, bool IsString)
         {
-            this._Value = Value;
-            this._IsString = IsString;
+            this.Value = Value;
+            this.IsString = IsString;
         }
 
         public static implicit operator JsonDynamicValue(string Value)
@@ -80,25 +80,9 @@
             return (this.IsString ? "\"" : "") + this.Value + (this.IsString ? "\"" : "");
         }
 
-        private readonly string _Value;
+        public string Value { get; }
 
-        public string Value
-        {
-            get
-            {
-                return this._Value;
-            }
-        }
-
-        private readonly bool _IsString;
-
-        public bool IsString
-        {
-            get
-            {
-                return this._IsString;
-            }
-        }
+        public bool IsString { get; }
 
         internal const string True = "true";
         internal const string False = "false";

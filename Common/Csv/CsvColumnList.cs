@@ -8,7 +8,7 @@ namespace Ks.Common
     {
         internal CsvColumnList(CsvData Parent)
         {
-            this._Parent = Parent;
+            this.Parent = Parent;
         }
 
         internal void ReportHeaderNameChanged(CsvColumn Column, string OldName, string NewName)
@@ -173,15 +173,7 @@ namespace Ks.Common
             }
         }
 
-        private readonly CsvData _Parent;
-
-        public CsvData Parent
-        {
-            get
-            {
-                return this._Parent;
-            }
-        }
+        public CsvData Parent { get; }
 
         private readonly List<CsvColumn> List = new List<CsvColumn>();
         private readonly MultiDictionary<string, CsvColumn> Names = new MultiDictionary<string, CsvColumn>();

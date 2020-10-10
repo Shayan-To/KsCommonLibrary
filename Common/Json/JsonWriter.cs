@@ -205,7 +205,7 @@ namespace Ks.Common
                         this.Out.Dispose();
                 }
             }
-            this._IsDisposed = true;
+            this.IsDisposed = true;
         }
 
         public void Dispose()
@@ -213,58 +213,14 @@ namespace Ks.Common
             this.Dispose(true);
         }
 
-        private bool _IsDisposed;
-
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public bool IsDisposed
-        {
-            get
-            {
-                return this._IsDisposed;
-            }
-        }
+        public bool IsDisposed { get; private set; }
 
-        private string _IndentString = "  ";
+        public string IndentString { get; set; } = "  ";
 
-        public string IndentString
-        {
-            get
-            {
-                return this._IndentString;
-            }
-            set
-            {
-                this._IndentString = value;
-            }
-        }
+        public bool OpeningBraceOnNewLine { get; set; } = false;
 
-        private bool _OpeningBraceOnNewLine = false;
-
-        public bool OpeningBraceOnNewLine
-        {
-            get
-            {
-                return this._OpeningBraceOnNewLine;
-            }
-            set
-            {
-                this._OpeningBraceOnNewLine = value;
-            }
-        }
-
-        private bool _AddSpaces = true;
-
-        public bool AddSpaces
-        {
-            get
-            {
-                return this._AddSpaces;
-            }
-            set
-            {
-                this._AddSpaces = value;
-            }
-        }
+        public bool AddSpaces { get; set; } = true;
 
         public struct Opening : IDisposable
         {

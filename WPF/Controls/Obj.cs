@@ -6,7 +6,7 @@ namespace Ks.Common.Controls
     {
         internal void ReportParent(TextBlock Parent)
         {
-            this._TextBlock = Parent;
+            this.TextBlock = Parent;
         }
 
         public static readonly DependencyProperty ObjtProperty = DependencyProperty.Register("Objt", typeof(object), typeof(Obj), new PropertyMetadata(null, Objt_Changed, Objt_Coerce));
@@ -42,14 +42,6 @@ namespace Ks.Common.Controls
             }
         }
 
-        private TextBlock _TextBlock;
-
-        public TextBlock TextBlock
-        {
-            get
-            {
-                return this._TextBlock;
-            }
-        }
+        public TextBlock TextBlock { get; private set; }
     }
 }

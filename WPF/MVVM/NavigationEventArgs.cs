@@ -6,17 +6,9 @@ namespace Ks.Common.MVVM
     {
         public NavigationEventArgs(NavigationType NavigationType)
         {
-            this._NavigationType = NavigationType;
+            this.NavigationType = NavigationType;
         }
 
-        private readonly NavigationType _NavigationType;
-
-        public NavigationType NavigationType
-        {
-            get
-            {
-                return this._NavigationType;
-            }
-        }
+        public NavigationType NavigationType { get; }
     }
 }

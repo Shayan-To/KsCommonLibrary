@@ -14,8 +14,8 @@ namespace Ks.Common
 
         public ConcurrentList(IList<T> BaseList, object LockObject)
         {
-            this._BaseList = BaseList;
-            this._LockObject = LockObject;
+            this.BaseList = BaseList;
+            this.LockObject = LockObject;
         }
 
         public override int Count
@@ -66,31 +66,15 @@ namespace Ks.Common
 
         public IEnumerator<T> GetEnumerator()
         {
-            lock (this._LockObject)
+            lock (this.LockObject)
             {
                 foreach (var I in this.BaseList)
                     yield return I;
             }
         }
 
-        private readonly object _LockObject;
+        public object LockObject { get; }
 
-        public object LockObject
-        {
-            get
-            {
-                return this._LockObject;
-            }
-        }
-
-        private readonly IList<T> _BaseList;
-
-        public IList<T> BaseList
-        {
-            get
-            {
-                return this._BaseList;
-            }
-        }
+        public IList<T> BaseList { get; }
     }
 }

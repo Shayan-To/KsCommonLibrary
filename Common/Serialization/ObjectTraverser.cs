@@ -50,19 +50,7 @@ namespace Ks.Common
 
         private class ObjectContainer<T>
         {
-            private T _Value;
-
-            public T Value
-            {
-                get
-                {
-                    return this._Value;
-                }
-                set
-                {
-                    this._Value = value;
-                }
-            }
+            public T Value { get; set; }
         }
     }
 }

@@ -4,39 +4,15 @@
     {
         public NavigationData(NavigationFrame Frame, bool AddToStack = true, bool ForceToStack = false)
         {
-            this._Frame = Frame;
-            this._AddToStack = AddToStack;
-            this._ForceToStack = ForceToStack;
+            this.Frame = Frame;
+            this.AddToStack = AddToStack;
+            this.ForceToStack = ForceToStack;
         }
 
-        private readonly NavigationFrame _Frame;
+        public NavigationFrame Frame { get; }
 
-        public NavigationFrame Frame
-        {
-            get
-            {
-                return this._Frame;
-            }
-        }
+        public bool AddToStack { get; }
 
-        private readonly bool _AddToStack;
-
-        public bool AddToStack
-        {
-            get
-            {
-                return this._AddToStack;
-            }
-        }
-
-        private readonly bool _ForceToStack;
-
-        public bool ForceToStack
-        {
-            get
-            {
-                return this._ForceToStack;
-            }
-        }
+        public bool ForceToStack { get; }
     }
 }

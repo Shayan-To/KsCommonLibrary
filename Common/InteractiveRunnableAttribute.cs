@@ -12,7 +12,7 @@ namespace Ks.Common
     {
         public InteractiveRunnableAttribute(bool ShouldBeRun = false)
         {
-            this._ShouldBeRun = ShouldBeRun;
+            this.ShouldBeRun = ShouldBeRun;
         }
 
         [DebuggerHidden()]
@@ -105,14 +105,6 @@ namespace Ks.Common
             RunTestMethods(Utilities.Reflection.GetAllMethods(Assemblies), JustTrue);
         }
 
-        private readonly bool _ShouldBeRun;
-
-        public bool ShouldBeRun
-        {
-            get
-            {
-                return this._ShouldBeRun;
-            }
-        }
+        public bool ShouldBeRun { get; }
     }
 }

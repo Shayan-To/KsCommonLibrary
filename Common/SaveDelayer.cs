@@ -14,8 +14,8 @@ namespace Ks.Common
             if (Encoding == null)
                 Encoding = System.Text.Encoding.UTF8;
 
-            this._Stream = Stream;
-            this._Encoding = Encoding;
+            this.Stream = Stream;
+            this.Encoding = Encoding;
         }
 
         private void DoSave()
@@ -53,25 +53,9 @@ namespace Ks.Common
             this.Save(this.Encoding.GetBytes(Str), RunningMode);
         }
 
-        private readonly System.IO.Stream _Stream;
+        public System.IO.Stream Stream { get; }
 
-        public System.IO.Stream Stream
-        {
-            get
-            {
-                return this._Stream;
-            }
-        }
-
-        private readonly System.Text.Encoding _Encoding;
-
-        public System.Text.Encoding Encoding
-        {
-            get
-            {
-                return this._Encoding;
-            }
-        }
+        public System.Text.Encoding Encoding { get; }
 
         private readonly TaskDelayer TaskDelayer;
         private System.IO.Stream InStream;

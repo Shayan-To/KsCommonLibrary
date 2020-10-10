@@ -6,7 +6,7 @@ namespace Ks.Common
     {
         public Serializer(string Id)
         {
-            this._Id = Id;
+            this.Id = Id;
         }
 
         public abstract bool CanSerializeType(Type Type);
@@ -22,15 +22,7 @@ namespace Ks.Common
             throw new NotSupportedException();
         }
 
-        private readonly string _Id;
-
-        public string Id
-        {
-            get
-            {
-                return this._Id;
-            }
-        }
+        public string Id { get; }
 
         public static Serializer Create(string Id, Func<Type, bool> CanSerialize, Func<FormatterGetProxy, object> Get, Action<FormatterGetProxy, object> Get2, Action<FormatterSetProxy, object> Set)
         {

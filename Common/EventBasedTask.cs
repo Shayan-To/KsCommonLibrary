@@ -19,9 +19,9 @@ namespace Ks.Common
 
         public void SetComplete()
         {
-            if (!this._IsCompleted)
+            if (!this.IsCompleted)
             {
-                this._IsCompleted = true;
+                this.IsCompleted = true;
                 this.CompletedAction?.Invoke();
             }
         }
@@ -32,15 +32,7 @@ namespace Ks.Common
             this.CompletedAction = continuation;
         }
 
-        private bool _IsCompleted;
-
-        public bool IsCompleted
-        {
-            get
-            {
-                return this._IsCompleted;
-            }
-        }
+        public bool IsCompleted { get; private set; }
 
         private Action CompletedAction;
     }

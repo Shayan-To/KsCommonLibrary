@@ -20,14 +20,14 @@ namespace Ks.Common.MVVM
 
         public KsApplication(string Name, Application Application)
         {
-            this._NavigateBackCommand = new DelegateCommand(this.NavigateBack);
+            this.NavigateBackCommand = new DelegateCommand(this.NavigateBack);
 
-            this._Name = Name;
-            this._Application = Application;
+            this.Name = Name;
+            this.Application = Application;
 
-            this._Window = new WindowViewModel(this);
-            this._EmptyNavigationFrame = new NavigationFrame(new[] { this._Window });
-            this._Window.NavigationFrame = this.EmptyNavigationFrame;
+            this.Window = new WindowViewModel(this);
+            this.EmptyNavigationFrame = new NavigationFrame(new[] { this.Window });
+            this.Window.NavigationFrame = this.EmptyNavigationFrame;
             this.CurrentNavigationFrame = this.EmptyNavigationFrame;
 
             this.State = KsApplicationState.NotStarted;
@@ -38,13 +38,13 @@ namespace Ks.Common.MVVM
             Verify.True(KsApplication.IsInDesignMode, "Test constructor should not be called from runtime.");
 
             var TestData = this.OnTestConstruct();
-            this._Name = TestData.Name;
-            this._Settings = TestData.Settings;
+            this.Name = TestData.Name;
+            this.Settings = TestData.Settings;
         }
 
         protected virtual void OnInitialize()
         {
-            this._Settings = new AutoStoreDictionary(System.IO.Path.Combine(".", "Settings.dat"));
+            this.Settings = new AutoStoreDictionary(System.IO.Path.Combine(".", "Settings.dat"));
 
             var Dir = System.IO.Path.Combine(".", "Languages");
             if (!System.IO.Directory.Exists(Dir))
@@ -67,7 +67,7 @@ namespace Ks.Common.MVVM
                 Languages.Add(new KsLanguage(File));
             }
 
-            this._Languages = Languages.AsReadOnly();
+            this.Languages = Languages.AsReadOnly();
 
             string LangId = null;
             if (!this.Settings.TryGetValue(nameof(this.Language), out LangId))
@@ -111,7 +111,7 @@ namespace Ks.Common.MVVM
             if (this.State != KsApplicationState.NotStarted)
                 throw new InvalidOperationException("Cannot run an already run KsApplication.");
 
-            _Current = this;
+            Current = this;
 
             this.State = KsApplicationState.Initializing;
             this.OnInitialize();
@@ -139,8 +139,8 @@ namespace Ks.Common.MVVM
         {
             Verify.True(this.State == KsApplicationState.Started, "The KsApplication has to be started to be able to be shut down.");
 
-            if (_Current == this)
-                _Current = null;
+            if (Current == this)
+                Current = null;
 
             this.State = KsApplicationState.ShuttingDown;
             this.OnShuttingDown();
@@ -300,15 +300,7 @@ namespace Ks.Common.MVVM
             }
         }
 
-        private DelegateCommand _NavigateBackCommand;
-
-        public DelegateCommand NavigateBackCommand
-        {
-            get
-            {
-                return this._NavigateBackCommand;
-            }
-        }
+        public DelegateCommand NavigateBackCommand { get; }
 
         private bool _CanNavigateBack;
 
@@ -328,7 +320,7 @@ namespace Ks.Common.MVVM
         {
             get
             {
-                return this._Window;
+                return this.Window;
             }
         }
 
@@ -360,25 +352,9 @@ namespace Ks.Common.MVVM
             }
         }
 
-        private readonly PushPopList<NavigationFrame> _NavigationFrames = new PushPopList<NavigationFrame>();
+        public PushPopList<NavigationFrame> NavigationFrames { get; } = new PushPopList<NavigationFrame>();
 
-        public PushPopList<NavigationFrame> NavigationFrames
-        {
-            get
-            {
-                return this._NavigationFrames;
-            }
-        }
-
-        private readonly NavigationFrame _EmptyNavigationFrame;
-
-        public NavigationFrame EmptyNavigationFrame
-        {
-            get
-            {
-                return this._EmptyNavigationFrame;
-            }
-        }
+        public NavigationFrame EmptyNavigationFrame { get; }
 
         private readonly Dictionary<Type, ViewModel> SingleInstanceViewModels = new Dictionary<Type, ViewModel>();
 
@@ -400,15 +376,7 @@ namespace Ks.Common.MVVM
             }
         }
 
-        private readonly string _Name;
-
-        public string Name
-        {
-            get
-            {
-                return this._Name;
-            }
-        }
+        public string Name { get; }
 
 #pragma warning disable CS0169 // The field is never used
         private readonly string _Version; // ToDo
@@ -422,27 +390,9 @@ namespace Ks.Common.MVVM
             }
         }
 
-        private readonly NavigationViewModel _Window;
+        public NavigationViewModel Window { get; }
 
-        public NavigationViewModel Window
-        {
-            get
-            {
-                return this._Window;
-            }
-        }
-
-#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value null
-        private readonly Type _HomePageType; // To-Do
-#pragma warning restore CS0649 // Field is never assigned to, and will always have its default value null
-
-        public Type HomePageType
-        {
-            get
-            {
-                return this._HomePageType;
-            }
-        }
+        public Type HomePageType { get; }
 
         private KsApplicationState _State;
 
@@ -458,15 +408,7 @@ namespace Ks.Common.MVVM
             }
         }
 
-        private IReadOnlyDictionary<string, KsLanguage> _Languages;
-
-        public IReadOnlyDictionary<string, KsLanguage> Languages
-        {
-            get
-            {
-                return this._Languages;
-            }
-        }
+        public IReadOnlyDictionary<string, KsLanguage> Languages { get; private set; }
 
         private KsLanguage _Language;
 
@@ -487,35 +429,11 @@ namespace Ks.Common.MVVM
             }
         }
 
-        private IDictionary<string, string> _Settings;
+        public IDictionary<string, string> Settings { get; private set; }
 
-        public IDictionary<string, string> Settings
-        {
-            get
-            {
-                return this._Settings;
-            }
-        }
+        public Application Application { get; }
 
-        private readonly Application _Application;
-
-        public Application Application
-        {
-            get
-            {
-                return this._Application;
-            }
-        }
-
-        private static KsApplication _Current;
-
-        public static KsApplication Current
-        {
-            get
-            {
-                return _Current;
-            }
-        }
+        public static KsApplication Current { get; private set; }
     }
 
     public enum KsApplicationState
@@ -529,32 +447,8 @@ namespace Ks.Common.MVVM
 
     public struct KsApplicationTestData
     {
-        private string _Name;
+        public string Name { get; set; }
 
-        public string Name
-        {
-            get
-            {
-                return this._Name;
-            }
-            set
-            {
-                this._Name = value;
-            }
-        }
-
-        private IDictionary<string, string> _Settings;
-
-        public IDictionary<string, string> Settings
-        {
-            get
-            {
-                return this._Settings;
-            }
-            set
-            {
-                this._Settings = value;
-            }
-        }
+        public IDictionary<string, string> Settings { get; set; }
     }
 }

@@ -367,19 +367,7 @@ namespace Ks.Common
             }
         }
 
-        private bool _AutoFlush = true;
-
-        public bool AutoFlush
-        {
-            get
-            {
-                return this._AutoFlush;
-            }
-            set
-            {
-                this._AutoFlush = value;
-            }
-        }
+        public bool AutoFlush { get; set; } = true;
 
         private readonly System.IO.TextWriter Base;
         private readonly Func<string> GetTimeStampDelegate;

@@ -20,19 +20,11 @@ namespace Ks.Common.MVVM
     {
         public ViewModelMetadataAttribute(Type ViewType)
         {
-            this._ViewType = ViewType;
+            this.ViewType = ViewType;
             Verify.True(typeof(Window).IsAssignableFrom(ViewType) | typeof(Page).IsAssignableFrom(ViewType), "ViewType must be a Window or a Page.");
         }
 
-        private readonly Type _ViewType;
-
-        public Type ViewType
-        {
-            get
-            {
-                return this._ViewType;
-            }
-        }
+        public Type ViewType { get; }
 
         private bool _IsSingleInstance = false;
         private bool _IsSingleInstance_Set = false;

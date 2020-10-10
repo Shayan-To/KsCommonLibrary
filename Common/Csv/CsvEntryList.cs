@@ -7,13 +7,13 @@ namespace Ks.Common
     {
         internal CsvEntryList(CsvData Parent)
         {
-            this._Parent = Parent;
+            this.Parent = Parent;
             this.List = new List<CsvEntry>();
         }
 
         internal CsvEntryList(CsvData Parent, int Capacity)
         {
-            this._Parent = Parent;
+            this.Parent = Parent;
             this.List = new List<CsvEntry>(Capacity);
         }
 
@@ -146,15 +146,7 @@ namespace Ks.Common
             }
         }
 
-        private readonly CsvData _Parent;
-
-        public CsvData Parent
-        {
-            get
-            {
-                return this._Parent;
-            }
-        }
+        public CsvData Parent { get; }
 
         private readonly List<CsvEntry> List;
     }

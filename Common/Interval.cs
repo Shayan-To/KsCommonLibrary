@@ -4,10 +4,10 @@
     {
         public Interval(double Start, bool IsStartInclusive, double End, bool IsEndInclusive)
         {
-            this._Start = Start;
-            this._End = End;
-            this._IsStartInclusive = IsStartInclusive;
-            this._IsEndInclusive = IsEndInclusive;
+            this.Start = Start;
+            this.End = End;
+            this.IsStartInclusive = IsStartInclusive;
+            this.IsEndInclusive = IsEndInclusive;
         }
 
         public int Compare(double Value)
@@ -23,44 +23,12 @@
             return 0;
         }
 
-        private readonly double _Start;
+        public double Start { get; }
 
-        public double Start
-        {
-            get
-            {
-                return this._Start;
-            }
-        }
+        public double End { get; }
 
-        private readonly double _End;
+        public bool IsStartInclusive { get; }
 
-        public double End
-        {
-            get
-            {
-                return this._End;
-            }
-        }
-
-        private readonly bool _IsStartInclusive;
-
-        public bool IsStartInclusive
-        {
-            get
-            {
-                return this._IsStartInclusive;
-            }
-        }
-
-        private readonly bool _IsEndInclusive;
-
-        public bool IsEndInclusive
-        {
-            get
-            {
-                return this._IsEndInclusive;
-            }
-        }
+        public bool IsEndInclusive { get; }
     }
 }

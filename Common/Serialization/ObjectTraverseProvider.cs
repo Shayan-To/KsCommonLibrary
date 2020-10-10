@@ -16,18 +16,10 @@ namespace Ks.Common
     {
         public PropertyTraverseCurrent(PropertyTraverseHandler Handler)
         {
-            this._Handler = Handler;
+            this.Handler = Handler;
         }
 
-        private readonly PropertyTraverseHandler _Handler;
-
-        public PropertyTraverseHandler Handler
-        {
-            get
-            {
-                return this._Handler;
-            }
-        }
+        public PropertyTraverseHandler Handler { get; }
     }
 
     public interface PropertyTraverseProcessor

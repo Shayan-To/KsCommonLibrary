@@ -233,7 +233,7 @@ namespace Ks.Common
             public Key(ListWithKeys<T> List, Func<T, object> KeySelector)
             {
                 this.List = List;
-                this._KeySelector = KeySelector;
+                this.KeySelector = KeySelector;
             }
 
             public static Condition operator ==(Key Key, object KeyValue)
@@ -255,29 +255,13 @@ namespace Ks.Common
 
             public void Destroy()
             {
-                this._IsKeyDestroyed = true;
+                this.IsKeyDestroyed = true;
                 this.List.DestroyKey(this);
             }
 
-            private bool _IsKeyDestroyed;
+            public bool IsKeyDestroyed { get; private set; }
 
-            public bool IsKeyDestroyed
-            {
-                get
-                {
-                    return this._IsKeyDestroyed;
-                }
-            }
-
-            private readonly Func<T, object> _KeySelector;
-
-            public Func<T, object> KeySelector
-            {
-                get
-                {
-                    return this._KeySelector;
-                }
-            }
+            public Func<T, object> KeySelector { get; }
 
             protected readonly ListWithKeys<T> List;
         }
@@ -290,7 +274,7 @@ namespace Ks.Common
         {
             public Key(ListWithKeys<T> List, Func<T, TK> KeySelector) : base(List, V => KeySelector.Invoke(V))
             {
-                this._KeySelector = KeySelector;
+                this.KeySelector = KeySelector;
             }
 
             public static Condition<TK> operator ==(Key<TK> Key, TK KeyValue)
@@ -305,73 +289,33 @@ namespace Ks.Common
                 return new Condition<TK>(Key, KeyValue);
             }
 
-            private readonly Func<T, TK> _KeySelector;
-
-            public new Func<T, TK> KeySelector
-            {
-                get
-                {
-                    return this._KeySelector;
-                }
-            }
+            public new Func<T, TK> KeySelector { get; }
         }
 
         public struct Condition<TK>
         {
             public Condition(Key<TK> Key, TK KeyValue)
             {
-                this._Key = Key;
-                this._KeyValue = KeyValue;
+                this.Key = Key;
+                this.KeyValue = KeyValue;
             }
 
-            private readonly Key<TK> _Key;
+            public Key<TK> Key { get; }
 
-            public Key<TK> Key
-            {
-                get
-                {
-                    return this._Key;
-                }
-            }
-
-            private readonly TK _KeyValue;
-
-            public TK KeyValue
-            {
-                get
-                {
-                    return this._KeyValue;
-                }
-            }
+            public TK KeyValue { get; }
         }
 
         public struct Condition
         {
             public Condition(Key Key, object KeyValue)
             {
-                this._Key = Key;
-                this._KeyValue = KeyValue;
+                this.Key = Key;
+                this.KeyValue = KeyValue;
             }
 
-            private readonly Key _Key;
+            public Key Key { get; }
 
-            public Key Key
-            {
-                get
-                {
-                    return this._Key;
-                }
-            }
-
-            private readonly object _KeyValue;
-
-            public object KeyValue
-            {
-                get
-                {
-                    return this._KeyValue;
-                }
-            }
+            public object KeyValue { get; }
         }
     }
 }

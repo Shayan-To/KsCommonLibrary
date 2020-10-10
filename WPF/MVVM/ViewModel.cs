@@ -7,17 +7,17 @@ namespace Ks.Common.MVVM
     {
         public ViewModel(KsApplication KsApplication)
         {
-            this._KsApplicationBase = KsApplication;
-            this._Metadata = this.GetMetadata();
+            this.KsApplicationBase = KsApplication;
+            this.Metadata = this.GetMetadata();
         }
 
         public ViewModel()
         {
             Verify.True(KsApplication.IsInDesignMode, "Test constructor should not be called from runtime.");
 
-            this._Metadata = this.GetMetadata();
-            if (this._Metadata.KsApplicationType != null)
-                this._KsApplicationBase = (KsApplication) this.Metadata.KsApplicationType.CreateInstance();
+            this.Metadata = this.GetMetadata();
+            if (this.Metadata.KsApplicationType != null)
+                this.KsApplicationBase = (KsApplication) this.Metadata.KsApplicationType.CreateInstance();
         }
 
         private ViewModelMetadataAttribute GetMetadata()
@@ -62,15 +62,7 @@ namespace Ks.Common.MVVM
             }
         }
 
-        private readonly KsApplication _KsApplicationBase;
-
-        public KsApplication KsApplicationBase
-        {
-            get
-            {
-                return this._KsApplicationBase;
-            }
-        }
+        public KsApplication KsApplicationBase { get; }
 
         private NavigationFrame _NavigationFrame;
 
@@ -86,15 +78,7 @@ namespace Ks.Common.MVVM
             }
         }
 
-        private readonly ViewModelMetadataAttribute _Metadata;
-
-        public ViewModelMetadataAttribute Metadata
-        {
-            get
-            {
-                return this._Metadata;
-            }
-        }
+        public ViewModelMetadataAttribute Metadata { get; }
 
         public Type Type
         {

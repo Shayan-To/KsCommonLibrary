@@ -252,15 +252,7 @@ namespace Ks.Common
             this.GetImpl<object>(Name, new CNullable<object>(Obj), false);
         }
 
-        private readonly SerializerCollection _Serializers = new SerializerCollection();
-
-        public SerializerCollection Serializers
-        {
-            get
-            {
-                return this._Serializers;
-            }
-        }
+        public SerializerCollection Serializers { get; } = new SerializerCollection();
 
         private readonly FormatterSetProxy SetProxy;
         private readonly FormatterGetProxy GetProxy;

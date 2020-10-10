@@ -8,8 +8,8 @@ namespace Ks.Common
     {
         public MultiDictionaryList(MultiDictionary<TKey, TValue> Parent, TKey Key, List<TValue> List)
         {
-            this._Parent = Parent;
-            this._Key = Key;
+            this.Parent = Parent;
+            this.Key = Key;
             this.List = List;
             this.Version = Parent.Version;
         }
@@ -243,25 +243,9 @@ namespace Ks.Common
             }
         }
 
-        private readonly MultiDictionary<TKey, TValue> _Parent;
+        public MultiDictionary<TKey, TValue> Parent { get; }
 
-        public MultiDictionary<TKey, TValue> Parent
-        {
-            get
-            {
-                return this._Parent;
-            }
-        }
-
-        private readonly TKey _Key;
-
-        public TKey Key
-        {
-            get
-            {
-                return this._Key;
-            }
-        }
+        public TKey Key { get; }
 
         private byte Version;
         internal List<TValue> List;

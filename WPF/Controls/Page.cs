@@ -25,18 +25,6 @@ namespace Ks.Common.Controls
             }
         }
 
-        private MVVM.INavigationView _ParentView;
-
-        internal MVVM.INavigationView ParentView
-        {
-            get
-            {
-                return this._ParentView;
-            }
-            set
-            {
-                this._ParentView = value;
-            }
-        }
+        internal MVVM.INavigationView ParentView { get; set; }
     }
 }

@@ -133,19 +133,7 @@ namespace Ks.Common.MVVM
             }
         }
 
-        private bool _AssumeSettingOfCollectionAsReset = true;
-
-        public bool AssumeSettingOfCollectionAsReset
-        {
-            get
-            {
-                return this._AssumeSettingOfCollectionAsReset;
-            }
-            set
-            {
-                this._AssumeSettingOfCollectionAsReset = value;
-            }
-        }
+        public bool AssumeSettingOfCollectionAsReset { get; set; } = true;
 
         private readonly List<object> Clone = new List<object>();
         private readonly NotifyCollectionChangedEventHandler _Collection_CollectionChanged;
@@ -155,17 +143,9 @@ namespace Ks.Common.MVVM
     {
         public ElementEventArgs(T Element)
         {
-            this._Element = Element;
+            this.Element = Element;
         }
 
-        private readonly T _Element;
-
-        public T Element
-        {
-            get
-            {
-                return this._Element;
-            }
-        }
+        public T Element { get; }
     }
 }

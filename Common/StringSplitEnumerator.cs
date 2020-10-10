@@ -8,10 +8,10 @@ namespace Ks.Common
     {
         public StringSplitEnumerator(string Str, StringSplitOptions Options, params char[] Chars)
         {
-            this._String = Str;
+            this.String = Str;
             this._Chars = (char[]) Chars.Clone();
             Array.Sort(this._Chars);
-            this._Options = Options;
+            this.Options = Options;
             this.Reset();
         }
 
@@ -22,12 +22,12 @@ namespace Ks.Common
 
         public bool MoveNext()
         {
-            if (this.Index == this._String.Length)
+            if (this.Index == this.String.Length)
                 return false;
 
             var Start = this.Index;
             this.SkipText();
-            this._Current = this._String.Substring(Start, this.Index - Start);
+            this.Current = this.String.Substring(Start, this.Index - Start);
             this.SkipDelimiter();
 
             return true;
@@ -37,7 +37,7 @@ namespace Ks.Common
         {
             this.Index = 0;
             this.GiveRest = false;
-            if (this._Options == StringSplitOptions.RemoveEmptyEntries)
+            if (this.Options == StringSplitOptions.RemoveEmptyEntries)
                 this.SkipDelimiter();
         }
 
@@ -48,9 +48,9 @@ namespace Ks.Common
 
         private void SkipDelimiter()
         {
-            if (this._Options == StringSplitOptions.RemoveEmptyEntries)
+            if (this.Options == StringSplitOptions.RemoveEmptyEntries)
             {
-                while (this.Index != this._String.Length && Array.BinarySearch(this._Chars, this._String[this.Index]) != -1)
+                while (this.Index != this.String.Length && Array.BinarySearch(this._Chars, this.String[this.Index]) != -1)
                     this.Index += 1;
             }
         }
@@ -58,8 +58,8 @@ namespace Ks.Common
         private void SkipText()
         {
             if (this.GiveRest)
-                this.Index = this._String.Length;
-            while (this.Index != this._String.Length && Array.BinarySearch(this._Chars, this._String[this.Index]) == -1)
+                this.Index = this.String.Length;
+            while (this.Index != this.String.Length && Array.BinarySearch(this._Chars, this.String[this.Index]) == -1)
                 this.Index += 1;
         }
 
@@ -67,33 +67,17 @@ namespace Ks.Common
         {
         }
 
-        private string _Current;
-
-        public string Current
-        {
-            get
-            {
-                return this._Current;
-            }
-        }
+        public string Current { get; private set; }
 
         object IEnumerator.Current
         {
             get
             {
-                return this._Current;
+                return this.Current;
             }
         }
 
-        private readonly string _String;
-
-        public string String
-        {
-            get
-            {
-                return this._String;
-            }
-        }
+        public string String { get; }
 
         private readonly char[] _Chars;
 
@@ -105,15 +89,7 @@ namespace Ks.Common
             }
         }
 
-        private readonly StringSplitOptions _Options;
-
-        public StringSplitOptions Options
-        {
-            get
-            {
-                return this._Options;
-            }
-        }
+        public StringSplitOptions Options { get; }
 
         private int Index;
         private bool GiveRest;

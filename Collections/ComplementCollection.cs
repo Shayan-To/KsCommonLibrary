@@ -183,7 +183,7 @@ namespace Ks.Common
         internal ChildComplementCollection(ComplementingCollectionMaster<T> Master)
         {
             this.InnerList = new List<T>();
-            this._Master = Master;
+            this.Master = Master;
         }
 
         private readonly List<T> InnerList;
@@ -202,15 +202,7 @@ namespace Ks.Common
             INotifyCollectionChanged_CollectionChanged?.Invoke(this, E);
         }
 
-        private readonly ComplementingCollectionMaster<T> _Master;
-
-        public ComplementingCollectionMaster<T> Master
-        {
-            get
-            {
-                return this._Master;
-            }
-        }
+        public ComplementingCollectionMaster<T> Master { get; }
 
         public int Count
         {
@@ -270,17 +262,17 @@ namespace Ks.Common
 
         public void Add(T Item)
         {
-            this._Master.AddC(Item, this);
+            this.Master.AddC(Item, this);
         }
 
         public void Clear()
         {
-            this._Master.ClearC(this);
+            this.Master.ClearC(this);
         }
 
         public bool Remove(T Item)
         {
-            return this._Master.RemoveC(Item, this);
+            return this.Master.RemoveC(Item, this);
         }
     }
 }

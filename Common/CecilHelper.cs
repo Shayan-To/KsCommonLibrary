@@ -131,15 +131,7 @@ namespace Ks.Common
             }
         }
 
-        private static readonly CecilHelper _Instance = new CecilHelper();
-
-        public static CecilHelper Instance
-        {
-            get
-            {
-                return _Instance;
-            }
-        }
+        public static CecilHelper Instance { get; } = new CecilHelper();
 
         private readonly Mono.Cecil.DefaultAssemblyResolver Resolver = new Mono.Cecil.DefaultAssemblyResolver();
         private readonly HashSet<Mono.Cecil.AssemblyDefinition> Assemblies = new HashSet<Mono.Cecil.AssemblyDefinition>();

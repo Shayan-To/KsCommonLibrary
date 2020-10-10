@@ -13,10 +13,10 @@ namespace Ks.Common
         {
             this.StopWatch.Start();
 
-            this._Task = Task;
-            this._MinDelay = MinDelay;
-            this._MaxDelay = (MaxDelay == TimeSpan.Zero) ? TimeSpan.MaxValue : MaxDelay;
-            this._InactivityTime = InactivityTime;
+            this.Task = Task;
+            this.MinDelay = MinDelay;
+            this.MaxDelay = (MaxDelay == TimeSpan.Zero) ? TimeSpan.MaxValue : MaxDelay;
+            this.InactivityTime = InactivityTime;
 
             this.TaskThread = new System.Threading.Thread(this.TaskThreadProcedure) { IsBackground = true, Name = nameof(TaskDelayer) + " thread - " + this.GetHashCode().ToString() };
             this.TaskThread.Start();
@@ -212,7 +212,7 @@ namespace Ks.Common
         {
             if (!this.IsDisposed)
             {
-                this._IsDisposed = true;
+                this.IsDisposed = true;
 
                 if (Disposing)
                 {
@@ -251,55 +251,15 @@ namespace Ks.Common
             GC.SuppressFinalize(this);
         }
 
-        private bool _IsDisposed;
+        public bool IsDisposed { get; private set; }
 
-        public bool IsDisposed
-        {
-            get
-            {
-                return this._IsDisposed;
-            }
-        }
+        public Action Task { get; }
 
-        private readonly Action _Task;
+        public TimeSpan MinDelay { get; }
 
-        public Action Task
-        {
-            get
-            {
-                return this._Task;
-            }
-        }
+        public TimeSpan MaxDelay { get; }
 
-        private readonly TimeSpan _MinDelay;
-
-        public TimeSpan MinDelay
-        {
-            get
-            {
-                return this._MinDelay;
-            }
-        }
-
-        private readonly TimeSpan _MaxDelay;
-
-        public TimeSpan MaxDelay
-        {
-            get
-            {
-                return this._MaxDelay;
-            }
-        }
-
-        private readonly TimeSpan _InactivityTime;
-
-        public TimeSpan InactivityTime
-        {
-            get
-            {
-                return this._InactivityTime;
-            }
-        }
+        public TimeSpan InactivityTime { get; }
 
         private bool IsTaskPending = false;
         private bool IsInstantSet = false;

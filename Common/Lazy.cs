@@ -6,7 +6,7 @@ namespace Ks.Common
     {
         public Lazy(Func<TRes> Func)
         {
-            this._Func = Func;
+            this.Func = Func;
             this._Value = default;
             this.ValueCalculated = default;
         }
@@ -17,15 +17,7 @@ namespace Ks.Common
             this.ValueCalculated = false;
         }
 
-        private readonly Func<TRes> _Func;
-
-        public Func<TRes> Func
-        {
-            get
-            {
-                return this._Func;
-            }
-        }
+        public Func<TRes> Func { get; }
 
         private TRes _Value;
         private bool ValueCalculated;
@@ -36,7 +28,7 @@ namespace Ks.Common
             {
                 if (!this.ValueCalculated)
                 {
-                    this._Value = this._Func.Invoke();
+                    this._Value = this.Func.Invoke();
                     this.ValueCalculated = true;
                 }
 

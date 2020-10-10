@@ -4,7 +4,7 @@
     {
         public WordReader(System.IO.TextReader TextReader)
         {
-            this._TextReader = TextReader;
+            this.TextReader = TextReader;
         }
 
         public string ReadWord()
@@ -54,15 +54,7 @@
             return Res;
         }
 
-        private readonly System.IO.TextReader _TextReader;
-
-        public System.IO.TextReader TextReader
-        {
-            get
-            {
-                return this._TextReader;
-            }
-        }
+        public System.IO.TextReader TextReader { get; }
 
         private readonly char[] Buffer = new char[4096];
         private int BufferSize = 0;

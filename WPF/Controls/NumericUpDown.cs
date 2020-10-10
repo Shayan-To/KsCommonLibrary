@@ -15,39 +15,23 @@ namespace Ks.Common.Controls
 
         public NumericUpDown()
         {
-            this._IncrementCommand = new DelegateCommand(this.OnIncrementCommand);
-            this._DecrementCommand = new DelegateCommand(this.OnDecrementCommand);
+            this.IncrementCommand = new DelegateCommand(this.OnIncrementCommand);
+            this.DecrementCommand = new DelegateCommand(this.OnDecrementCommand);
         }
-
-        private DelegateCommand _IncrementCommand;
 
         private void OnIncrementCommand()
         {
             this.Value += this.Step;
         }
 
-        public DelegateCommand IncrementCommand
-        {
-            get
-            {
-                return this._IncrementCommand;
-            }
-        }
-
-        private DelegateCommand _DecrementCommand;
+        public DelegateCommand IncrementCommand { get; }
 
         private void OnDecrementCommand()
         {
             this.Value -= this.Step;
         }
 
-        public DelegateCommand DecrementCommand
-        {
-            get
-            {
-                return this._DecrementCommand;
-            }
-        }
+        public DelegateCommand DecrementCommand { get; }
 
         public static readonly DependencyProperty StepProperty = DependencyProperty.Register("Step", typeof(double), typeof(NumericUpDown), new PropertyMetadata(1.0, Step_Changed, Step_Coerce));
 

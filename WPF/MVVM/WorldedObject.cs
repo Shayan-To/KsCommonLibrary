@@ -4,17 +4,9 @@
     {
         public WorldedObject(TWorld World)
         {
-            this._World = World;
+            this.World = World;
         }
 
-        private readonly TWorld _World;
-
-        public TWorld World
-        {
-            get
-            {
-                return this._World;
-            }
-        }
+        public TWorld World { get; }
     }
 }

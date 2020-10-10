@@ -214,34 +214,12 @@ namespace Ks.Common.Controls
         }
 
         internal const string PopupsPanelName = "PART_PopupsPanel";
-        private PopupPanel _PopupsPanel;
 
-        internal PopupPanel PopupsPanel
-        {
-            get
-            {
-                return this._PopupsPanel;
-            }
-            private set
-            {
-                this._PopupsPanel = value;
-            }
-        }
+        internal PopupPanel PopupsPanel { get; private set; }
 
         internal const string ContentPresenterName = "PART_ContentPresenter";
-        private ContentPresenter _ContentPresenter;
 
-        private ContentPresenter ContentPresenter
-        {
-            get
-            {
-                return this._ContentPresenter;
-            }
-            set
-            {
-                this._ContentPresenter = value;
-            }
-        }
+        private ContentPresenter ContentPresenter { get; set; }
 
         private readonly CreateInstanceDictionary<int, List<Popup>> ShelterLayers = CreateInstanceDictionary.Create(new SortedDictionary<int, List<Popup>>());
         private readonly Dictionary<Popup, PopupShelter> PopupShelterDic = new Dictionary<Popup, PopupShelter>();

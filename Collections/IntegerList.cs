@@ -13,40 +13,16 @@ namespace Ks.Common
         /// <param name="Step">The step by which the sequence goes.</param>
         public IntegerList(int Start, int End, int Step = 1)
         {
-            this._Start = Start;
-            this._Step = Step;
-            this._End = (End - Utilities.Math.PosMod(End - Start, Step)) + Step;
+            this.Start = Start;
+            this.Step = Step;
+            this.End = (End - Utilities.Math.PosMod(End - Start, Step)) + Step;
         }
 
-        private readonly int _Start;
+        public int Start { get; }
 
-        public int Start
-        {
-            get
-            {
-                return this._Start;
-            }
-        }
+        public int End { get; }
 
-        private readonly int _End;
-
-        public int End
-        {
-            get
-            {
-                return this._End;
-            }
-        }
-
-        private readonly int _Step;
-
-        public int Step
-        {
-            get
-            {
-                return this._Step;
-            }
-        }
+        public int Step { get; }
 
         public int this[int Index]
         {
@@ -54,9 +30,9 @@ namespace Ks.Common
             {
                 int Res;
 
-                Res = this._Start + (Index * this._Step);
+                Res = this.Start + (Index * this.Step);
 
-                if (Res >= this._End || Res < this._Start)
+                if (Res >= this.End || Res < this.Start)
                     throw new ArgumentOutOfRangeException(nameof(Index));
 
                 return Res;
@@ -71,26 +47,26 @@ namespace Ks.Common
         {
             get
             {
-                return (this._End - this._Start) / this._Step;
+                return (this.End - this.Start) / this.Step;
             }
         }
 
         public int IndexOf(int item)
         {
             if (this.Contains(item))
-                return (item - this._Start) / this._Step;
+                return (item - this.Start) / this.Step;
             return -1;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Contains(int Item)
         {
-            return Item >= this._Start && Item < this._End && ((Item - this._Start) % this._Step) == 0;
+            return Item >= this.Start && Item < this.End && ((Item - this.Start) % this.Step) == 0;
         }
 
         public void CopyTo(int[] Array, int ArrayIndex)
         {
-            for (var I = this._Start; I < this._End; I += this._Step)
+            for (var I = this.Start; I < this.End; I += this.Step)
             {
                 Array[ArrayIndex] = I;
                 ArrayIndex += 1;
@@ -99,7 +75,7 @@ namespace Ks.Common
 
         public IEnumerator<int> GetEnumerator()
         {
-            for (var I = this._Start; I < this._End; I += this._Step)
+            for (var I = this.Start; I < this.End; I += this.Step)
                 yield return I;
         }
 
