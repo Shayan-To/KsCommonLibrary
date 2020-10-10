@@ -107,7 +107,7 @@ namespace Ks.Common
             }
         }
 
-        const int PageLength = 9;
+        private const int PageLength = 9;
 
         private int ChoiceOffset = 0;
 
