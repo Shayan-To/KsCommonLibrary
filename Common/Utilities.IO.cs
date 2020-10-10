@@ -26,26 +26,20 @@ namespace Ks.Common
             public static string DownloadURL(string URL)
             {
                 var Request = System.Net.WebRequest.Create(URL);
-                using (var Response = Request.GetResponse())
-                using (var Reader = new SIO.StreamReader(Response.GetResponseStream())
-)
-                {
-                    var Res = Reader.ReadToEnd();
+                using var Response = Request.GetResponse();
+                using var Reader = new SIO.StreamReader(Response.GetResponseStream());
+                var Res = Reader.ReadToEnd();
 
-                    return Res;
-                }
+                return Res;
             }
 
             public static void DownloadURLToFile(string URL, string Path)
             {
                 var Request = System.Net.WebRequest.Create(URL);
-                using (var Response = Request.GetResponse())
-                using (var WStream = Response.GetResponseStream())
-                using (var FStream = SIO.File.Open(Path, SIO.FileMode.CreateNew, SIO.FileAccess.Write, SIO.FileShare.Read)
-)
-                {
-                    FStream.Write(WStream);
-                }
+                using var Response = Request.GetResponse();
+                using var WStream = Response.GetResponseStream();
+                using var FStream = SIO.File.Open(Path, SIO.FileMode.CreateNew, SIO.FileAccess.Write, SIO.FileShare.Read);
+                FStream.Write(WStream);
             }
 
             /// <summary>

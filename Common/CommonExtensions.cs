@@ -278,19 +278,16 @@ namespace Ks.Common
 
         public static bool Equals<T1, T2>(this IEnumerable<T1> Self, IEnumerable<T2> Other, Func<T1, T2, bool> Comparison)
         {
-            using (var Enum1 = Self.GetEnumerator())
-            using (var Enum2 = Other.GetEnumerator()
-)
+            using var Enum1 = Self.GetEnumerator();
+            using var Enum2 = Other.GetEnumerator();
+            while (true)
             {
-                while (true)
-                {
-                    if (!Enum1.MoveNext())
-                        return !Enum2.MoveNext();
-                    if (!Enum2.MoveNext())
-                        return false;
-                    if (!Comparison.Invoke(Enum1.Current, Enum2.Current))
-                        return false;
-                }
+                if (!Enum1.MoveNext())
+                    return !Enum2.MoveNext();
+                if (!Enum2.MoveNext())
+                    return false;
+                if (!Comparison.Invoke(Enum1.Current, Enum2.Current))
+                    return false;
             }
         }
 
@@ -1337,14 +1334,12 @@ namespace Ks.Common
 
         public static byte[] ComputeHash(this System.Security.Cryptography.HashAlgorithm Self, byte[] Data, int Index, int Length, byte[] Result = null)
         {
-            using (var Stream = Result == null ? new System.IO.MemoryStream() : new System.IO.MemoryStream(Result))
+            using var Stream = Result == null ? new System.IO.MemoryStream() : new System.IO.MemoryStream(Result);
+            using (var CryptoStream = new System.Security.Cryptography.CryptoStream(Stream, Self, System.Security.Cryptography.CryptoStreamMode.Write))
             {
-                using (var CryptoStream = new System.Security.Cryptography.CryptoStream(Stream, Self, System.Security.Cryptography.CryptoStreamMode.Write))
-                {
-                    CryptoStream.Write(Data, Index, Length);
-                }
-                return Stream.ToArray();
+                CryptoStream.Write(Data, Index, Length);
             }
+            return Stream.ToArray();
         }
 
         public static byte[] ComputeHash(this System.Security.Cryptography.HashAlgorithm Self, byte[] Data, byte[] Result = null)

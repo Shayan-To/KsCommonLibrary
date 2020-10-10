@@ -56,13 +56,11 @@ namespace Ks.Common
             var FIY = this.FIntervals[(int) Orientation.Y];
 
             this.Graphics.Clear(this.Form.BackColor);
-            using (var Pen = new Pen(ConvertColor(BorderRectangleColor)))
-            {
-                this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start, FIY.Start, Orientation.X), CreatePoint(FIX.Start + FIX.Length, FIY.Start, Orientation.X));
-                this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start, FIY.Start, Orientation.X), CreatePoint(FIX.Start, FIY.Start + FIY.Length, Orientation.X));
-                this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start + FIX.Length, FIY.Start + FIY.Length, Orientation.X), CreatePoint(FIX.Start + FIX.Length, FIY.Start, Orientation.X));
-                this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start + FIX.Length, FIY.Start + FIY.Length, Orientation.X), CreatePoint(FIX.Start, FIY.Start + FIY.Length, Orientation.X));
-            }
+            using var Pen = new Pen(ConvertColor(BorderRectangleColor));
+            this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start, FIY.Start, Orientation.X), CreatePoint(FIX.Start + FIX.Length, FIY.Start, Orientation.X));
+            this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start, FIY.Start, Orientation.X), CreatePoint(FIX.Start, FIY.Start + FIY.Length, Orientation.X));
+            this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start + FIX.Length, FIY.Start + FIY.Length, Orientation.X), CreatePoint(FIX.Start + FIX.Length, FIY.Start, Orientation.X));
+            this.Graphics.DrawLine(Pen, CreatePoint(FIX.Start + FIX.Length, FIY.Start + FIY.Length, Orientation.X), CreatePoint(FIX.Start, FIY.Start + FIY.Length, Orientation.X));
         }
 
         public void DrawFunction(Color Color, IReadOnlyList<double> Ys, double XStart, double XStep)
@@ -81,10 +79,8 @@ namespace Ks.Common
                 FPoints[I] = P;
             }
 
-            using (var Pen = new Pen(ConvertColor(Color)))
-            {
-                this.Graphics.DrawLines(Pen, FPoints);
-            }
+            using var Pen = new Pen(ConvertColor(Color));
+            this.Graphics.DrawLines(Pen, FPoints);
         }
 
         public void DrawFunction(Color Color, Func<double, double> Func)
@@ -99,10 +95,8 @@ namespace Ks.Common
                 Points[I] = P;
             }
 
-            using (var Pen = new Pen(ConvertColor(Color)))
-            {
-                this.Graphics.DrawLines(Pen, Points);
-            }
+            using var Pen = new Pen(ConvertColor(Color));
+            this.Graphics.DrawLines(Pen, Points);
         }
 
         public void DrawSlope(Color Color, double Value)
@@ -120,10 +114,8 @@ namespace Ks.Common
             var X2 = X + (100 * Math.Cos(A));
             var Y2 = Y + (100 * Math.Sin(A));
 
-            using (var Pen = new Pen(ConvertColor(Color)))
-            {
-                this.Graphics.DrawLine(Pen, CreatePoint(X, Y, Orientation.X), CreatePoint(X2, Y2, Orientation.X));
-            }
+            using var Pen = new Pen(ConvertColor(Color));
+            this.Graphics.DrawLine(Pen, CreatePoint(X, Y, Orientation.X), CreatePoint(X2, Y2, Orientation.X));
         }
 
         public void DrawPoint(Color Color, double Value, Orientation Orientation, string Caption = "")
@@ -132,14 +124,10 @@ namespace Ks.Common
             var FV = ConvertValue(Value, Orientation);
 
             var Col = ConvertColor(Color);
-            using (var Pen = new Pen(ConvertColor(Color)))
-            {
-                this.Graphics.DrawLine(Pen, this.CreatePoint(FV, FIO.Start, Orientation), this.CreatePoint(FV, FIO.Start + FIO.Length, Orientation));
-            }
-            using (var Brush = new SolidBrush(ConvertColor(Color)))
-            {
-                this.Graphics.DrawString(Caption, SystemFonts.DefaultFont, Brush, CreatePoint(FV, FIO.Start, Orientation));
-            }
+            using var Pen = new Pen(ConvertColor(Color));
+            using var Brush = new SolidBrush(ConvertColor(Color));
+            this.Graphics.DrawLine(Pen, this.CreatePoint(FV, FIO.Start, Orientation), this.CreatePoint(FV, FIO.Start + FIO.Length, Orientation));
+            this.Graphics.DrawString(Caption, SystemFonts.DefaultFont, Brush, CreatePoint(FV, FIO.Start, Orientation));
         }
 
         private Point CreatePoint(double X, double Y, Orientation Orientation)
