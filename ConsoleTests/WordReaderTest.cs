@@ -10,12 +10,11 @@ namespace Ks.ConsoleTests
         {
             var Reader = new WordReader(Console.In);
 
-            do
+            while (true)
             {
                 var W = Reader.ReadWord();
                 Console.WriteLine(W);
             }
-            while (true);
         }
     }
 }

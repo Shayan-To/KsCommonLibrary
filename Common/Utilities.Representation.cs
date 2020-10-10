@@ -26,7 +26,7 @@ namespace Ks
                             break;
                     }
 
-                    do
+                    while (true)
                     {
                         var Prefix = Prefixes[I];
                         var C = Prefix.AcceptInterval.Compare(System.Math.Abs(Value));
@@ -44,7 +44,6 @@ namespace Ks
                         else
                             break;
                     }
-                    while (true);
 
                     return (Value, Prefixes[I].Prefix);
                 }

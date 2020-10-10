@@ -234,7 +234,7 @@ namespace Ks
 
                     var Graphics = this.Parent.Graphics;
 
-                    do
+                    while (true)
                     {
                         await Task.Delay(this.Interval);
                         if (!this.IsDrawing)
@@ -245,7 +245,6 @@ namespace Ks
                             D.Draw(Graphics);
                         }
                     }
-                    while (true);
 
                     this.IsDrawing = false;
                 }

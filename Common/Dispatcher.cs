@@ -99,14 +99,13 @@ namespace Ks
                 this._IsRunning = true;
 
                 var List = new List<(Action Action, int Id)>();
-                do
+                while (true)
                 {
                     (Action Action, int Id) AI;
                     if (!this.Queue.TryTake(out AI))
                         break;
                     List.Add(AI);
                 }
-                while (true);
 
                 foreach (var AI in List)
                     this.RunAction(AI);

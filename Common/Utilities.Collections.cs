@@ -44,9 +44,8 @@ namespace Ks
 
                 public static IEnumerable<Void> InfiniteEnumerable()
                 {
-                    do
-                        yield return null;
-                    while (true);
+                    while (true)
+                        yield return default;
                 }
 
                 public static JoinElement<T, T, TKey>[] Join<T, TKey>(IEnumerable<T> Items1, IEnumerable<T> Items2, Func<T, TKey> KeySelector, JoinDirection JoinType)

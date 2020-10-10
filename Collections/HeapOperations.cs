@@ -17,7 +17,7 @@ namespace Ks
 
             public void Heapify(IList<T> List, int Count, int Index)
             {
-                do
+                while (true)
                 {
                     var MinIndex = LeftChild(Index);
                     if (MinIndex >= Count)
@@ -45,7 +45,6 @@ namespace Ks
                     else
                         break;
                 }
-                while (true);
             }
 
             public void MakeHeap(IList<T> List, int Count)
@@ -56,7 +55,7 @@ namespace Ks
 
             public void BubbleUp(IList<T> List, int Count, int Index)
             {
-                do
+                while (true)
                 {
                     if (Index == 0)
                         break;
@@ -72,7 +71,6 @@ namespace Ks
                     else
                         break;
                 }
-                while (true);
             }
 
             public static int Parent(int Index)

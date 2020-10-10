@@ -98,7 +98,7 @@ if (this.LastActivityTime > Now)
                 Console.WriteLine("{0}: Started.", nameof(TaskThreadProcedure));
 #endif
                 // ToDo Prove that we need two wait handles. (Have done it once.)
-                do
+                while (true)
                 {
 #if WriteDebugInfo
                     Console.WriteLine("{0}: {1}, getting into wait.", nameof(TaskThreadProcedure), nameof(this.TaskWaitHandle));
@@ -116,7 +116,7 @@ if (this.LastActivityTime > Now)
                         break;
                     }
 
-                    do
+                    while (true)
                     {
                         var WaitTime = TimeSpan.Zero;
                         var ShouldRunTask = false;
@@ -205,9 +205,7 @@ if (this.LastActivityTime > Now)
 #endif
                         }
                     }
-                    while (true);
                 }
-                while (true);
             }
 
             protected virtual void Dispose(bool Disposing)

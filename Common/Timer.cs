@@ -25,14 +25,13 @@ namespace Ks
                 if (this.RunAtStart)
                     this.Callback.Invoke();
 
-                do
+                while (true)
                 {
                     await Task.Delay(this.Interval);
                     if (!this.IsRunning)
                         break;
                     this.Callback.Invoke();
                 }
-                while (true);
             }
 
             public void Stop()

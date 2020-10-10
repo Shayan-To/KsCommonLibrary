@@ -11,7 +11,7 @@
 
             public string ReadWord()
             {
-                do
+                while (true)
                 {
                     if (this.Index == this.BufferSize)
                     {
@@ -25,11 +25,10 @@
                         break;
                     this.Index += 1;
                 }
-                while (true);
 
                 var Res = "";
                 var StartIndex = this.Index;
-                do
+                while (true)
                 {
                     if (this.Index == this.BufferSize)
                     {
@@ -53,7 +52,6 @@
 
                     this.Index += 1;
                 }
-                while (true);
 
                 return Res;
             }

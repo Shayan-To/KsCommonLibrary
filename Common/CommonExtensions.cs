@@ -283,7 +283,7 @@ namespace Ks
                 using (var Enum2 = Other.GetEnumerator()
 )
                 {
-                    do
+                    while (true)
                     {
                         if (!Enum1.MoveNext())
                             return !Enum2.MoveNext();
@@ -292,7 +292,6 @@ namespace Ks
                         if (!Comparison.Invoke(Enum1.Current, Enum2.Current))
                             return false;
                     }
-                    while (true);
                 }
             }
 
@@ -1206,11 +1205,11 @@ namespace Ks
                 var N = 0;
                 var Buf = default(byte[]);
 
-                do
+                while (true)
                 {
                     Buf = new byte[BufLength];
                     N = 0;
-                    do
+                    while (true)
                     {
                         var T = Self.Read(Buf, N, Buf.Length - N);
                         if (T == 0)
@@ -1219,12 +1218,10 @@ namespace Ks
                         N += T;
                         ProgressCallback?.Invoke(TotalN);
                     }
-                    while (true);
                     if (N != BufLength)
                         break;
                     Arrs.Add(Buf);
                 }
-                while (true);
 
                 var Res = new byte[TotalN];
                 var Offset = 0;
@@ -1246,7 +1243,7 @@ namespace Ks
                     Stream.Seek(Start, System.IO.SeekOrigin.Begin);
 
                 var TotalN = 0;
-                do
+                while (true)
                 {
                     var N = 0;
                     if (Length == -1)
@@ -1265,7 +1262,6 @@ namespace Ks
                             break;
                     }
                 }
-                while (true);
 
                 return TotalN;
             }

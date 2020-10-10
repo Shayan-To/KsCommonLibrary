@@ -44,7 +44,7 @@ namespace Ks
                         return new JsonDictionaryObject(List);
                     }
 
-                    do
+                    while (true)
                     {
                         Token = this.ReadToken();
 #if RelaxedStrings
@@ -61,7 +61,6 @@ namespace Ks
                         if (Token.Value == "}")
                             break;
                     }
-                    while (true);
 
                     return new JsonDictionaryObject(List);
                 }
@@ -77,7 +76,7 @@ namespace Ks
                         return new JsonListObject(List);
                     }
 
-                    do
+                    while (true)
                     {
                         List.Add(this.Parse());
                         Token = this.ReadToken();
@@ -85,7 +84,6 @@ namespace Ks
                         if (Token.Value == "]")
                             break;
                     }
-                    while (true);
 
                     return new JsonListObject(List);
                 }

@@ -207,14 +207,13 @@ namespace Ks
                         return Min;
                     Min = T;
 
-                    do
+                    while (true)
                     {
                         T = (Min - 1) & Min;
                         if (T == 0)
                             return Min << 1;
                         Min = T;
                     }
-                    while (true);
                 }
 
                 public static long LeastPowerOfTwoOnMin(long Min)
@@ -228,14 +227,13 @@ namespace Ks
                         return Min;
                     Min = T;
 
-                    do
+                    while (true)
                     {
                         T = (Min - 1) & Min;
                         if (T == 0)
                             return Min << 1;
                         Min = T;
                     }
-                    while (true);
                 }
 
                 public static int FloorDiv(int A, int B)

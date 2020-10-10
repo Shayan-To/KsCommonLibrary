@@ -13,9 +13,8 @@ namespace Ks
             {
                 Console.TreatControlCAsInput = true;
                 this.OnLoad();
-                do
+                while (true)
                     this.OnKeyPressed(Console.ReadKey(true));
-                while (true);
             }
 
             protected virtual void OnLoad()

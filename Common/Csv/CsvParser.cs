@@ -32,7 +32,7 @@ namespace Ks
                 Res.HasHeaders = HasHeaders;
                 if (HasHeaders)
                 {
-                    do
+                    while (true)
                     {
                         var T = this.ReadToken();
                         var D = T;
@@ -60,7 +60,6 @@ namespace Ks
 
                         throw new ArgumentException("Invalid CSV.");
                     }
-                    while (true);
                 }
 
                 CsvEntry Entry = null;
@@ -68,7 +67,7 @@ namespace Ks
                 var I = 0;
                 var NewEntry = true;
 
-                do
+                while (true)
                 {
                     if (NewEntry)
                     {
@@ -112,7 +111,6 @@ namespace Ks
 
                     throw new ArgumentException("Invalid CSV.");
                 }
-                while (true);
 
                 if (IsLastEntryEmpty)
                     Res.Entries.Remove(Res.Entries.Count - 1);
@@ -164,7 +162,7 @@ namespace Ks
 
                 if (this.ReadChar('"'))
                 {
-                    do
+                    while (true)
                     {
                         if (this.IsFinished())
                             throw new ArgumentException("Invalid CSV.");
@@ -191,17 +189,15 @@ namespace Ks
 
                         Res.Append(this.ReadChar());
                     }
-                    while (true);
                 }
                 else
-                    do
+                    while (true)
                     {
                         var T = this.PeekChar();
                         if (!T.HasValue | (T == this.DelimiterChar) | (T == '\r') | (T == '\n'))
                             break;
                         Res.Append(this.ReadChar());
                     }
-                    while (true);
 
                 return Res.ToString();
             }

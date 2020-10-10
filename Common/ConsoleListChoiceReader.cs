@@ -22,7 +22,7 @@ namespace Ks
             {
                 var Choices = new List<T>();
 
-                do
+                while (true)
                 {
                     Choices.Clear();
                     for (var I = 0; I < PageLength; I++)
@@ -55,7 +55,7 @@ namespace Ks
                     Console.WriteLine();
                     Console.WriteLine();
                     ConsoleUtilities.WriteColored("Select your choice:", ConsoleColor.Green);
-                    do
+                    while (true)
                     {
                         var Key = Console.ReadKey(true).Key;
                         if ((Key == ConsoleKey.LeftArrow) & PrevPagePossible)
@@ -93,9 +93,7 @@ namespace Ks
                             return Choices[N - 1];
                         }
                     }
-                    while (true);
                 }
-                while (true);
             }
 
             const int PageLength = 9;
