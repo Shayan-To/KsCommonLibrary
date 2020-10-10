@@ -13,8 +13,7 @@ namespace Ks.Common
         {
             get
             {
-                var argValue = default(T);
-                this.TryGetValue(int.MaxValue, out argValue);
+                this.TryGetValue(int.MaxValue, out var argValue);
                 return this.List.Count;
             }
         }
@@ -23,8 +22,7 @@ namespace Ks.Common
         {
             get
             {
-                var Res = default(T);
-                Verify.TrueArg(this.TryGetValue(Index, out Res), nameof(Index), "Index out of range.");
+                Verify.TrueArg(this.TryGetValue(Index, out var Res), nameof(Index), "Index out of range.");
                 return Res;
             }
         }
@@ -32,8 +30,7 @@ namespace Ks.Common
         public override IEnumerator<T> GetEnumerator()
         {
             var I = 0;
-            var T = default(T);
-            while (this.TryGetValue(I, out T))
+            while (this.TryGetValue(I, out var T))
             {
                 yield return T;
                 I += 1;

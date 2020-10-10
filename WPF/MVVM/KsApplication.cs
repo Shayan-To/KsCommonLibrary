@@ -69,8 +69,7 @@ namespace Ks.Common.MVVM
 
             this.Languages = Languages.AsReadOnly();
 
-            string LangId = null;
-            if (!this.Settings.TryGetValue(nameof(this.Language), out LangId))
+            if (!this.Settings.TryGetValue(nameof(this.Language), out var LangId))
                 LangId = "";
 
             if (!this.Languages.TryGetValue(LangId, out this._Language))
@@ -170,8 +169,7 @@ namespace Ks.Common.MVVM
 
             if (Metadata.IsSingleInstance)
             {
-                ViewModel T = null;
-                if (this.SingleInstanceViewModels.TryGetValue(ViewModelType, out T))
+                if (this.SingleInstanceViewModels.TryGetValue(ViewModelType, out var T))
                     return T;
             }
 

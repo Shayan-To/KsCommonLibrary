@@ -18,8 +18,7 @@ namespace Ks.Common
         {
             if (this.Version != this.Parent.Version)
             {
-                List<TValue> T = null;
-                if (this.Parent.Dic.TryGetValue(this.Key, out T))
+                if (this.Parent.Dic.TryGetValue(this.Key, out var T))
                     this.List = T;
                 else
                     this.List = null;

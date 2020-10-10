@@ -50,9 +50,8 @@ namespace Ks.Common
         public virtual bool Set(TValue Value)
         {
             var Key = this.KeySelector.Invoke(Value);
-            var PValue = default(TValue);
 
-            if (this._Dic.TryGetValue(Key, out PValue))
+            if (this._Dic.TryGetValue(Key, out var PValue))
             {
                 this._Items[this._Items.IndexOf(PValue)] = Value;
                 this._Dic[Key] = Value;
@@ -86,8 +85,7 @@ namespace Ks.Common
 
         public virtual bool RemoveKey(TKey key)
         {
-            var Value = default(TValue);
-            if (!this._Dic.TryGetValue(key, out Value))
+            if (!this._Dic.TryGetValue(key, out var Value))
                 return false;
 
             Assert.True(this._Dic.Remove(key));
@@ -350,8 +348,7 @@ namespace Ks.Common
 
         private bool ICollection_Remove(KeyValuePair<TKey, TValue> item)
         {
-            var V = default(TValue);
-            if (!this.TryGetValue(item.Key, out V))
+            if (!this.TryGetValue(item.Key, out var V))
                 return false;
             if (!object.Equals(V, item.Value))
                 return false;
@@ -380,8 +377,7 @@ namespace Ks.Common
 
         private bool ICollection_Contains(KeyValuePair<TKey, TValue> item)
         {
-            var V = default(TValue);
-            if (!this.TryGetValue(item.Key, out V))
+            if (!this.TryGetValue(item.Key, out var V))
                 return false;
             return object.Equals(V, item.Value);
         }

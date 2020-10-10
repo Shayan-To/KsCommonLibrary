@@ -92,8 +92,7 @@ namespace Ks.Common
 
         private Container AddTypeContainers(ComparableCollection<string> Path, Type TypeInfo)
         {
-            Container C = null;
-            if (this.Containers.TryGetValue(Path, out C))
+            if (this.Containers.TryGetValue(Path, out var C))
             {
                 Debug.Assert(C.TypeInfo == null | TypeInfo == null);
                 if (C.TypeInfo == null)

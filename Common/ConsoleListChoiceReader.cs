@@ -25,15 +25,13 @@ namespace Ks.Common
                 Choices.Clear();
                 for (var I = 0; I < PageLength; I++)
                 {
-                    var Tmp = default(T);
-                    if (!this.List.TryGetValue(this.ChoiceOffset + I, out Tmp))
+                    if (!this.List.TryGetValue(this.ChoiceOffset + I, out var Tmp))
                         break;
                     Choices.Add(Tmp);
                 }
 
                 var PrevPagePossible = (this.ChoiceOffset - PageLength) >= 0;
-                var argValue = default(T);
-                var NextPagePossible = this.List.TryGetValue(this.ChoiceOffset + PageLength, out argValue);
+                var NextPagePossible = this.List.TryGetValue(this.ChoiceOffset + PageLength, out var argValue);
                 Console.WriteLine();
                 Console.WriteLine();
                 for (var I = 0; I < Choices.Count; I++)

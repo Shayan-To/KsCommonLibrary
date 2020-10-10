@@ -99,8 +99,7 @@ namespace Ks.Common
 
         bool ICollection<KeyValuePair<string, JsonDynamicBase>>.Remove(KeyValuePair<string, JsonDynamicBase> item)
         {
-            JsonDynamicBase V = null;
-            if (!this.TryGetValue(item.Key, out V))
+            if (!this.TryGetValue(item.Key, out var V))
                 return false;
             if (!object.Equals(V, item.Value))
                 return false;
@@ -119,8 +118,7 @@ namespace Ks.Common
 
         bool ICollection<KeyValuePair<string, JsonDynamicBase>>.Contains(KeyValuePair<string, JsonDynamicBase> item)
         {
-            JsonDynamicBase V = null;
-            if (!this.TryGetValue(item.Key, out V))
+            if (!this.TryGetValue(item.Key, out var V))
                 return false;
             return object.Equals(V, item.Value);
         }

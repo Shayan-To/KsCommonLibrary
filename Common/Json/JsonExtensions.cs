@@ -117,8 +117,7 @@ namespace Ks.Common
 #if !RelaxedStrings
             Verify.False(V.IsString, "Value must be an integer.");
 #endif
-            var T = 0;
-            Verify.True(ParseInv.TryInteger(V.Value, out T), "Value must be an integer.");
+            Verify.True(ParseInv.TryInteger(V.Value, out var T), "Value must be an integer.");
             return T;
         }
 
@@ -130,8 +129,7 @@ namespace Ks.Common
 #if !RelaxedStrings
             Verify.False(V.IsString, "Value must be a number.");
 #endif
-            var T = 0.0;
-            Verify.True(ParseInv.TryDouble(V.Value, out T), "Value must be a number.");
+            Verify.True(ParseInv.TryDouble(V.Value, out var T), "Value must be a number.");
             return T;
         }
 

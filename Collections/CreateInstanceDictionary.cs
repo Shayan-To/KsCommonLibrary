@@ -78,8 +78,7 @@ namespace Ks.Common
         {
             get
             {
-                TValue V;
-                if (!this.Dic.TryGetValue(key, out V))
+                if (!this.Dic.TryGetValue(key, out var V))
                 {
                     V = this.Creator.Invoke(key);
                     this.Dic.Add(key, V);

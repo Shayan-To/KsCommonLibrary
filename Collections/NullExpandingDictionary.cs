@@ -41,8 +41,7 @@ namespace Ks.Common
         {
             get
             {
-                TValue R;
-                if (this.Dic.TryGetValue(key, out R))
+                if (this.Dic.TryGetValue(key, out var R))
                     return R;
                 return default;
             }

@@ -79,16 +79,14 @@ namespace Ks.Common
         private List<T> GetIndexList(Condition Condition)
         {
             var Index = this.Indexes[Condition.Key];
-            List<T> Res = null;
-            Index.TryGetValue(Condition.KeyValue, out Res);
+            Index.TryGetValue(Condition.KeyValue, out var Res);
             return Res;
         }
 
         private List<T> GetIndexList<TK>(Condition<TK> Condition)
         {
             var Index = this.Indexes[Condition.Key];
-            List<T> Res = null;
-            Index.TryGetValue(Condition.KeyValue, out Res);
+            Index.TryGetValue(Condition.KeyValue, out var Res);
             return Res;
         }
 

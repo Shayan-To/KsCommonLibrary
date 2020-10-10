@@ -43,8 +43,7 @@ namespace Ks.Common
         {
             get
             {
-                List<TValue> L = null;
-                if (this.Dic.TryGetValue(key, out L))
+                if (this.Dic.TryGetValue(key, out var L))
                     return new MultiDictionaryList<TKey, TValue>(this, key, L);
                 return new MultiDictionaryList<TKey, TValue>(this, key, null);
             }
@@ -85,8 +84,7 @@ namespace Ks.Common
 
         public bool TryGetValue(TKey key, out MultiDictionaryList<TKey, TValue> value)
         {
-            List<TValue> L = null;
-            if (this.Dic.TryGetValue(key, out L))
+            if (this.Dic.TryGetValue(key, out var L))
             {
                 value = new MultiDictionaryList<TKey, TValue>(this, key, L);
                 return true;

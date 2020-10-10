@@ -80,8 +80,7 @@ namespace Ks.Common
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
         {
-            var V = default(TValue);
-            if (!this.TryGetValue(item.Key, out V))
+            if (!this.TryGetValue(item.Key, out var V))
                 return false;
             if (!object.Equals(V, item.Value))
                 return false;
@@ -105,8 +104,7 @@ namespace Ks.Common
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
         {
-            var V = default(TValue);
-            if (!this.TryGetValue(item.Key, out V))
+            if (!this.TryGetValue(item.Key, out var V))
                 return false;
             return object.Equals(V, item.Value);
         }

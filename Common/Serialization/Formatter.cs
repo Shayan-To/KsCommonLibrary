@@ -80,8 +80,7 @@ namespace Ks.Common
                 var Id = this.ObjectsCount;
                 if (IsRefType)
                 {
-                    (int, bool) Tmp;
-                    var WasInCache = this.SetCache.TryGetValue(Obj, out Tmp);
+                    var WasInCache = this.SetCache.TryGetValue(Obj, out var Tmp);
 
                     var IsDone = Tmp.Item2;
                     if (WasInCache)
@@ -162,8 +161,7 @@ namespace Ks.Common
                 {
                     Id = this.Get<int>(nameof(Id));
 
-                    object Obj = null;
-                    if (this.GetCache.TryGetValue(Id, out Obj) && Obj != null)
+                    if (this.GetCache.TryGetValue(Id, out var Obj) && Obj != null)
                         return (T) Obj;
 
                     this.GetCache.Add(Id, null);

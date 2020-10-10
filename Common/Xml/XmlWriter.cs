@@ -34,8 +34,7 @@ namespace Ks.Common
             for (; I < S.Length; I++)
             {
                 var Ch = S[I];
-                string Esc = null;
-                if (EscapeDic.TryGetValue(Ch, out Esc))
+                if (EscapeDic.TryGetValue(Ch, out var Esc))
                 {
                     this.Out.Write(S.Substring(PrevStart, I - PrevStart));
                     this.Out.Write(Esc);

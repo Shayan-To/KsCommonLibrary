@@ -23,8 +23,7 @@ namespace Ks.Common
             for (; I < S.Length; I++)
             {
                 var Ch = S[I];
-                var ECh = Ch;
-                if (EscapeDic.TryGetValue(Ch, out ECh))
+                if (EscapeDic.TryGetValue(Ch, out var ECh))
                 {
                     this.Out.Write(S.Substring(PrevStart, I - PrevStart));
                     this.Out.Write('\\');

@@ -38,8 +38,7 @@ namespace Ks.Common.MVVM
             {
                 foreach (var KV in MetadataDic[T])
                 {
-                    string V = null;
-                    if (Dictionary.TryGetValue(this.GetStoreKey(KV.Key), out V))
+                    if (Dictionary.TryGetValue(this.GetStoreKey(KV.Key), out var V))
                         KV.Value.SetCallback.Invoke(this, V);
                 }
             }
@@ -68,8 +67,7 @@ namespace Ks.Common.MVVM
 
                 foreach (var t in this.GetType().GetBaseTypes())
                 {
-                    var M = default(PropertyMetadata);
-                    if (MetadataDic[t].TryGetValue(PropertyName, out M))
+                    if (MetadataDic[t].TryGetValue(PropertyName, out var M))
                     {
                         var Str = M.ToStringCallback.Invoke(Source);
                         StoreDictionary[this.GetStoreKey(PropertyName)] = Str;

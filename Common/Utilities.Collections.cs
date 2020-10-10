@@ -72,8 +72,7 @@ namespace Ks.Common
                 foreach (var I1 in Items1)
                 {
                     var Key = KeySelector1.Invoke(I1);
-                    var I2 = default(T2);
-                    if (Dic.TryGetValue(Key, out I2))
+                    if (Dic.TryGetValue(Key, out var I2))
                     {
                         Res.Add(new JoinElement<T1, T2, TKey>(Key, JoinDirection.Both, I1, I2));
                         Dic.Remove(Key);

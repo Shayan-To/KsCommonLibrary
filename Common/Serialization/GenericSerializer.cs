@@ -14,8 +14,7 @@ namespace Ks.Common
 
         private Serializer GetSerializer(Type[] TypeArguments)
         {
-            Serializer S = null;
-            if (this.Cache.TryGetValue(TypeArguments, out S))
+            if (this.Cache.TryGetValue(TypeArguments, out var S))
                 return S;
 
             S = (Serializer) this.SerializerType.MakeGenericType(TypeArguments).CreateInstance();

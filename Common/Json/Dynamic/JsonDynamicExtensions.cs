@@ -150,15 +150,13 @@ namespace Ks.Common
 
         public static int GetInteger(this JsonDynamicValue Self)
         {
-            var T = 0;
-            Verify.True(ParseInv.TryInteger(Self.Value, out T), "Value must be an integer.");
+            Verify.True(ParseInv.TryInteger(Self.Value, out var T), "Value must be an integer.");
             return T;
         }
 
         public static double GetDouble(this JsonDynamicValue Self)
         {
-            var T = 0.0;
-            Verify.True(ParseInv.TryDouble(Self.Value, out T), "Value must be a number.");
+            Verify.True(ParseInv.TryDouble(Self.Value, out var T), "Value must be a number.");
             return T;
         }
     }

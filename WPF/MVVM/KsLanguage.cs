@@ -101,9 +101,8 @@ namespace Ks.Common.MVVM
             if (Text == null || Text.Length == 0)
                 return Text;
 
-            string R = null;
 
-            if (this.Dictionary.TryGetValue(Text, out R))
+            if (this.Dictionary.TryGetValue(Text, out var R))
                 return R;
 
             this.Dictionary.Add(Text, Text);

@@ -152,8 +152,7 @@ namespace Ks.Common
                     }
                     else
                     {
-                        var Ch = default(char);
-                        Verify.True(EscapeDic.TryGetValue(this.Input[I], out Ch), "Invalid JSON format. Invalid escape sequence.");
+                        Verify.True(EscapeDic.TryGetValue(this.Input[I], out var Ch), "Invalid JSON format. Invalid escape sequence.");
                         Res.Append(Ch);
                     }
 

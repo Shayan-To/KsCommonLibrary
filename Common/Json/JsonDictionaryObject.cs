@@ -28,16 +28,14 @@ namespace Ks.Common
         {
             get
             {
-                JsonObject Value = null;
-                Verify.True(this.TryGetValue(Key, out Value), "Key not found.");
+                Verify.True(this.TryGetValue(Key, out var Value), "Key not found.");
                 return Value;
             }
         }
 
         public JsonObject GetItemOrDefault(string Key)
         {
-            JsonObject Value = null;
-            this.TryGetValue(Key, out Value);
+            this.TryGetValue(Key, out var Value);
             return Value;
         }
 
@@ -59,8 +57,7 @@ namespace Ks.Common
 
         public bool ContainsKey(string key)
         {
-            JsonObject Value = null;
-            return this.TryGetValue(key, out Value);
+            return this.TryGetValue(key, out var Value);
         }
 
         public IEnumerator<KeyValuePair<string, JsonObject>> GetEnumerator()

@@ -9,8 +9,7 @@ namespace Ks.Common
     {
         private void RunAction((Action Action, int Id) AI)
         {
-            (EventWaitHandle WaitHandle, Exception Exception) WaitingData;
-            this.WaitingActions.TryGetValue(AI.Id, out WaitingData);
+            this.WaitingActions.TryGetValue(AI.Id, out var WaitingData);
 
             try
             {
@@ -99,8 +98,7 @@ namespace Ks.Common
             var List = new List<(Action Action, int Id)>();
             while (true)
             {
-                (Action Action, int Id) AI;
-                if (!this.Queue.TryTake(out AI))
+                if (!this.Queue.TryTake(out var AI))
                     break;
                 List.Add(AI);
             }

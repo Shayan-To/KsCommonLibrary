@@ -31,8 +31,7 @@ namespace Ks.Common
 
         private void AddToGroup(TimeSpan Interval, Drawing Drawing)
         {
-            DrawingGroup Group = null;
-            if (!this.Groups.TryGetValue(Interval, out Group))
+            if (!this.Groups.TryGetValue(Interval, out var Group))
             {
                 Group = new DrawingGroup(this, Interval);
                 this.Groups[Interval] = Group;
