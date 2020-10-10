@@ -12,7 +12,7 @@ namespace Ks.Common
         public static class Serialization
         {
 
-            public static System.Windows.Media.Color HexToColor(string Hex)
+            public static Media.Color HexToColor(string Hex)
             {
                 if (Hex.StartsWith("#"))
                     Hex = Hex.Substring(1);
@@ -24,7 +24,7 @@ namespace Ks.Common
                 throw new ArgumentException("Invalid hex color.");
             }
 
-            public static string ColorToHex(System.Windows.Media.Color Color)
+            public static string ColorToHex(Media.Color Color)
             {
                 return string.Concat("#", Color.A.ToString("X2"), Color.R.ToString("X2"), Color.G.ToString("X2"), Color.B.ToString("X2"));
             }

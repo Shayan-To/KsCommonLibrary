@@ -33,7 +33,7 @@ namespace Ks.Common
             return this.GetHashCode(System.Collections.Generic.EqualityComparer<object>.Default);
         }
 
-        public int CompareTo(object Other, System.Collections.IComparer Comparer)
+        public int CompareTo(object Other, IComparer Comparer)
         {
             var O = (ComparableCollection<T>) Other;
             var count = Math.Min(this.Count, O.Count);
@@ -47,7 +47,7 @@ namespace Ks.Common
             return this.Count - O.Count;
         }
 
-        public bool Equals(object Other, System.Collections.IEqualityComparer Comparer)
+        public bool Equals(object Other, IEqualityComparer Comparer)
         {
             if (!(Other is ComparableCollection<T>))
                 return false;
@@ -64,7 +64,7 @@ namespace Ks.Common
             return true;
         }
 
-        public int GetHashCode(System.Collections.IEqualityComparer Comparer)
+        public int GetHashCode(IEqualityComparer Comparer)
         {
             var Bl = true;
             var R = 0;

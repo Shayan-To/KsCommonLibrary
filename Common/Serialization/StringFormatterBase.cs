@@ -20,7 +20,7 @@ namespace Ks.Common
             this.Serializers.Add(Serializer<float>.Create($"Binary_{nameof(Single)}", F => ParseInv.Single(F.Get<string>(null)), null, (F, O) => F.Set(null, O.ToStringInv())));
             this.Serializers.Add(Serializer<double>.Create($"Binary_{nameof(Double)}", F => ParseInv.Double(F.Get<string>(null)), null, (F, O) => F.Set(null, O.ToStringInv())));
 
-            this.Serializers.Add(Serializer<char>.Create($"Binary_{nameof(Char)}", F => F.Get<string>(null)[0], null, (F, O) => F.Set<string>(null, O.ToString())));
+            this.Serializers.Add(Serializer<char>.Create($"Binary_{nameof(Char)}", F => F.Get<string>(null)[0], null, (F, O) => F.Set(null, O.ToString())));
 
             this.Initialize();
         }

@@ -126,7 +126,7 @@ namespace Ks.Common
         {
         }
 
-        protected override void OnCharacterKeyPressed(System.ConsoleKeyInfo KeyInfo)
+        protected override void OnCharacterKeyPressed(ConsoleKeyInfo KeyInfo)
         {
         }
 

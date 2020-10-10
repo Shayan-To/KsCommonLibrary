@@ -192,7 +192,7 @@ namespace Ks.Common.Controls
 
         public static readonly DependencyProperty YProperty = DependencyProperty.RegisterAttached("Y", typeof(double), typeof(ResizableCanvas), new PropertyMetadata(0.0, Y_Changed));
 
-        private static void Y_Changed(System.Windows.DependencyObject D, System.Windows.DependencyPropertyChangedEventArgs E)
+        private static void Y_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
             var C = VisualTreeHelper.GetParent(D) as ResizableCanvas;
             if (C != null)
@@ -230,7 +230,7 @@ namespace Ks.Common.Controls
 
         public static readonly DependencyProperty HProperty = DependencyProperty.RegisterAttached("H", typeof(double), typeof(ResizableCanvas), new PropertyMetadata(0.0, H_Changed));
 
-        private static void H_Changed(System.Windows.DependencyObject D, System.Windows.DependencyPropertyChangedEventArgs E)
+        private static void H_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
             var C = VisualTreeHelper.GetParent(D) as ResizableCanvas;
             if (C != null)
@@ -249,7 +249,7 @@ namespace Ks.Common.Controls
 
         public static readonly DependencyProperty WProperty = DependencyProperty.RegisterAttached("W", typeof(double), typeof(ResizableCanvas), new PropertyMetadata(0.0, W_Changed));
 
-        private static void W_Changed(System.Windows.DependencyObject D, System.Windows.DependencyPropertyChangedEventArgs E)
+        private static void W_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
             var C = VisualTreeHelper.GetParent(D) as ResizableCanvas;
             if (C != null)

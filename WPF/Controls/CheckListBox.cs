@@ -255,7 +255,7 @@ namespace Ks.Common.Controls
             }
         }
 
-        private readonly MVVM.CollectionObserver<object> CollectionObserver = new MVVM.CollectionObserver<object>() { AssumeSettingOfCollectionAsReset = false };
+        private readonly CollectionObserver<object> CollectionObserver = new CollectionObserver<object>() { AssumeSettingOfCollectionAsReset = false };
         private bool Dirty;
     }
 

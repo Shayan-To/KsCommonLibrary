@@ -247,7 +247,7 @@ namespace Ks.Common
 
         protected internal void Get(string Name, object Obj)
         {
-            this.GetImpl<object>(Name, new CNullable<object>(Obj), false);
+            this.GetImpl(Name, new CNullable<object>(Obj), false);
         }
 
         public SerializerCollection Serializers { get; } = new SerializerCollection();
