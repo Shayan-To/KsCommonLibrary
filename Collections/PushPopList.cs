@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public interface IPushPop<T>
         {
             void Push(T Item);
@@ -38,4 +36,3 @@ namespace Ks
             }
         }
     }
-}

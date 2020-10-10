@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public class Navigation : System.Windows.Markup.MarkupExtension, ICommand
         {
             public Navigation()
@@ -149,4 +147,3 @@ namespace Ks
             }
         }
     }
-}

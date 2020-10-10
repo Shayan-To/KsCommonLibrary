@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public class DelegateCommand : ICommand
         {
             public DelegateCommand(Action ExecuteFunc)
@@ -49,4 +47,3 @@ namespace Ks
             private readonly Func<object, bool> _CanExecuteFunc;
         }
     }
-}

@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class SaveDelayer
         {
 
@@ -80,4 +78,3 @@ namespace Ks
             private int Length;
         }
     }
-}

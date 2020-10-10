@@ -11,10 +11,8 @@ using System.Xml.Linq;
 using Ks.Common;
 using FsCheck.Xunit;
 
-namespace Ks.Tests
+namespace Ks.Tests.Common
 {
-    namespace Common
-    {
         partial class Utilities_Tests
         {
             public class Math
@@ -68,4 +66,3 @@ namespace Ks.Tests
             }
         }
     }
-}

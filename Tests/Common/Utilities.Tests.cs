@@ -2,12 +2,9 @@
 using Assert = Xunit.Assert;
 using FsCheck.Xunit;
 
-namespace Ks.Tests
+namespace Ks.Tests.Common
 {
-    namespace Common
-    {
         public partial class Utilities_Tests
         {
         }
     }
-}

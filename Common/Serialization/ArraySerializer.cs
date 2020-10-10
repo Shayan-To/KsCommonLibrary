@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ArraySerializer<T> : Serializer<T[]>
         {
             public ArraySerializer() : base(nameof(Array))
@@ -30,4 +28,3 @@ namespace Ks
             }
         }
     }
-}

@@ -2,10 +2,8 @@
 using System;
 using System.Collections.Specialized;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class SelectAsNotifyingListCollection<TIn, TOut> : SelectAsListCollection<TIn, TOut>, INotifyCollectionChanged<TOut>
         {
             public SelectAsNotifyingListCollection(IReadOnlyList<TIn> List, Func<TIn, TOut> Func) : base(List, Func)
@@ -89,4 +87,3 @@ namespace Ks
             }
         }
     }
-}

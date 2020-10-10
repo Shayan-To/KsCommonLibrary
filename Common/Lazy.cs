@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public struct Lazy<TRes>
         {
             public Lazy(Func<TRes> Func)
@@ -47,4 +45,3 @@ namespace Ks
             }
         }
     }
-}

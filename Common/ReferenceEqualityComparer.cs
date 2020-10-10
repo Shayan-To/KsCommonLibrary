@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ReferenceEqualityComparer<T> : EqualityComparer<T> where T : class
         {
             public override bool Equals(T x, T y)
@@ -27,4 +25,3 @@ namespace Ks
             }
         }
     }
-}

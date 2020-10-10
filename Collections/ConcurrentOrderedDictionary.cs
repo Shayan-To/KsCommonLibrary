@@ -2,10 +2,8 @@
 using System.Collections;
 using System.Collections.Specialized;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ConcurrentOrderedDictionary<TKey, TValue> : BaseDictionary<TKey, TValue>, IOrderedDictionary<TKey, TValue>
         {
             public ConcurrentOrderedDictionary() : this(new OrderedDictionary<TKey, TValue>())
@@ -283,4 +281,3 @@ namespace Ks
             private readonly object LockObject;
         }
     }
-}

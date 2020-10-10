@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class CsvEntryList : IReadOnlyList<CsvEntry>
         {
             internal CsvEntryList(CsvData Parent)
@@ -161,4 +159,3 @@ namespace Ks
             private readonly List<CsvEntry> List;
         }
     }
-}

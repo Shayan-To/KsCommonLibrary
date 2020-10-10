@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
         public class Utf8Encoding
         {
             public static bool Encode(char[] CharsArray, int CharsIndex, int CharsLenght, byte[] BytesArray, int BytesIndex, int BytesLength, bool BeginningOfFile, out int CharsRead, out int BytesWritten)
@@ -133,4 +131,3 @@
             }
         }
     }
-}

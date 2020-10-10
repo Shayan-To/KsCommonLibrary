@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
 #pragma warning disable CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
 #pragma warning disable CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
         public struct Ratio
@@ -257,4 +255,3 @@
             public static readonly Ratio Zero;
         }
     }
-}

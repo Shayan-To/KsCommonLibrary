@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public static class ParseInv
         {
 
@@ -191,4 +189,3 @@ namespace Ks
             }
         }
     }
-}

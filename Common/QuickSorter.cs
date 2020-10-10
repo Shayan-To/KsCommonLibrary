@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class QuickSorter<T>
         {
             public QuickSorter() : this(DefaultCacher<Random>.Value)
@@ -112,4 +110,3 @@ namespace Ks
             private IComparer<T> Comparer;
         }
     }
-}

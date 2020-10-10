@@ -3,10 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         partial class Formatter
         {
             public Formatter()
@@ -97,4 +95,3 @@ namespace Ks
             }
         }
     }
-}

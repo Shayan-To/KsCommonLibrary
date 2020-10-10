@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class MergedList<T> : BaseReadOnlyList<T>
         {
             public MergedList(IEnumerable<IReadOnlyList<T>> Lists)
@@ -76,4 +74,3 @@ namespace Ks
             private readonly IReadOnlyList<T>[] Lists;
         }
     }
-}

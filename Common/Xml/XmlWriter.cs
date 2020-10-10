@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class XmlWriter : IDisposable
         {
             public XmlWriter(System.IO.TextWriter Output, bool LeaveOpen = false)
@@ -366,4 +364,3 @@ namespace Ks
             }
         }
     }
-}

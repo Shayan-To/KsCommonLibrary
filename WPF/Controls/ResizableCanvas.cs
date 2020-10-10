@@ -4,10 +4,8 @@ using System;
 using System.Windows.Media;
 using Ks.Common;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
-    {
         public class ResizableCanvas : Panel
         {
             private Rect? GetViewingArea(Size Size)
@@ -269,4 +267,3 @@ namespace Ks
             }
         }
     }
-}

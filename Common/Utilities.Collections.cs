@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         partial class Utilities
         {
             public static class Collections
@@ -168,4 +166,3 @@ namespace Ks
             }
         }
     }
-}

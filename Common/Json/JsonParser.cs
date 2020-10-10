@@ -3,10 +3,8 @@
 using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class JsonParser
         {
             public JsonObject Parse(string Input)
@@ -252,4 +250,3 @@ namespace Ks
             }
         }
     }
-}

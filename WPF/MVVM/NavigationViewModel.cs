@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public abstract class NavigationViewModel : ViewModel
         {
             public NavigationViewModel(KsApplication KsApplication) : base(KsApplication)
@@ -22,4 +20,3 @@ namespace Ks
             }
         }
     }
-}

@@ -5,10 +5,8 @@ using Media = System.Windows.Media;
 using Reflect = System.Reflection;
 using SIO = System.IO;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         partial class Utilities
         {
             public static class Reflection
@@ -78,4 +76,3 @@ namespace Ks
             }
         }
     }
-}

@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class OwnerNotifyingList<T> : BaseList<T>
         {
             public OwnerNotifyingList(Action<NotifyCollectionChangedEventArgs<T>> ChangedDelegate)
@@ -75,4 +73,3 @@ namespace Ks
             }
         }
     }
-}

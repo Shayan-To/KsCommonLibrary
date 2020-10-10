@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
         public class CsvData
         {
             public CsvData(int EntriesCapacity)
@@ -136,4 +134,3 @@
             }
         }
     }
-}

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System;
 using System.Drawing;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class OnScreenDrawer
         {
             private OnScreenDrawer(Graphics Graphics)
@@ -386,4 +384,3 @@ namespace Ks
             }
         }
     }
-}

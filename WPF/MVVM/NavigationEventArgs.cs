@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public class NavigationEventArgs : EventArgs
         {
             public NavigationEventArgs(NavigationType NavigationType)
@@ -22,4 +20,3 @@ namespace Ks
             }
         }
     }
-}

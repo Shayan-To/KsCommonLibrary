@@ -3,10 +3,8 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Ks
+namespace Ks.Common.MVVM.Converters
 {
-    namespace Common.MVVM.Converters
-    {
         public class BooleanToVisibilityConverter : IValueConverter
         {
             public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
@@ -23,4 +21,3 @@ namespace Ks
             }
         }
     }
-}

@@ -2,10 +2,8 @@
 using System;
 using Ks.Common.MVVM;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
-    {
         public class Popup : ContentElement
         {
             static Popup()
@@ -287,4 +285,3 @@ namespace Ks
             internal Func<PopupPanel, Size, Size, Rect?> ArrangeCallBack;
         }
     }
-}

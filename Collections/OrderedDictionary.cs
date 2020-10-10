@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Collections.Specialized;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class OrderedDictionary<TKey, TValue> : BaseDictionary<TKey, TValue>, IOrderedDictionary<TKey, TValue>
         {
 
@@ -277,4 +275,3 @@ namespace Ks
             private readonly List<TKey> _Keys = new List<TKey>();
         }
     }
-}

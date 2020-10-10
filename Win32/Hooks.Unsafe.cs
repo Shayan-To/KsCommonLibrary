@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Ks
+namespace Ks.Common.Win32
 {
-    namespace Common.Win32
-    {
         partial class Hooks
         {
             public static class Unsafe
@@ -310,4 +308,3 @@ namespace Ks
             }
         }
     }
-}

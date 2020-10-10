@@ -3,10 +3,8 @@
 using System;
 using System.Diagnostics;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class TaskDelayer : IDisposable
         {
 
@@ -321,4 +319,3 @@ if (this.LastActivityTime > Now)
             Delayed
         }
     }
-}

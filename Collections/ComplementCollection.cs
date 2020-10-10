@@ -4,10 +4,8 @@ using System.Collections;
 using System;
 using System.Collections.Specialized;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ComplementingCollectionMaster<T> : INotifyingCollection<T>
         {
             public ComplementingCollectionMaster()
@@ -286,4 +284,3 @@ namespace Ks
             }
         }
     }
-}

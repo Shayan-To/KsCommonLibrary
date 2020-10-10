@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Windows.Markup;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class AddChildList<T> : NotifyingList<T>, IAddChild
         {
             public void AddChild(object value)
@@ -18,4 +16,3 @@ namespace Ks
             }
         }
     }
-}

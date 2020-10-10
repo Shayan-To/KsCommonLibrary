@@ -2,10 +2,8 @@
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public abstract class BaseList<T> : IReadOnlyList<T>, IList<T>, IList
         {
             public abstract void Insert(int index, T item);
@@ -175,4 +173,3 @@ namespace Ks
             }
         }
     }
-}

@@ -5,10 +5,8 @@ using System.Collections;
 using System;
 using System.Collections.Specialized;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public delegate void NotifyCollectionChangedEventHandler<T>(object sender, NotifyCollectionChangedEventArgs<T> e);
 
         public class NotifyCollectionChangedEventArgs<T> : NotifyCollectionChangedEventArgs
@@ -418,4 +416,3 @@ namespace Ks
             private readonly IList<T> BaseList;
         }
     }
-}

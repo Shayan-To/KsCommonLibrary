@@ -6,10 +6,8 @@ using System.Collections;
 using System;
 using System.Text.RegularExpressions;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public static class CommonExtensions
         {
             public static string RegexEscape(this string str)
@@ -1382,4 +1380,3 @@ namespace Ks
         public delegate int Comparison<in T1, in T2>(T1 x, T2 y);
 
     }
-}

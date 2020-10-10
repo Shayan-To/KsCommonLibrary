@@ -2,10 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class PartialReadOnlyDictionary<TKey, TValue> : BaseDictionary<TKey, TValue>
         {
             public PartialReadOnlyDictionary(IDictionary<TKey, TValue> BaseDic)
@@ -104,4 +102,3 @@ namespace Ks
             private readonly HashSet<TKey> LockedKeys = new HashSet<TKey>();
         }
     }
-}

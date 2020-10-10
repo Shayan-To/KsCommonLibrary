@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
         public class JsonValueObject : JsonObject
         {
             public JsonValueObject(string Value, bool IsString)
@@ -31,4 +29,3 @@
             }
         }
     }
-}

@@ -4,10 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using Ks.Common.MVVM;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
-    {
         public class NumericUpDown : Control
         {
             static NumericUpDown()
@@ -118,4 +116,3 @@ namespace Ks
 #pragma warning restore CS0169 // The field is never used
         }
     }
-}

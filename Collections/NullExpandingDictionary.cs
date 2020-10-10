@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class NullExpandingDictionary
         {
             public static NullExpandingDictionary<TKey, TValue> Create<TKey, TValue>(IDictionary<TKey, TValue> Dic)
@@ -109,4 +107,3 @@ namespace Ks
             private readonly IDictionary<TKey, TValue> Dic;
         }
     }
-}

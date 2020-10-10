@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
         public struct SerializationArrayChunk<T>
         {
             public SerializationArrayChunk(T[] Array) : this(Array, 0, Array.Length)
@@ -46,4 +44,3 @@
             }
         }
     }
-}

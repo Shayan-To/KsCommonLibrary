@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class DelegateEqualityComparer<T> : EqualityComparer<T>
         {
             public DelegateEqualityComparer(Func<T, T, bool> EqualsDelegate, Func<T, int> GetHashCodeDelegate)
@@ -27,4 +25,3 @@ namespace Ks
             private readonly Func<T, int> GetHashCodeDelegate;
         }
     }
-}

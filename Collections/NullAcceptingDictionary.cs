@@ -2,10 +2,8 @@
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class NullAcceptingDictionary
         {
             public static NullAcceptingDictionary<TKey, TValue> Create<TKey, TValue>(IDictionary<TKey, TValue> Dic) where TKey : class
@@ -200,4 +198,3 @@ namespace Ks
             private readonly MergedCollection<TValue> ValuesCollection;
         }
     }
-}

@@ -2,10 +2,8 @@
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class JsonDynamicDictionary : JsonDynamicBase, IReadOnlyDictionary<string, JsonDynamicBase>, IDictionary<string, JsonDynamicBase>, IDictionary
         {
             public int Count
@@ -271,4 +269,3 @@ namespace Ks
             private readonly Dictionary<string, JsonDynamicBase> Base = new Dictionary<string, JsonDynamicBase>();
         }
     }
-}

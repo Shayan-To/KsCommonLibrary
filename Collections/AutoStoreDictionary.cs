@@ -3,10 +3,8 @@ using System.Collections;
 using System;
 using System.Collections.Specialized;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class AutoStoreDictionary : BaseDictionary<string, string>, IFormattable, IDisposable, IOrderedDictionary<string, string>
         {
             public AutoStoreDictionary(string Path) : this(System.IO.File.Open(Path, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, System.IO.FileShare.Read))
@@ -358,4 +356,3 @@ namespace Ks
             private readonly TaskDelayer TaskDelayer;
         }
     }
-}

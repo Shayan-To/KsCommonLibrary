@@ -1,9 +1,7 @@
 ﻿using System.Windows;
 
-namespace Ks
+namespace Ks.Common.NonUI
 {
-    namespace Common.NonUI
-    {
         public abstract class NonUIElement : FrameworkElement
         {
             private static readonly object Collapsed = Visibility.Collapsed;
@@ -19,4 +17,3 @@ namespace Ks
             }
         }
     }
-}

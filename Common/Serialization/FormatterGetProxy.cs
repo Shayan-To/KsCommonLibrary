@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
         public class FormatterGetProxy
         {
             public FormatterGetProxy(Formatter Formatter)
@@ -40,4 +38,3 @@
             }
         }
     }
-}

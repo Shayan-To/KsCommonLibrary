@@ -2,10 +2,8 @@
 using Ks.Common.Controls;
 using Page = Ks.Common.Controls.Page;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public static class MvvmExtensions
         {
             public static bool IsNavigation(this ViewModel Self)
@@ -43,4 +41,3 @@ namespace Ks
             }
         }
     }
-}

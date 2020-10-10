@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class JsonDictionaryObject : JsonObject, IReadOnlyDictionary<string, JsonObject>
         {
             public JsonDictionaryObject(IEnumerable<KeyValuePair<string, JsonObject>> Items)
@@ -95,4 +93,3 @@ namespace Ks
             private static readonly Comparison<KeyValuePair<string, JsonObject>> CompareKeyHash = (A, B) => A.Key.GetHashCode().CompareTo(B.Key.GetHashCode());
         }
     }
-}

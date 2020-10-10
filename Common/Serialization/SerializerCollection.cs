@@ -1,10 +1,8 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class SerializerCollection : OneToOneOrderedDictionary<string, Serializer>
         {
             public SerializerCollection() : base(S => S.Id)
@@ -59,4 +57,3 @@ namespace Ks
             private readonly HashSet<Serializer> LockedItems = new HashSet<Serializer>();
         }
     }
-}

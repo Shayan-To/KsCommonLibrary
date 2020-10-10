@@ -2,10 +2,8 @@
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public struct MultiDictionaryList<TKey, TValue> : IList<TValue>, IList
         {
             public MultiDictionaryList(MultiDictionary<TKey, TValue> Parent, TKey Key, List<TValue> List)
@@ -270,4 +268,3 @@ namespace Ks
             private static readonly List<TValue> EmptyList = new List<TValue>();
         }
     }
-}

@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class Closable : IDisposable
         {
             public Closable(Action CloseOperation)
@@ -24,4 +22,3 @@ namespace Ks
             private readonly Action CloseOperation;
         }
     }
-}

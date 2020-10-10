@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ListEqualityComparer<T> : EqualityComparer<IList<T>>
         {
             public ListEqualityComparer(IEqualityComparer<T> EqualityComparer)
@@ -38,4 +36,3 @@ namespace Ks
             private readonly IEqualityComparer<T> EqualityComparer;
         }
     }
-}

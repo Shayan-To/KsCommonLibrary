@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
         public struct JoinElement<T1, T2, TKey>
         {
             public JoinElement(TKey Key, JoinDirection Direction, T1 Item1, T2 Item2)
@@ -53,4 +51,3 @@
             }
         }
     }
-}

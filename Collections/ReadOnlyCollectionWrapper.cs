@@ -2,10 +2,8 @@
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ReadOnlyCollectionWrapper<T> : ICollection, ICollection<T>, IReadOnlyCollection<T>
         {
             public ReadOnlyCollectionWrapper(ICollection<T> Collection)
@@ -92,4 +90,3 @@ namespace Ks
             private readonly ICollection<T> Collection;
         }
     }
-}

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public abstract class XmlLinqTraverser
         {
             public static DelegateXmlLinqTraverser Create(Action<XElement, VisitAction> VisitDelegate)
@@ -117,4 +115,3 @@ namespace Ks
             private readonly Action<XElement, VisitAction> VisitDelegate;
         }
     }
-}

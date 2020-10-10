@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Collections;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class JsonListObject : JsonObject, IReadOnlyList<JsonObject>
         {
             public JsonListObject(IEnumerable<JsonObject> Items)
@@ -42,4 +40,3 @@ namespace Ks
             private readonly JsonObject[] List;
         }
     }
-}

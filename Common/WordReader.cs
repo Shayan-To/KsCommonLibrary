@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
         public class WordReader
         {
             public WordReader(System.IO.TextReader TextReader)
@@ -71,4 +69,3 @@
             private int Index;
         }
     }
-}

@@ -1,10 +1,8 @@
 ﻿using System.Windows.Controls;
 using System;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public abstract class ViewModel : BindableBase
         {
             public ViewModel(KsApplication KsApplication)
@@ -107,4 +105,3 @@ namespace Ks
             }
         }
     }
-}

@@ -2,10 +2,8 @@
 using System;
 using System.Collections;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class StringSplitEnumerator : IEnumerator<string>
         {
             public StringSplitEnumerator(string Str, StringSplitOptions Options, params char[] Chars)
@@ -121,4 +119,3 @@ namespace Ks
             private bool GiveRest;
         }
     }
-}

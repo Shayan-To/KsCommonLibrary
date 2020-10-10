@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ConcurrentList<T> : BaseList<T>
         {
             public ConcurrentList() : this(new List<T>(), new object())
@@ -96,4 +94,3 @@ namespace Ks
             }
         }
     }
-}

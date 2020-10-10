@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public abstract class StringFormatterBase : Formatter
         {
             public StringFormatterBase()
@@ -28,4 +26,3 @@ namespace Ks
             }
         }
     }
-}

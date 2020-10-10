@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class BitArray : BaseList<bool>
         {
             public BitArray(int Count)
@@ -151,4 +149,3 @@ namespace Ks
             private byte[] _Bytes;
         }
     }
-}

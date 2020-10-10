@@ -1,10 +1,8 @@
 ﻿using System.Diagnostics;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class Verify
         {
             [DebuggerHidden()]
@@ -101,4 +99,3 @@ namespace Ks
             }
         }
     }
-}

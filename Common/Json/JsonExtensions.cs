@@ -4,10 +4,8 @@ using System.Data;
 using System.Linq;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public static class JsonExtensions
         {
             public static void WriteValue(this JsonWriter Writer, JsonObject Obj, bool? MultiLine = default)
@@ -149,4 +147,3 @@ namespace Ks
             private const string False = "false";
         }
     }
-}

@@ -1,10 +1,8 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ListSerializer<T> : Serializer<IEnumerable<T>>
         {
             public ListSerializer() : base(nameof(List<object>))
@@ -31,4 +29,3 @@ namespace Ks
             }
         }
     }
-}

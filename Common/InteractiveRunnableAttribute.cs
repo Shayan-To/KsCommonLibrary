@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using System;
 using System.Reflection;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         [AttributeUsage(AttributeTargets.Method)]
         public class InteractiveRunnableAttribute : Attribute
         {
@@ -118,4 +116,3 @@ namespace Ks
             }
         }
     }
-}

@@ -10,10 +10,8 @@ using System.Windows.Controls;
 using System;
 using System.Xml.Linq;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
-    {
         public class ObjList : BaseList<Obj>, System.Windows.Markup.IAddChild
         {
             public ObjList(TextBlock Parent)
@@ -110,4 +108,3 @@ namespace Ks
             private readonly List<Obj> List = new List<Obj>();
         }
     }
-}

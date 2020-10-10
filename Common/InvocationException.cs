@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class InvocationException : Exception
         {
             public InvocationException() : base()
@@ -19,4 +17,3 @@ namespace Ks
             }
         }
     }
-}

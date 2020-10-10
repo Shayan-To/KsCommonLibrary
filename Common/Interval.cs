@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
         public struct Interval
         {
             public Interval(double Start, bool IsStartInclusive, double End, bool IsEndInclusive)
@@ -66,4 +64,3 @@
             }
         }
     }
-}

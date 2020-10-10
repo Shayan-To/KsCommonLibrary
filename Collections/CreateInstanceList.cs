@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public static class CreateInstanceList
         {
 
@@ -104,4 +102,3 @@ namespace Ks
             private readonly IList<T> List;
         }
     }
-}

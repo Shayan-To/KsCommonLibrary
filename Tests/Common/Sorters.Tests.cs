@@ -11,10 +11,8 @@ using System.Xml.Linq;
 using Ks.Common;
 using FsCheck.Xunit;
 
-namespace Ks.Tests
+namespace Ks.Tests.Common
 {
-    namespace Common
-    {
         public class Sorters_Tests
         {
             [Property()]
@@ -60,4 +58,3 @@ namespace Ks.Tests
             }
         }
     }
-}

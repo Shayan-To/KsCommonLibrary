@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public struct DictionaryEnumerator<TKey, TValue, T> : IEnumerator<KeyValuePair<TKey, TValue>>, IDictionaryEnumerator where T : IEnumerator<KeyValuePair<TKey, TValue>>
         {
             public DictionaryEnumerator(T BaseEnumerator)
@@ -71,4 +69,3 @@ namespace Ks
             private readonly T BaseEnumerator;
         }
     }
-}

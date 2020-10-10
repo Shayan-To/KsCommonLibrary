@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class MultiDictionary<TKey, TValue> : IReadOnlyDictionary<TKey, MultiDictionaryList<TKey, TValue>>
         {
             private void IncrementVersion()
@@ -106,4 +104,3 @@ namespace Ks
             internal readonly Dictionary<TKey, List<TValue>> Dic = new Dictionary<TKey, List<TValue>>();
         }
     }
-}

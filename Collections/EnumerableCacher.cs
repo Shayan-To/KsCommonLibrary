@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class EnumerableCacher<T> : BaseReadOnlyList<T>
         {
             public EnumerableCacher(IEnumerable<T> Enumerable)
@@ -62,4 +60,3 @@ namespace Ks
             private readonly List<T> List = new List<T>();
         }
     }
-}

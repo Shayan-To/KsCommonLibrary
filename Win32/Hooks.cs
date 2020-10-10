@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common.Win32
 {
-    namespace Common.Win32
-    {
 
 
         // Open tabs:
@@ -331,4 +329,3 @@ namespace Ks
             }
         }
     }
-}

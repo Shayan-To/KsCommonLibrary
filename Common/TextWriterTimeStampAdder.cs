@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class TextWriterTimeStampAdder : System.IO.TextWriter
         {
             public TextWriterTimeStampAdder(System.IO.TextWriter TextWriter, Func<string> GetTimeStampDelegate)
@@ -387,4 +385,3 @@ namespace Ks
             private readonly Func<string> GetTimeStampDelegate;
         }
     }
-}

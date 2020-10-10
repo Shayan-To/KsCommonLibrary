@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class MergeSorter<T>
         {
             private void Merge(int Start, int Mid, int End)
@@ -107,4 +105,3 @@ namespace Ks
             private IComparer<T> Comparer;
         }
     }
-}

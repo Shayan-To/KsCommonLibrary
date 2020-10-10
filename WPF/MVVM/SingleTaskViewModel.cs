@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public abstract class SingleTaskViewModel : ViewModel
         {
             public SingleTaskViewModel(KsApplication KsApplication) : base(KsApplication)
@@ -62,4 +60,3 @@ namespace Ks
             private TaskCompletionSource<Void> WhenWorkDoneTaskSource;
         }
     }
-}

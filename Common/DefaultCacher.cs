@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public static class DefaultCacher<T> where T : new()
         {
 
@@ -23,4 +21,3 @@ namespace Ks
             }
         }
     }
-}

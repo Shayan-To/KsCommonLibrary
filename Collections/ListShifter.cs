@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ListShifter<T> : IList<T>
         {
             private readonly IList<T> InnerList;
@@ -95,4 +93,3 @@ namespace Ks
             }
         }
     }
-}

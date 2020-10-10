@@ -3,10 +3,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class Dispatcher : IDisposable
         {
             private void RunAction((Action Action, int Id) AI)
@@ -303,4 +301,3 @@ namespace Ks
             }
         }
     }
-}

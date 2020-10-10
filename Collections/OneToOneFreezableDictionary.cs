@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class OneToOneFreezableDictionary<TKey, TValue> : OneToOneDictionary<TKey, TValue>
         {
             public OneToOneFreezableDictionary(Func<TValue, TKey> KeySelector) : base(KeySelector)
@@ -71,4 +69,3 @@ namespace Ks
             }
         }
     }
-}

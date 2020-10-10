@@ -2,10 +2,8 @@
 using System.Windows.Controls;
 using System;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
-    {
         public class EqualizingStackPanel : Panel
         {
 
@@ -115,4 +113,3 @@ namespace Ks
             private Orientation OrientationCache = Orientation.Vertical;
         }
     }
-}

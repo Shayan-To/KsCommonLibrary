@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System;
 using System.Reflection;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public abstract class InteractiveConsoleBase
         {
             public void Run()
@@ -158,4 +156,3 @@ namespace Ks
             }
         }
     }
-}

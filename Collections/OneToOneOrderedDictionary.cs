@@ -5,10 +5,8 @@ using System.Collections;
 using System;
 using System.Collections.Specialized;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class OneToOneOrderedDictionary<TKey, TValue> : IOrderedDictionary<TKey, TValue>
         {
 
@@ -451,4 +449,3 @@ namespace Ks
             private readonly Func<TValue, TKey> KeySelector;
         }
     }
-}

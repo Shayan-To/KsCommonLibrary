@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public sealed class Void
         {
             private Void()
@@ -12,4 +10,3 @@ namespace Ks
             }
         }
     }
-}

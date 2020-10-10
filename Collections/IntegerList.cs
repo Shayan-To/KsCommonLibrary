@@ -3,10 +3,8 @@ using System.Collections;
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class IntegerList : IList<int>
         {
 
@@ -144,4 +142,3 @@ namespace Ks
             }
         }
     }
-}

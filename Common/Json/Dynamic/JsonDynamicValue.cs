@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
         public class JsonDynamicValue : JsonDynamicBase
         {
             public JsonDynamicValue(string Value, bool IsString)
@@ -106,4 +104,3 @@
             internal const string False = "false";
         }
     }
-}

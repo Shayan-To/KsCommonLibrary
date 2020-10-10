@@ -3,10 +3,8 @@ using System.Collections;
 using System;
 using System.Collections.Specialized;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public class CollectionObserver<T>
         {
             public CollectionObserver()
@@ -171,4 +169,3 @@ namespace Ks
             }
         }
     }
-}

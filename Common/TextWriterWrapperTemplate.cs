@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class TextWriterWrapper : System.IO.TextWriter
         {
             public TextWriterWrapper(System.IO.TextWriter TextWriter)
@@ -288,4 +286,3 @@ namespace Ks
             private readonly System.IO.TextWriter Base;
         }
     }
-}

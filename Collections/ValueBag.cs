@@ -4,10 +4,8 @@ using System;
 using System.ComponentModel;
 using Ks.Common.MVVM;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         [TypeDescriptionProvider(typeof(ValueBagTypeDescriptionProvider))]
         public class ValueBag<T> : BindableBase, IDictionary<string, T>, IDictionary, IFormattable
          {
@@ -392,4 +390,3 @@ namespace Ks
             private readonly Type PropType;
         }
     }
-}

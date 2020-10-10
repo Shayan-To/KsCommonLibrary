@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public static class CreateInstanceDictionary
         {
 
@@ -134,4 +132,3 @@ namespace Ks
             private readonly IDictionary<TKey, TValue> Dic;
         }
     }
-}

@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class XmlFormatter : StringFormatterBase
         {
             public XmlFormatter()
@@ -86,4 +84,3 @@ namespace Ks
             private System.Xml.XmlWriter XmlWriter;
         }
     }
-}

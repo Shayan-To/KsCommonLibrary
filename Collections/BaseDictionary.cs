@@ -2,10 +2,8 @@
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public abstract class BaseDictionary<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>, IDictionary<TKey, TValue>, IDictionary
         {
             public abstract int Count { get; }
@@ -249,4 +247,3 @@ namespace Ks
             protected abstract IEnumerator<KeyValuePair<TKey, TValue>> _GetEnumerator();
         }
     }
-}

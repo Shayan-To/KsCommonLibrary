@@ -2,10 +2,8 @@
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public abstract class BaseReadOnlyList<T> : IReadOnlyList<T>, IList<T>, IList
         {
             public abstract int Count { get; }
@@ -181,4 +179,3 @@ namespace Ks
             }
         }
     }
-}

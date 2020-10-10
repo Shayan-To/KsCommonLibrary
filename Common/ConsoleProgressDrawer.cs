@@ -1,10 +1,8 @@
 ﻿using System.Diagnostics;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ConsoleProgressDrawer
         {
 
@@ -317,4 +315,3 @@ namespace Ks
             private readonly Stopwatch StopWatch;
         }
     }
-}

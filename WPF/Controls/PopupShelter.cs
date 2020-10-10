@@ -1,10 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
-    {
         public class PopupShelter : Control
         {
             static PopupShelter()
@@ -28,4 +26,3 @@ namespace Ks
             }
         }
     }
-}

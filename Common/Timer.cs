@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class Timer
         {
             public Timer(Action Callback, TimeSpan Interval)
@@ -90,4 +88,3 @@ namespace Ks
             private readonly Action Callback;
         }
     }
-}

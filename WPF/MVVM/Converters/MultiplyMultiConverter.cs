@@ -2,10 +2,8 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Ks
+namespace Ks.Common.MVVM.Converters
 {
-    namespace Common.MVVM.Converters
-    {
         public class MultiplyMultiConverter : IMultiValueConverter
         {
             public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -22,4 +20,3 @@ namespace Ks
             }
         }
     }
-}

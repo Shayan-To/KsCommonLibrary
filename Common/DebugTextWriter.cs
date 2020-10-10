@@ -2,10 +2,8 @@
 using System.Diagnostics;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class DebugTextWriter : System.IO.TextWriter
         {
             private DebugTextWriter()
@@ -301,4 +299,3 @@ namespace Ks
             }
         }
     }
-}

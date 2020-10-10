@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class TaskDeduplicator
         {
             public TaskDeduplicator(Func<Task> Task)
@@ -46,4 +44,3 @@ namespace Ks
             private readonly Func<Task> Task;
         }
     }
-}

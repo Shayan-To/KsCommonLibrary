@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ReadOnlyListWrapper<T> : BaseReadOnlyList<T>
         {
             public ReadOnlyListWrapper(IList<T> List)
@@ -50,4 +48,3 @@ namespace Ks
             private readonly IReadOnlyList<T> ROList;
         }
     }
-}

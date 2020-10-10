@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class CsvEntry
         {
             internal CsvEntry(CsvData Parent)
@@ -81,4 +79,3 @@ namespace Ks
             private bool IsDetached = false;
         }
     }
-}

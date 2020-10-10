@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class HeapOperations<T>
         {
             public HeapOperations(IComparer<T> Comparer)
@@ -91,4 +89,3 @@ namespace Ks
             private readonly IComparer<T> Comparer;
         }
     }
-}

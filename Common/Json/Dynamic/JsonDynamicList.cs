@@ -2,10 +2,8 @@
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class JsonDynamicList : JsonDynamicBase, IReadOnlyList<JsonDynamicBase>, IList<JsonDynamicBase>, IList
         {
             public void Insert(int index, JsonDynamicBase item)
@@ -203,4 +201,3 @@ namespace Ks
             private readonly List<JsonDynamicBase> Base = new List<JsonDynamicBase>();
         }
     }
-}

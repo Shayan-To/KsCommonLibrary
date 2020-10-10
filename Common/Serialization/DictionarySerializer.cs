@@ -1,10 +1,8 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class DictionarySerializer<TKey, TValue> : Serializer<IEnumerable<KeyValuePair<TKey, TValue>>>
         {
             public DictionarySerializer() : base(nameof(Dictionary<object, object>))
@@ -57,4 +55,3 @@ namespace Ks
             }
         }
     }
-}

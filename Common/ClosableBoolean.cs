@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         [Obsolete("Cannot be used due to stupidity of the compiler.")]
         public struct ClosableBoolean : IDisposable
         {
@@ -78,4 +76,3 @@ namespace Ks
             }
         }
     }
-}

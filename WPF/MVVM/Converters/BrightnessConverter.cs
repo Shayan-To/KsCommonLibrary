@@ -4,10 +4,8 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Ks
+namespace Ks.Common.MVVM.Converters
 {
-    namespace Common.MVVM.Converters
-    {
         public class BrightnessConverter : DependencyObject, IValueConverter
         {
             public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
@@ -118,4 +116,3 @@ namespace Ks
             private double Coeff = 1;
         }
     }
-}

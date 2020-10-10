@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public static class AccentColors
         {
 
@@ -56,4 +54,3 @@ namespace Ks
             }
         }
     }
-}

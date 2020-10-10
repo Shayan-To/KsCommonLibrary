@@ -1,9 +1,7 @@
 ﻿using System.Windows;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
-    {
         public class Obj : FrameworkContentElement // ToDo For the binding on the Obj to work, this was forced to change to a FrameworkElement or a FrameworkContentElement. Otherwise, the AddLogicalChild on the TextBlock has no effect and DataContext, TemplatedParent, ElementName, FindAncestor, etc. will not work in bindings on the Obj in the Obj list. Find out why this does not work, and remove this unnecessary base class. (why bindings work on Brush, RotateTransform, etc.?)
         {
             internal void ReportParent(TextBlock Parent)
@@ -55,4 +53,3 @@ namespace Ks
             }
         }
     }
-}

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class MergedCollection<T> : ICollection<T>, ICollection
         {
             public MergedCollection(IEnumerable<ICollection<T>> Collections)
@@ -121,4 +119,3 @@ namespace Ks
             private readonly ICollection<T>[] Collections;
         }
     }
-}

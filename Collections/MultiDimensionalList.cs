@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class MultiDimensionalList<T> : IEnumerable<T>
         {
             public MultiDimensionalList(params int[] Lengths)
@@ -66,4 +64,3 @@ namespace Ks
             private readonly T[] Arr;
         }
     }
-}

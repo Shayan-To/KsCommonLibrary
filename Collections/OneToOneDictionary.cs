@@ -2,10 +2,8 @@
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class OneToOneDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
         {
             public OneToOneDictionary(Func<TValue, TKey> KeySelector) : this(new Dictionary<TKey, TValue>(), KeySelector)
@@ -267,4 +265,3 @@ namespace Ks
             private readonly Func<TValue, TKey> KeySelector;
         }
     }
-}

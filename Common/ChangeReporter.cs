@@ -4,10 +4,8 @@ using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ChangeReporter
         {
             private List<object> A = new List<object>();
@@ -90,4 +88,3 @@ namespace Ks
             }
         }
     }
-}

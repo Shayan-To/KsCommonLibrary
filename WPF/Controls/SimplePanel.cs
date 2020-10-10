@@ -1,10 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
-    {
         public class SimplePanel : Panel
         {
             protected override Size MeasureOverride(Size AvailableSize)
@@ -35,4 +33,3 @@ namespace Ks
             }
         }
     }
-}

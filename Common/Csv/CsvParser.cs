@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         internal class CsvParser
         {
             public void ParseCsv(CsvData Csv, string Str, bool HasHeaders = true, char Delimiter = ',', bool NormalizeLineEndings = true)
@@ -253,4 +251,3 @@ namespace Ks
             private CsvData Csv;
         }
     }
-}

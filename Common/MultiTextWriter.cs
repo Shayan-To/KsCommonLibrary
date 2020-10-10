@@ -4,10 +4,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class MultiTextWriter : System.IO.TextWriter
         {
             public MultiTextWriter(IEnumerable<System.IO.TextWriter> TextWriters)
@@ -347,4 +345,3 @@ namespace Ks
             private readonly System.IO.TextWriter[] Bases;
         }
     }
-}

@@ -4,10 +4,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using DColor = System.Drawing.Color;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class TestingVisualizer
         {
             public TestingVisualizer()
@@ -374,4 +372,3 @@ namespace Ks
             }
         }
     }
-}

@@ -3,10 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class CastAsListCollection<T> : BaseReadOnlyList<T>
         {
             public CastAsListCollection(IList List)
@@ -38,4 +36,3 @@ namespace Ks
             private readonly IList List;
         }
     }
-}

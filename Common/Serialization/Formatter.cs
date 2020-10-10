@@ -10,10 +10,8 @@ using System.Windows.Controls;
 using System;
 using System.Xml.Linq;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public abstract partial class Formatter
         {
 
@@ -273,4 +271,3 @@ namespace Ks
             private bool IsRunning;
         }
     }
-}

@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public class WorldedObject<TWorld> : BindableBase
         {
             public WorldedObject(TWorld World)
@@ -20,4 +18,3 @@
             }
         }
     }
-}

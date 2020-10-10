@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public struct CNullable<T>
         {
             public CNullable(T Value)
@@ -45,4 +43,3 @@ namespace Ks
             }
         }
     }
-}

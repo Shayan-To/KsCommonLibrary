@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class SelectAsListCollection<TIn, TOut> : BaseReadOnlyList<TOut>
         {
             public SelectAsListCollection(IReadOnlyList<TIn> List, Func<TIn, TOut> Func)
@@ -57,4 +55,3 @@ namespace Ks
             protected readonly Func<TIn, int, TOut> FuncIndexed;
         }
     }
-}

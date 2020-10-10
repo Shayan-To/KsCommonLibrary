@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public static class ConsoleUtilities
         {
 
@@ -85,4 +83,3 @@ namespace Ks
             }
         }
     }
-}

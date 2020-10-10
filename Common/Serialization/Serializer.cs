@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public abstract class Serializer
         {
             public Serializer(string Id)
@@ -162,4 +160,3 @@ namespace Ks
             }
         }
     }
-}

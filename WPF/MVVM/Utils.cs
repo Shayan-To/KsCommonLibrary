@@ -4,10 +4,8 @@ using System.Windows.Controls;
 using System;
 using System.Windows.Documents;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public class Utils : DependencyObject
         {
 
@@ -603,4 +601,3 @@ namespace Ks
             public const bool False = false;
         }
     }
-}

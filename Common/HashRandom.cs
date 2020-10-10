@@ -1,10 +1,8 @@
 ﻿using System.Linq;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class HashRandom
         {
             private static byte[] GetRandomSeed(System.Security.Cryptography.HashAlgorithm Hasher)
@@ -132,4 +130,3 @@ namespace Ks
             private int Index;
         }
     }
-}

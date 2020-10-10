@@ -6,22 +6,20 @@ using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using Ks.Common.MVVM;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
-    {
 
         // FText help:
-        // 
+        //
         // ` -> Escape character.
         // {{ObjNum(,[+-]?##)?(:.*)?}} -> No change.
         // {ObjNum(,[+-]?##)?(:.*)?} -> Common corrections.
         // [[.*]] -> Common corrections.
         // [.*] -> Translate.
-        // 
+        //
         // {}s could exist inside []s.
         // A '{}' at the beginning is ignored.
-        // 
+        //
         // If just Obj is set, only common corrections will be applied.
 
         public class TextBlock : Control
@@ -387,4 +385,3 @@ namespace Ks
             private readonly Obj[] Obj1Array = new[] { new Obj() };
         }
     }
-}

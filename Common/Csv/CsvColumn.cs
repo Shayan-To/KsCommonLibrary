@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
         public class CsvColumn
         {
             internal CsvColumn(CsvData Parent)
@@ -70,4 +68,3 @@
             private bool IsDetached = false;
         }
     }
-}

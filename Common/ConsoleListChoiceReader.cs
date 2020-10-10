@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ConsoleListChoiceReader<T>
         {
             public ConsoleListChoiceReader(IEnumerable<T> List) : this(List, O => O.ToString())
@@ -104,4 +102,3 @@ namespace Ks
             private readonly Func<T, string> Selector;
         }
     }
-}

@@ -2,10 +2,8 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 
-namespace Ks
+namespace Ks.Common.Win32
 {
-    namespace Common.Win32
-    {
         public static class Common
         {
 
@@ -24,4 +22,3 @@ namespace Ks
             }
         }
     }
-}

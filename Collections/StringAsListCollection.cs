@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class StringAsListCollection : BaseReadOnlyList<char>
         {
             public StringAsListCollection(string Str)
@@ -35,4 +33,3 @@ namespace Ks
             private readonly string Base;
         }
     }
-}

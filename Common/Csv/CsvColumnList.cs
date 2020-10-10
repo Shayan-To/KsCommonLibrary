@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Collections;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class CsvColumnList : IReadOnlyList<CsvColumn>
         {
             internal CsvColumnList(CsvData Parent)
@@ -189,4 +187,3 @@ namespace Ks
             private readonly MultiDictionary<string, CsvColumn> Names = new MultiDictionary<string, CsvColumn>();
         }
     }
-}

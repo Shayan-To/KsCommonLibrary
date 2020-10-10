@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public struct NavigationData
         {
             public NavigationData(NavigationFrame Frame, bool AddToStack = true, bool ForceToStack = false)
@@ -42,4 +40,3 @@
             }
         }
     }
-}

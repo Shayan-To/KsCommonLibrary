@@ -4,10 +4,8 @@ using System;
 using System.Collections.Specialized;
 using System.Runtime.Serialization;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
 
         // ToDo Is this replacable by CreateInstance...?
 
@@ -173,4 +171,3 @@ namespace Ks
             }
         }
     }
-}

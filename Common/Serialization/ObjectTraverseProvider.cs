@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public abstract class ObjectTraverseProvider
         {
             protected abstract IEnumerable<Void> GetSetPropertiesOverride(PropertyTraverseHandler Handler);
@@ -37,4 +35,3 @@ namespace Ks
             void Process<T>(PropertyTraverseHandler Prop);
         }
     }
-}

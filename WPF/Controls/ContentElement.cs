@@ -2,10 +2,8 @@
 using System.Collections;
 using System.Windows.Markup;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
-    {
         [ContentProperty("Content")]
         public class ContentElement : FrameworkElement
         {
@@ -90,4 +88,3 @@ namespace Ks
             }
         }
     }
-}

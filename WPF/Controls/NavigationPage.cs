@@ -1,10 +1,8 @@
 ﻿using System.Windows;
 using Ks.Common.MVVM;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
-    {
         [System.ComponentModel.DesignTimeVisible(false)]
         public class NavigationPage : Page, INavigationView
         {
@@ -26,4 +24,3 @@ namespace Ks
             }
         }
     }
-}

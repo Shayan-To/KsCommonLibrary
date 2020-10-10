@@ -1,7 +1,5 @@
-﻿namespace Ks
+﻿namespace Ks.Common
 {
-    namespace Common
-    {
         public class Freezable : MVVM.BindableBase
         {
             public void Freeze()
@@ -46,4 +44,3 @@
             private bool FreezeCalled;
         }
     }
-}

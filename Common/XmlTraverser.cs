@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public abstract class XmlTraverser
         {
             public static DelegateXmlTraverser Create(Action<System.Xml.XmlNode, VisitAction> VisitDelegate)
@@ -70,4 +68,3 @@ namespace Ks
             private readonly Action<System.Xml.XmlNode, VisitAction> VisitDelegate;
         }
     }
-}

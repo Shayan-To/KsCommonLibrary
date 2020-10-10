@@ -2,10 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public static class JsonDynamicExtensions
         {
             public static void WriteValue(this JsonWriter Writer, JsonDynamicBase Obj, bool? MultiLine = default)
@@ -165,4 +163,3 @@ namespace Ks
             }
         }
     }
-}

@@ -1,9 +1,7 @@
 ﻿using System.Diagnostics;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class Assert
         {
             [DebuggerHidden()]
@@ -39,4 +37,3 @@ namespace Ks
             }
         }
     }
-}

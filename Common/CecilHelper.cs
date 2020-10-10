@@ -3,10 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class CecilHelper
         {
             public bool IsBaseTypeOf(Mono.Cecil.TypeDefinition Base, Mono.Cecil.TypeDefinition Derived)
@@ -148,4 +146,3 @@ namespace Ks
             private readonly HashSet<Mono.Cecil.AssemblyNameReference> AssemblyNames = new HashSet<Mono.Cecil.AssemblyNameReference>();
         }
     }
-}

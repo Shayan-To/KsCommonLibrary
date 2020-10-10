@@ -2,10 +2,8 @@
 using System.Collections;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ComparableCollection<T> : List<T>, IComparable<ComparableCollection<T>>, IStructuralComparable, IStructuralEquatable
         {
             public ComparableCollection()
@@ -119,4 +117,3 @@ namespace Ks
             }
         }
     }
-}

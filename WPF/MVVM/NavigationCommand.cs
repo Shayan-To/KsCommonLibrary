@@ -2,10 +2,8 @@
 using System;
 using System.Windows.Input;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public class NavigationCommand : DependencyObject, ICommand
         {
 #pragma warning disable CS0067 // The event is never used
@@ -158,4 +156,3 @@ namespace Ks
             }
         }
     }
-}

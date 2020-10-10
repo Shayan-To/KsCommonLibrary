@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public class ArrayComparer<T> : IComparer<T[]>, IEqualityComparer<T[]>
         {
             public ArrayComparer() : this(System.Collections.Generic.Comparer<T>.Default, System.Collections.Generic.EqualityComparer<T>.Default)
@@ -56,4 +54,3 @@ namespace Ks
             private readonly IEqualityComparer<T> EqualityComparer;
         }
     }
-}

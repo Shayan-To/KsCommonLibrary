@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         public abstract class BinaryFormatterBase : Formatter
         {
             public BinaryFormatterBase()
@@ -99,4 +97,3 @@ namespace Ks
             private readonly byte[] TempArray = new byte[8];
         }
     }
-}

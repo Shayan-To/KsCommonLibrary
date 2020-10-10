@@ -2,10 +2,8 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
         [Obsolete("Use " + nameof(TaskCompletionSource<Void>) + " instead.", true)]
         public class EventBasedTask : INotifyCompletion
         {
@@ -47,4 +45,3 @@ namespace Ks
             private Action CompletedAction;
         }
     }
-}

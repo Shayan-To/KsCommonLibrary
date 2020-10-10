@@ -1,10 +1,8 @@
 ﻿using System.Windows;
 using System.Threading.Tasks;
 
-namespace Ks
+namespace Ks.Common.NonUI
 {
-    namespace Common.NonUI
-    {
         public class OneWaySetter : NonUIElement
         {
             public static readonly DependencyProperty InputProperty = DependencyProperty.Register("Input", typeof(object), typeof(OneWaySetter), new PropertyMetadata(null, Input_Changed, Input_Coerce));
@@ -76,4 +74,3 @@ namespace Ks
             }
         }
     }
-}

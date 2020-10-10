@@ -10,10 +10,8 @@ using System.Windows.Controls;
 using System;
 using System.Xml.Linq;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public class KsLanguage : IDisposable
         {
             public KsLanguage(System.IO.Stream Stream)
@@ -248,4 +246,3 @@ namespace Ks
             private readonly System.IO.Stream Stream;
         }
     }
-}

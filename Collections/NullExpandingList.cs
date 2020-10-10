@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
-    {
 
         // Public Class NullExpandingList
 
@@ -106,4 +104,3 @@ namespace Ks
             private readonly List<T> List = new List<T>();
         }
     }
-}

@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
-    {
         public class BindableBase : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
@@ -31,4 +29,3 @@ namespace Ks
             }
         }
     }
-}
