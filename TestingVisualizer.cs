@@ -131,8 +131,8 @@ namespace Ks.Common
             var FV = this.ConvertValue(Value, Orientation);
 
             var Col = this.ConvertColor(Color);
-            using var Pen = new Pen(this.ConvertColor(Color));
-            using var Brush = new SolidBrush(this.ConvertColor(Color));
+            using var Pen = new Pen(Col);
+            using var Brush = new SolidBrush(Col);
             this.Graphics.DrawLine(Pen, this.CreatePoint(FV, FIO.Start, Orientation), this.CreatePoint(FV, FIO.Start + FIO.Length, Orientation));
             this.Graphics.DrawString(Caption, SystemFonts.DefaultFont, Brush, this.CreatePoint(FV, FIO.Start, Orientation));
         }
