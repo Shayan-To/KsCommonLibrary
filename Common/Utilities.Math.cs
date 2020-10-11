@@ -27,7 +27,7 @@ namespace Ks.Common
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static int NonNegMod(int A, int B)
             {
-                A = A % B;
+                A %= B;
                 if (A >= 0)
                 {
                     return A;
@@ -53,7 +53,7 @@ namespace Ks.Common
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static int PosMod(int A, int B)
             {
-                A = A % B;
+                A %= B;
                 if (A > 0)
                 {
                     return A;
@@ -87,12 +87,12 @@ namespace Ks.Common
                 var High = A2 * B2;
 
                 var Mid = Low >> N;
-                Low = Low & NMask;
+                Low &= NMask;
 
                 Mid += A1 * B2;
                 High += Mid >> N;
 
-                Mid = Mid & NMask;
+                Mid &= NMask;
 
                 Mid += A2 * B1;
                 High += Mid >> N;
@@ -167,7 +167,7 @@ namespace Ks.Common
 
                     if (Reminder >= Root2)
                     {
-                        Root = Root | 1;
+                        Root |= 1;
                         Reminder -= Root2;
                     }
                 }
@@ -201,7 +201,7 @@ namespace Ks.Common
 
                     if (Reminder >= Root2)
                     {
-                        Root = Root | 1;
+                        Root |= 1;
                         Reminder -= Root2;
                     }
                 }
@@ -385,7 +385,7 @@ namespace Ks.Common
                 while (N != 0)
                 {
                     Reminder += (N % Base) * Power;
-                    N = N / Base;
+                    N /= Base;
                     Power *= Base;
                     Log += 1;
                 }
@@ -529,7 +529,7 @@ namespace Ks.Common
                     {
                         J += Size;
                         var C = Cur >> (ByteBits - J);
-                        C = C & ((1 << Size) - 1);
+                        C &= (1 << Size) - 1;
                         T = (T << Size) | C;
 
                         Res[Index] = Digits[T];
@@ -576,7 +576,7 @@ namespace Ks.Common
                     {
                         J += Size;
                         var C = Cur >> (DigitBits - J);
-                        C = C & ((1 << Size) - 1);
+                        C &= (1 << Size) - 1;
                         T = (T << Size) | C;
 
                         Res[Index] = (byte) T;

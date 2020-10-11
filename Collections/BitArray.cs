@@ -91,7 +91,7 @@ namespace Ks.Common
 
             var B = (int) this._Bytes[Index >> 3];
             var I = Index & 7;
-            B = B | (1 << I);
+            B |= 1 << I;
             this._Bytes[Index >> 3] = (byte) B;
         }
 
@@ -101,7 +101,7 @@ namespace Ks.Common
 
             var B = (int) this._Bytes[Index >> 3];
             var I = Index & 7;
-            B = B & ~(1 << I);
+            B &= ~(1 << I);
             this._Bytes[Index >> 3] = (byte) B;
         }
 

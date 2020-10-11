@@ -78,7 +78,7 @@ namespace Ks.Common.Controls
 
         private double Dimension(Size Size, Orientation Orientation)
         {
-            Orientation = Orientation ^ this.OrientationCache;
+            Orientation ^= this.OrientationCache;
             if (Orientation == Orientation.Horizontal)
             {
                 return Size.Width;

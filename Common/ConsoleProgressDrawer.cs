@@ -232,7 +232,7 @@ namespace Ks.Common
             get => this._ShowProgressBar;
             set
             {
-                value = value & this.IsSingleLine;
+                value &= this.IsSingleLine;
                 this._ShowProgressBar = value;
                 this.Draw();
             }

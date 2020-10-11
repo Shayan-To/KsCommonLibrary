@@ -21,7 +21,7 @@ namespace Ks.Common
 
         protected override void OnGetEnterContext(string Name)
         {
-            Name = Name ?? "Value";
+            Name ??= "Value";
             if (Name != null)
             {
                 this.XmlReader.ReadStartElement(Name);
@@ -35,7 +35,7 @@ namespace Ks.Common
 
         protected override void OnGetExitContext(string Name)
         {
-            Name = Name ?? "Value";
+            Name ??= "Value";
             if (Name != null)
             {
                 this.XmlReader.ReadEndElement();
@@ -52,7 +52,7 @@ namespace Ks.Common
 
         protected override void OnSetEnterContext(string Name)
         {
-            Name = Name ?? "Value";
+            Name ??= "Value";
             if (Name != null)
             {
                 this.XmlWriter.WriteStartElement(Name);
@@ -66,7 +66,7 @@ namespace Ks.Common
 
         protected override void OnSetExitContext(string Name)
         {
-            Name = Name ?? "Value";
+            Name ??= "Value";
             if (Name != null)
             {
                 this.XmlWriter.WriteEndElement();
