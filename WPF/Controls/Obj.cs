@@ -13,7 +13,7 @@ namespace Ks.Common.Controls
 
         private static object Objt_Coerce(DependencyObject D, object BaseValue)
         {
-            var Self = (Obj) D;
+            // var Self = (Obj) D;
 
             // Dim Value = DirectCast(BaseValue, Object)
 
@@ -32,7 +32,7 @@ namespace Ks.Common.Controls
 
         public object Objt
         {
-            get => (object) this.GetValue(ObjtProperty);
+            get => /* (object) */ this.GetValue(ObjtProperty);
             set => this.SetValue(ObjtProperty, value);
         }
 

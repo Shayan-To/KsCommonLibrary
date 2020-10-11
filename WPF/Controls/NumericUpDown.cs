@@ -38,19 +38,19 @@ namespace Ks.Common.Controls
 
         private static object Step_Coerce(DependencyObject D, object BaseValue)
         {
-            var Self = (NumericUpDown) D;
+            // var Self = (NumericUpDown) D;
 
-            var Value = (double) BaseValue;
+            // var Value = (double) BaseValue;
 
             return BaseValue;
         }
 
         private static void Step_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var Self = (NumericUpDown) D;
+            // var Self = (NumericUpDown) D;
 
-            var OldValue = (double) E.OldValue;
-            var NewValue = (double) E.NewValue;
+            // var OldValue = (double) E.OldValue;
+            // var NewValue = (double) E.NewValue;
         }
 
         public double Step
@@ -63,19 +63,19 @@ namespace Ks.Common.Controls
 
         private static object Value_Coerce(DependencyObject D, object BaseValue)
         {
-            var Self = (NumericUpDown) D;
+            // var Self = (NumericUpDown) D;
 
-            var Value = (double) BaseValue;
+            // var Value = (double) BaseValue;
 
             return BaseValue;
         }
 
         private static void Value_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var Self = (NumericUpDown) D;
+            // var Self = (NumericUpDown) D;
 
-            var OldValue = (double) E.OldValue;
-            var NewValue = (double) E.NewValue;
+            // var OldValue = (double) E.OldValue;
+            // var NewValue = (double) E.NewValue;
         }
 
         public double Value
@@ -84,8 +84,10 @@ namespace Ks.Common.Controls
             set => this.SetValue(ValueProperty, value);
         }
 
-#pragma warning disable CS0169 // The field is never used
+#pragma warning disable IDE0044 // Add readonly modifier
+#pragma warning disable IDE0051, CS0169 // Remove unused private members
         private bool IsDirty; // ToDo
-#pragma warning restore CS0169 // The field is never used
+#pragma warning restore IDE0051, CS0169 // Remove unused private members
+#pragma warning restore IDE0044 // Add readonly modifier
     }
 }

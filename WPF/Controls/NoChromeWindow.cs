@@ -34,7 +34,9 @@ namespace Ks.Common.Controls
         private IntPtr NCHitTest(IntPtr wParam, IntPtr lParam, ref bool Handled)
         {
             var MousePosition = System.Windows.Input.Mouse.GetPosition(this);
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
             var InputElement = this.InputHitTest(MousePosition);
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
             return default;
         }
     }

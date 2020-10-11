@@ -189,10 +189,10 @@ namespace Ks.Common.Controls
 
         private static void IsShelterSensitive_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var Self = (PopupShelter) D;
+            // var Self = (PopupShelter) D;
 
-            var OldValue = (bool) E.OldValue;
-            var NewValue = (bool) E.NewValue;
+            // var OldValue = (bool) E.OldValue;
+            // var NewValue = (bool) E.NewValue;
         }
 
         public bool IsShelterSensitive

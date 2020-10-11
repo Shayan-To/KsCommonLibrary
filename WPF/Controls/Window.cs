@@ -53,8 +53,10 @@ namespace Ks.Common.Controls
                 LastIndex = PanelChildren.IndexOf(NextLayerFirst);
             }
 
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
             // ToDo Why isn't this ever used?
             var Layer = this.ShelterLayers[LayerIndex];
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
 
             if (Popup.HasShelter)
             {
@@ -73,7 +75,9 @@ namespace Ks.Common.Controls
         {
             if (LayerIndex == -1)
             {
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
                 LayerIndex = Popup.Layer;
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
             }
 
             var Shelter = this.PopupShelterDic[Popup];
@@ -213,7 +217,9 @@ namespace Ks.Common.Controls
 
         internal const string ContentPresenterName = "PART_ContentPresenter";
 
+#pragma warning disable IDE0052 // Remove unread private members
         private ContentPresenter ContentPresenter { get; set; }
+#pragma warning restore IDE0052 // Remove unread private members
 
         private readonly CreateInstanceDictionary<int, List<Popup>> ShelterLayers = CreateInstanceDictionary.Create(new SortedDictionary<int, List<Popup>>());
         private readonly Dictionary<Popup, PopupShelter> PopupShelterDic = new Dictionary<Popup, PopupShelter>();

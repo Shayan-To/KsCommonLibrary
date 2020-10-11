@@ -74,8 +74,10 @@ namespace Ks.Common
 
         public void DrawFunction(Color Color, IReadOnlyList<(double X, double Y)> Points)
         {
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
             // ToDo Why isn't this ever used?
             var FIX = this.Intervals[(int) Orientation.X];
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
             var FPoints = new Point[Points.Count - 1 + 1];
             for (var I = 0; I < FPoints.Length; I++)
             {
@@ -171,7 +173,9 @@ namespace Ks.Common
             return this.CreatePoint(this.ConvertValue(X, Orientation), this.ConvertValue(Y, Orientation ^ Orientation.Y), Orientation);
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         private Size ConvertSize(double Width, double Height, Orientation Orientation)
+#pragma warning restore IDE0051 // Remove unused private members
         {
             return this.CreateSize(this.ConvertValue(Width, Orientation), this.ConvertValue(Height, Orientation ^ Orientation.Y), Orientation);
         }

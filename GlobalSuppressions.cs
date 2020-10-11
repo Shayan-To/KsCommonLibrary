@@ -6,3 +6,4 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Style", "IDE0047:Remove unnecessary parentheses")]
+[assembly: SuppressMessage("Style", "IDE0060:Remove unused parameter")]

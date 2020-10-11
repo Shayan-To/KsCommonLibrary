@@ -60,7 +60,9 @@ namespace Ks.Common
         }
 
         [Sample()]
+#pragma warning disable IDE0051 // Remove unused private members
         private static void CecilRunTestMethods(bool JustTrue = true)
+#pragma warning restore IDE0051 // Remove unused private members
         {
             var Helper = CecilHelper.Instance;
             var AttributeType = Helper.Convert(typeof(InteractiveRunnableAttribute));

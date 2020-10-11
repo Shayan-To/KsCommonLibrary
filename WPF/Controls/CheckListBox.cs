@@ -258,7 +258,7 @@ namespace Ks.Common.Controls
         {
             var Self = (CheckListBox) D;
 
-            var OldValue = (IList) E.OldValue;
+            // var OldValue = (IList) E.OldValue;
             var NewValue = (IList) E.NewValue;
 
             Self.CollectionObserver.Collection = NewValue;

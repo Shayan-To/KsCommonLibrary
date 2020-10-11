@@ -86,8 +86,10 @@ namespace Ks.Common
             return SB.ToString();
         }
 
+#pragma warning disable IDE0044 // Add readonly modifier
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value null
         private System.Xml.XmlReader XmlReader; // ToDo
+#pragma warning restore IDE0044 // Add readonly modifier
 #pragma warning restore CS0649 // Field is never assigned to, and will always have its default value null
         private System.Xml.XmlWriter XmlWriter;
     }

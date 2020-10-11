@@ -242,7 +242,7 @@ namespace Ks.Common.Controls
             var Self = (TextBlock) D;
 
             // Dim OldValue = DirectCast(E.OldValue, String)
-            var NewValue = (string) E.NewValue;
+            // var NewValue = (string) E.NewValue;
 
             Verify.True(Self.FText == null, "Cannot set both Text and FText.");
 
@@ -259,9 +259,9 @@ namespace Ks.Common.Controls
 
         private static object FText_Coerce(DependencyObject D, object BaseValue)
         {
-            var Self = (TextBlock) D;
+            // var Self = (TextBlock) D;
 
-            var Value = (string) BaseValue;
+            // var Value = (string) BaseValue;
 
             return BaseValue;
         }

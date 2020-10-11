@@ -150,8 +150,10 @@ namespace Ks.Common
         {
         }
 
+#pragma warning disable IDE0052 // Remove unread private members
         private readonly Dictionary<string, object> Objects = new Dictionary<string, object>();
         private readonly System.Text.StringBuilder Input = new System.Text.StringBuilder();
+#pragma warning restore IDE0052 // Remove unread private members
         private readonly SortedDictionary<string, Container> Names = new SortedDictionary<string, Container>();
         private readonly CreateInstanceDictionary<ComparableCollection<string>, Container> Containers = CreateInstanceDictionary.Create(new SortedDictionary<ComparableCollection<string>, Container>());
         private readonly HashSet<Assembly> Assemblies = new HashSet<Assembly>();

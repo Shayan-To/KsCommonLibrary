@@ -142,7 +142,9 @@ namespace Ks.Common
             }
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         private bool ReadToken(string T)
+#pragma warning restore IDE0051 // Remove unused private members
         {
             if (this.PeekToken() == T)
             {

@@ -612,8 +612,10 @@ namespace Ks.Common
                 return Collections.Range(2, D.Length - 2).Select(I => D.Subarray(0, I)).ToArray();
             }).Invoke();
 
+#pragma warning disable IDE0052 // Remove unread private members
             /// <summary>The last character is the padding character.</summary>
             private static readonly char[] Base64Digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".ToCharArray();
+#pragma warning restore IDE0052 // Remove unread private members
         }
     }
 }

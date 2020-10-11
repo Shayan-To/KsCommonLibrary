@@ -45,12 +45,12 @@ namespace Ks.Common.MVVM
 
         private static object Document_Coerce(DependencyObject D, object BaseValue)
         {
-            if (!(D is RichTextBox Self))
+            if (!(D is RichTextBox /* Self */))
             {
                 return DocumentProperty.DefaultMetadata.DefaultValue;
             }
 
-            var Value = (FlowDocument) BaseValue;
+            // var Value = (FlowDocument) BaseValue;
 
             return BaseValue;
         }
@@ -59,7 +59,7 @@ namespace Ks.Common.MVVM
         {
             var Self = (RichTextBox) D;
 
-            var OldValue = (FlowDocument) E.OldValue;
+            // var OldValue = (FlowDocument) E.OldValue;
             var NewValue = (FlowDocument) E.NewValue;
 
             Self.Document = NewValue;
@@ -126,7 +126,7 @@ namespace Ks.Common.MVVM
 
         private static object DesignViewModelType_Coerce(DependencyObject D, object BaseValue)
         {
-            if (!(D is FrameworkElement Self))
+            if (!(D is FrameworkElement /* Self */))
             {
                 return DesignViewModelTypeProperty.DefaultMetadata.DefaultValue;
             }
@@ -548,12 +548,12 @@ namespace Ks.Common.MVVM
 
         private static object DescriptionToolTip_Coerce(DependencyObject D, object BaseValue)
         {
-            if (!(D is FrameworkElement Self))
+            if (!(D is FrameworkElement /* Self */))
             {
                 return DescriptionToolTipProperty.DefaultMetadata.DefaultValue;
             }
 
-            var Value = (string) BaseValue;
+            // var Value = (string) BaseValue;
 
             return BaseValue;
         }
@@ -562,7 +562,7 @@ namespace Ks.Common.MVVM
         {
             var Self = (FrameworkElement) D;
 
-            var OldValue = (string) E.OldValue;
+            // var OldValue = (string) E.OldValue;
             var NewValue = (string) E.NewValue;
 
             Self.ToolTip = new Controls.ToolTip() { Text = "Desc@" + NewValue ?? "" };
@@ -584,12 +584,12 @@ namespace Ks.Common.MVVM
 
         private static object ToolTip_Coerce(DependencyObject D, object BaseValue)
         {
-            if (!(D is FrameworkElement Self))
+            if (!(D is FrameworkElement /* Self */))
             {
                 return ToolTipProperty.DefaultMetadata.DefaultValue;
             }
 
-            var Value = (string) BaseValue;
+            // var Value = (string) BaseValue;
 
             return BaseValue;
         }
@@ -598,7 +598,7 @@ namespace Ks.Common.MVVM
         {
             var Self = (FrameworkElement) D;
 
-            var OldValue = (string) E.OldValue;
+            // var OldValue = (string) E.OldValue;
             var NewValue = (string) E.NewValue;
 
             Self.ToolTip = new Controls.ToolTip() { Text = NewValue ?? "" };
@@ -621,12 +621,12 @@ namespace Ks.Common.MVVM
 
         private static object Password_Coerce(DependencyObject D, object BaseValue)
         {
-            if (!(D is PasswordBox Self))
+            if (!(D is PasswordBox /* Self */))
             {
                 return PasswordProperty.DefaultMetadata.DefaultValue;
             }
 
-            var Value = (string) BaseValue;
+            // var Value = (string) BaseValue;
 
             return BaseValue;
         }

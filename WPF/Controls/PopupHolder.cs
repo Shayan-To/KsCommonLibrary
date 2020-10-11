@@ -87,7 +87,7 @@ namespace Ks.Common.Controls
 
         private static void Target_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var Self = (PopupHolder) D;
+            // var Self = (PopupHolder) D;
         }
 
         public FrameworkElement Target
@@ -164,10 +164,10 @@ namespace Ks.Common.Controls
 
         private static void TargetHorizontalAnchor_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var Self = (PopupHolder) D;
+            // var Self = (PopupHolder) D;
 
-            var OldValue = (double) E.OldValue;
-            var NewValue = (double) E.NewValue;
+            // var OldValue = (double) E.OldValue;
+            // var NewValue = (double) E.NewValue;
         }
 
         public double TargetHorizontalAnchor
@@ -180,10 +180,10 @@ namespace Ks.Common.Controls
 
         private static void TargetVerticalAnchor_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var Self = (PopupHolder) D;
+            // var Self = (PopupHolder) D;
 
-            var OldValue = (double) E.OldValue;
-            var NewValue = (double) E.NewValue;
+            // var OldValue = (double) E.OldValue;
+            // var NewValue = (double) E.NewValue;
         }
 
         public double TargetVerticalAnchor
@@ -196,10 +196,10 @@ namespace Ks.Common.Controls
 
         private static void PopupHorizontalAnchor_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var Self = (PopupHolder) D;
+            // var Self = (PopupHolder) D;
 
-            var OldValue = (double) E.OldValue;
-            var NewValue = (double) E.NewValue;
+            // var OldValue = (double) E.OldValue;
+            // var NewValue = (double) E.NewValue;
         }
 
         public double PopupHorizontalAnchor
@@ -212,10 +212,10 @@ namespace Ks.Common.Controls
 
         private static void PopupVerticalAnchor_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var Self = (PopupHolder) D;
+            // var Self = (PopupHolder) D;
 
-            var OldValue = (double) E.OldValue;
-            var NewValue = (double) E.NewValue;
+            // var OldValue = (double) E.OldValue;
+            // var NewValue = (double) E.NewValue;
         }
 
         public double PopupVerticalAnchor
