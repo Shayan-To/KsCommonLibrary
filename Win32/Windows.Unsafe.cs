@@ -35,7 +35,7 @@ namespace Ks.Common.Win32
             /// The length member of WINDOWPLACEMENT must be set to sizeof(WINDOWPLACEMENT). If this member is not set correctly, the function returns FALSE. For additional remarks on the proper use of window placement coordinates, see WINDOWPLACEMENT.
             /// </remarks>
             [DllImport("User32.dll", SetLastError = true)]
-            public static extern bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement lpwndpl);
+            public static extern bool GetWindowPlacement(IntPtr hWnd, ref WindowPlacement lpwndpl);
 
             /// BOOL WINAPI EnumWindows(
             /// _In_ WNDENUMPROC lpEnumFunc,

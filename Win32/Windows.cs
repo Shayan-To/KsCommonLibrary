@@ -18,7 +18,7 @@ namespace Ks.Common.Win32
             public static Unsafe.WindowPlacement GetWindowPlacement(IntPtr hWnd)
             {
                 var R = new Unsafe.WindowPlacement().InitNew();
-                Unsafe.GetWindowPlacement(hWnd, out R);
+                Unsafe.GetWindowPlacement(hWnd, ref R);
                 Common.VerifyError();
                 return R;
             }
