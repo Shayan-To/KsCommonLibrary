@@ -286,7 +286,7 @@ namespace Ks.Common
                 Count = Self.Count;
             }
 
-            var Complement = (Count + (2 * Index)) - 1;
+            var Complement = Count + (2 * Index) - 1;
             for (var I = Index; I < Index + Count; I++)
             {
                 var C = Self[I];

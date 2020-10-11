@@ -45,7 +45,7 @@ namespace Ks.Common
 
         protected ListCollectionRA(SerializationInfo info, StreamingContext context)
         {
-            if ((info == null))
+            if (info == null)
             {
                 throw new ArgumentNullException(nameof(info));
             }

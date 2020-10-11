@@ -75,7 +75,7 @@ namespace Ks.Common
 
                 do
                 {
-                    var T = Reader.Invoke(Buffer, (Offset + Length) - N, N);
+                    var T = Reader.Invoke(Buffer, Offset + Length - N, N);
                     if (T == 0)
                     {
                         return Length - N;

@@ -146,7 +146,7 @@ namespace Ks.Common
                     Bl = true;
                     this.Base.WriteLine(buffer, SI, I - SI);
 
-                    if (I < ((index + count) - 1) && ((Ch == '\r') & (buffer[I + 1] == '\n')))
+                    if (I < (index + count - 1) && ((Ch == '\r') & (buffer[I + 1] == '\n')))
                     {
                         I += 1;
                     }
@@ -309,7 +309,7 @@ namespace Ks.Common
                     Bl = true;
                     await this.Base.WriteLineAsync(buffer, SI, I - SI);
 
-                    if (I < ((index + count) - 1) && ((Ch == '\r') & (buffer[I + 1] == '\n')))
+                    if (I < (index + count - 1) && ((Ch == '\r') & (buffer[I + 1] == '\n')))
                     {
                         I += 1;
                     }

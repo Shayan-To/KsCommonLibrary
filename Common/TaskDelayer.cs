@@ -145,7 +145,7 @@ namespace Ks.Common
 
                             // These " - Now"s were at the end. To avoid overflows, moved them a step back.
 
-                            WaitTime = (this.FirstActivityTime - Now) + this.MinDelay;
+                            WaitTime = this.FirstActivityTime - Now + this.MinDelay;
                             if (WaitTime > TimeEpsilon)
                             {
 #if WriteDebugInfo
@@ -154,8 +154,8 @@ namespace Ks.Common
                                 break;
                             }
 
-                            var MaxWaitTime = (this.FirstActivityTime - Now) + this.MaxDelay;
-                            WaitTime = (this.LastActivityTime - Now) + this.InactivityTime;
+                            var MaxWaitTime = this.FirstActivityTime - Now + this.MaxDelay;
+                            WaitTime = this.LastActivityTime - Now + this.InactivityTime;
                             if ((WaitTime <= TimeEpsilon) | (MaxWaitTime <= TimeEpsilon))
                             {
 #if WriteDebugInfo

@@ -22,7 +22,7 @@ namespace Ks.Common
             }
 
             var Ptr1 = Start;
-            var Ptr2 = (Start + Length) - 1;
+            var Ptr2 = Start + Length - 1;
 
             var PivotPtr = Start + this.Random.Next(Length);
             var Pivot = this.List[PivotPtr];

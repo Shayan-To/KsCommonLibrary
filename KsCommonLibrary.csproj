@@ -154,6 +154,7 @@
     <Compile Include="Common\XmlLinqTraverser.cs" />
     <Compile Include="Common\XmlTraverser.cs" />
     <Compile Include="Common\Xml\XmlWriter.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TestingVisualizer.cs" />
     <Compile Include="Win32\Common.cs" />
     <Compile Include="Win32\Files.cs" />

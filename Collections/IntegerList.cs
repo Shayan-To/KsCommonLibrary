@@ -15,7 +15,7 @@ namespace Ks.Common
         {
             this.Start = Start;
             this.Step = Step;
-            this.End = (End - Utilities.Math.PosMod(End - Start, Step)) + Step;
+            this.End = End - Utilities.Math.PosMod(End - Start, Step) + Step;
         }
 
         public int Start { get; }
