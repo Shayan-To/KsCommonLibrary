@@ -228,8 +228,6 @@ namespace Ks.Common
             return this.ICollection_Contains((KeyValuePair<TKey, TValue>) value);
         }
 
-        private bool IsReadOnly => false;
-
         object IDictionary.this[object key]
         {
             get => this[(TKey) key];
