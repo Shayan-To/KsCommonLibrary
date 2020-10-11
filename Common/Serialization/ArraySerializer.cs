@@ -19,8 +19,7 @@ namespace Ks.Common
 
         public override T[] GetT(FormatterGetProxy Formatter)
         {
-            var Length = default(int);
-            Length = Formatter.Get<int>(nameof(Length));
+            int Length = Formatter.Get<int>(nameof(Length));
 
             var R = new T[Length];
             for (var I = 0; I < Length; I++)

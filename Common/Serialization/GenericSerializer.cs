@@ -58,8 +58,7 @@ namespace Ks.Common
         public sealed override object Get(FormatterGetProxy Formatter)
         {
             Type[] TypeArguments;
-            var IsSingle = default(bool);
-            IsSingle = Formatter.Get<bool>(nameof(IsSingle));
+            bool IsSingle = Formatter.Get<bool>(nameof(IsSingle));
             if (IsSingle)
             {
                 TypeArguments = new[] { Formatter.Get<Type>(nameof(TypeArguments)) };

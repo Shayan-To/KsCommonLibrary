@@ -25,7 +25,7 @@ namespace Ks.Common
 
                 var Min = List[MinIndex];
                 var I = RightChild(Index);
-                var T = default(T);
+                T T;
                 if (I < Count)
                 {
                     T = List[I];

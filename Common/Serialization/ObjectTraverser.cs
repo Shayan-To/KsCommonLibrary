@@ -20,7 +20,7 @@ namespace Ks.Common
             Verify.True(this.Type == null & this.Container == null, "Reset before setting.");
             this.Type = typeof(T);
 
-            ObjectContainer<T> C = null;
+            ObjectContainer<T> C;
             if (this.Containers.TryGetValue(this.Type, out this.Container))
             {
                 C = (ObjectContainer<T>) this.Container;

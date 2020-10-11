@@ -43,8 +43,7 @@ namespace Ks.Common.Controls
             }
 
             var PanelChildren = this.PopupsPanel.Children;
-            var LastIndex = -1;
-
+            int LastIndex;
             if (NextLayerFirst == null)
             {
                 LastIndex = PanelChildren.Count;
@@ -56,11 +55,10 @@ namespace Ks.Common.Controls
 
             // ToDo Why isn't this ever used?
             var Layer = this.ShelterLayers[LayerIndex];
-            PopupShelter Shelter = null;
 
             if (Popup.HasShelter)
             {
-                Shelter = new PopupShelter() { DataContext = Popup, Style = this.ShelterStyle };
+                var Shelter = new PopupShelter() { DataContext = Popup, Style = this.ShelterStyle };
                 this.PopupShelterDic.Add(Popup, Shelter);
                 PanelChildren.Insert(LastIndex, Shelter);
                 LastIndex += 1;
@@ -90,8 +88,7 @@ namespace Ks.Common.Controls
 
         internal void RefreshPopup(Popup Popup)
         {
-            PopupShelter Shelter = null;
-
+            PopupShelter Shelter;
             if (Popup.HasShelter)
             {
                 if (!this.PopupShelterDic.ContainsKey(Popup))

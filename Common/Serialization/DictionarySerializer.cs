@@ -20,8 +20,7 @@ namespace Ks.Common
 
         public override IEnumerable<KeyValuePair<TKey, TValue>> GetT(FormatterGetProxy Formatter)
         {
-            var Count = default(int);
-            Count = Formatter.Get<int>(nameof(Count));
+            int Count = Formatter.Get<int>(nameof(Count));
 
             var R = new Dictionary<TKey, TValue>(Count);
             for (var I = 0; I < Count; I++)
@@ -48,10 +47,8 @@ namespace Ks.Common
 
         public override KeyValuePair<TKey, TValue> GetT(FormatterGetProxy Formatter)
         {
-            var Key = default(TKey);
-            Key = Formatter.Get<TKey>(nameof(Key));
-            var Value = default(TValue);
-            Value = Formatter.Get<TValue>(nameof(Value));
+            TKey Key = Formatter.Get<TKey>(nameof(Key));
+            TValue Value = Formatter.Get<TValue>(nameof(Value));
 
             return new KeyValuePair<TKey, TValue>(Key, Value);
         }

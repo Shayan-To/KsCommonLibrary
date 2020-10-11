@@ -20,8 +20,7 @@ namespace Ks.Common
 
         public override IEnumerable<T> GetT(FormatterGetProxy Formatter)
         {
-            var Count = default(int);
-            Count = Formatter.Get<int>(nameof(Count));
+            int Count = Formatter.Get<int>(nameof(Count));
 
             var R = new List<T>(Count);
             for (var I = 0; I < Count; I++)

@@ -22,7 +22,7 @@ namespace Ks.Common
                     break;
                 }
 
-                var Ch = default(int);
+                int Ch;
                 if (BeginningOfFile & (CharsIndex == (CharsInitialIndex - 1)))
                 {
                     Ch = 0xFEFF;

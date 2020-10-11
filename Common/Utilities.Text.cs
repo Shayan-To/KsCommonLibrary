@@ -204,13 +204,10 @@ namespace Ks.Common
 
             public static string CEscape(string Input, bool DoesThrow = true)
             {
-                char T1 = default, T2 = default;
-
                 var Res = new StringBuilder();
                 for (var I = 0; I < Input.Length; I++)
                 {
-                    T2 = Input[I];
-
+                    var T2 = Input[I];
                     if (T2 == '\\')
                     {
                         I += 1;
@@ -227,7 +224,7 @@ namespace Ks.Common
                             }
                         }
 
-                        T1 = Input[I];
+                        var T1 = Input[I];
 
                         if (EscapeDic.TryGetValue(T1, out T2))
                         {

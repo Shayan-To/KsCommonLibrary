@@ -60,7 +60,7 @@ namespace Ks.Common
                 Id = this.CurrentId;
             }
 
-            var WaitingData = default((EventWaitHandle WaitHandle, Exception Exception));
+            (EventWaitHandle WaitHandle, Exception Exception) WaitingData;
 
             using (var WaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset))
             {

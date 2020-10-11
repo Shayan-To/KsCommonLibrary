@@ -18,7 +18,7 @@ namespace Ks.Common
 
             public static (double Value, string Prefix) GetPrefixedRepresentation(double Value, IReadOnlyList<(string Prefix, int Multiplier, Interval AcceptInterval)> Prefixes)
             {
-                var I = 0;
+                int I;
                 for (I = 0; I < Prefixes.Count; I++)
                 {
                     if (string.IsNullOrEmpty(Prefixes[I].Prefix))

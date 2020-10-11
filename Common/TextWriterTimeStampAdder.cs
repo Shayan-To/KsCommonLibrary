@@ -126,7 +126,7 @@ namespace Ks.Common
             var Bl = false;
             for (var I = index; I <= index + count; I++)
             {
-                var Ch = default(char);
+                char Ch;
                 if (I < (index + count))
                 {
                     Ch = buffer[I];
@@ -290,7 +290,7 @@ namespace Ks.Common
             var Bl = false;
             for (var I = index; I <= index + count; I++)
             {
-                var Ch = default(char);
+                char Ch;
                 if (I < (index + count))
                 {
                     Ch = buffer[I];

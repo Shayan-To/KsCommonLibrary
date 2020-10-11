@@ -187,7 +187,7 @@ namespace Ks.Common
                 {
                     var I = 0;
                     var J = 0;
-                    var Cur = default((int Length, int Mode));
+                    (int Length, int Mode) Cur;
                     do
                     {
                         Cur = Dyn[I, J];

@@ -37,7 +37,7 @@ namespace Ks.Common
         {
             WriteColored(Prompt, ConsoleColor.Green);
 
-            var K = default(ConsoleKey);
+            ConsoleKey K;
             do
             {
                 K = Console.ReadKey(true).Key;

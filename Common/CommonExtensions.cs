@@ -1404,8 +1404,8 @@ namespace Ks.Common
             var BufLength = 8192;
 
             var TotalN = 0;
-            var N = 0;
-            var Buf = default(byte[]);
+            int N;
+            byte[] Buf;
 
             while (true)
             {
@@ -1455,7 +1455,7 @@ namespace Ks.Common
             var TotalN = 0;
             while (true)
             {
-                var N = 0;
+                int N;
                 if (Length == -1)
                 {
                     N = Stream.Read(Buffer, 0, Buffer.Length);
