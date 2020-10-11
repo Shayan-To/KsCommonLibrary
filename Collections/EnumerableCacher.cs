@@ -13,7 +13,7 @@ namespace Ks.Common
         {
             get
             {
-                this.TryGetValue(int.MaxValue, out var argValue);
+                this.TryGetValue(int.MaxValue, out _);
                 return this.List.Count;
             }
         }

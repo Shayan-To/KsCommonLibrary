@@ -74,6 +74,7 @@ namespace Ks.Common
 
         public void DrawFunction(Color Color, IReadOnlyList<(double X, double Y)> Points)
         {
+            // ToDo Why isn't this ever used?
             var FIX = this.Intervals[(int) Orientation.X];
             var FPoints = new Point[Points.Count - 1 + 1];
             for (var I = 0; I < FPoints.Length; I++)

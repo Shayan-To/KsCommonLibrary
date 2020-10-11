@@ -54,6 +54,7 @@ namespace Ks.Common.Controls
                 LastIndex = PanelChildren.IndexOf(NextLayerFirst);
             }
 
+            // ToDo Why isn't this ever used?
             var Layer = this.ShelterLayers[LayerIndex];
             PopupShelter Shelter = null;
 

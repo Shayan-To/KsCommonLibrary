@@ -41,7 +41,7 @@ namespace Ks.Common
 
         public bool ContainsKey(string key)
         {
-            return this.TryGetValue(key, out var Value);
+            return this.TryGetValue(key, out _);
         }
 
         public IEnumerator<KeyValuePair<string, JsonObject>> GetEnumerator()
