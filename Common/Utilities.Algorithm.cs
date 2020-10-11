@@ -64,12 +64,12 @@ namespace Ks.Common
             {
                 if (Start <= End)
                 {
-                    var R = BinarySearch(I => ((I + Start) >= End) ? true : Func(I + Start), End - Start);
+                    var R = BinarySearch(I => ((I + Start) >= End) || Func(I + Start), End - Start);
                     return R + Start;
                 }
                 else
                 {
-                    var R = BinarySearch(I => ((Start - I) <= End) ? true : Func(Start - I), Start - End);
+                    var R = BinarySearch(I => ((Start - I) <= End) || Func(Start - I), Start - End);
                     return Start - R;
                 }
             }
