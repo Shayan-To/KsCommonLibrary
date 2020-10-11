@@ -291,7 +291,7 @@ namespace Ks.Common
             {
                 var C = Self[I];
                 Self[I] = Self[Complement - I];
-                Self[Complement - I] = Self[I];
+                Self[Complement - I] = C;
             }
         }
 
