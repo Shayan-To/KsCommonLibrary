@@ -8,7 +8,7 @@ namespace Ks.Common
 {
     public class ChangeReporter
     {
-        private List<object> A = new List<object>();
+        private readonly List<object> A = new List<object>();
 
         public void Add(object Obj)
         {

@@ -284,7 +284,7 @@ namespace Ks.Common
 
         public static CsvParser Instance { get; } = new CsvParser();
 
-        private static string NewLine = "\r\n";
+        private static readonly string NewLine = "\r\n";
 
         private string Delimiter;
         private char DelimiterChar;

@@ -106,7 +106,7 @@ namespace Ks.Common
 
         public static QuickSorter<T> Instance => DefaultCacher<QuickSorter<T>>.Value;
 
-        private Random Random;
+        private readonly Random Random;
         private IList<T> List;
         private IComparer<T> Comparer;
     }

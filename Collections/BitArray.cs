@@ -149,6 +149,6 @@ namespace Ks.Common
 
         public override int Count => this._Count;
 
-        private byte[] _Bytes;
+        private readonly byte[] _Bytes;
     }
 }
