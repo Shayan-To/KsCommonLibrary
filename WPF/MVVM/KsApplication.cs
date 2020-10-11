@@ -317,18 +317,12 @@ namespace Ks.Common.MVVM
             // If the top of stack is not the current frame, we can go back from the current frame to it.
             Count += (this.NavigationFrames.PeekOrDefault() == this.CurrentNavigationFrame) ? 0 : 1;
 
-            switch (Count)
+            this.CanNavigateBack = Count switch
             {
-                case 0:
-                    this.CanNavigateBack = false;
-                    break;
-                case 1:
-                    this.CanNavigateBack = this.CanNavigateBackToEmpty();
-                    break;
-                default:
-                    this.CanNavigateBack = true;
-                    break;
-            }
+                0 => false,
+                1 => this.CanNavigateBackToEmpty(),
+                _ => true,
+            };
         }
 
         public DelegateCommand NavigateBackCommand { get; }

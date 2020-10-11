@@ -39,7 +39,7 @@ namespace Ks.Common
         }
 
         [DebuggerHidden()]
-        public static void Fail(string Message = null)
+        public static AssertionException Fail(string Message = null)
         {
             throw new AssertionException(Message);
         }

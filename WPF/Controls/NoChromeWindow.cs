@@ -24,13 +24,11 @@ namespace Ks.Common.Controls
 
         private IntPtr WindowProcess(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            switch (msg)
+            return msg switch
             {
-                case 0x0084: // NCHitTest
-                    return this.NCHitTest(wParam, lParam, ref handled);
-            }
-
-            return default;
+                0x0084 /* NCHitTest */ => this.NCHitTest(wParam, lParam, ref handled),
+                _ => default,
+            };
         }
 
         private IntPtr NCHitTest(IntPtr wParam, IntPtr lParam, ref bool Handled)

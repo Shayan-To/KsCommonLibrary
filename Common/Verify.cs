@@ -112,13 +112,13 @@ namespace Ks.Common
         }
 
         [DebuggerHidden()]
-        public static void Fail(string Message = null)
+        public static InvalidOperationException Fail(string Message = null)
         {
             throw new InvalidOperationException(Message);
         }
 
         [DebuggerHidden()]
-        public static void FailArg(string Name = null, string Message = null)
+        public static ArgumentException FailArg(string Name = null, string Message = null)
         {
             if (Name == null & Message == null)
             {
