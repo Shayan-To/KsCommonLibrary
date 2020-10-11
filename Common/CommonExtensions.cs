@@ -1401,7 +1401,7 @@ namespace Ks.Common
 
             var Arrs = new List<byte[]>();
 
-            var BufLength = 8192;
+            const int BufLength = 8192;
 
             var TotalN = 0;
             int N;
