@@ -163,8 +163,7 @@ namespace Ks.Common
 
         public override void WriteLine(object value)
         {
-            var Formattable = value as IFormattable;
-            if (Formattable != null)
+            if (value is IFormattable Formattable)
             {
                 this.WriteLine(Formattable.ToString(null, this.Base.FormatProvider));
             }

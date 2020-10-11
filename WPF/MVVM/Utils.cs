@@ -45,8 +45,7 @@ namespace Ks.Common.MVVM
 
         private static object Document_Coerce(DependencyObject D, object BaseValue)
         {
-            var Self = D as RichTextBox;
-            if (Self == null)
+            if (!(D is RichTextBox Self))
             {
                 return DocumentProperty.DefaultMetadata.DefaultValue;
             }
@@ -127,8 +126,7 @@ namespace Ks.Common.MVVM
 
         private static object DesignViewModelType_Coerce(DependencyObject D, object BaseValue)
         {
-            var Self = D as FrameworkElement;
-            if (Self == null)
+            if (!(D is FrameworkElement Self))
             {
                 return DesignViewModelTypeProperty.DefaultMetadata.DefaultValue;
             }
@@ -476,9 +474,7 @@ namespace Ks.Common.MVVM
 
         private static void SnapsToDevicePixels_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var Self = D as UIElement;
-
-            if (Self == null)
+            if (!(D is UIElement Self))
             {
                 return;
             }
@@ -517,9 +513,7 @@ namespace Ks.Common.MVVM
 
         private static void Foreground_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var Self = D as UIElement;
-
-            if (Self == null)
+            if (!(D is UIElement Self))
             {
                 return;
             }
@@ -554,8 +548,7 @@ namespace Ks.Common.MVVM
 
         private static object DescriptionToolTip_Coerce(DependencyObject D, object BaseValue)
         {
-            var Self = D as FrameworkElement;
-            if (Self == null)
+            if (!(D is FrameworkElement Self))
             {
                 return DescriptionToolTipProperty.DefaultMetadata.DefaultValue;
             }
@@ -591,8 +584,7 @@ namespace Ks.Common.MVVM
 
         private static object ToolTip_Coerce(DependencyObject D, object BaseValue)
         {
-            var Self = D as FrameworkElement;
-            if (Self == null)
+            if (!(D is FrameworkElement Self))
             {
                 return ToolTipProperty.DefaultMetadata.DefaultValue;
             }
@@ -629,8 +621,7 @@ namespace Ks.Common.MVVM
 
         private static object Password_Coerce(DependencyObject D, object BaseValue)
         {
-            var Self = D as PasswordBox;
-            if (Self == null)
+            if (!(D is PasswordBox Self))
             {
                 return PasswordProperty.DefaultMetadata.DefaultValue;
             }

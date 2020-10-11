@@ -146,8 +146,7 @@ namespace Ks.Common.MVVM
             get => this._Collection;
             set
             {
-                var Obs = this._Collection as INotifyCollectionChanged;
-                if (Obs != null)
+                if (this._Collection is INotifyCollectionChanged Obs)
                 {
                     Obs.CollectionChanged -= this._Collection_CollectionChanged;
                 }

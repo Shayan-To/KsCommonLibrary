@@ -189,8 +189,7 @@ namespace Ks.Common.Controls
 
         private static void Y_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var C = VisualTreeHelper.GetParent(D) as ResizableCanvas;
-            if (C != null)
+            if (VisualTreeHelper.GetParent(D) is ResizableCanvas C)
             {
                 C.InvalidateMeasure();
             }
@@ -210,8 +209,7 @@ namespace Ks.Common.Controls
 
         private static void X_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var C = VisualTreeHelper.GetParent(D) as ResizableCanvas;
-            if (C != null)
+            if (VisualTreeHelper.GetParent(D) is ResizableCanvas C)
             {
                 C.InvalidateMeasure();
             }
@@ -231,8 +229,7 @@ namespace Ks.Common.Controls
 
         private static void H_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var C = VisualTreeHelper.GetParent(D) as ResizableCanvas;
-            if (C != null)
+            if (VisualTreeHelper.GetParent(D) is ResizableCanvas C)
             {
                 C.InvalidateMeasure();
             }
@@ -252,8 +249,7 @@ namespace Ks.Common.Controls
 
         private static void W_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var C = VisualTreeHelper.GetParent(D) as ResizableCanvas;
-            if (C != null)
+            if (VisualTreeHelper.GetParent(D) is ResizableCanvas C)
             {
                 C.InvalidateMeasure();
             }

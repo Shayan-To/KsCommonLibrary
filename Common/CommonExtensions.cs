@@ -208,18 +208,14 @@ namespace Ks.Common
 
         public static int? FastCount<T>(this IEnumerable<T> Self)
         {
-            var CollectionT = Self as ICollection<T>;
-            if (CollectionT != null)
+            if (Self is ICollection<T> CollectionT)
             {
                 return CollectionT.Count;
             }
-
-            var Collection = Self as ICollection;
-            if (Collection != null)
+            if (Self is ICollection Collection)
             {
                 return Collection.Count;
             }
-
             return default;
         }
 
@@ -600,8 +596,7 @@ namespace Ks.Common
 
         public static IReadOnlyList<T> CastAsList<T>(this IList Self)
         {
-            var R = Self as IReadOnlyList<T>;
-            if (R != null)
+            if (Self is IReadOnlyList<T> R)
             {
                 return R;
             }

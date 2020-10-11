@@ -111,8 +111,7 @@ namespace Ks.Common
                 var S = this.GetSerializer<T>(Obj, IsGeneric);
                 if (IsGeneric)
                 {
-                    var ST = S as Serializer<T>;
-                    if (ST != null)
+                    if (S is Serializer<T> ST)
                     {
                         ST.SetT(this.SetProxy, Obj);
                     }

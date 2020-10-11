@@ -190,9 +190,7 @@ namespace Ks.Common.Controls
 
         private static void KsLanguage_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
         {
-            var Self = D as TextBlock;
-
-            if (Self == null)
+            if (!(D is TextBlock Self))
             {
                 return;
             }

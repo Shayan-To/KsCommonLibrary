@@ -8,8 +8,7 @@ namespace Ks.Common
     {
         public SelectAsNotifyingListCollection(IReadOnlyList<TIn> List, Func<TIn, TOut> Func) : base(List, Func)
         {
-            var Notifying = List as INotifyCollectionChanged;
-            if (Notifying != null)
+            if (List is INotifyCollectionChanged Notifying)
             {
                 Notifying.CollectionChanged += this.List_CollectionChanged;
             }
@@ -17,8 +16,7 @@ namespace Ks.Common
 
         public SelectAsNotifyingListCollection(IReadOnlyList<TIn> List, Func<TIn, int, TOut> Func) : base(List, Func)
         {
-            var Notifying = List as INotifyCollectionChanged;
-            if (Notifying != null)
+            if (List is INotifyCollectionChanged Notifying)
             {
                 Notifying.CollectionChanged += this.List_CollectionChanged;
             }

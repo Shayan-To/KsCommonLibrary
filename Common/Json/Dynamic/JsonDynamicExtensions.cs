@@ -8,10 +8,8 @@ namespace Ks.Common
     {
         public static void WriteValue(this JsonWriter Writer, JsonDynamicBase Obj, bool? MultiLine = default)
         {
-            if (Obj is JsonDynamicDictionary)
+            if (Obj is JsonDynamicDictionary dic)
             {
-                var T = (JsonDynamicDictionary) Obj;
-
                 bool ML;
                 if (MultiLine.HasValue)
                 {
@@ -19,13 +17,13 @@ namespace Ks.Common
                 }
                 else
                 {
-                    ML = T.Count > 1;
-                    ML = ML || T.Values.Any(I => !(I is JsonDynamicValue));
+                    ML = dic.Count > 1;
+                    ML = ML || dic.Values.Any(I => !(I is JsonDynamicValue));
                 }
 
                 using (Writer.OpenDictionary(ML))
                 {
-                    foreach (var I in T.OrderBy(KV => KV.Key))
+                    foreach (var I in dic.OrderBy(KV => KV.Key))
                     {
                         Writer.WriteKey(I.Key);
                         Writer.WriteValue(I.Value, MultiLine);
@@ -35,10 +33,8 @@ namespace Ks.Common
                 return;
             }
 
-            if (Obj is JsonDynamicList)
+            if (Obj is JsonDynamicList list)
             {
-                var T = (JsonDynamicList) Obj;
-
                 bool ML;
                 if (MultiLine.HasValue)
                 {
@@ -46,14 +42,14 @@ namespace Ks.Common
                 }
                 else
                 {
-                    ML = T.Count > 10;
-                    ML = ML || T.Any(I => !(I is JsonDynamicValue));
-                    ML = ML || T.Cast<JsonDynamicValue>().Sum(I => I.Value.Length) > 150;
+                    ML = list.Count > 10;
+                    ML = ML || list.Any(I => !(I is JsonDynamicValue));
+                    ML = ML || list.Cast<JsonDynamicValue>().Sum(I => I.Value.Length) > 150;
                 }
 
                 using (Writer.OpenList(ML))
                 {
-                    foreach (var I in T)
+                    foreach (var I in list)
                     {
                         Writer.WriteValue(I, MultiLine);
                     }
@@ -62,10 +58,9 @@ namespace Ks.Common
                 return;
             }
 
-            if (Obj is JsonDynamicValue)
+            if (Obj is JsonDynamicValue v)
             {
-                var T = (JsonDynamicValue) Obj;
-                Writer.WriteValue(T.Value, T.IsString);
+                Writer.WriteValue(v.Value, v.IsString);
 
                 return;
             }
@@ -75,10 +70,10 @@ namespace Ks.Common
 
         public static JsonDynamicBase ToDynamic(this JsonObject Self)
         {
-            if (Self is JsonDictionaryObject)
+            if (Self is JsonDictionaryObject dic)
             {
                 var Res = new JsonDynamicDictionary();
-                foreach (var T in (JsonDictionaryObject) Self)
+                foreach (var T in dic)
                 {
                     Res.Add(T.Key, T.Value.ToDynamic());
                 }
@@ -86,10 +81,10 @@ namespace Ks.Common
                 return Res;
             }
 
-            if (Self is JsonListObject)
+            if (Self is JsonListObject list)
             {
                 var Res = new JsonDynamicList();
-                foreach (var T in (JsonListObject) Self)
+                foreach (var T in list)
                 {
                     Res.Add(T.ToDynamic());
                 }
@@ -97,10 +92,9 @@ namespace Ks.Common
                 return Res;
             }
 
-            if (Self is JsonValueObject)
+            if (Self is JsonValueObject v)
             {
-                var T = (JsonValueObject) Self;
-                return new JsonDynamicValue(T.Value, T.IsString);
+                return new JsonDynamicValue(v.Value, v.IsString);
             }
 
             Verify.Fail("Invalid object type.");
@@ -109,10 +103,10 @@ namespace Ks.Common
 
         public static JsonObject ToConstant(this JsonDynamicBase Self)
         {
-            if (Self is JsonDynamicDictionary)
+            if (Self is JsonDynamicDictionary dic)
             {
                 var Res = new List<KeyValuePair<string, JsonObject>>();
-                foreach (var T in (JsonDynamicDictionary) Self)
+                foreach (var T in dic)
                 {
                     Res.Add(new KeyValuePair<string, JsonObject>(T.Key, T.Value.ToConstant()));
                 }
@@ -120,10 +114,10 @@ namespace Ks.Common
                 return new JsonDictionaryObject(Res);
             }
 
-            if (Self is JsonDynamicList)
+            if (Self is JsonDynamicList list)
             {
                 var Res = new List<JsonObject>();
-                foreach (var T in (JsonDynamicList) Self)
+                foreach (var T in list)
                 {
                     Res.Add(T.ToConstant());
                 }
@@ -131,10 +125,9 @@ namespace Ks.Common
                 return new JsonListObject(Res);
             }
 
-            if (Self is JsonDynamicValue)
+            if (Self is JsonDynamicValue v)
             {
-                var T = (JsonDynamicValue) Self;
-                return new JsonValueObject(T.Value, T.IsString);
+                return new JsonValueObject(v.Value, v.IsString);
             }
 
             Verify.Fail("Invalid object type.");

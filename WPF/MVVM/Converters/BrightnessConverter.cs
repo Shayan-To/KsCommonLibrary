@@ -10,9 +10,8 @@ namespace Ks.Common.MVVM.Converters
     {
         public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            var B = Value as SolidColorBrush;
             Color C;
-            if (B != null)
+            if (Value is SolidColorBrush B)
             {
                 C = B.Color;
             }
@@ -39,9 +38,8 @@ namespace Ks.Common.MVVM.Converters
 
         public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            var B = Value as SolidColorBrush;
             Color C;
-            if (B != null)
+            if (Value is SolidColorBrush B)
             {
                 C = B.Color;
             }
