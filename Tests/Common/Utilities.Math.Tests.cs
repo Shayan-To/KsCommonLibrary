@@ -26,8 +26,7 @@ namespace Ks.Tests.Common
             {
                 if (N < 0)
                 {
-                    Assert.Throws<ArgumentException>(() => Utilities.Math.SquareRoot(N));
-                    return;
+                    throw Assert.Throws<ArgumentException>(() => Utilities.Math.SquareRoot(N));
                 }
 
                 var T = Utilities.Math.SquareRoot(N);
@@ -42,8 +41,7 @@ namespace Ks.Tests.Common
             {
                 if (N < 0)
                 {
-                    Assert.Throws<ArgumentException>(() => Utilities.Math.SquareRootL(N));
-                    return;
+                    throw Assert.Throws<ArgumentException>(() => Utilities.Math.SquareRootL(N));
                 }
 
                 var T = Utilities.Math.SquareRootL(N);
