@@ -70,7 +70,7 @@ namespace Ks.Common
                 var B = this._Bytes[I];
                 for (var J = 0; J < 8; J++)
                 {
-                    yield return (B >> J & 1) == 1;
+                    yield return ((B >> J) & 1) == 1;
                 }
             }
 
@@ -80,7 +80,7 @@ namespace Ks.Common
                 var bits = this.LastByteBitCount();
                 for (var J = 0; J < bits; J++)
                 {
-                    yield return (B >> J & 1) == 1;
+                    yield return ((B >> J) & 1) == 1;
                 }
             }
         }
@@ -113,7 +113,7 @@ namespace Ks.Common
 
                 var B = this._Bytes[index >> 3];
                 var I = index & 7;
-                return (B >> I & 1) == 1;
+                return ((B >> I) & 1) == 1;
             }
             set
             {

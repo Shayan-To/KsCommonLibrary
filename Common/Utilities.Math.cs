@@ -514,7 +514,7 @@ namespace Ks.Common
                 var BlockSize = DigitBits / GreatestCommonDivisor(DigitBits, ByteBits);
                 var Offset = ((BlockSize - (N.Length % BlockSize)) * ByteBits) % DigitBits;
 
-                var Res = new char[CeilDiv(N.Length, BlockSize) * ((BlockSize * ByteBits) / DigitBits) + 1];
+                var Res = new char[(CeilDiv(N.Length, BlockSize) * ((BlockSize * ByteBits) / DigitBits)) + 1];
                 var Index = 0;
 
                 var J = 0;
@@ -560,7 +560,7 @@ namespace Ks.Common
                 var BlockSize = ByteBits / GreatestCommonDivisor(DigitBits, ByteBits);
                 var Offset = ((BlockSize - (N.Length % BlockSize)) * DigitBits) % ByteBits;
 
-                var Res = new byte[CeilDiv(N.Length, BlockSize) * ((BlockSize * DigitBits) / ByteBits) + 1];
+                var Res = new byte[(CeilDiv(N.Length, BlockSize) * ((BlockSize * DigitBits) / ByteBits)) + 1];
                 var Index = 0;
 
                 var J = 0;
