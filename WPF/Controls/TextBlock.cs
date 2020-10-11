@@ -75,7 +75,11 @@ namespace Ks.Common.Controls
             Verify.False(Regex.IsMatch(S, @"`[^`\[\]\{\}]"), "Invalid escape sequence.");
 
             S = Regex.Replace(S, @"`[\[\]\{\}]", M => "`" + "[]{}".IndexOf(M.Value[1]).ToString());
-            Func<string, string> UnEscape = T => Regex.Replace(T, "`([0123])", M => "[]{}"[ParseInv.Integer(M.Groups[1].Value)].ToString());
+
+            static string UnEscape(string T)
+            {
+                return Regex.Replace(T, "`([0123])", M => "[]{}"[ParseInv.Integer(M.Groups[1].Value)].ToString());
+            }
 
             if (S.StartsWith("{}"))
             {
@@ -105,7 +109,7 @@ namespace Ks.Common.Controls
                     return "";
                 }
 
-                var T = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0" + UnEscape.Invoke(M.Groups[2].Value) + "}", Objs[I].Objt);
+                var T = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0" + UnEscape(M.Groups[2].Value) + "}", Objs[I].Objt);
                 return T;
             });
             S = Regex.Replace(S, @"\{(\d+)((?:,[+-]?\d+)?(?::[^\{\}]*)?)\}", M =>
@@ -116,7 +120,7 @@ namespace Ks.Common.Controls
                     return "";
                 }
 
-                var T = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0" + UnEscape.Invoke(M.Groups[2].Value) + "}", Objs[I].Objt);
+                var T = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0" + UnEscape(M.Groups[2].Value) + "}", Objs[I].Objt);
                 return CorrectString(T, Lang);
             });
 
@@ -124,18 +128,18 @@ namespace Ks.Common.Controls
 
             S = Regex.Replace(S, @"\[\[([^\[\]]*)\]\]", M =>
             {
-                var T = UnEscape.Invoke(M.Groups[1].Value);
+                var T = UnEscape(M.Groups[1].Value);
                 return CorrectString(T, Lang);
             });
             S = Regex.Replace(S, @"\[([^\[\]]*)\]", M =>
             {
-                var T = UnEscape.Invoke(M.Groups[1].Value);
+                var T = UnEscape(M.Groups[1].Value);
                 return Lang?.GetTranslation(T) ?? T;
             });
 
             Verify.False(S.Contains("[") | S.Contains("]"), "Invalid format string.");
 
-            S = UnEscape.Invoke(S);
+            S = UnEscape(S);
             this.OutText = S;
         }
 
