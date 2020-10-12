@@ -13,7 +13,7 @@ namespace Ks.Common
         public static class Serialization
         {
 
-            public static Media.Color HexToColor(string Hex)
+            public static (byte A, byte R, byte G, byte B) HexToColor(string Hex)
             {
                 if (Hex.StartsWith("#"))
                 {
@@ -22,18 +22,18 @@ namespace Ks.Common
 
                 if (Hex.Length == 8)
                 {
-                    return System.Windows.Media.Color.FromArgb(byte.Parse(Hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber));
+                    return (byte.Parse(Hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber));
                 }
 
                 if (Hex.Length == 6)
                 {
-                    return System.Windows.Media.Color.FromRgb(byte.Parse(Hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+                    return (byte.MaxValue, byte.Parse(Hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
                 }
 
                 throw new ArgumentException("Invalid hex color.");
             }
 
-            public static string ColorToHex(Media.Color Color)
+            public static string ColorToHex((byte A, byte R, byte G, byte B) Color)
             {
                 return string.Concat("#", Color.A.ToString("X2"), Color.R.ToString("X2"), Color.G.ToString("X2"), Color.B.ToString("X2"));
             }
