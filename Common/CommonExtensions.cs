@@ -323,6 +323,70 @@ namespace Ks.Common
             }
         }
 
+        public static IEnumerable<T> TakeLast<T>(this IEnumerable<T> self, int count)
+        {
+            if (count <= 0)
+            {
+                yield break;
+            }
+
+            var buffer = new Queue<T>(count);
+
+            foreach (var i in self)
+            {
+                if (buffer.Count == count)
+                {
+                    buffer.Dequeue();
+                }
+                buffer.Enqueue(i);
+            }
+
+            while (buffer.Count != 0)
+            {
+                yield return buffer.Dequeue();
+            }
+        }
+
+        public static IEnumerable<T> SkipLast<T>(this IEnumerable<T> self, int count)
+        {
+            if (count <= 0)
+            {
+                foreach (var i in self)
+                {
+                    yield return i;
+                }
+                yield break;
+            }
+
+            var buffer = new Queue<T>(count);
+
+            foreach (var i in self)
+            {
+                if (buffer.Count == count)
+                {
+                    yield return buffer.Dequeue();
+                }
+                buffer.Enqueue(i);
+            }
+        }
+
+        public static IEnumerable<TRes> ZipNeighbors<T, TRes>(this IEnumerable<T> self, Func<T, T, TRes> func)
+        {
+            var bl = true;
+            var prev = default(T);
+            foreach (var i in self)
+            {
+                if (bl)
+                {
+                    bl = false;
+                    prev = i;
+                    continue;
+                }
+                yield return func.Invoke(prev, i);
+                prev = i;
+            }
+        }
+
         public static TAggregate Aggregate<TAggregate, T>(this IEnumerable<T> Self, TAggregate Seed, Func<TAggregate, T, int, TAggregate> Func)
         {
             var Ind = 0;
@@ -836,6 +900,18 @@ namespace Ks.Common
         public static IEnumerable<T> Prepend<T>(this IEnumerable<T> Self, T Element)
         {
             yield return Element;
+            foreach (var I in Self)
+            {
+                yield return I;
+            }
+        }
+
+        public static IEnumerable<T> ConcatBack<T>(this IEnumerable<T> Self, IEnumerable<T> Other)
+        {
+            foreach (var I in Other)
+            {
+                yield return I;
+            }
             foreach (var I in Self)
             {
                 yield return I;
