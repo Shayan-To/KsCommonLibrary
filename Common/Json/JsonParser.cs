@@ -1,4 +1,4 @@
-﻿//#define RelaxedStrings
+//#define RelaxedStrings
 
 using System;
 using System.Collections.Generic;

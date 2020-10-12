@@ -1,4 +1,4 @@
-﻿ - [ ] The headered binary serializer.
+ - [ ] The headered binary serializer.
  - [ ] The object-database binding engine.
  - [ ] I think GetEnumerator of BaseReadOnlyList should be IList_1_GetEnumerator, and let the class define its own version (struct).
  - [ ] Add Microsoft.CodeAnalysis.FxCopAnalyzers nuget package for code analysis.

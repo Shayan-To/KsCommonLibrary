@@ -1,4 +1,4 @@
-﻿// Imports System.Collections.Specialized
+// Imports System.Collections.Specialized
 
 using System.Windows;
 using System.Windows.Controls;

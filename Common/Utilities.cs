@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using Media = System.Windows.Media;
 using Reflect = System.Reflection;

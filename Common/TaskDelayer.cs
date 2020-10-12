@@ -1,4 +1,4 @@
-﻿#define WriteDebugInfo
+#define WriteDebugInfo
 
 using System;
 using System.Diagnostics;

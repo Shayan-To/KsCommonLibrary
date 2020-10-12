@@ -1,4 +1,4 @@
-﻿namespace Ks.Common
+namespace Ks.Common
 {
     public struct JoinElement<T1, T2, TKey>
     {

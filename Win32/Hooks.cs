@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Ks.Common.Win32
 {

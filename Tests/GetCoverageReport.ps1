@@ -1,4 +1,4 @@
-﻿$ErrorActionPreference = [System.Management.Automation.ActionPreference]::Stop
+$ErrorActionPreference = [System.Management.Automation.ActionPreference]::Stop
 
 $MyDir = Split-Path -Parent $Script:MyInvocation.MyCommand.Path
 

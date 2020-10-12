@@ -1,4 +1,4 @@
-﻿// Namespace Common
+// Namespace Common
 
 // Public Class NotifyingDictionary(Of TKey, TValue)
 // Implements IDictionary(Of TKey, TValue),

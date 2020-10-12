@@ -1,4 +1,4 @@
-﻿namespace Ks.Common
+namespace Ks.Common
 {
     public class Array2D<T>
     {

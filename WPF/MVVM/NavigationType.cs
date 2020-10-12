@@ -1,4 +1,4 @@
-﻿namespace Ks.Common.MVVM
+namespace Ks.Common.MVVM
 {
     public enum NavigationType
     {

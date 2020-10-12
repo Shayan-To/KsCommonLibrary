@@ -1,4 +1,4 @@
-﻿// Imports System.ComponentModel
+// Imports System.ComponentModel
 // Imports System.Security
 // Imports System.Windows.Automation.Peers
 // Imports System.Windows.Input
