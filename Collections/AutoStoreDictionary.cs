@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using Microsoft.VisualBasic.CompilerServices;
+using System.Collections.Specialized;
 
 namespace Ks
 {

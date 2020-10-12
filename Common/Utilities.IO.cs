@@ -1,6 +1,9 @@
 ﻿using System.Linq;
 using System;
 using System.Text;
+using Media = System.Windows.Media;
+using Reflect = System.Reflection;
+using SIO = System.IO;
 
 namespace Ks
 {
@@ -17,9 +20,9 @@ namespace Ks
 
                 public static bool EnsureExists(string Path)
                 {
-                    if (!System.SIO.Directory.Exists(Path))
+                    if (!SIO.Directory.Exists(Path))
                     {
-                        System.SIO.Directory.CreateDirectory(Path);
+                        SIO.Directory.CreateDirectory(Path);
                         return true;
                     }
                     else
@@ -30,7 +33,7 @@ namespace Ks
                 {
                     var Request = System.Net.WebRequest.Create(URL);
                     using (var Response = Request.GetResponse())
-                    using (var Reader = new System.SIO.StreamReader(Response.GetResponseStream())
+                    using (var Reader = new SIO.StreamReader(Response.GetResponseStream())
 )
                     {
                         var Res = Reader.ReadToEnd();
@@ -44,7 +47,7 @@ namespace Ks
                     var Request = System.Net.WebRequest.Create(URL);
                     using (var Response = Request.GetResponse())
                     using (var WStream = Response.GetResponseStream())
-                    using (var FStream = System.SIO.File.Open(Path, System.SIO.FileMode.CreateNew, System.SIO.FileAccess.Write, System.SIO.FileShare.Read)
+                    using (var FStream = SIO.File.Open(Path, SIO.FileMode.CreateNew, SIO.FileAccess.Write, SIO.FileShare.Read)
 )
                     {
                         FStream.Write(WStream);
@@ -59,7 +62,7 @@ namespace Ks
                 public static string CorrectFileName(string Name)
                 {
                     var Res = new StringBuilder(Name.Length);
-                    var Invalids = System.SIO.Path.GetInvalidFileNameChars();
+                    var Invalids = SIO.Path.GetInvalidFileNameChars();
                     foreach (var Ch in Name)
                     {
                         if (Invalids.Contains(Ch))

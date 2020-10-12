@@ -1,4 +1,7 @@
 ﻿using System;
+using Media = System.Windows.Media;
+using Reflect = System.Reflection;
+using SIO = System.IO;
 
 namespace Ks
 {

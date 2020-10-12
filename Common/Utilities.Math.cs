@@ -4,6 +4,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 using System.Runtime.CompilerServices;
+using Media = System.Windows.Media;
+using Reflect = System.Reflection;
+using SIO = System.IO;
 
 namespace Ks
 {

@@ -3,7 +3,7 @@ using Xunit;
 using System.Data;
 using System.Diagnostics;
 using Microsoft.VisualBasic;
-using Xunit.Assert;
+using Assert = Xunit.Assert;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;

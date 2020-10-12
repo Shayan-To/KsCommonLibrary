@@ -1,5 +1,5 @@
 ﻿using Xunit;
-using Xunit.Assert;
+using Assert = Xunit.Assert;
 using FsCheck.Xunit;
 
 namespace Ks.Tests
