@@ -1,0 +1,22 @@
+{
+    "workbench.colorCustomizations": {
+        "editorGroup.border": "#37f7d8",
+        "panel.border": "#37f7d8",
+        "sideBar.border": "#37f7d8",
+        "statusBar.background": "#0af1cc",
+        "statusBar.foreground": "#15202b",
+        "statusBarItem.hoverBackground": "#08c0a3",
+        "tab.activeBorder": "#37f7d8",
+        "titleBar.activeBackground": "#0af1cc",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#0af1cc99",
+        "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.color": "#0af1cc",
+    "files.exclude": {
+        ".vs/": true,
+        "bin/": true,
+        "obj/": true,
+        "packages/": true
+    }
+}
