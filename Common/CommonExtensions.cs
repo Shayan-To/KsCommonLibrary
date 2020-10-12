@@ -1240,14 +1240,20 @@ namespace Ks.Common
 
         public static IEnumerable<System.Reflection.Assembly> GetRecursiveReferencedAssemblies(this System.Reflection.Assembly Assembly)
         {
-            var Helper = CecilHelper.Instance;
-            return Helper.GetRawRecursiveReferencedAssemblies(Helper.Convert(Assembly)).Select(A => Helper.Convert(A));
+            var res = new HashSet<System.Reflection.Assembly>() { Assembly };
+
+            IEnumerable<System.Reflection.Assembly> recurse(System.Reflection.Assembly assembly)
+            {
+                var referenceds = assembly.GetAllReferencedAssemblies().Where(res.Add).AsCachedList();
+                return referenceds.Concat(referenceds.SelectMany(recurse));
+            }
+
+            return recurse(Assembly).Prepend(Assembly);
         }
 
         public static IEnumerable<System.Reflection.Assembly> GetAllReferencedAssemblies(this System.Reflection.Assembly Assembly)
         {
-            var Helper = CecilHelper.Instance;
-            return Helper.GetRawReferencedAssemblyNames(Helper.Convert(Assembly)).Select(A => Helper.Convert(A));
+            return Assembly.GetReferencedAssemblies().Select(System.Reflection.Assembly.Load);
         }
 
         public static object CreateInstance(this Type Self)
