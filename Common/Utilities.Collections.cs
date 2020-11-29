@@ -54,6 +54,15 @@ namespace Ks.Common
                 }
             }
 
+            public static IEnumerable<T> Generate<T>(T initialValue, Func<T, T> generator)
+            {
+                while (true)
+                {
+                    yield return initialValue;
+                    initialValue = generator.Invoke(initialValue);
+                }
+            }
+
             public static JoinElement<T, T, TKey>[] Join<T, TKey>(IEnumerable<T> Items1, IEnumerable<T> Items2, Func<T, TKey> KeySelector, JoinDirection JoinType)
             {
                 return Join(Items1, Items2, KeySelector, KeySelector, JoinType, EqualityComparer<TKey>.Default);
