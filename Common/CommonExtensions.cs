@@ -272,23 +272,16 @@ namespace Ks.Common
             }
         }
 
-        public static void Reverse<T>(this IList<T> Self)
-        {
-#pragma warning disable CS0612
-            Self.Reverse(0);
-#pragma warning restore CS0612
-        }
-
-        [Obsolete()]
-        public static void Reverse<T>(this IList<T> Self, int Index, int Count = -1)
+        public static void ReverseSelf<T>(this IList<T> Self, int Index = 0, int Count = -1)
         {
             if (Count == -1)
             {
-                Count = Self.Count;
+                Count = Self.Count - Index;
             }
 
             var Complement = Count + (2 * Index) - 1;
-            for (var I = Index; I < Index + Count; I++)
+            var MaxI = Index + (Count / 2);
+            for (var I = Index; I < MaxI; I++)
             {
                 var C = Self[I];
                 Self[I] = Self[Complement - I];
