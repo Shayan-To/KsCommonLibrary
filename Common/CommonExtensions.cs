@@ -615,7 +615,7 @@ namespace Ks.Common
         /// <param name="Value">The value to look for.</param>
         /// <returns>
         /// Start index being the index of fist occurrance of Value, and length being the count of its occurrances.
-        /// If no occurrance of Value has been found, start index will be at the first element larger than Value.
+        /// If no occurrance of Value is found, start index will be at the first element larger than Value.
         /// </returns>
         public static (int Index, int Count) BinarySearch<T, TValue>(this IReadOnlyList<T> Self, TValue Value, Comparison<T, TValue> Comp)
         {
