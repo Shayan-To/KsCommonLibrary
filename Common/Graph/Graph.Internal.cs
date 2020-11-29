@@ -36,7 +36,7 @@ namespace Ks.Common
                 throw new NotSupportedException($"This method is not supported in this graph instance.");
             }
 
-            foreach (var c in constraints.SkipLast(1))
+            foreach (var c in constraints.SkipLast2(1))
             {
                 Verify.False(call(c).HasValue);
             }

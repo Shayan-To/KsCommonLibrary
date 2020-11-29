@@ -325,7 +325,7 @@ namespace Ks.Common
             }
         }
 
-        public static IEnumerable<T> TakeLast<T>(this IEnumerable<T> self, int count)
+        public static IEnumerable<T> TakeLast2<T>(this IEnumerable<T> self, int count)
         {
             if (count <= 0)
             {
@@ -349,7 +349,7 @@ namespace Ks.Common
             }
         }
 
-        public static IEnumerable<T> SkipLast<T>(this IEnumerable<T> self, int count)
+        public static IEnumerable<T> SkipLast2<T>(this IEnumerable<T> self, int count)
         {
             if (count <= 0)
             {
@@ -902,7 +902,7 @@ namespace Ks.Common
             return new ReadOnlyCollectionWrapper<T>(Self);
         }
 
-        public static IEnumerable<T> Append<T>(this IEnumerable<T> Self, T Element)
+        public static IEnumerable<T> AppendElement<T>(this IEnumerable<T> Self, T Element)
         {
             foreach (var I in Self)
             {
@@ -912,7 +912,7 @@ namespace Ks.Common
             yield return Element;
         }
 
-        public static IEnumerable<T> Prepend<T>(this IEnumerable<T> Self, T Element)
+        public static IEnumerable<T> PrependElement<T>(this IEnumerable<T> Self, T Element)
         {
             yield return Element;
             foreach (var I in Self)
@@ -1263,7 +1263,7 @@ namespace Ks.Common
                 return referenceds.Concat(referenceds.SelectMany(recurse));
             }
 
-            return recurse(Assembly).Prepend(Assembly);
+            return recurse(Assembly).PrependElement(Assembly);
         }
 
         public static IEnumerable<System.Reflection.Assembly> GetAllReferencedAssemblies(this System.Reflection.Assembly Assembly)
