@@ -1390,9 +1390,14 @@ namespace Ks.Common
             return Self.GetType().GetMethod(Name, new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }).Invoke(Self, new object[] { Arg1, Arg2, Arg3, Arg4 });
         }
 
-        public static T GetSharedFieldValue<T>(this Type Self, string Name)
+        public static T GetStaticFieldValue<T>(this Type Self, string Name)
         {
             return (T) Self.GetField(Name).GetValue(null);
+        }
+
+        public static object GetStaticFieldValue(this Type Self, string Name)
+        {
+            return Self.GetField(Name).GetValue(null);
         }
 
         public static T GetFieldValue<T>(this object Self, string Name)
