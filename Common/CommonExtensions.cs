@@ -827,6 +827,13 @@ namespace Ks.Common
             }
         }
 
+        public static IEnumerable<T> RandomizeOrder<T>(this IEnumerable<T> Self, Random Random = null)
+        {
+            var Arr = Self.ToArray();
+            Arr.RandomizeSelfOrder(Random);
+            return Arr;
+        }
+
         public static void CopyTo<T>(this IEnumerable<T> Self, IList<T> Destination, int Index = 0, int Count = -1)
         {
             // If Destination.Count - Index < Self.Count() Then
