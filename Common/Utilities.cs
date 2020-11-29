@@ -89,14 +89,6 @@ namespace Ks.Common
             }
         }
 
-        public static object EmptyObject = new object();
-
-        public static class Typed<T>
-        {
-            public static readonly Func<T, T> IdentityFunc = X => X;
-            public static readonly T[] EmptyArray = new T[0] { };
-        }
-
         public static (double R, double G, double B) HslToRgb(double H, double S, double L)
         {
             throw new NotImplementedException();
@@ -109,6 +101,14 @@ namespace Ks.Common
 
         public static void DoNothing()
         {
+        }
+
+        public static object EmptyObject = new object();
+
+        public static class Typed<T>
+        {
+            public static readonly Func<T, T> IdentityFunc = X => X;
+            public static readonly T[] EmptyArray = new T[0] { };
         }
     }
 }
