@@ -9,7 +9,7 @@ namespace Ks.Common
         private static byte[] GetRandomSeed(HashAlgorithm Hasher)
         {
             var Seed = new byte[Hasher.OutputBlockSize];
-            DefaultCacher<Random>.Value.NextBytes(Seed);
+            DefaultCacher<RandomNumberGenerator>.Value.GetBytes(Seed);
             return Seed;
         }
 
