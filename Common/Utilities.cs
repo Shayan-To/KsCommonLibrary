@@ -1,5 +1,7 @@
 using System;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Reflect = System.Reflection;
 using SIO = System.IO;
@@ -53,6 +55,38 @@ namespace Ks.Common
             var buffer = new byte[(length * 6 / 8) + 1];
             random.GetBytes(buffer);
             return Convert.ToBase64String(buffer).Substring(0, length).Replace('+', '-').Replace('/', '_');
+        }
+
+        public static async Task Delay(int milliseconds, CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                await Task.Delay(milliseconds);
+                return;
+            }
+            try
+            {
+                await Task.Delay(milliseconds, cancellationToken);
+            }
+            catch (TaskCanceledException)
+            {
+            }
+        }
+
+        public static async Task Delay(TimeSpan time, CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                await Task.Delay(time);
+                return;
+            }
+            try
+            {
+                await Task.Delay(time, cancellationToken);
+            }
+            catch (TaskCanceledException)
+            {
+            }
         }
 
         public static object EmptyObject = new object();
