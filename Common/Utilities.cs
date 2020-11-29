@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 
 using Reflect = System.Reflection;
 using SIO = System.IO;
@@ -44,6 +45,14 @@ namespace Ks.Common
         public static int CombineHashCodes(int H1, int H2, int H3, int H4, int H5, int H6, int H7, int H8)
         {
             return CombineHashCodes(CombineHashCodes(H1, H2, H3, H4), CombineHashCodes(H5, H6, H7, H8));
+        }
+
+        public static string GenerateStringId(int length = 10)
+        {
+            var random = DefaultCacher<RandomNumberGenerator>.Value;
+            var buffer = new byte[(length * 6 / 8) + 1];
+            random.GetBytes(buffer);
+            return Convert.ToBase64String(buffer).Substring(0, length).Replace('+', '-').Replace('/', '_');
         }
 
         public static object EmptyObject = new object();
