@@ -872,6 +872,7 @@ namespace Ks.Common
             }
         }
 
+        [Obsolete("This method is dangerous.", false)]
         public static void AddRange(this IList Self, IEnumerable Items)
         {
             foreach (var I in Items)
