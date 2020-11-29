@@ -289,6 +289,14 @@ namespace Ks.Common
             }
         }
 
+        public static IEnumerable<T> Reverse<T>(this IReadOnlyList<T> self)
+        {
+            for (var i = self.Count - 1; i >= 0; i -= 1)
+            {
+                yield return self[i];
+            }
+        }
+
         public static StringAsListCollection AsList(this string Self)
         {
             return new StringAsListCollection(Self);
