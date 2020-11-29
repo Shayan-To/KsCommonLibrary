@@ -13,7 +13,7 @@ namespace Ks.Common
         {
             get
             {
-                this.TryGetValue(int.MaxValue, out _);
+                this.DrainEnumerable();
                 return this.List.Count;
             }
         }
@@ -25,6 +25,11 @@ namespace Ks.Common
                 Verify.TrueArg(this.TryGetValue(Index, out var Res), nameof(Index), "Index out of range.");
                 return Res;
             }
+        }
+
+        public void DrainEnumerable()
+        {
+            this.TryGetValue(int.MaxValue, out _);
         }
 
         public override IEnumerator<T> GetEnumerator()
