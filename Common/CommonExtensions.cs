@@ -575,8 +575,21 @@ namespace Ks.Common
             return Res;
         }
 
-        public static SubList<T> SubList<T>(this IReadOnlyList<T> self, int index, int count)
+        public static ReadOnlySubList<T> ReadOnlySubList<T>(this IReadOnlyList<T> self, int index, int count = -1)
         {
+            if (count == -1)
+            {
+                count = self.Count - index;
+            }
+            return new ReadOnlySubList<T>(self, index, count);
+        }
+
+        public static SubList<T> SubList<T>(this IList<T> self, int index, int count = -1)
+        {
+            if (count == -1)
+            {
+                count = self.Count - index;
+            }
             return new SubList<T>(self, index, count);
         }
 

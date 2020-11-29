@@ -15,13 +15,13 @@ namespace Ks.Common
         public IReadOnlyList<GraphEdge> GetEdgesFrom(GraphNode from)
         {
             var (index, count) = this.EdgesTo.BinarySearch(from, (e, n) => e.From.Id - n.Id);
-            return this.EdgesTo.SubList(index, count);
+            return this.EdgesTo.ReadOnlySubList(index, count);
         }
 
         public IReadOnlyList<GraphEdge> GetEdgesTo(GraphNode to)
         {
             var (index, count) = this.EdgesFrom.BinarySearch(to, (e, n) => e.To.Id - n.Id);
-            return this.EdgesFrom.SubList(index, count);
+            return this.EdgesFrom.ReadOnlySubList(index, count);
         }
 
         public int Id { get; }
