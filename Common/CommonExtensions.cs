@@ -819,7 +819,7 @@ namespace Ks.Common
             for (var I = 1; I < Self.Count; I++)
             {
                 var J = Rand.Next(I + 1);
-                Self.Move(I, J);
+                Self.Swap(I, J);
             }
         }
 
