@@ -6,7 +6,7 @@ namespace Ks.Common
     {
         private void Merge(int Start, int Mid, int End)
         {
-            if (Start == Mid || this.Comparer.Compare(this.List[Mid - 1], this.List[Mid]) <= 0)
+            if (Start == Mid || this.Comparer.Invoke(this.List[Mid - 1], this.List[Mid]) <= 0)
             {
                 return;
             }
@@ -19,14 +19,14 @@ namespace Ks.Common
             Merge(this.List, Start, this.Temp, 0, Mid - Start, this.List, Mid, End - Mid, this.Comparer);
         }
 
-        public static void Merge(IList<T> BaseList, int BaseIndex, IList<T> List1, int Index1, int Length1, IList<T> List2, int Index2, int Length2, IComparer<T> Comparer)
+        public static void Merge(IList<T> BaseList, int BaseIndex, IList<T> List1, int Index1, int Length1, IList<T> List2, int Index2, int Length2, Comparison<T, T> Comparer)
         {
             var End1 = Index1 + Length1;
             var End2 = Index2 + Length2;
 
             while ((Index1 < End1) & (Index2 < End2))
             {
-                if (Comparer.Compare(List1[Index1], List2[Index2]) <= 0)
+                if (Comparer.Invoke(List1[Index1], List2[Index2]) <= 0)
                 {
                     BaseList[BaseIndex] = List1[Index1];
                     Index1 += 1;
@@ -53,6 +53,16 @@ namespace Ks.Common
             }
         }
 
+        public static void Merge(IList<T> BaseList, int BaseIndex, IList<T> List1, int Index1, int Length1, IList<T> List2, int Index2, int Length2, IComparer<T> Comparer)
+        {
+            Merge(BaseList, BaseIndex, List1, Index1, Length1, List2, Index2, Length2, Comparer.Compare);
+        }
+
+        public static void Merge(IList<T> BaseList, int BaseIndex, IList<T> List1, int Index1, int Length1, IList<T> List2, int Index2, int Length2)
+        {
+            Merge(BaseList, BaseIndex, List1, Index1, Length1, List2, Index2, Length2, Comparer<T>.Default.Compare);
+        }
+
         private void SortRecursive(int Start, int End)
         {
             int Mid;
@@ -69,7 +79,7 @@ namespace Ks.Common
             this.Merge(Start, Mid, End);
         }
 
-        public void Sort(IList<T> List, IComparer<T> Comparer)
+        public void Sort(IList<T> List, Comparison<T, T> Comparer)
         {
             this.List = List;
             this.Temp = new T[List.Count + 1];
@@ -99,14 +109,19 @@ namespace Ks.Common
             this.List = null;
         }
 
+        public void Sort(IList<T> List, IComparer<T> Comparer)
+        {
+            this.Sort(List, Comparer.Compare);
+        }
+
         public void Sort(IList<T> List)
         {
-            this.Sort(List, System.Collections.Generic.Comparer<T>.Default);
+            this.Sort(List, Comparer<T>.Default.Compare);
         }
 
         public static MergeSorter<T> Instance => DefaultCacher<MergeSorter<T>>.Value;
 
         private IList<T> List, Temp;
-        private IComparer<T> Comparer;
+        private Comparison<T, T> Comparer;
     }
 }
