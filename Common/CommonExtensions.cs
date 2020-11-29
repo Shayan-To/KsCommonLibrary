@@ -487,6 +487,18 @@ namespace Ks.Common
             Self[NewIndex] = Item;
         }
 
+        public static void Swap<T>(this IList<T> self, int i1, int i2)
+        {
+            if (i1 == i2)
+            {
+                return;
+            }
+
+            var c = self[i1];
+            self[i1] = self[i2];
+            self[i2] = c;
+        }
+
         public static void RemoveRange<T>(this IList<T> Self, int StartIndex, int Length = -1)
         {
             if (Length == -1)
