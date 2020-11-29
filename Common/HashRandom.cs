@@ -1,26 +1,27 @@
 using System;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Ks.Common
 {
     public class HashRandom
     {
-        private static byte[] GetRandomSeed(System.Security.Cryptography.HashAlgorithm Hasher)
+        private static byte[] GetRandomSeed(HashAlgorithm Hasher)
         {
             var Seed = new byte[Hasher.OutputBlockSize];
             DefaultCacher<Random>.Value.NextBytes(Seed);
             return Seed;
         }
 
-        public HashRandom(System.Security.Cryptography.HashAlgorithm Hasher) : this(Hasher, GetRandomSeed(Hasher))
+        public HashRandom(HashAlgorithm Hasher) : this(Hasher, GetRandomSeed(Hasher))
         {
         }
 
-        public HashRandom(System.Security.Cryptography.HashAlgorithm Hasher, long Seed) : this(Hasher, BitConverter.GetBytes(Seed))
+        public HashRandom(HashAlgorithm Hasher, long Seed) : this(Hasher, BitConverter.GetBytes(Seed))
         {
         }
 
-        public HashRandom(System.Security.Cryptography.HashAlgorithm Hasher, byte[] Seed)
+        public HashRandom(HashAlgorithm Hasher, byte[] Seed)
         {
             this.Buffer = new byte[Hasher.OutputBlockSize];
             Hasher.ComputeHash(Seed, this.Buffer);
@@ -28,7 +29,7 @@ namespace Ks.Common
             this.Index = 0;
         }
 
-        protected HashRandom(System.Security.Cryptography.HashAlgorithm Hasher, byte[] Buffer, int Index)
+        protected HashRandom(HashAlgorithm Hasher, byte[] Buffer, int Index)
         {
             this.Hasher = Hasher;
             this.Buffer = Buffer.ToArray();
@@ -128,7 +129,7 @@ namespace Ks.Common
         }
 
         private readonly byte[] Tmp = new byte[8];
-        private readonly System.Security.Cryptography.HashAlgorithm Hasher;
+        private readonly HashAlgorithm Hasher;
         private readonly byte[] Buffer;
         private int Index;
     }
