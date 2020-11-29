@@ -11,6 +11,7 @@ namespace Ks.Common
 {
     public static class CommonExtensions
     {
+        #region String Group
         public static string RegexEscape(this string str)
         {
             return Regex.Escape(str);
@@ -116,6 +117,9 @@ namespace Ks.Common
             return S.RegexReplace(@"\r\n|\r|\n", Environment.NewLine);
         }
 
+        #endregion
+
+        #region Math Group
         public static int GetLeastCommonMultiple(this IEnumerable<int> Self)
         {
             var Res = 0;
@@ -198,7 +202,9 @@ namespace Ks.Common
 
             return Res;
         }
+        #endregion
 
+        #region CollectionUtils Group
         public static IEnumerable<T> ToEnumerable<T>(this IEnumerable<T> Self)
         {
             foreach (var I in Self)
@@ -1088,6 +1094,10 @@ namespace Ks.Common
             return new EnumerableCacher<T>(Self);
         }
 
+        #endregion
+
+        #region Geometry Group
+        #region Elementary
         public static Vector ToVector(this Size Self)
         {
             return new Vector(Self.Width, Self.Height);
@@ -1122,7 +1132,9 @@ namespace Ks.Common
         {
             return new Point(Self.X, Self.Y);
         }
+        #endregion
 
+        #region RectangleFitting
         public static (Rect, bool?) GetLargestFitOf(this Rect Self, Size Size)
         {
             bool? Bl = null;
@@ -1250,7 +1262,9 @@ namespace Ks.Common
         {
             throw new NotImplementedException();
         }
+        #endregion
 
+        #region ChangeCoordinateSystem Logic
         public static Point FromLocal(this Rect Self, Point Point)
         {
             return Point + Self.Location.ToVector();
@@ -1274,6 +1288,7 @@ namespace Ks.Common
             Point = new Point(Point.X / Self.Width, Point.Y / Self.Height);
             return Point;
         }
+        #endregion
 
         public static Point GetCenter(this Rect Self)
         {
@@ -1284,7 +1299,9 @@ namespace Ks.Common
         {
             Self.Location = Center - (Self.Size.ToVector() / 2);
         }
+        #endregion
 
+        #region Reflection Group
         /// <summary>
         /// First element is the given type.
         /// </summary>
@@ -1517,6 +1534,9 @@ namespace Ks.Common
             }
         }
 
+        #endregion
+
+        #region IO Group
         public static int ReadAll(this System.IO.Stream Self, byte[] Buffer, int Offset, int Length)
         {
             return Utilities.IO.ReadAll((B, O, L) => Self.Read(B, O, L), Buffer, Offset, Length);
@@ -1640,6 +1660,7 @@ namespace Ks.Common
         {
             return Self.GetRegexMatch(new Regex(RegexPattern, RegexOptions.Singleline));
         }
+        #endregion
 
         public static byte[] ComputeHash(this System.Security.Cryptography.HashAlgorithm Self, byte[] Data, int Index, int Length, byte[] Result = null)
         {
