@@ -40,12 +40,14 @@ namespace Ks.Common
                 return X + 1;
             }
 
+            public enum Direction { Forward, Backward }
+
             /// <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
             /// <param name="End">Func(End) must equal True.</param>
             /// <returns>Index of first true.</returns>
-            public static int BinarySearch(Func<int, bool> Func, bool Foreward, int Start, int? End = default)
+            public static int BinarySearch(Func<int, bool> Func, Direction Direction, int Start, int? End = default)
             {
-                if (Foreward)
+                if (Direction == Direction.Forward)
                 {
                     var R = BinarySearch(I => Func(I + Start), (End - Start) ?? -1);
                     return R + Start;
