@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Reflect = System.Reflection;
@@ -19,17 +20,27 @@ namespace Ks.Common
                     Hex = Hex.Substring(1);
                 }
 
+                if (Hex.Length is 3 or 4)
+                {
+                    Hex = new string(Hex.SelectMany(ch => new[] { ch, ch }).ToArray());
+                }
+
                 if (Hex.Length == 8)
                 {
-                    return (byte.Parse(Hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber));
+                    return (H(Hex, 0), H(Hex, 2), H(Hex, 4), H(Hex, 6));
                 }
 
                 if (Hex.Length == 6)
                 {
-                    return (byte.MaxValue, byte.Parse(Hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber), byte.Parse(Hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber));
+                    return (byte.MaxValue, H(Hex, 0), H(Hex, 2), H(Hex, 4));
                 }
 
                 throw new ArgumentException("Invalid hex color.");
+
+                static byte H(string Hex, int I)
+                {
+                    return byte.Parse(Hex.Substring(I, 2), System.Globalization.NumberStyles.HexNumber);
+                }
             }
 
             public static string ColorToHex((byte A, byte R, byte G, byte B) Color)
