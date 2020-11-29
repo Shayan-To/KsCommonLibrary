@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Reflect = System.Reflection;
@@ -467,6 +468,24 @@ namespace Ks.Common
                 }
 
                 return Res.Append('}').ToString();
+            }
+
+            public static string ReplaceInvalidCharacters(string str, char[] invalidCharacters, char replacement = '_')
+            {
+                var res = new StringBuilder(str.Length);
+                foreach (var ch in str)
+                {
+                    if (invalidCharacters.Contains(ch))
+                    {
+                        res.Append('_');
+                    }
+                    else
+                    {
+                        res.Append(ch);
+                    }
+                }
+
+                return res.ToString();
             }
 
             public static string PadAlignString(string Str, char Ch, int Length, TextAlignment Alignment)
