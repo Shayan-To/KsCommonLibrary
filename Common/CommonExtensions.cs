@@ -890,6 +890,26 @@ namespace Ks.Common
             DefaultCacher<MergeSorter<T>>.Value.Sort(Self, Comparer);
         }
 
+        public static void Sort<T>(this IList<T> Self, Comparison<T, T> Comparer)
+        {
+            DefaultCacher<MergeSorter<T>>.Value.Sort(Self, Comparer);
+        }
+
+        public static void Sort<T, TKey>(this IList<T> Self, Func<T, TKey> KeySelector, Comparison<TKey, TKey> Comparer)
+        {
+            DefaultCacher<MergeSorter<T>>.Value.Sort(Self, (a, b) => Comparer.Invoke(KeySelector.Invoke(a), KeySelector.Invoke(b)));
+        }
+
+        public static void Sort<T, TKey>(this IList<T> Self, Func<T, TKey> KeySelector, IComparer<TKey> Comparer)
+        {
+            Self.Sort(KeySelector, Comparer.Compare);
+        }
+
+        public static void Sort<T, TKey>(this IList<T> Self, Func<T, TKey> KeySelector)
+        {
+            Self.Sort(KeySelector, Comparer<TKey>.Default.Compare);
+        }
+
         public static string AllToString<T>(this IEnumerable<T> Self)
         {
             var Res = new System.Text.StringBuilder("{");
