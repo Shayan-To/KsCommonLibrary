@@ -177,7 +177,7 @@ namespace Ks.Common.MVVM
 
         public ViewModel GetViewModel(Type ViewModelType)
         {
-            var Metadata = ViewModelType.GetCustomAttribute<ViewModelMetadataAttribute>();
+            var Metadata = ViewModelType.GetCustomAttribute<ViewModelMetadataAttribute>(true);
             Verify.False(Metadata == null, "No metadata available.");
 
             if (Metadata.IsSingleInstance)

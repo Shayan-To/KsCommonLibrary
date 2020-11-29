@@ -19,7 +19,7 @@ namespace Ks.Common
         public static void RunTestMethods(IEnumerable<MethodInfo> Methods, bool JustTrue = true)
         {
             var FullNameSelector = new Func<MethodInfo, string>(M => $"{M.DeclaringType.FullName}.{M.Name}");
-            var List = Methods.WithCustomAttribute<InteractiveRunnableAttribute>()
+            var List = Methods.WithCustomAttribute<InteractiveRunnableAttribute>(true)
                     .Where(MA =>
                     {
                         var M = MA.Method;

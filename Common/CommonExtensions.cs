@@ -1405,77 +1405,67 @@ namespace Ks.Common
             return (T) Self.GetType().GetField(Name).GetValue(Self);
         }
 
-        private static TAttribute GetCustomAttributeInternal<TAttribute>(this System.Reflection.MemberInfo Self, bool Inherit = true) where TAttribute : Attribute
+        public static IEnumerable<T> GetCustomAttributes<T>(this System.Reflection.MemberInfo self, bool inherit)
         {
-            return (TAttribute) Self.GetCustomAttributeInternal(typeof(TAttribute), Inherit);
+            return self.GetCustomAttributes(typeof(T), inherit).Cast<T>();
         }
 
-        private static Attribute GetCustomAttributeInternal(this System.Reflection.MemberInfo Self, Type AttributeType, bool Inherit = true)
+        public static IEnumerable<T> GetCustomAttributes<T>(this System.Reflection.Assembly self, bool inherit)
         {
-            return (Attribute) Self.GetCustomAttributes(AttributeType, Inherit).FirstOrDefault();
+            return self.GetCustomAttributes(typeof(T), inherit).Cast<T>();
         }
 
-        private static TAttribute GetCustomAttributeInternal<TAttribute>(this System.Reflection.Assembly Self, bool Inherit = true) where TAttribute : Attribute
-        {
-            return (TAttribute) Self.GetCustomAttributeInternal(typeof(TAttribute), Inherit);
-        }
-
-        private static Attribute GetCustomAttributeInternal(this System.Reflection.Assembly Self, Type AttributeType, bool Inherit = true)
-        {
-            return (Attribute) Self.GetCustomAttributes(AttributeType, Inherit).FirstOrDefault();
-        }
-
-        public static TAttribute GetCustomAttribute<TAttribute>(this System.Reflection.MemberInfo Self, bool Inherit = true) where TAttribute : Attribute
+        public static TAttribute GetCustomAttribute<TAttribute>(this System.Reflection.MemberInfo Self, bool Inherit) where TAttribute : Attribute
         {
             var AttributeType = typeof(TAttribute);
-            var Usage = AttributeType.GetCustomAttributeInternal<AttributeUsageAttribute>();
+            var Usage = AttributeType.GetCustomAttributes<AttributeUsageAttribute>(true).SingleOrDefault();
             if (Usage != null && Usage.AllowMultiple)
             {
                 throw new ArgumentException("The attribute should not allow multiple.");
             }
 
-            return Self.GetCustomAttributeInternal<TAttribute>(Inherit);
+            return Self.GetCustomAttributes<TAttribute>(Inherit).SingleOrDefault();
         }
 
-        public static Attribute GetCustomAttribute(this System.Reflection.MemberInfo Self, Type AttributeType, bool Inherit = true)
+        public static Attribute GetCustomAttribute(this System.Reflection.MemberInfo Self, Type AttributeType, bool Inherit)
         {
-            var Usage = AttributeType.GetCustomAttributeInternal<AttributeUsageAttribute>();
+            var Usage = AttributeType.GetCustomAttributes<AttributeUsageAttribute>(true).SingleOrDefault();
             if (Usage != null && Usage.AllowMultiple)
             {
                 throw new ArgumentException("The attribute should not allow multiple.");
             }
 
-            return Self.GetCustomAttributeInternal(AttributeType, Inherit);
+            return (Attribute) Self.GetCustomAttributes(AttributeType, Inherit).SingleOrDefault();
         }
 
-        public static TAttribute GetCustomAttribute<TAttribute>(this System.Reflection.Assembly Self, bool Inherit = true) where TAttribute : Attribute
+        public static TAttribute GetCustomAttribute<TAttribute>(this System.Reflection.Assembly Self, bool Inherit) where TAttribute : Attribute
         {
             var AttributeType = typeof(TAttribute);
-            var Usage = AttributeType.GetCustomAttributeInternal<AttributeUsageAttribute>();
+            var Usage = AttributeType.GetCustomAttributes<AttributeUsageAttribute>(true).SingleOrDefault();
             if (Usage != null && Usage.AllowMultiple)
             {
                 throw new ArgumentException("The attribute should not allow multiple.");
             }
 
-            return Self.GetCustomAttributeInternal<TAttribute>(Inherit);
+            return Self.GetCustomAttributes<TAttribute>(Inherit).SingleOrDefault();
         }
 
-        public static Attribute GetCustomAttribute(this System.Reflection.Assembly Self, Type AttributeType, bool Inherit = true)
+        public static Attribute GetCustomAttribute(this System.Reflection.Assembly Self, Type AttributeType, bool Inherit)
         {
-            var Usage = AttributeType.GetCustomAttributeInternal<AttributeUsageAttribute>();
+            var Usage = AttributeType.GetCustomAttributes<AttributeUsageAttribute>(true).SingleOrDefault();
             if (Usage != null && Usage.AllowMultiple)
             {
                 throw new ArgumentException("The attribute should not allow multiple.");
             }
 
-            return Self.GetCustomAttributeInternal(AttributeType, Inherit);
+            return (Attribute) Self.GetCustomAttributes(AttributeType, Inherit).SingleOrDefault();
         }
 
-        public static IEnumerable<(Type Type, TAttribute Attribute)> WithCustomAttribute<TAttribute>(this IEnumerable<Type> Types) where TAttribute : Attribute
+        public static IEnumerable<(Type Type, TAttribute Attribute)> WithCustomAttribute<TAttribute>(this IEnumerable<Type> Types, bool Inherit) where TAttribute : Attribute
         {
             var Type = typeof(TAttribute);
 
-            var Usage = Type.GetCustomAttributeInternal<AttributeUsageAttribute>();
+            var Usage = Type.GetCustomAttributes<AttributeUsageAttribute>(true).SingleOrDefault();
             if (Usage != null)
             {
                 if (Usage.AllowMultiple)
@@ -1491,7 +1481,7 @@ namespace Ks.Common
 
             foreach (var T in Types)
             {
-                var Attribute = T.GetCustomAttributeInternal<TAttribute>();
+                var Attribute = T.GetCustomAttributes<TAttribute>(Inherit).SingleOrDefault();
                 if (Attribute != null)
                 {
                     yield return (T, Attribute);
@@ -1499,11 +1489,11 @@ namespace Ks.Common
             }
         }
 
-        public static IEnumerable<(System.Reflection.MethodInfo Method, TAttribute Attribute)> WithCustomAttribute<TAttribute>(this IEnumerable<System.Reflection.MethodInfo> Methods) where TAttribute : Attribute
+        public static IEnumerable<(System.Reflection.MethodInfo Method, TAttribute Attribute)> WithCustomAttribute<TAttribute>(this IEnumerable<System.Reflection.MethodInfo> Methods, bool Inherit) where TAttribute : Attribute
         {
             var Type = typeof(TAttribute);
 
-            var Usage = Type.GetCustomAttributeInternal<AttributeUsageAttribute>();
+            var Usage = Type.GetCustomAttributes<AttributeUsageAttribute>(true).SingleOrDefault();
             if (Usage != null)
             {
                 if (Usage.AllowMultiple)
@@ -1519,7 +1509,7 @@ namespace Ks.Common
 
             foreach (var M in Methods)
             {
-                var Attribute = M.GetCustomAttributeInternal<TAttribute>();
+                var Attribute = M.GetCustomAttributes<TAttribute>(Inherit).SingleOrDefault();
                 if (Attribute != null)
                 {
                     yield return (M, Attribute);
