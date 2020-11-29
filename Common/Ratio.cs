@@ -237,7 +237,7 @@ namespace Ks.Common
             return new Ratio(Value);
         }
 
-        public int Floor()
+        public int IntegerPart()
         {
             return this.Numerator / this.Denumenator;
         }
