@@ -1,5 +1,7 @@
-﻿using System.Diagnostics;
+﻿#define WriteDebugInfo
+
 using System;
+using System.Diagnostics;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
@@ -25,8 +27,9 @@ namespace Ks
 
             public void RunTask(TaskDelayerRunningMode RunningMode)
             {
-                /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#if WriteDebugInfo
                 Console.WriteLine("{0}: Started. Mode: {1}", nameof(RunTask), RunningMode);
+#endif
                 TimeSpan Now;
                 // First Check that IsTaskPending is REALLY true. We have to lock to make that sure.
                 if (this.IsTaskPending)
@@ -36,13 +39,16 @@ namespace Ks
                         Now = this.StopWatch.Elapsed;
                         if (this.IsTaskPending)
                         {
-                            /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#if WriteDebugInfo
                             Console.WriteLine("{0}: Task was pending.", nameof(RunTask));
+#endif
                             if ((int)RunningMode == (int)TaskDelayerRunningMode.Instant)
                             {
                                 this.IsInstantSet = true;
                                 this.DelayWaitHandle.Set();
+#if WriteDebugInfo
                                 Console.WriteLine("{0}: {1} was set.", nameof(RunTask), nameof(this.DelayWaitHandle));
+#endif
                             }
                             else
 // As setting LastActivityTime can at most delay the run of a task, it is only important to have it at the time of deciding whether to run the task.
@@ -52,7 +58,9 @@ if (this.LastActivityTime > Now)
                                 // The simplest thing to do is to set instant.
                                 this.IsInstantSet = true;
                                 this.DelayWaitHandle.Set();
+#if WriteDebugInfo
                                 Console.WriteLine("{0}: {1} was set.", nameof(RunTask), nameof(this.DelayWaitHandle));
+#endif
                             }
                             else
                                 this.LastActivityTime = Now;
@@ -75,28 +83,36 @@ if (this.LastActivityTime > Now)
                     this.IsInstantSet = true;
                     // We set the wait handle before waiting on it. The wait will then immediately return.
                     this.DelayWaitHandle.Set();
+#if WriteDebugInfo
                     Console.WriteLine("{0}: {1} was set.", nameof(RunTask), nameof(this.DelayWaitHandle));
+#endif
                 }
                 this.TaskWaitHandle.Set();
+#if WriteDebugInfo
                 Console.WriteLine("{0}: {1} was set.", nameof(RunTask), nameof(this.TaskWaitHandle));
+#endif
             }
 
             private void TaskThreadProcedure()
             {
-                /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */            // ToDo Prove that we need two wait handles. (Have done it once.)
+#if WriteDebugInfo
                 Console.WriteLine("{0}: Started.", nameof(TaskThreadProcedure));
+#endif
                 // ToDo Prove that we need two wait handles. (Have done it once.)
                 do
                 {
-                    /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#if WriteDebugInfo
                     Console.WriteLine("{0}: {1}, getting into wait.", nameof(TaskThreadProcedure), nameof(this.TaskWaitHandle));
+#endif
                     this.TaskWaitHandle.WaitOne();
-                    /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#if WriteDebugInfo
                     Console.WriteLine("{0}: {1}, out of wait.", nameof(TaskThreadProcedure), nameof(this.TaskWaitHandle));
+#endif
                     if (!this.IsTaskPending)
                     {
-                        /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#if WriteDebugInfo
                         Console.WriteLine("{0}: Exiting...", nameof(TaskThreadProcedure));
+#endif
                         Assert.True(this.IsDisposed);
                         break;
                     }
@@ -118,8 +134,9 @@ if (this.LastActivityTime > Now)
                             {
                                 if (ShouldRunTask)
                                 {
-                                    /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#if WriteDebugInfo
                                     Console.WriteLine("{0}: Wait -> Instant.", nameof(TaskThreadProcedure));
+#endif
                                     break;
                                 }
 
@@ -128,8 +145,9 @@ if (this.LastActivityTime > Now)
                                 WaitTime = (this.FirstActivityTime - Now) + this.MinDelay;
                                 if (WaitTime > TimeEpsilon)
                                 {
-                                    /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#if WriteDebugInfo
                                     Console.WriteLine("{0}: Wait -> Min delay.", nameof(TaskThreadProcedure));
+#endif
                                     break;
                                 }
 
@@ -137,24 +155,27 @@ if (this.LastActivityTime > Now)
                                 WaitTime = (this.LastActivityTime - Now) + this.InactivityTime;
                                 if ((WaitTime <= TimeEpsilon) | (MaxWaitTime <= TimeEpsilon))
                                 {
-                                    /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#if WriteDebugInfo
                                     Console.WriteLine("{0}: Wait -> No wait.", nameof(TaskThreadProcedure));
+#endif
                                     ShouldRunTask = true;
                                     break;
                                 }
 
                                 if (WaitTime >= MaxWaitTime)
                                 {
-                                    /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */                                // We know that next time the task must surely be done, so we set instant to avoid unnecessary next-time calculations.
+#if WriteDebugInfo
                                     Console.WriteLine("{0}: Wait -> Reaching max wait.", nameof(TaskThreadProcedure));
+#endif
                                     // We know that next time the task must surely be done, so we set instant to avoid unnecessary next-time calculations.
                                     this.IsInstantSet = true;
                                     WaitTime = MaxWaitTime;
                                     break;
                                 }
 
-                                /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#if WriteDebugInfo
                                 Console.WriteLine("{0}: Wait -> Regular wait.", nameof(TaskThreadProcedure));
+#endif
                                 break;
                             }
                             while (true);
@@ -169,17 +190,21 @@ if (this.LastActivityTime > Now)
 
                         if (ShouldRunTask)
                         {
-                            /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#if WriteDebugInfo
                             Console.WriteLine("{0}: Running task...", nameof(TaskThreadProcedure));
+#endif
                             this.Task.Invoke();
                             break;
                         }
                         else
                         {
-                            /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#if WriteDebugInfo
                             Console.WriteLine("{0}: {1}, getting into wait. WaitTime: {2}", nameof(TaskThreadProcedure), nameof(this.DelayWaitHandle), WaitTime);
+#endif
                             this.DelayWaitHandle.WaitOne(WaitTime);
+#if WriteDebugInfo
                             Console.WriteLine("{0}: {1}, out of wait.", nameof(TaskThreadProcedure), nameof(this.DelayWaitHandle));
+#endif
                         }
                     }
                     while (true);

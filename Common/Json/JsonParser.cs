@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualBasic;
+﻿//#define RelaxedStrings
+
+using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System;
 using Microsoft.VisualBasic.CompilerServices;
@@ -47,9 +49,11 @@ namespace Ks
                     do
                     {
                         Token = this.ReadToken();
-                        /* TODO ERROR: Skipped IfDirectiveTrivia *//* TODO ERROR: Skipped DisabledTextTrivia *//* TODO ERROR: Skipped ElseDirectiveTrivia */
+#if RelaxedStrings
+                        Verify.True((Token.Type & TokenType.Value) == TokenType.Value, "Invalid JSON format. Key must be a value.");
+#else
                         Verify.True((int)Token.Type == (int)TokenType.QuotedValue, "Invalid JSON format. Key must be a string.");
-                        /* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#endif
                         var Key = Token.Value;
                         Token = this.ReadToken();
                         Verify.True(((int)Token.Type == (int)TokenType.Operator) & (Token.Value == ":"), "Invalid JSON format. Expected ':'.");

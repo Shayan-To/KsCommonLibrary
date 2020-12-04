@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿//#define RelaxedStrings
+
+using System.Data;
 using System.Linq;
 using System;
 using Microsoft.VisualBasic.CompilerServices;
@@ -92,9 +94,9 @@ namespace Ks
                 Verify.NonNull(Self);
                 var V = Self.AsValue("A string value was expected, not a list or dictionary.");
 
-                /* TODO ERROR: Skipped IfDirectiveTrivia */
+#if !RelaxedStrings
                 Verify.True(V.IsString, "Value must be a string.");
-                /* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#endif
                 return V.Value;
             }
 
@@ -103,9 +105,9 @@ namespace Ks
                 Verify.NonNull(Self);
                 var V = Self.AsValue("A boolean value was expected, not a list or dictionary.");
 
-                /* TODO ERROR: Skipped IfDirectiveTrivia */
+#if !RelaxedStrings
                 Verify.False(V.IsString, "Value must be a boolean.");
-                /* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#endif
                 Verify.True((Operators.CompareString(V.Value, True, TextCompare: false) == 0) | (Operators.CompareString(V.Value, False, TextCompare: false) == 0), "Value must be a boolean.");
                 return Operators.CompareString(V.Value, True, TextCompare: false) == 0;
             }
@@ -115,9 +117,9 @@ namespace Ks
                 Verify.NonNull(Self);
                 var V = Self.AsValue("An integer value was expected, not a list or dictionary.");
 
-                /* TODO ERROR: Skipped IfDirectiveTrivia */
+#if !RelaxedStrings
                 Verify.False(V.IsString, "Value must be an integer.");
-                /* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#endif
                 var T = 0;
                 Verify.True(ParseInv.TryInteger(V.Value, ref T), "Value must be an integer.");
                 return T;
@@ -128,9 +130,9 @@ namespace Ks
                 Verify.NonNull(Self);
                 var V = Self.AsValue("A number value was expected, not a list or dictionary.");
 
-                /* TODO ERROR: Skipped IfDirectiveTrivia */
+#if !RelaxedStrings
                 Verify.False(V.IsString, "Value must be a number.");
-                /* TODO ERROR: Skipped EndIfDirectiveTrivia */
+#endif
                 var T = 0.0;
                 Verify.True(ParseInv.TryDouble(V.Value, ref T), "Value must be a number.");
                 return T;
