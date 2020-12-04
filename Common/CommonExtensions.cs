@@ -324,6 +324,35 @@ namespace Ks
                 return R;
             }
 
+            public static IEnumerable<T> Cumulate<T>(this IEnumerable<T> self, Func<T, T, T> func)
+            {
+                var bl = true;
+                var v = default(T);
+                foreach (var i in self)
+                {
+                    if (bl)
+                    {
+                        v = i;
+                        bl = false;
+                    }
+                    else
+                    {
+                        v = func.Invoke(v, i);
+                    }
+                    yield return v;
+                }
+            }
+
+            public static IEnumerable<TCumulate> Cumulate<T, TCumulate>(this IEnumerable<T> self, TCumulate seed, Func<TCumulate, T, TCumulate> func)
+            {
+                var v = seed;
+                foreach (var i in self)
+                {
+                    v = func.Invoke(v, i);
+                    yield return v;
+                }
+            }
+
             public static int IndexOf<T>(this IList<T> Self, Func<T, int, bool> Predicate, int StartIndex = 0)
             {
                 for (var I = StartIndex; I < Self.Count; I++)
