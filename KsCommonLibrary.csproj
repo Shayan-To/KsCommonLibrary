@@ -76,6 +76,7 @@
     <Compile Include="Collections\Array2D.cs" />
     <Compile Include="Collections\ListWithKeys.cs" />
     <Compile Include="Collections\OwnerNotifyingList.cs" />
+    <Compile Include="Collections\SortedList.cs" />
     <Compile Include="Common\Closable.cs" />
     <Compile Include="Common\ConsoleListChoiceReader.cs" />
     <Compile Include="Common\DelegateEqualityComparer.cs" />
@@ -176,7 +177,6 @@
     <Compile Include="Collections\CreateInstanceList.cs" />
     <Compile Include="Collections\DictionaryEnumerator.cs" />
     <Compile Include="Collections\HeapOperations.cs" />
-    <Compile Include="Collections\InsertionSortList.cs" />
     <Compile Include="Collections\IOrderedDictionary.cs" />
     <Compile Include="Collections\MergedCollection.cs" />
     <Compile Include="Collections\MultiDictionary.cs" />
