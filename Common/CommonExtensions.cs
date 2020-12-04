@@ -625,6 +625,17 @@ namespace Ks
                 return Res;
             }
 
+            public static IEnumerable<T> RandomPick<T>(this IEnumerable<T> Self, double Ratio)
+            {
+                var Rand = DefaultCacher<Random>.Value;
+
+                foreach (var I in Self)
+                {
+                    if (Rand.NextDouble() < Ratio)
+                        yield return I;
+                }
+            }
+
             public static IEnumerable<T> RandomPick<T>(this IEnumerable<T> Self, Ratio Ratio)
             {
                 var Rand = DefaultCacher<Random>.Value;
