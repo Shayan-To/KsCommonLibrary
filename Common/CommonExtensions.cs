@@ -429,6 +429,11 @@ namespace Ks
                 return Res;
             }
 
+            public static SubList<T> SubList<T>(this IReadOnlyList<T> self, int index, int count)
+            {
+                return new SubList<T>(self, index, count);
+            }
+
             public static (int StartIndex, int Length) BinarySearch<T>(this IReadOnlyList<T> Self, T Value)
             {
                 return Self.BinarySearch(Value, Comparer<T>.Default);
