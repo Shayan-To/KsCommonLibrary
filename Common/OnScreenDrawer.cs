@@ -276,7 +276,7 @@ namespace Ks
                 {
                 }
 
-                public Drawing(int IntervalMillis, int X, int Y, int Width, int Height) : this(TimeSpan.FromMilliseconds((double)IntervalMillis), new Rectangle(X, Y, Width, Height))
+                public Drawing(int IntervalMillis, int X, int Y, int Width, int Height) : this(TimeSpan.FromMilliseconds(IntervalMillis), new Rectangle(X, Y, Width, Height))
                 {
                 }
 

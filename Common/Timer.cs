@@ -13,7 +13,7 @@ namespace Ks
                 this.Interval = Interval;
             }
 
-            public Timer(Action Callback, int IntervalMillis) : this(Callback, TimeSpan.FromMilliseconds((double)IntervalMillis))
+            public Timer(Action Callback, int IntervalMillis) : this(Callback, TimeSpan.FromMilliseconds(IntervalMillis))
             {
             }
 

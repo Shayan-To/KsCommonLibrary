@@ -32,7 +32,7 @@ namespace Ks
             [Obsolete("Use the Create methods instead.")]
             public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, T changedItem) : base(action, changedItem)
             {
-                if ((int)action == (int)NotifyCollectionChangedAction.Reset)
+                if (action == NotifyCollectionChangedAction.Reset)
                     InitializeAdd(action, null, -1);
                 else
                     InitializeAddOrRemove(action, new T[] { changedItem }, -1);
@@ -54,7 +54,7 @@ namespace Ks
             [Obsolete("Use the Create methods instead.")]
             public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, T changedItem, int index) : base(action, changedItem, index)
             {
-                if ((int)action == (int)NotifyCollectionChangedAction.Reset)
+                if (action == NotifyCollectionChangedAction.Reset)
                     InitializeAdd(action, null, -1);
                 else
                     InitializeAddOrRemove(action, new T[] { changedItem }, index);
@@ -76,7 +76,7 @@ namespace Ks
             [Obsolete("Use the Create methods instead.")]
             public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, IList<T> changedItems) : base(action, (IList)changedItems)
             {
-                if ((int)action == (int)NotifyCollectionChangedAction.Reset)
+                if (action == NotifyCollectionChangedAction.Reset)
                     InitializeAdd(action, null, -1);
                 else
                     InitializeAddOrRemove(action, changedItems, -1);
@@ -98,7 +98,7 @@ namespace Ks
             [Obsolete("Use the Create methods instead.")]
             public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, IList<T> changedItems, int startingIndex) : base(action, (IList)changedItems, startingIndex)
             {
-                if ((int)action == (int)NotifyCollectionChangedAction.Reset)
+                if (action == NotifyCollectionChangedAction.Reset)
                     InitializeAdd(action, null, -1);
                 else
                     InitializeAddOrRemove(action, changedItems, startingIndex);
@@ -280,9 +280,9 @@ namespace Ks
 
             private void InitializeAddOrRemove(NotifyCollectionChangedAction action, IList<T> changedItems, int startingIndex)
             {
-                if ((int)action == (int)NotifyCollectionChangedAction.Add)
+                if (action == NotifyCollectionChangedAction.Add)
                     InitializeAdd(action, changedItems, startingIndex);
-                else if ((int)action == (int)NotifyCollectionChangedAction.Remove)
+                else if (action == NotifyCollectionChangedAction.Remove)
                     InitializeRemove(action, changedItems, startingIndex);
             }
 
@@ -306,7 +306,7 @@ namespace Ks
             {
                 get
                 {
-                    if (((int)this.Action == (int)NotifyCollectionChangedAction.Add) | ((int)this.Action == (int)NotifyCollectionChangedAction.Replace))
+                    if ((this.Action == NotifyCollectionChangedAction.Add) | (this.Action == NotifyCollectionChangedAction.Replace))
                         return this.NewItems;
                     return Utilities.Typed<T>.EmptyArray;
                 }
@@ -316,7 +316,7 @@ namespace Ks
             {
                 get
                 {
-                    if (((int)this.Action == (int)NotifyCollectionChangedAction.Remove) | ((int)this.Action == (int)NotifyCollectionChangedAction.Replace))
+                    if ((this.Action == NotifyCollectionChangedAction.Remove) | (this.Action == NotifyCollectionChangedAction.Replace))
                         return this.OldItems;
                     return Utilities.Typed<T>.EmptyArray;
                 }

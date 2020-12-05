@@ -18,12 +18,12 @@ namespace Ks
             {
                 Verify.True(Stream.CanRead & Stream.CanWrite & Stream.CanSeek, "Stream must have read, write and seek capabilities.");
 
-                this.TaskDelayer = new TaskDelayer(this.Store, TimeSpan.FromSeconds((double)10));
+                this.TaskDelayer = new TaskDelayer(this.Store, TimeSpan.FromSeconds(10));
 
                 this.Stream = Stream;
                 this._LeaveOpen = LeaveOpen;
 
-                if (Stream.Length == (long)0)
+                if (Stream.Length == 0)
                 {
                     this.BaseDic = new ConcurrentOrderedDictionary<string, string>();
                     return;
@@ -56,7 +56,7 @@ namespace Ks
                 var SerializedBinaryData = System.Text.Encoding.UTF8.GetBytes(SerializedData);
                 this.Stream.Position = 0;
                 this.Stream.Write(SerializedBinaryData, 0, SerializedBinaryData.Length);
-                this.Stream.SetLength((long)SerializedBinaryData.Length);
+                this.Stream.SetLength(SerializedBinaryData.Length);
                 this.Stream.Flush();
             }
 

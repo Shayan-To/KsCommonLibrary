@@ -212,7 +212,7 @@ namespace Ks
 
             public static explicit operator double(Ratio Value)
             {
-                return (double)Value.Numerator / (double)Value.Denumenator;
+                return (double)Value.Numerator / Value.Denumenator;
             }
 
             public static implicit operator Ratio(int Value)

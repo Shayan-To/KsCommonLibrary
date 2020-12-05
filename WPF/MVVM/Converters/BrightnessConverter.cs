@@ -61,18 +61,18 @@ namespace Ks
 
             public Color Convert(Color C, double Parameter = 0.0)
             {
-                var P = System.Convert.ToInt32((Parameter * (double)255 * this.Coeff));
-                return Color.FromArgb(C.A, GetByte((int)C.R + P), GetByte((int)C.G + P), GetByte((int)C.B + P));
+                var P = System.Convert.ToInt32((Parameter * 255 * this.Coeff));
+                return Color.FromArgb(C.A, GetByte(C.R + P), GetByte(C.G + P), GetByte(C.B + P));
             }
 
             private void CalculateCoeff()
             {
                 var Background = this.Background;
                 var Foreground = this.Foreground;
-                var BG = (Background.ScR + Background.ScG + Background.ScB) / (float)3;
-                var FG = (Foreground.ScR + Foreground.ScG + Foreground.ScB) / (float)3;
+                var BG = (Background.ScR + Background.ScG + Background.ScB) / 3;
+                var FG = (Foreground.ScR + Foreground.ScG + Foreground.ScB) / 3;
 
-                this.Coeff = (double)BG - FG;
+                this.Coeff = BG - FG;
             }
 
             public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register("Background", typeof(Color), typeof(BrightnessConverter), new PropertyMetadata(Colors.White, Background_Changed));
@@ -115,7 +115,7 @@ namespace Ks
                 }
             }
 
-            private double Coeff = (double)1;
+            private double Coeff = 1;
         }
     }
 }

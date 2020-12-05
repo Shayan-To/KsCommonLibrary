@@ -19,7 +19,7 @@ namespace Ks
 
             public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
             {
-                return (System.Convert.ToString(Parameter) == "~") ^ ((byte)(Visibility)Value == (byte)Visibility.Visible);
+                return (System.Convert.ToString(Parameter) == "~") ^ ((Visibility)Value == Visibility.Visible);
             }
         }
     }

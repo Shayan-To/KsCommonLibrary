@@ -96,17 +96,17 @@ namespace Ks
 
             public Opening OpenTag(string Name, bool MultiLine = false, bool MultiLineAttributes = false)
             {
-                Verify.False((int)this.State == (int)WriterState.End, "Cannot write after write is finished.");
+                Verify.False(this.State == WriterState.End, "Cannot write after write is finished.");
                 Verify.True(MultiLineAttributes.Implies(MultiLine), "Cannot have multi-line attributes on a non-multi-line tag.");
 
                 Verify.FalseArg(this.NeedsEscaping(Name), nameof(Name), "Name contains unacceptable characters.");
 
-                var R = new Opening(this, Name, this.TagIdCounter, ((int)this.State == (int)WriterState.Begin) ? WriterState.End : this.State, this.MultiLine, this.TagId);
+                var R = new Opening(this, Name, this.TagIdCounter, (this.State == WriterState.Begin) ? WriterState.End : this.State, this.MultiLine, this.TagId);
 
                 this.TagId = this.TagIdCounter;
                 this.TagIdCounter += 1;
 
-                if ((int)this.State == (int)WriterState.Begin)
+                if (this.State == WriterState.Begin)
                 {
                     if (this.AddXmlDeclaration)
                     {
@@ -142,8 +142,8 @@ namespace Ks
 
             public void WriteAttribute(string Key, string Value)
             {
-                Verify.False((int)this.State == (int)WriterState.Begin, "Cannot write before a tag is opened.");
-                Verify.False((int)this.State == (int)WriterState.End, "Cannot write after write is finished.");
+                Verify.False(this.State == WriterState.Begin, "Cannot write before a tag is opened.");
+                Verify.False(this.State == WriterState.End, "Cannot write after write is finished.");
                 Verify.True(this.IsTagOpen, "Cannot write an attribute when the tag is cloned.");
 
                 Verify.FalseArg(this.NeedsEscaping(Key), nameof(Key), "Key contains unacceptable characters.");
@@ -168,8 +168,8 @@ namespace Ks
 
             public void WriteValue(string Value)
             {
-                Verify.False((int)this.State == (int)WriterState.Begin, "Cannot write before a tag is opened.");
-                Verify.False((int)this.State == (int)WriterState.End, "Cannot write after write is finished.");
+                Verify.False(this.State == WriterState.Begin, "Cannot write before a tag is opened.");
+                Verify.False(this.State == WriterState.End, "Cannot write after write is finished.");
                 Verify.False(this.HasValueBefore, "Cannot write two consecutive values.");
 
                 this.GetOutOfTag();
@@ -183,8 +183,8 @@ namespace Ks
 
             private void CloseOpening(string Name, int TagId, WriterState PreviousState, bool PreviousMultiline, int PreviousTagId)
             {
-                Verify.False((int)this.State == (int)WriterState.Begin, "Cannot write before a tag is opened.");
-                Verify.False((int)this.State == (int)WriterState.End, "Cannot write after write is finished.");
+                Verify.False(this.State == WriterState.Begin, "Cannot write before a tag is opened.");
+                Verify.False(this.State == WriterState.End, "Cannot write after write is finished.");
                 Verify.True(this.TagId == TagId, $"{this.TagId} {TagId}Invalid closing of tag. Nested structure is not respected.");
 
                 if (this.MultiLine)

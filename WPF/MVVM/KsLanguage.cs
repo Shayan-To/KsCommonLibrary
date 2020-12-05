@@ -20,7 +20,7 @@ namespace Ks
         {
             public KsLanguage(System.IO.Stream Stream)
             {
-                this.TaskDelayer = new TaskDelayer(this.DoStore, TimeSpan.FromSeconds((double)10));
+                this.TaskDelayer = new TaskDelayer(this.DoStore, TimeSpan.FromSeconds(10));
 
                 this.Stream = Stream;
 
@@ -174,7 +174,7 @@ namespace Ks
 
                     E = this.Csv.Entries[3];
                     E[0] = nameof(this.Direction);
-                    E[1] = ((int)this.Direction == (int)FlowDirection.LeftToRight) ? nameof(FlowDirection.LeftToRight) : nameof(FlowDirection.RightToLeft);
+                    E[1] = (this.Direction == FlowDirection.LeftToRight) ? nameof(FlowDirection.LeftToRight) : nameof(FlowDirection.RightToLeft);
 
                     Str = this.Csv.ToString();
                 }
@@ -182,7 +182,7 @@ namespace Ks
                 var Bytes = System.Text.Encoding.UTF8.GetBytes(Str);
                 this.Stream.Position = 0;
                 this.Stream.Write(Bytes, 0, Bytes.Length);
-                this.Stream.SetLength((long)Bytes.Length);
+                this.Stream.SetLength(Bytes.Length);
                 this.Stream.Flush();
             }
 

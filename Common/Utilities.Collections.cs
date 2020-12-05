@@ -82,11 +82,11 @@ namespace Ks
                             Res.Add(new JoinElement<T1, T2, TKey>(Key, JoinDirection.Both, I1, I2));
                             Dic.Remove(Key);
                         }
-                        else if ((int)(JoinType & JoinDirection.Left) == (int)JoinDirection.Left)
+                        else if ((JoinType & JoinDirection.Left) == JoinDirection.Left)
                             Res.Add(new JoinElement<T1, T2, TKey>(Key, JoinDirection.Left, I1, default(T2)));
                     }
 
-                    if ((int)(JoinType & JoinDirection.Right) == (int)JoinDirection.Right)
+                    if ((JoinType & JoinDirection.Right) == JoinDirection.Right)
                     {
                         foreach (var KI2 in Dic)
                             Res.Add(new JoinElement<T1, T2, TKey>(KI2.Key, JoinDirection.Left, default(T1), KI2.Value));

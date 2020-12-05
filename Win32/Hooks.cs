@@ -270,7 +270,7 @@ namespace Ks
             /// <summary>
             /// Test the extended-key flag.
             /// </summary>
-                Extended = ((int)Windows.KeyFlags.Extended >> 8),
+                Extended = (Windows.KeyFlags.Extended >> 8),
                 /// LLKHF_LOWER_IL_INJECTED = 0x00000002
             /// <summary>
             /// Test the event-injected (from a process running at lower integrity level) flag.
@@ -285,12 +285,12 @@ namespace Ks
             /// <summary>
             /// Test the context code.
             /// </summary>
-                AltDown = ((int)Windows.KeyFlags.AltDown >> 8),
+                AltDown = (Windows.KeyFlags.AltDown >> 8),
                 /// LLKHF_UP = (KF_UP >> 8)
             /// <summary>
             /// Test the transition-state flag.
             /// </summary>
-                Up = ((int)Windows.KeyFlags.Up >> 8)
+                Up = (Windows.KeyFlags.Up >> 8)
             }
 
             /// typedef struct tagKBDLLHOOKSTRUCT {

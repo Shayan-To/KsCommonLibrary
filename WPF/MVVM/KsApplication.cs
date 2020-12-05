@@ -111,7 +111,7 @@ namespace Ks
             [DebuggerHidden()]
             public void Run()
             {
-                if ((int)this.State != (int)KsApplicationState.NotStarted)
+                if (this.State != KsApplicationState.NotStarted)
                     throw new InvalidOperationException("Cannot run an already run KsApplication.");
 
                 _Current = this;
@@ -140,7 +140,7 @@ namespace Ks
 
             public void ShutDown(int ExitCode = 0)
             {
-                Verify.True((int)this.State == (int)KsApplicationState.Started, "The KsApplication has to be started to be able to be shut down.");
+                Verify.True(this.State == KsApplicationState.Started, "The KsApplication has to be started to be able to be shut down.");
 
                 if (_Current == this)
                     _Current = null;

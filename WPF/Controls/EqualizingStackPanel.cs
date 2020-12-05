@@ -20,7 +20,7 @@ namespace Ks
 
                 var MaxHeight = 0.0;
                 var MaxWidth = 0.0;
-                AvailableSize = this.CreateSize(this.Dimension(AvailableSize, Orientation.Horizontal) / (double)ChildCount,
+                AvailableSize = this.CreateSize(this.Dimension(AvailableSize, Orientation.Horizontal) / ChildCount,
                                                 this.Dimension(AvailableSize, Orientation.Vertical));
 
                 foreach (UIElement C in this.Children)
@@ -31,7 +31,7 @@ namespace Ks
                     MaxHeight = Math.Max(MaxHeight, this.Dimension(Sz, Orientation.Vertical));
                 }
 
-                return this.CreateSize(MaxWidth * (double)ChildCount, MaxHeight);
+                return this.CreateSize(MaxWidth * ChildCount, MaxHeight);
             }
 
             protected override Size ArrangeOverride(Size FinalSize)
@@ -39,13 +39,13 @@ namespace Ks
                 var ChildCount = this.Children.Count;
                 var OrigFinalSize = FinalSize;
 
-                var Width = this.Dimension(FinalSize, Orientation.Horizontal) / (double)ChildCount;
+                var Width = this.Dimension(FinalSize, Orientation.Horizontal) / ChildCount;
                 FinalSize = this.CreateSize(Width, this.Dimension(FinalSize, Orientation.Vertical));
                 var X = 0.0;
 
                 foreach (UIElement C in this.Children)
                 {
-                    C.Arrange(new Rect(this.CreatePoint(X, (double)0), FinalSize));
+                    C.Arrange(new Rect(this.CreatePoint(X, 0), FinalSize));
                     X += Width;
                 }
 
@@ -54,7 +54,7 @@ namespace Ks
 
             private Size CreateSize(double Width, double Height)
             {
-                if ((int)this.OrientationCache == (int)Orientation.Horizontal)
+                if (this.OrientationCache == Orientation.Horizontal)
                     return new Size(Width, Height);
                 else
                     return new Size(Height, Width);
@@ -62,7 +62,7 @@ namespace Ks
 
             private Point CreatePoint(double X, double Y)
             {
-                if ((int)this.OrientationCache == (int)Orientation.Horizontal)
+                if (this.OrientationCache == Orientation.Horizontal)
                     return new Point(X, Y);
                 else
                     return new Point(Y, X);
@@ -71,7 +71,7 @@ namespace Ks
             private double Dimension(Size Size, Orientation Orientation)
             {
                 Orientation = Orientation ^ this.OrientationCache;
-                if ((int)Orientation == (int)Orientation.Horizontal)
+                if (Orientation == Orientation.Horizontal)
                     return Size.Width;
                 else
                     return Size.Height;

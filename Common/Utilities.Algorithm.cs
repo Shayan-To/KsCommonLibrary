@@ -77,10 +77,10 @@ namespace Ks
             /// <returns>Some X that Func(X) = True and |X - N| &lt; MaxError (N is from doc of Func).</returns>
                 public static double BinarySearch(Func<double, bool> Func, double MaxError, double MaxX = double.NaN)
                 {
-                    Verify.True(MaxError > (double)0);
+                    Verify.True(MaxError > 0);
                     if (double.IsNaN(MaxX))
                     {
-                        MaxX = (double)8 * MaxError;
+                        MaxX = 8 * MaxError;
                         while (!Func.Invoke(MaxX))
                             MaxX *= 2;
                     }

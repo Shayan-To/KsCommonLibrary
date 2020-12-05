@@ -42,8 +42,8 @@ namespace Ks
                     this.Graphics = Graphics.FromHwnd(this.Form.Handle);
                 }
 
-                this.FIntervals[(int)Orientation.X] = new Interval((double)FormMargin, (double)FormWidth);
-                this.FIntervals[(int)Orientation.Y] = new Interval((double)FormMargin + FormHeight, (double)-FormHeight);
+                this.FIntervals[(int)Orientation.X] = new Interval(FormMargin, FormWidth);
+                this.FIntervals[(int)Orientation.Y] = new Interval(FormMargin + FormHeight, -FormHeight);
                 this.Intervals[(int)Orientation.X] = new Interval(XStart, XLength);
                 this.Intervals[(int)Orientation.Y] = new Interval(YStart, YLength);
 
@@ -69,7 +69,7 @@ namespace Ks
 
             public void DrawFunction(Color Color, IReadOnlyList<double> Ys, double XStart, double XStep)
             {
-                this.DrawFunction(Color, Ys.SelectAsList((Y, I) => (XStart + ((double)I * XStep), Y)));
+                this.DrawFunction(Color, Ys.SelectAsList((Y, I) => (XStart + (I * XStep), Y)));
             }
 
             public void DrawFunction(Color Color, IReadOnlyList<(double X, double Y)> Points)
@@ -98,7 +98,7 @@ namespace Ks
                 var loopTo = N;
                 for (int I = 0; I <= loopTo; I++)
                 {
-                    var X = FIX.Start + ((FIX.Length / (double)N) * (double)I);
+                    var X = FIX.Start + ((FIX.Length / N) * I);
                     var P = ConvertPoint(X, Func.Invoke(X), Orientation.X);
                     Points[I] = P;
                 }
@@ -120,9 +120,9 @@ namespace Ks
 
                 var A = Math.Atan(Value);
                 var X = FIX.Start;
-                var Y = FIY.Start + (FIY.Length / (double)2);
-                var X2 = X + ((double)100 * Math.Cos(A));
-                var Y2 = Y + ((double)100 * Math.Sin(A));
+                var Y = FIY.Start + (FIY.Length / 2);
+                var X2 = X + (100 * Math.Cos(A));
+                var Y2 = Y + (100 * Math.Sin(A));
 
                 using (var Pen = new Pen(ConvertColor(Color)))
                 {
@@ -148,7 +148,7 @@ namespace Ks
 
             private Point CreatePoint(double X, double Y, Orientation Orientation)
             {
-                if ((int)Orientation == (int)Orientation.X)
+                if (Orientation == Orientation.X)
                     return new Point(System.Convert.ToInt32(X), System.Convert.ToInt32(Y));
                 else
                     return new Point(System.Convert.ToInt32(Y), System.Convert.ToInt32(X));
@@ -156,7 +156,7 @@ namespace Ks
 
             private Size CreateSize(double Width, double Height, Orientation Orientation)
             {
-                if ((int)Orientation == (int)Orientation.X)
+                if (Orientation == Orientation.X)
                     return new Size(System.Convert.ToInt32(Width), System.Convert.ToInt32(Height));
                 else
                     return new Size(System.Convert.ToInt32(Height), System.Convert.ToInt32(Width));

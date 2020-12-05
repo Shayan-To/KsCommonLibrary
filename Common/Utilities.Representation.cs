@@ -13,9 +13,9 @@ namespace Ks
         {
             public class Representation
             {
-                public static readonly IReadOnlyList<(string Prefix, int Multiplier, Interval AcceptInterval)> BinaryPrefixes = new[] { ("", 1024, new Interval((double)0, true, (double)1000, false)), ("K", 1024, new Interval(0.9, true, (double)1000, false)), ("M", 1024, new Interval(0.9, true, (double)1000, false)), ("G", 1024, new Interval(0.9, true, (double)1000, false)), ("T", 1024, new Interval(0.9, true, (double)1000, false)), ("P", 1024, new Interval(0.9, true, (double)1000, false)), ("E", 1024, new Interval(0.9, true, (double)1000, false)), ("Z", 1024, new Interval(0.9, true, double.PositiveInfinity, true)) }.AsReadOnly();
+                public static readonly IReadOnlyList<(string Prefix, int Multiplier, Interval AcceptInterval)> BinaryPrefixes = new[] { ("", 1024, new Interval(0, true, 1000, false)), ("K", 1024, new Interval(0.9, true, 1000, false)), ("M", 1024, new Interval(0.9, true, 1000, false)), ("G", 1024, new Interval(0.9, true, 1000, false)), ("T", 1024, new Interval(0.9, true, 1000, false)), ("P", 1024, new Interval(0.9, true, 1000, false)), ("E", 1024, new Interval(0.9, true, 1000, false)), ("Z", 1024, new Interval(0.9, true, double.PositiveInfinity, true)) }.AsReadOnly();
 
-                public static readonly IReadOnlyList<(string Prefix, int Multiplier, Interval AcceptInterval)> MetricPrefixes = new[] { ("a", 1000, new Interval((double)0, true, (double)1000, false)), ("f", 1000, new Interval((double)1, true, (double)1000, false)), ("p", 1000, new Interval((double)1, true, (double)1000, false)), ("n", 1000, new Interval((double)1, true, (double)1000, false)), ("μ", 1000, new Interval((double)1, true, (double)1000, false)), ("m", 1000, new Interval((double)1, true, (double)10, false)), ("c", 10, new Interval((double)1, true, (double)10, false)), ("d", 10, new Interval((double)1, true, (double)10, false)), ("", 10, new Interval((double)1, true, (double)10, false)), ("da", 10, new Interval((double)1, true, (double)10, false)), ("h", 10, new Interval((double)1, true, (double)10, false)), ("k", 10, new Interval((double)1, true, (double)1000, false)), ("M", 1000, new Interval((double)1, true, (double)1000, false)), ("G", 1000, new Interval((double)1, true, (double)1000, false)), ("T", 1000, new Interval((double)1, true, (double)1000, false)), ("P", 1000, new Interval((double)1, true, (double)1000, false)), ("E", 1000, new Interval((double)1, true, double.PositiveInfinity, true)) }.AsReadOnly();
+                public static readonly IReadOnlyList<(string Prefix, int Multiplier, Interval AcceptInterval)> MetricPrefixes = new[] { ("a", 1000, new Interval(0, true, 1000, false)), ("f", 1000, new Interval(1, true, 1000, false)), ("p", 1000, new Interval(1, true, 1000, false)), ("n", 1000, new Interval(1, true, 1000, false)), ("μ", 1000, new Interval(1, true, 1000, false)), ("m", 1000, new Interval(1, true, 10, false)), ("c", 10, new Interval(1, true, 10, false)), ("d", 10, new Interval(1, true, 10, false)), ("", 10, new Interval(1, true, 10, false)), ("da", 10, new Interval(1, true, 10, false)), ("h", 10, new Interval(1, true, 10, false)), ("k", 10, new Interval(1, true, 1000, false)), ("M", 1000, new Interval(1, true, 1000, false)), ("G", 1000, new Interval(1, true, 1000, false)), ("T", 1000, new Interval(1, true, 1000, false)), ("P", 1000, new Interval(1, true, 1000, false)), ("E", 1000, new Interval(1, true, double.PositiveInfinity, true)) }.AsReadOnly();
 
                 public static (double Value, string Prefix) GetPrefixedRepresentation(double Value, IReadOnlyList<(string Prefix, int Multiplier, Interval AcceptInterval)> Prefixes)
                 {
@@ -52,7 +52,7 @@ namespace Ks
 
                 public static string GetFriendlyTimeSpan(TimeSpan Time, TimeSpan MaxError)
                 {
-                    var Units = new[] { ("ms", TimeSpan.FromMilliseconds((double)1)), ("s", TimeSpan.FromSeconds((double)1)), ("min", TimeSpan.FromMinutes((double)1)), ("h", TimeSpan.FromHours((double)1)), ("d", TimeSpan.FromDays((double)1)) };
+                    var Units = new[] { ("ms", TimeSpan.FromMilliseconds(1)), ("s", TimeSpan.FromSeconds(1)), ("min", TimeSpan.FromMinutes(1)), ("h", TimeSpan.FromHours(1)), ("d", TimeSpan.FromDays(1)) };
                     // We want to be able to show values using a max error value, so we have to remove the unnecessary units.
                     // So we will keep the units that are greater than or equal to MaxError.
                     // But these are not enough, as they may not show the value with needed precision if no unit is equal to MaxError.
@@ -78,7 +78,7 @@ namespace Ks
                         var Value = Math.FloorDiv(Ticks, UnitTicks);
                         Ticks -= Value * UnitTicks;
 
-                        if (Value != (long)0)
+                        if (Value != 0)
                         {
                             if (Count == 1)
                                 break;
@@ -101,7 +101,7 @@ namespace Ks
                         // And we cannot optimize it by assuming we can do any number of digits when not at Start.
                         // A unit is something about 20-100 times smaller than the previous one, so maybe we are forced to use only one digit.
                         var Prec = 100;
-                        while ((UnitTicks / (long)Prec) <= MaxError.Ticks)
+                        while ((UnitTicks / Prec) <= MaxError.Ticks)
                         {
                             Prec /= 10;
                             if (Prec == 0)
@@ -114,12 +114,12 @@ namespace Ks
                             Prec = 100;
 
                         // We assume (Unit / Prec) to be another unit, but print the result divided by Prec.
-                        var Value = System.Math.Round((double)Ticks / (double)(UnitTicks / (long)Prec));
-                        if ((Value != (double)0) | (Res.Length == 0))
+                        var Value = System.Math.Round(Ticks / (double)(UnitTicks / Prec));
+                        if ((Value != 0) | (Res.Length == 0))
                         {
                             if (Res.Length != 0)
                                 Res.Append(" ");
-                            Res.Append(Value / (double)Prec).Append(Unit.Item1.ToLowerInvariant());
+                            Res.Append(Value / Prec).Append(Unit.Item1.ToLowerInvariant());
                         }
 
                         break;

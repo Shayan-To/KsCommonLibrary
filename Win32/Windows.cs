@@ -111,12 +111,12 @@ namespace Ks
             {
                 IntPtr R = default;
 
-                if ((uint)Kind == (uint)AncestorKind.ParentOrOwner)
+                if (Kind == AncestorKind.ParentOrOwner)
                     R = Unsafe.GetParent(hwnd);
-                else if (((long)GetAncestorConstant <= (long)Kind) & ((long)Kind < (long)GetWindowConstant))
-                    R = Unsafe.GetAncestor(hwnd, (Unsafe.GetAncestorFlags)((long)Kind - (long)GetAncestorConstant));
-                else if ((long)GetWindowConstant <= (long)Kind)
-                    R = Unsafe.GetWindow(hwnd, (Unsafe.GetWindowCommand)((long)Kind - (long)GetWindowConstant));
+                else if ((GetAncestorConstant <= (uint)Kind) & ((uint)Kind < GetWindowConstant))
+                    R = Unsafe.GetAncestor(hwnd, (Unsafe.GetAncestorFlags)((uint)Kind - GetAncestorConstant));
+                else if (GetWindowConstant <= (long)Kind)
+                    R = Unsafe.GetWindow(hwnd, (Unsafe.GetWindowCommand)((uint)Kind - GetWindowConstant));
                 else
                     Verify.FailArg(nameof(Kind), "Invalid kind.");
 

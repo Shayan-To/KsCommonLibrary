@@ -66,7 +66,7 @@ namespace Ks
 
             private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
             {
-                if ((int)e.Action != (int)NotifyCollectionChangedAction.Move)
+                if (e.Action != NotifyCollectionChangedAction.Move)
                 {
                     if (e.OldItems != null)
                     {

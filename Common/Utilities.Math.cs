@@ -165,31 +165,31 @@ namespace Ks
 
                 public static (long Root, long Reminder) SquareRootL(long A)
                 {
-                    Verify.FalseArg(A < (long)0, nameof(A), $"{nameof(A)} must be non-negative.");
+                    Verify.FalseArg(A < 0, nameof(A), $"{nameof(A)} must be non-negative.");
 
                     var ARev = 0L;
                     var T = A;
-                    while (T != (long)0)
+                    while (T != 0)
                     {
-                        ARev = (ARev << 2) | (T & (long)3);
+                        ARev = (ARev << 2) | (T & 3);
                         T >>= 2;
                     }
 
                     var Reminder = 0L;
                     var Root = 0L;
-                    while (A != (long)0)
+                    while (A != 0)
                     {
-                        Reminder = (Reminder << 2) | (ARev & (long)3);
+                        Reminder = (Reminder << 2) | (ARev & 3);
 
                         ARev >>= 2;
                         A >>= 2;
 
                         Root <<= 1;
-                        var Root2 = (Root << 1) | (long)1;
+                        var Root2 = (Root << 1) | 1;
 
                         if (Reminder >= Root2)
                         {
-                            Root = Root | (long)1;
+                            Root = Root | 1;
                             Reminder -= Root2;
                         }
                     }
@@ -220,19 +220,19 @@ namespace Ks
 
                 public static long LeastPowerOfTwoOnMin(long Min)
                 {
-                    if (Min < (long)1)
+                    if (Min < 1)
                         return 1;
 
                     // If Min is a power of two, we should return Min, otherwise, Min * 2
-                    var T = (Min - (long)1) & Min;
-                    if (T == (long)0)
+                    var T = (Min - 1) & Min;
+                    if (T == 0)
                         return Min;
                     Min = T;
 
                     do
                     {
-                        T = (Min - (long)1) & Min;
-                        if (T == (long)0)
+                        T = (Min - 1) & Min;
+                        if (T == 0)
                             return Min << 1;
                         Min = T;
                     }
@@ -253,14 +253,14 @@ namespace Ks
 
                 public static long FloorDiv(long A, long B)
                 {
-                    if (B < (long)0)
+                    if (B < 0)
                     {
                         A = -A;
                         B = -B;
                     }
-                    if ((A >= (long)0) | ((A % B) == (long)0))
+                    if ((A >= 0) | ((A % B) == 0))
                         return A / B;
-                    return (A / B) - (long)1;
+                    return (A / B) - 1;
                 }
 
                 public static int CeilDiv(int A, int B)
@@ -277,14 +277,14 @@ namespace Ks
 
                 public static long CeilDiv(long A, long B)
                 {
-                    if (B < (long)0)
+                    if (B < 0)
                     {
                         A = -A;
                         B = -B;
                     }
-                    if ((A < (long)0) | ((A % B) == (long)0))
+                    if ((A < 0) | ((A % B) == 0))
                         return A / B;
-                    return (A / B) + (long)1;
+                    return (A / B) + 1;
                 }
 
                 public static int GreatestCommonDivisor(int A, int B)
@@ -304,11 +304,11 @@ namespace Ks
 
                 public static long GreatestCommonDivisor(long A, long B)
                 {
-                    if (B < (long)0)
+                    if (B < 0)
                         B = -B;
-                    if (A < (long)0)
+                    if (A < 0)
                         A = -A;
-                    while (B != (long)0)
+                    while (B != 0)
                     {
                         var C = A % B;
                         A = B;
@@ -332,7 +332,7 @@ namespace Ks
                     var Reminder = 0L;
                     var Power = 1L;
                     var Log = 0;
-                    while (N != (long)0)
+                    while (N != 0)
                     {
                         Reminder += (N % Base) * Power;
                         N = N / Base;
@@ -349,16 +349,16 @@ namespace Ks
 
                 public static string ConvertToBase(long N, char[] Digits, char NegativeSign = '-')
                 {
-                    var IsNegative = N < (long)0;
+                    var IsNegative = N < 0;
                     if (IsNegative)
                         N = -N;
 
                     var Res = new List<char>();
                     var Base = Digits.Length;
 
-                    while (N != (long)0)
+                    while (N != 0)
                     {
-                        Res.Add(Digits[System.Convert.ToInt32((N % (long)Base))]);
+                        Res.Add(Digits[N % Base]);
                         N /= Base;
                     }
 
@@ -384,7 +384,7 @@ namespace Ks
                     {
                         var T = Array.IndexOf(Digits, N[I]);
                         Verify.False(T == -1, $"Invalid digit at index {I}.");
-                        Res = (Res * (long)Base) + (long)T;
+                        Res = (Res * Base) + T;
                     }
 
                     if (IsNegative)
@@ -398,9 +398,9 @@ namespace Ks
                     var Res = new List<char>();
                     var Base = System.Convert.ToUInt32(Digits.Length);
 
-                    while ((decimal)N != (decimal)0)
+                    while (N != 0)
                     {
-                        Res.Add(Digits[System.Convert.ToInt32((N % (ulong)Base))]);
+                        Res.Add(Digits[N % Base]);
                         N /= Base;
                     }
 
@@ -420,7 +420,7 @@ namespace Ks
                     {
                         var T = Array.IndexOf(Digits, N[I]);
                         Verify.False(T == -1, $"Invalid digit at index {I}.");
-                        Res = (Res * (ulong)Base) + (ulong)System.Convert.ToUInt32(T);
+                        Res = (Res * Base) + (ulong)T;
                     }
 
                     return Res;
@@ -449,11 +449,11 @@ namespace Ks
                 public static string ConvertToBaseB(byte[] N, char[] Digits)
                 {
                     var Base = Digits.Length;
-                    var LogRem = Logarithm((long)Base, (long)2);
+                    var LogRem = Logarithm(Base, 2);
                     var DigitBits = LogRem.Log;
                     const int ByteBits = 8;
 
-                    Verify.TrueArg(LogRem.Reminder == (long)0, nameof(Digits), "Base must be a power of two.");
+                    Verify.TrueArg(LogRem.Reminder == 0, nameof(Digits), "Base must be a power of two.");
 
                     var BlockSize = DigitBits / GreatestCommonDivisor(DigitBits, ByteBits);
                     var Offset = ((BlockSize - (N.Length % BlockSize)) * ByteBits) % DigitBits;
@@ -496,11 +496,11 @@ namespace Ks
                 public static byte[] ConvertFromBaseB(string N, char[] Digits)
                 {
                     var Base = Digits.Length;
-                    var LogRem = Logarithm((long)Base, (long)2);
+                    var LogRem = Logarithm(Base, 2);
                     var DigitBits = LogRem.Log;
                     const int ByteBits = 8;
 
-                    Verify.TrueArg(LogRem.Reminder == (long)0, nameof(Digits), "Base must be a power of two.");
+                    Verify.TrueArg(LogRem.Reminder == 0, nameof(Digits), "Base must be a power of two.");
 
                     var BlockSize = ByteBits / GreatestCommonDivisor(DigitBits, ByteBits);
                     var Offset = ((BlockSize - (N.Length % BlockSize)) * DigitBits) % ByteBits;

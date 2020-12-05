@@ -838,9 +838,9 @@ namespace Ks
 
             public static Size ToSizeSafe(this Vector Self)
             {
-                if (Self.X < (double)0)
+                if (Self.X < 0)
                     Self.X = 0;
-                if (Self.Y < (double)0)
+                if (Self.Y < 0)
                     Self.Y = 0;
                 return new Size(Self.X, Self.Y);
             }
@@ -856,22 +856,22 @@ namespace Ks
 
                 if (Self.IsEmpty)
                     return (Rect.Empty, Bl);
-                if ((Size.Width == (double)0) & (Size.Height == (double)0))
-                    return (new Rect(Self.Location + (Self.Size.ToVector() / (double)2), new Size()), Bl);
-                if (Size.Width == (double)0)
+                if ((Size.Width == 0) & (Size.Height == 0))
+                    return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
+                if (Size.Width == 0)
                 {
-                    if (Self.Height == (double)0)
-                        return (new Rect(Self.Location + (Self.Size.ToVector() / (double)2), new Size()), Bl);
+                    if (Self.Height == 0)
+                        return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
                     Bl = false;
                 }
-                if (Size.Height == (double)0)
+                if (Size.Height == 0)
                 {
-                    if (Self.Width == (double)0)
-                        return (new Rect(Self.Location + (Self.Size.ToVector() / (double)2), new Size()), Bl);
+                    if (Self.Width == 0)
+                        return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
                     Bl = true;
                 }
-                if ((Self.Width == (double)0) | (Self.Height == (double)0))
-                    return (new Rect(Self.Location + (Self.Size.ToVector() / (double)2), new Size()), Bl);
+                if ((Self.Width == 0) | (Self.Height == 0))
+                    return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
 
                 if (!Bl.HasValue)
                 {
@@ -884,13 +884,13 @@ namespace Ks
                 if (Bl.Value)
                 {
                     var Sz = new Size(Self.Width, (Self.Width / Size.Width) * Size.Height);
-                    Loc += new Vector((double)0, (Self.Height - Sz.Height) / (double)2);
+                    Loc += new Vector(0, (Self.Height - Sz.Height) / 2);
                     return (new Rect(Loc, Sz), Bl);
                 }
                 else
                 {
                     var Sz = new Size((Self.Height / Size.Height) * Size.Width, Self.Height);
-                    Loc += new Vector((Self.Width - Sz.Width) / (double)2, (double)0);
+                    Loc += new Vector((Self.Width - Sz.Width) / 2, 0);
                     return (new Rect(Loc, Sz), Bl);
                 }
             }
@@ -903,19 +903,19 @@ namespace Ks
                     return (Rect.Empty, Bl);
                 if (Self.Size == new Size())
                     return (new Rect(Self.Location, new Size()), Bl);
-                if (Self.Width == (double)0)
+                if (Self.Width == 0)
                 {
-                    if (Size.Height == (double)0)
+                    if (Size.Height == 0)
                         return (Rect.Empty, Bl);
                     Bl = false;
                 }
-                if (Self.Height == (double)0)
+                if (Self.Height == 0)
                 {
-                    if (Size.Width == (double)0)
+                    if (Size.Width == 0)
                         return (Rect.Empty, Bl);
                     Bl = true;
                 }
-                if ((Size.Width == (double)0) | (Size.Height == (double)0))
+                if ((Size.Width == 0) | (Size.Height == 0))
                     return (Rect.Empty, Bl);
 
                 if (!Bl.HasValue)
@@ -929,13 +929,13 @@ namespace Ks
                 if (Bl.Value)
                 {
                     var Sz = new Size(Self.Width, (Self.Width / Size.Width) * Size.Height);
-                    Loc += new Vector((double)0, (Self.Height - Sz.Height) / (double)2);
+                    Loc += new Vector(0, (Self.Height - Sz.Height) / 2);
                     return (new Rect(Loc, Sz), Bl);
                 }
                 else
                 {
                     var Sz = new Size((Self.Height / Size.Height) * Size.Width, Self.Height);
-                    Loc += new Vector((Self.Width - Sz.Width) / (double)2, (double)0);
+                    Loc += new Vector((Self.Width - Sz.Width) / 2, 0);
                     return (new Rect(Loc, Sz), Bl);
                 }
             }
@@ -976,12 +976,12 @@ namespace Ks
 
             public static Point GetCenter(this Rect Self)
             {
-                return Self.Location + (Self.Size.ToVector() / (double)2);
+                return Self.Location + (Self.Size.ToVector() / 2);
             }
 
             public static void MoveCenter(this Rect Self, Point Center)
             {
-                Self.Location = Center - (Self.Size.ToVector() / (double)2);
+                Self.Location = Center - (Self.Size.ToVector() / 2);
             }
 
             /// <summary>
@@ -1161,7 +1161,7 @@ namespace Ks
                 {
                     if (Usage.AllowMultiple)
                         throw new ArgumentException("The attribute should not allow multiple.");
-                    if ((int)(Usage.ValidOn & (AttributeTargets.Class | AttributeTargets.Delegate | AttributeTargets.Enum | AttributeTargets.GenericParameter | AttributeTargets.Interface | AttributeTargets.Module | AttributeTargets.Struct)) == 0)
+                    if ((Usage.ValidOn & (AttributeTargets.Class | AttributeTargets.Delegate | AttributeTargets.Enum | AttributeTargets.GenericParameter | AttributeTargets.Interface | AttributeTargets.Module | AttributeTargets.Struct)) == 0)
                         throw new ArgumentException("The attribute is not valid on types.");
                 }
 
@@ -1182,7 +1182,7 @@ namespace Ks
                 {
                     if (Usage.AllowMultiple)
                         throw new ArgumentException("The attribute should not allow multiple.");
-                    if ((int)(Usage.ValidOn & AttributeTargets.Method) != (int)AttributeTargets.Method)
+                    if ((Usage.ValidOn & AttributeTargets.Method) != AttributeTargets.Method)
                         throw new ArgumentException("The attribute is not valid on methods.");
                 }
 
@@ -1251,26 +1251,26 @@ namespace Ks
             {
                 var Buffer = new byte[65536];
 
-                if (Start != (long)-1)
+                if (Start != -1)
                     Stream.Seek(Start, System.IO.SeekOrigin.Begin);
 
                 var TotalN = 0;
                 do
                 {
                     var N = 0;
-                    if (Length == (long)-1)
+                    if (Length == -1)
                         N = Stream.Read(Buffer, 0, Buffer.Length);
                     else
-                        N = Stream.Read(Buffer, 0, System.Convert.ToInt32(Math.Min(Length, (long)Buffer.Length)));
+                        N = Stream.Read(Buffer, 0, System.Convert.ToInt32(Math.Min(Length, Buffer.Length)));
                     if (N == 0)
                         break;
                     Self.Write(Buffer, 0, N);
                     TotalN += N;
                     ProgressCallback?.Invoke(TotalN);
-                    if (Length != (long)-1)
+                    if (Length != -1)
                     {
                         Length -= N;
-                        if (Length == (long)0)
+                        if (Length == 0)
                             break;
                     }
                 }

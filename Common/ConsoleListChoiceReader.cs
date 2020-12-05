@@ -59,7 +59,7 @@ namespace Ks
                     do
                     {
                         var Key = Console.ReadKey(true).Key;
-                        if (((int)Key == (int)ConsoleKey.LeftArrow) & PrevPagePossible)
+                        if ((Key == ConsoleKey.LeftArrow) & PrevPagePossible)
                         {
                             ConsoleUtilities.WriteColored(" <-");
                             Console.WriteLine();
@@ -67,7 +67,7 @@ namespace Ks
                             break;
                         }
 
-                        if (((int)Key == (int)ConsoleKey.RightArrow) & NextPagePossible)
+                        if ((Key == ConsoleKey.RightArrow) & NextPagePossible)
                         {
                             ConsoleUtilities.WriteColored(" ->");
                             Console.WriteLine();
@@ -75,7 +75,7 @@ namespace Ks
                             break;
                         }
 
-                        if ((int)Key == (int)ConsoleKey.Q)
+                        if (Key == ConsoleKey.Q)
                         {
                             ConsoleUtilities.WriteColored(" Q");
                             Console.WriteLine();
@@ -83,10 +83,10 @@ namespace Ks
                         }
 
                         var N = 0;
-                        if (((int)ConsoleKey.D1 <= (int)Key) & ((int)Key <= (int)ConsoleKey.D9))
-                            N = (int)Key - (int)ConsoleKey.D0;
-                        if (((int)ConsoleKey.NumPad1 <= (int)Key) & ((int)Key <= (int)ConsoleKey.NumPad9))
-                            N = (int)Key - (int)ConsoleKey.NumPad0;
+                        if ((ConsoleKey.D1 <= Key) & (Key <= ConsoleKey.D9))
+                            N = Key - ConsoleKey.D0;
+                        if ((ConsoleKey.NumPad1 <= Key) & (Key <= ConsoleKey.NumPad9))
+                            N = Key - ConsoleKey.NumPad0;
                         if ((1 <= N) & (N <= Choices.Count))
                         {
                             ConsoleUtilities.WriteColored($" {N.ToStringInv()}");

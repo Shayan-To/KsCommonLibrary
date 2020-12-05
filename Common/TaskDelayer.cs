@@ -42,7 +42,7 @@ namespace Ks
 #if WriteDebugInfo
                             Console.WriteLine("{0}: Task was pending.", nameof(RunTask));
 #endif
-                            if ((int)RunningMode == (int)TaskDelayerRunningMode.Instant)
+                            if (RunningMode == TaskDelayerRunningMode.Instant)
                             {
                                 this.IsInstantSet = true;
                                 this.DelayWaitHandle.Set();
@@ -78,7 +78,7 @@ if (this.LastActivityTime > Now)
                 this.FirstActivityTime = Now;
                 this.LastActivityTime = this.FirstActivityTime;
 
-                if ((int)RunningMode == (int)TaskDelayerRunningMode.Instant)
+                if (RunningMode == TaskDelayerRunningMode.Instant)
                 {
                     this.IsInstantSet = true;
                     // We set the wait handle before waiting on it. The wait will then immediately return.
@@ -310,7 +310,7 @@ if (this.LastActivityTime > Now)
             private TimeSpan FirstActivityTime;
             private TimeSpan LastActivityTime;
 
-            private static readonly TimeSpan TimeEpsilon = TimeSpan.FromMilliseconds((double)30);
+            private static readonly TimeSpan TimeEpsilon = TimeSpan.FromMilliseconds(30);
 
             private readonly Stopwatch StopWatch = new Stopwatch();
             private readonly object WaitLockObject = new object();

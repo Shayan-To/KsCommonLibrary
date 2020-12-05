@@ -27,13 +27,13 @@ namespace Ks
                 Console.Write(TextBefore);
 
                 Console.Write('[');
-                if (this.Total == (long)-1)
+                if (this.Total == -1)
                     Console.Write("...");
                 else
                 {
                     var Width = Console.WindowWidth - 1;
                     var ProgWidth = Math.Min(Width - TextBefore.Length - TextAfter.Length - 2, 100);
-                    var ProgFull = System.Convert.ToInt32((((double)ProgWidth / (double)this.Total) * (double)this.Amount));
+                    var ProgFull = System.Convert.ToInt32(((double)ProgWidth / this.Total * this.Amount));
                     var ProgEmp = ProgWidth - ProgFull;
 
                     Console.Write(new string('#', ProgFull));
@@ -64,7 +64,7 @@ namespace Ks
 
                 var T = new System.Text.StringBuilder(this.Text);
 
-                var ShowTotal = this.ShowTotal & (this.Total != (long)-1);
+                var ShowTotal = this.ShowTotal & (this.Total != -1);
 
                 if (this.ShowAmount | ShowTotal)
                 {
@@ -73,12 +73,12 @@ namespace Ks
                     T.Append("(");
                     if (this.ShowAmount)
                     {
-                        T.Append(this.GetString((double)this.Amount));
+                        T.Append(this.GetString(this.Amount));
                         if (ShowTotal)
-                            T.Append(" / ").Append(this.GetString((double)this.Total));
+                            T.Append(" / ").Append(this.GetString(this.Total));
                     }
                     else
-                        T.Append("Total ").Append(this.GetString((double)this.Total));
+                        T.Append("Total ").Append(this.GetString(this.Total));
                     T.Append(")");
                 }
 
@@ -92,9 +92,9 @@ namespace Ks
                 if (Bef.Length != 0)
                     T.Append(" ");
 
-                if (this.ShowPercentage & (this.Total != (long)-1))
+                if (this.ShowPercentage & (this.Total != -1))
                 {
-                    var Per = ((double)this.Amount / (double)this.Total) * (double)100;
+                    var Per = ((double)this.Amount / this.Total) * 100;
                     var Tmp = Per.ToString("F2").PadLeft(5);
                     if (Tmp.Length > 5)
                         Tmp = Tmp.Substring(0, 5);
@@ -106,7 +106,7 @@ namespace Ks
                     if (T.Length != 0)
                         T.Append(" ");
                     T.AppendFormat("at ")
-                     .Append(this.GetString((double)this.Amount / this.StopWatch.Elapsed.TotalSeconds))
+                     .Append(this.GetString(this.Amount / this.StopWatch.Elapsed.TotalSeconds))
                      .Append("/s");
                 }
 
@@ -260,7 +260,7 @@ namespace Ks
                 }
             }
 
-            private long _Total = (long)100;
+            private long _Total = 100;
 
             public long Total
             {

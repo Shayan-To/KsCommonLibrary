@@ -85,18 +85,18 @@ namespace Ks
 
                     var B = BytesArray[BytesIndex];
 
-                    if ((int)(B >> 7) == 0)
+                    if ((B >> 7) == 0)
                     {
-                        CharsArray[CharsIndex] = (char)(int)B;
+                        CharsArray[CharsIndex] = (char)B;
                         CharsIndex += 1;
                         continue;
                     }
 
-                    if (((int)(B >> 6) & 1) == 0)
+                    if (((B >> 6) & 1) == 0)
                         return false;
 
                     var I = 5;
-                    while (((int)(B >> I) & 1) != 0)
+                    while (((B >> I) & 1) != 0)
                     {
                         I -= 1;
                         if (I == 0)
@@ -108,15 +108,15 @@ namespace Ks
                     if ((BytesIndex + I) >= BytesLength)
                         break;
 
-                    int Ch = (int)(B << (I + 1)) >> (I + 1);
+                    int Ch = (B << (I + 1)) >> (I + 1);
                     var loopTo1 = I - 1;
                     for (int J = 1; J <= loopTo1; J++)
                     {
                         BytesIndex += 1;
                         B = BytesArray[BytesIndex];
-                        if ((int)(B >> 6) != 2)
+                        if ((B >> 6) != 2)
                             return false;
-                        Ch = (Ch << 6) | (int)((B << 2) >> 2);
+                        Ch = (Ch << 6) | ((B << 2) >> 2);
                     }
 
                     // Exclude Byte Order Mark (BOM).

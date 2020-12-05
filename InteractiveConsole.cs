@@ -31,7 +31,7 @@ namespace Ks
         {
             protected sealed override void OnKeyPressed(ConsoleKeyInfo KeyInfo)
             {
-                if ((int)KeyInfo.Modifiers != 0)
+                if (KeyInfo.Modifiers != 0)
                 {
                     this.OnCombinationalKeyPressed(KeyInfo);
                     return;

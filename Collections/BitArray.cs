@@ -51,7 +51,7 @@ namespace Ks
                 var loopTo = this._Bytes.Length - 1;
                 for (var I = 0; I <= loopTo; I++)
                     this._Bytes[I] = (byte)~this._Bytes[I];
-                this._Bytes[this._Bytes.Length - 1] = System.Convert.ToByte(((int)this._Bytes[this._Bytes.Length - 1] & ((1 << this.LastByteBitCount()) - 1)));
+                this._Bytes[this._Bytes.Length - 1] = System.Convert.ToByte((this._Bytes[this._Bytes.Length - 1] & ((1 << this.LastByteBitCount()) - 1)));
             }
 
             protected override IEnumerator<bool> _GetEnumerator()
@@ -66,7 +66,7 @@ namespace Ks
                 {
                     var B = this._Bytes[I];
                     for (var J = 0; J <= 7; J++)
-                        yield return ((int)(B >> J) & 1) == 1;
+                        yield return (B >> J & 1) == 1;
                 }
 
                 if (true)
@@ -74,7 +74,7 @@ namespace Ks
                     var B = this._Bytes[this._Bytes.Length - 1];
                     var loopTo1 = this.LastByteBitCount() - 1;
                     for (var J = 0; J <= loopTo1; J++)
-                        yield return ((int)(B >> J) & 1) == 1;
+                        yield return (B >> J & 1) == 1;
                 }
             }
 
@@ -106,7 +106,7 @@ namespace Ks
 
                     var B = this._Bytes[index >> 3];
                     var I = index & 7;
-                    return ((int)(B >> I) & 1) == 1;
+                    return (B >> I & 1) == 1;
                 }
                 set
                 {
@@ -128,7 +128,7 @@ namespace Ks
                 (self, Index, value) =>
                 {
                     if (Index == (self._Bytes.Length - 1))
-                        value = System.Convert.ToByte(((int)value & ((1 << self.LastByteBitCount()) - 1)));
+                        value = System.Convert.ToByte((value & ((1 << self.LastByteBitCount()) - 1)));
                     self._Bytes[Index] = value;
                 }
             );

@@ -48,9 +48,9 @@ namespace Ks
                 ConsoleKey K = default(ConsoleKey);
                 do
                     K = Console.ReadKey(true).Key;
-                while (!(((int)K == (int)ConsoleKey.Y) | ((int)K == (int)ConsoleKey.N)));
+                while (!((K == ConsoleKey.Y) | (K == ConsoleKey.N)));
 
-                var Res = (int)K == (int)ConsoleKey.Y;
+                var Res = K == ConsoleKey.Y;
 
                 WriteColored(Res ? " Y" : " N");
                 Console.WriteLine();

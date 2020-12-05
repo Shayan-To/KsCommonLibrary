@@ -16,7 +16,7 @@ namespace Ks
                 this.Input = Input.ToCharArray();
                 this.Index = 0;
                 var Res = this.Parse();
-                Verify.True((int)this.ReadToken().Type == (int)TokenType.None, "Invalid JSON format. Expected end of data.");
+                Verify.True(this.ReadToken().Type == TokenType.None, "Invalid JSON format. Expected end of data.");
                 this.StringBuilder.Clear();
                 return Res;
             }
@@ -25,12 +25,12 @@ namespace Ks
             {
                 var Token = this.ReadToken();
 
-                Verify.False((int)Token.Type == (int)TokenType.None, "Invalid JSON format. Unexpected end of data.");
+                Verify.False(Token.Type == TokenType.None, "Invalid JSON format. Unexpected end of data.");
 
-                if ((int)(Token.Type & TokenType.Value) == (int)TokenType.Value)
-                    return new JsonValueObject(Token.Value, (int)Token.Type == (int)TokenType.QuotedValue);
+                if ((Token.Type & TokenType.Value) == TokenType.Value)
+                    return new JsonValueObject(Token.Value, Token.Type == TokenType.QuotedValue);
 
-                Assert.True((int)Token.Type == (int)TokenType.Operator);
+                Assert.True(Token.Type == TokenType.Operator);
 
                 Verify.True((Token.Value == "{") | (Token.Value == "["), "Invalid JSON format. Unexpected token.");
 
@@ -40,7 +40,7 @@ namespace Ks
 
                     Token = this.PeekToken();
 
-                    if (((int)Token.Type == (int)TokenType.Operator) & (Token.Value == "}"))
+                    if ((Token.Type == TokenType.Operator) & (Token.Value == "}"))
                     {
                         this.ReadToken();
                         return new JsonDictionaryObject(List);
@@ -52,14 +52,14 @@ namespace Ks
 #if RelaxedStrings
                         Verify.True((Token.Type & TokenType.Value) == TokenType.Value, "Invalid JSON format. Key must be a value.");
 #else
-                        Verify.True((int)Token.Type == (int)TokenType.QuotedValue, "Invalid JSON format. Key must be a string.");
+                        Verify.True(Token.Type == TokenType.QuotedValue, "Invalid JSON format. Key must be a string.");
 #endif
                         var Key = Token.Value;
                         Token = this.ReadToken();
-                        Verify.True(((int)Token.Type == (int)TokenType.Operator) & (Token.Value == ":"), "Invalid JSON format. Expected ':'.");
+                        Verify.True((Token.Type == TokenType.Operator) & (Token.Value == ":"), "Invalid JSON format. Expected ':'.");
                         List.Add(new KeyValuePair<string, JsonObject>(Key, this.Parse()));
                         Token = this.ReadToken();
-                        Verify.True(((int)Token.Type == (int)TokenType.Operator) & ((Token.Value == ",") | (Token.Value == "}")), "Invalid JSON format. Expected ',' or '}'.");
+                        Verify.True((Token.Type == TokenType.Operator) & ((Token.Value == ",") | (Token.Value == "}")), "Invalid JSON format. Expected ',' or '}'.");
                         if (Token.Value == "}")
                             break;
                     }
@@ -73,7 +73,7 @@ namespace Ks
 
                     Token = this.PeekToken();
 
-                    if (((int)Token.Type == (int)TokenType.Operator) & (Token.Value == "]"))
+                    if ((Token.Type == TokenType.Operator) & (Token.Value == "]"))
                     {
                         this.ReadToken();
                         return new JsonListObject(List);
@@ -83,7 +83,7 @@ namespace Ks
                     {
                         List.Add(this.Parse());
                         Token = this.ReadToken();
-                        Verify.True(((int)Token.Type == (int)TokenType.Operator) & ((Token.Value == ",") | (Token.Value == "]")), "Invalid JSON format. Expected ',' or ']'.");
+                        Verify.True((Token.Type == TokenType.Operator) & ((Token.Value == ",") | (Token.Value == "]")), "Invalid JSON format. Expected ',' or ']'.");
                         if (Token.Value == "]")
                             break;
                     }
