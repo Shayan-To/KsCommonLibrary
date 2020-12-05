@@ -47,7 +47,7 @@ namespace Ks
                     {
                         this.Out.Write(S.Substring(PrevStart, I - PrevStart));
                         this.Out.Write("&#x");
-                        this.Out.Write(Convert.ToString(Ch, 16));
+                        this.Out.Write(Utilities.Math.ConvertToBase(Ch, 16));
                         this.Out.Write(";");
                         PrevStart = I + 1;
                     }

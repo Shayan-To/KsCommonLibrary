@@ -93,7 +93,7 @@ namespace Ks
                                 return T1;
                         }
 
-                        return (char)Convert.ToInt32(Input.Substring(2, 2), 16);
+                        return (char)Math.ConvertFromBase(Input.Substring(2, 2), 16);
                     }
 
                     if (T1 == 'u')
@@ -113,7 +113,7 @@ namespace Ks
                                 return T1;
                         }
 
-                        return (char)Convert.ToInt32(Input.Substring(2, 4), 16);
+                        return (char)Math.ConvertFromBase(Input.Substring(2, 4), 16);
                     }
 
                     if (T1 == 'U')
@@ -133,7 +133,7 @@ namespace Ks
                                 return T1;
                         }
 
-                        return (char)Convert.ToInt32(Input.Substring(2, 8), 16);
+                        return (char)Math.ConvertFromBase(Input.Substring(2, 8), 16);
                     }
 
                     if (IsOctalDigit(T1))
@@ -153,7 +153,7 @@ namespace Ks
                                 return T1;
                         }
 
-                        return (char)Convert.ToInt32(Input.Substring(1, 3), 8);
+                        return (char)Math.ConvertFromBase(Input.Substring(1, 3), 8);
                     }
 
                     if (DoesThrow)
@@ -214,7 +214,7 @@ namespace Ks
                                     }
                                 }
 
-                                Res.Append((char)Convert.ToInt32(Input.Substring(I + 1, 2), 16));
+                                Res.Append((char)Math.ConvertFromBase(Input.Substring(I + 1, 2), 16));
                                 I += 2;
                                 continue;
                             }
@@ -242,7 +242,7 @@ namespace Ks
                                     }
                                 }
 
-                                Res.Append((char)Convert.ToInt32(Input.Substring(I + 1, 4), 16));
+                                Res.Append((char)Math.ConvertFromBase(Input.Substring(I + 1, 4), 16));
                                 I += 4;
                                 continue;
                             }
@@ -270,7 +270,7 @@ namespace Ks
                                     }
                                 }
 
-                                Res.Append((char)Convert.ToInt32(Input.Substring(I + 1, 8), 16));
+                                Res.Append((char)Math.ConvertFromBase(Input.Substring(I + 1, 8), 16));
                                 I += 8;
                                 continue;
                             }
@@ -298,7 +298,7 @@ namespace Ks
                                     }
                                 }
 
-                                Res.Append((char)Convert.ToInt32(Input.Substring(I, 3), 8));
+                                Res.Append((char)Math.ConvertFromBase(Input.Substring(I, 3), 8));
                                 I += 2;
                                 continue;
                             }
