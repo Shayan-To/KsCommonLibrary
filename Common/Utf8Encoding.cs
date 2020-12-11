@@ -74,6 +74,9 @@ namespace Ks
 
                 var CharsInitialIndex = CharsIndex;
                 var BytesInitialIndex = BytesIndex;
+
+                try
+                {
                 var loopTo = BytesLength - 1;
                 for (BytesIndex = BytesIndex; BytesIndex <= loopTo; BytesIndex++)
                 {
@@ -125,9 +128,13 @@ namespace Ks
                 }
                 // 12345678
                 // 76543210
-
+                }
+                finally
+                {
                 BytesRead = BytesIndex - BytesInitialIndex;
                 CharsWritten = CharsIndex - CharsInitialIndex;
+                }
+
                 return true;
             }
         }
