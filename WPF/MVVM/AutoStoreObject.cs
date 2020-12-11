@@ -69,10 +69,10 @@ namespace Ks
                     Source = Value;
                     this.NotifyPropertyChanged(PropertyName);
 
-                    foreach (var T in this.GetType().GetBaseTypes())
+                    foreach (var t in this.GetType().GetBaseTypes())
                     {
                         PropertyMetadata M = default(PropertyMetadata);
-                        if (MetadataDic[T].TryGetValue(PropertyName, out M))
+                        if (MetadataDic[t].TryGetValue(PropertyName, out M))
                         {
                             var Str = M.ToStringCallback.Invoke(Source);
                             StoreDictionary[this.GetStoreKey(PropertyName)] = Str;

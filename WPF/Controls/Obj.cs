@@ -11,9 +11,9 @@ namespace Ks
                 this._TextBlock = Parent;
             }
 
-            public static readonly DependencyProperty ObjProperty = DependencyProperty.Register("Obj", typeof(object), typeof(Obj), new PropertyMetadata(null, Obj_Changed, Obj_Coerce));
+            public static readonly DependencyProperty ObjtProperty = DependencyProperty.Register("Objt", typeof(object), typeof(Obj), new PropertyMetadata(null, Objt_Changed, Objt_Coerce));
 
-            private static object Obj_Coerce(DependencyObject D, object BaseValue)
+            private static object Objt_Coerce(DependencyObject D, object BaseValue)
             {
                 var Self = (Obj)D;
 
@@ -22,7 +22,7 @@ namespace Ks
                 return BaseValue;
             }
 
-            private static void Obj_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
+            private static void Objt_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
             {
                 var Self = (Obj)D;
 
@@ -32,15 +32,15 @@ namespace Ks
                 Self.TextBlock?.ReportObjChanged();
             }
 
-            public object Obj
+            public object Objt
             {
                 get
                 {
-                    return (object)this.GetValue(ObjProperty);
+                    return (object)this.GetValue(ObjtProperty);
                 }
                 set
                 {
-                    this.SetValue(ObjProperty, value);
+                    this.SetValue(ObjtProperty, value);
                 }
             }
 

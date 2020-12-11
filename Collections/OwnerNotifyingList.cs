@@ -9,7 +9,7 @@ namespace Ks
         {
             public OwnerNotifyingList(Action<NotifyCollectionChangedEventArgs<T>> ChangedDelegate)
             {
-                this.Base = new OwnerNotifyingList(ChangedDelegate);
+                this.Base = new BaseList(ChangedDelegate);
             }
 
             public override T this[int index]
@@ -57,11 +57,11 @@ namespace Ks
                 return this.Base.GetEnumerator();
             }
 
-            private readonly OwnerNotifyingList Base;
+            private readonly BaseList Base;
 
-            public class OwnerNotifyingList : NotifyingList<T>
+            private class BaseList : NotifyingList<T>
             {
-                public OwnerNotifyingList(Action<NotifyCollectionChangedEventArgs<T>> ChangedDelegate)
+                public BaseList(Action<NotifyCollectionChangedEventArgs<T>> ChangedDelegate)
                 {
                     this.ChangedDelegate = ChangedDelegate;
                 }

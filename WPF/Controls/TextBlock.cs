@@ -81,7 +81,7 @@ namespace Ks
                 if (Obj != null)
                 {
                     Objs = this.Obj1Array;
-                    Objs[0].Obj = Obj;
+                    Objs[0].Objt = Obj;
                 }
                 else
                     Objs = this.Objs;
@@ -93,7 +93,7 @@ namespace Ks
                     if (I >= Objs.Count)
                         return "";
 
-                    var T = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0" + UnEscape.Invoke(M.Groups[2].Value) + "}", Objs[I].Obj);
+                    var T = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0" + UnEscape.Invoke(M.Groups[2].Value) + "}", Objs[I].Objt);
                     return T;
                 });
                 S = Regex.Replace(S, @"\{(\d+)((?:,[+-]?\d+)?(?::[^\{\}]*)?)\}", M =>
@@ -102,7 +102,7 @@ namespace Ks
                     if (I >= Objs.Count)
                         return "";
 
-                    var T = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0" + UnEscape.Invoke(M.Groups[2].Value) + "}", Objs[I].Obj);
+                    var T = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0" + UnEscape.Invoke(M.Groups[2].Value) + "}", Objs[I].Objt);
                     return CorrectString(T, Lang);
                 });
 
