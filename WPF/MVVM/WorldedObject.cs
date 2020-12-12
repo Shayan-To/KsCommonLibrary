@@ -1,20 +1,20 @@
 ﻿namespace Ks.Common.MVVM
 {
-        public class WorldedObject<TWorld> : BindableBase
+    public class WorldedObject<TWorld> : BindableBase
+    {
+        public WorldedObject(TWorld World)
         {
-            public WorldedObject(TWorld World)
-            {
-                this._World = World;
-            }
+            this._World = World;
+        }
 
-            private readonly TWorld _World;
+        private readonly TWorld _World;
 
-            public TWorld World
+        public TWorld World
+        {
+            get
             {
-                get
-                {
-                    return this._World;
-                }
+                return this._World;
             }
         }
     }
+}

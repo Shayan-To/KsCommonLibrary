@@ -3,147 +3,147 @@ using System.Windows.Input;
 
 namespace Ks.Common.MVVM
 {
-        public class Navigation : System.Windows.Markup.MarkupExtension, ICommand
+    public class Navigation : System.Windows.Markup.MarkupExtension, ICommand
+    {
+        public Navigation()
         {
-            public Navigation()
-            {
-            }
+        }
 
-            public Navigation(Type ViewType)
-            {
-                this.ViewType = ViewType;
-            }
+        public Navigation(Type ViewType)
+        {
+            this.ViewType = ViewType;
+        }
 
 #pragma warning disable CS0067 // The event is never used
-            public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged;
 #pragma warning restore CS0067 // The event is never used
 
-            public void Execute(object parameter)
+        public void Execute(object parameter)
+        {
+            var KsApplication = this.GetKsApplication();
+            KsApplication.NavigateTo(this.GetParent(), KsApplication.GetViewModel(this.ViewType), this.AddToStack, this.ForceToStack);
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        private NavigationViewModel GetParent()
+        {
+            var T = this.Parent;
+            if (T != null)
+                return T;
+            var T2 = this.ParentType;
+            if (T2 != null)
+                return (NavigationViewModel) this.GetKsApplication().GetViewModel(T2);
+            return this.GetKsApplication().DefaultNavigationView;
+        }
+
+        private KsApplication GetKsApplication()
+        {
+            return this.KsApplication ?? KsApplication.Current;
+        }
+
+        public override object ProvideValue(IServiceProvider serviceProvider)
+        {
+            return this;
+        }
+
+        private bool _AddToStack = true;
+
+        public bool AddToStack
+        {
+            get
             {
-                var KsApplication = this.GetKsApplication();
-                KsApplication.NavigateTo(this.GetParent(), KsApplication.GetViewModel(this.ViewType), this.AddToStack, this.ForceToStack);
+                return this._AddToStack;
             }
-
-            public bool CanExecute(object parameter)
+            set
             {
-                return true;
+                this._AddToStack = value;
             }
+        }
 
-            private NavigationViewModel GetParent()
+        private bool _ForceToStack = false;
+
+        public bool ForceToStack
+        {
+            get
             {
-                var T = this.Parent;
-                if (T != null)
-                    return T;
-                var T2 = this.ParentType;
-                if (T2 != null)
-                    return (NavigationViewModel)this.GetKsApplication().GetViewModel(T2);
-                return this.GetKsApplication().DefaultNavigationView;
+                return this._ForceToStack;
             }
-
-            private KsApplication GetKsApplication()
+            set
             {
-                return this.KsApplication ?? KsApplication.Current;
+                this._ForceToStack = value;
             }
+        }
 
-            public override object ProvideValue(IServiceProvider serviceProvider)
+        private Type _ViewType;
+
+        public Type ViewType
+        {
+            get
             {
-                return this;
+                return this._ViewType;
             }
-
-            private bool _AddToStack = true;
-
-            public bool AddToStack
+            set
             {
-                get
-                {
-                    return this._AddToStack;
-                }
-                set
-                {
-                    this._AddToStack = value;
-                }
+                if (value == null || !typeof(ViewModel).IsAssignableFrom(value))
+                    value = null;
+
+                this._ViewType = value;
             }
+        }
 
-            private bool _ForceToStack = false;
+        private Type _ParentType;
 
-            public bool ForceToStack
+        public Type ParentType
+        {
+            get
             {
-                get
-                {
-                    return this._ForceToStack;
-                }
-                set
-                {
-                    this._ForceToStack = value;
-                }
+                return this._ParentType;
             }
-
-            private Type _ViewType;
-
-            public Type ViewType
+            set
             {
-                get
-                {
-                    return this._ViewType;
-                }
-                set
-                {
-                    if (value == null || !typeof(ViewModel).IsAssignableFrom(value))
-                        value = null;
+                if (this.Parent != null)
+                    value = null;
 
-                    this._ViewType = value;
-                }
+                if (value == null || !typeof(NavigationViewModel).IsAssignableFrom(value))
+                    value = null;
+
+                this._ParentType = value;
             }
+        }
 
-            private Type _ParentType;
+        private NavigationViewModel _Parent;
 
-            public Type ParentType
+        public NavigationViewModel Parent
+        {
+            get
             {
-                get
-                {
-                    return this._ParentType;
-                }
-                set
-                {
-                    if (this.Parent != null)
-                        value = null;
-
-                    if (value == null || !typeof(NavigationViewModel).IsAssignableFrom(value))
-                        value = null;
-
-                    this._ParentType = value;
-                }
+                return this._Parent;
             }
-
-            private NavigationViewModel _Parent;
-
-            public NavigationViewModel Parent
+            set
             {
-                get
-                {
-                    return this._Parent;
-                }
-                set
-                {
-                    if (this.ParentType != null)
-                        value = null;
+                if (this.ParentType != null)
+                    value = null;
 
-                    this._Parent = value;
-                }
+                this._Parent = value;
             }
+        }
 
-            private KsApplication _KsApplication;
+        private KsApplication _KsApplication;
 
-            public KsApplication KsApplication
+        public KsApplication KsApplication
+        {
+            get
             {
-                get
-                {
-                    return this._KsApplication;
-                }
-                set
-                {
-                    this._KsApplication = value;
-                }
+                return this._KsApplication;
+            }
+            set
+            {
+                this._KsApplication = value;
             }
         }
     }
+}

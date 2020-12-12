@@ -4,7 +4,7 @@ using FsCheck.Xunit;
 
 namespace Ks.Tests.Common
 {
-        public partial class Utilities_Tests
-        {
-        }
+    public partial class Utilities_Tests
+    {
     }
+}

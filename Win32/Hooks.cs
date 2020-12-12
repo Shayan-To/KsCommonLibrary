@@ -4,29 +4,29 @@ namespace Ks.Common.Win32
 {
 
 
-        // Open tabs:
-        // Hooks Overview (Windows)                      https://msdn.microsoft.com/en-us/library/windows/desktop/ms644959(v=vs.85).aspx#wh_keyboard_llhook
-        // KeyboardProc callback function (Windows)      https://msdn.microsoft.com/en-us/library/windows/desktop/ms644984(v=vs.85).aspx
-        // LowLevelMouseProc callback function (Windows)      https://msdn.microsoft.com/en-us/library/windows/desktop/ms644986(v=vs.85).aspx
-        // MouseProc callback function (Windows)         https://msdn.microsoft.com/en-us/library/windows/desktop/ms644988(v=vs.85).aspx
-        // LowLevelKeyboardProc callback function (Windows)      https://msdn.microsoft.com/en-us/library/windows/desktop/ms644985(v=vs.85).aspx
-        // SetWindowsHookEx function (Windows)           https://msdn.microsoft.com/en-us/library/windows/desktop/ms644990(v=vs.85).aspx
-        // Hooks (Windows)                               https://msdn.microsoft.com/en-us/library/windows/desktop/ms632589(v=vs.85).aspx
-        // Using Hooks (Windows)                         https://msdn.microsoft.com/en-us/library/windows/desktop/ms644960(v=vs.85).aspx
-        // CallNextHookEx function (Windows)             https://msdn.microsoft.com/en-us/library/windows/desktop/ms644974(v=vs.85).aspx
-        // UnhookWindowsHookEx function (Windows)        https://msdn.microsoft.com/en-us/library/windows/desktop/ms644993(v=vs.85).aspx
-        // KBDLLHOOKSTRUCT structure (Windows)           https://msdn.microsoft.com/en-us/library/windows/desktop/ms644967(v=vs.85).aspx
-        // MSLLHOOKSTRUCT structure (Windows)            https://msdn.microsoft.com/en-us/library/windows/desktop/ms644970(v=vs.85).aspx
-        // Raw Input (Windows)                           https://msdn.microsoft.com/en-us/library/ms645536(VS.85).aspx
-        // MOUSEHOOKSTRUCT structure (Windows)           https://msdn.microsoft.com/en-us/library/windows/desktop/ms644968(v=vs.85).aspx
-        // About Raw Input (Windows)                     https://msdn.microsoft.com/en-us/library/ms645543(v=vs.85).aspx
-        // Using Raw Input (Windows)                     https://msdn.microsoft.com/en-us/library/ms645546(v=vs.85).aspx
-        // KF_ALTDOWN - Bing                             https://www.bing.com/search?q=KF_ALTDOWN&pc=MOZI&form=MOZCON
-        // pinvoke.net: KeyFlags (Enums)                 https://www.pinvoke.net/default.aspx/Enums/KeyFlags.html
-        // About Keyboard Input (Windows)                https://msdn.microsoft.com/en-us/library/windows/desktop/ms646267(v=vs.85).aspx
+    // Open tabs:
+    // Hooks Overview (Windows)                      https://msdn.microsoft.com/en-us/library/windows/desktop/ms644959(v=vs.85).aspx#wh_keyboard_llhook
+    // KeyboardProc callback function (Windows)      https://msdn.microsoft.com/en-us/library/windows/desktop/ms644984(v=vs.85).aspx
+    // LowLevelMouseProc callback function (Windows)      https://msdn.microsoft.com/en-us/library/windows/desktop/ms644986(v=vs.85).aspx
+    // MouseProc callback function (Windows)         https://msdn.microsoft.com/en-us/library/windows/desktop/ms644988(v=vs.85).aspx
+    // LowLevelKeyboardProc callback function (Windows)      https://msdn.microsoft.com/en-us/library/windows/desktop/ms644985(v=vs.85).aspx
+    // SetWindowsHookEx function (Windows)           https://msdn.microsoft.com/en-us/library/windows/desktop/ms644990(v=vs.85).aspx
+    // Hooks (Windows)                               https://msdn.microsoft.com/en-us/library/windows/desktop/ms632589(v=vs.85).aspx
+    // Using Hooks (Windows)                         https://msdn.microsoft.com/en-us/library/windows/desktop/ms644960(v=vs.85).aspx
+    // CallNextHookEx function (Windows)             https://msdn.microsoft.com/en-us/library/windows/desktop/ms644974(v=vs.85).aspx
+    // UnhookWindowsHookEx function (Windows)        https://msdn.microsoft.com/en-us/library/windows/desktop/ms644993(v=vs.85).aspx
+    // KBDLLHOOKSTRUCT structure (Windows)           https://msdn.microsoft.com/en-us/library/windows/desktop/ms644967(v=vs.85).aspx
+    // MSLLHOOKSTRUCT structure (Windows)            https://msdn.microsoft.com/en-us/library/windows/desktop/ms644970(v=vs.85).aspx
+    // Raw Input (Windows)                           https://msdn.microsoft.com/en-us/library/ms645536(VS.85).aspx
+    // MOUSEHOOKSTRUCT structure (Windows)           https://msdn.microsoft.com/en-us/library/windows/desktop/ms644968(v=vs.85).aspx
+    // About Raw Input (Windows)                     https://msdn.microsoft.com/en-us/library/ms645543(v=vs.85).aspx
+    // Using Raw Input (Windows)                     https://msdn.microsoft.com/en-us/library/ms645546(v=vs.85).aspx
+    // KF_ALTDOWN - Bing                             https://www.bing.com/search?q=KF_ALTDOWN&pc=MOZI&form=MOZCON
+    // pinvoke.net: KeyFlags (Enums)                 https://www.pinvoke.net/default.aspx/Enums/KeyFlags.html
+    // About Keyboard Input (Windows)                https://msdn.microsoft.com/en-us/library/windows/desktop/ms646267(v=vs.85).aspx
 
 
-        /// <summary>
+    /// <summary>
     /// Documentation is available here: https://msdn.microsoft.com/en-us/library/windows/desktop/ms644959(v=vs.85).aspx
     /// </summary>
     /// <remarks>
@@ -66,10 +66,10 @@ namespace Ks.Common.Win32
     /// WH_MOUSE_LL
     /// This behavior is similar to what happens when there is an architecture mismatch between the hook DLL and the target application process, for example, when the hook DLL is 32-bit and the application process 64-bit.
     /// </remarks>
-        public static partial class Hooks
-        {
+    public static partial class Hooks
+    {
 
-            /// LRESULT CALLBACK LowLevelKeyboardProc(
+        /// LRESULT CALLBACK LowLevelKeyboardProc(
         /// _In_ int    nCode,
         /// _In_ WPARAM wParam,
         /// _In_ LPARAM lParam
@@ -111,9 +111,9 @@ namespace Ks.Common.Win32
         /// The value is in milliseconds. If the hook procedure times out, the system passes the message to the next hook. However, on Windows 7 and later, the hook is silently removed without being called. There is no way for the application to know whether the hook is removed.
         /// Note  Debug hooks cannot track this type of low level keyboard hooks. If the application must use low level hooks, it should run the hooks on a dedicated thread that passes the work off to a worker thread and then immediately returns. In most cases where the application needs to use low level hooks, it should monitor raw input instead. This is because raw input can asynchronously monitor mouse and keyboard messages that are targeted for other threads more effectively than low level hooks can. For more information on raw input, see Raw Input.
         /// </remarks>
-            public delegate IntPtr LowLevelKeyboardProc(int nCode, UIntPtr wParam, IntPtr lParam);
+        public delegate IntPtr LowLevelKeyboardProc(int nCode, UIntPtr wParam, IntPtr lParam);
 
-            /// LRESULT CALLBACK KeyboardProc(
+        /// LRESULT CALLBACK KeyboardProc(
         /// _In_ int    code,
         /// _In_ WPARAM wParam,
         /// _In_ LPARAM lParam
@@ -161,9 +161,9 @@ namespace Ks.Common.Win32
         /// An application installs the hook procedure by specifying the WH_KEYBOARD hook type and a pointer to the hook procedure in a call to the SetWindowsHookEx function.
         /// This hook may be called in the context of the thread that installed it. The call is made by sending a message to the thread that installed the hook. Therefore, the thread that installed the hook must have a message loop.
         /// </remarks>
-            public delegate IntPtr KeyboardProc(int nCode, UIntPtr wParam, IntPtr lParam);
+        public delegate IntPtr KeyboardProc(int nCode, UIntPtr wParam, IntPtr lParam);
 
-            /// LRESULT CALLBACK LowLevelMouseProc(
+        /// LRESULT CALLBACK LowLevelMouseProc(
         /// _In_ int    nCode,
         /// _In_ WPARAM wParam,
         /// _In_ LPARAM lParam
@@ -204,9 +204,9 @@ namespace Ks.Common.Win32
         /// The value is in milliseconds. If the hook procedure times out, the system passes the message to the next hook. However, on Windows 7 and later, the hook is silently removed without being called. There is no way for the application to know whether the hook is removed.
         /// Note  Debug hooks cannot track this type of low level mouse hooks. If the application must use low level hooks, it should run the hooks on a dedicated thread that passes the work off to a worker thread and then immediately returns. In most cases where the application needs to use low level hooks, it should monitor raw input instead. This is because raw input can asynchronously monitor mouse and keyboard messages that are targeted for other threads more effectively than low level hooks can. For more information on raw input, see Raw Input.
         /// </remarks>
-            public delegate IntPtr LowLevelMouseProc(int nCode, UIntPtr wParam, IntPtr lParam);
+        public delegate IntPtr LowLevelMouseProc(int nCode, UIntPtr wParam, IntPtr lParam);
 
-            /// LRESULT CALLBACK MouseProc(
+        /// LRESULT CALLBACK MouseProc(
         /// _In_ int    nCode,
         /// _In_ WPARAM wParam,
         /// _In_ LPARAM lParam
@@ -246,9 +246,9 @@ namespace Ks.Common.Win32
         /// The hook procedure must not install a WH_JOURNALPLAYBACK callback function.
         /// This hook may be called in the context of the thread that installed it. The call is made by sending a message to the thread that installed the hook. Therefore, the thread that installed the hook must have a message loop.
         /// </remarks>
-            public delegate IntPtr MouseProc(int nCode, UIntPtr wParam, IntPtr lParam);
+        public delegate IntPtr MouseProc(int nCode, UIntPtr wParam, IntPtr lParam);
 
-            /// The following table describes the layout of this value.
+        /// The following table describes the layout of this value.
         /// Bits  Description
         /// 0     Specifies whether the key is an extended key, such as a function key or a key on the numeric keypad. The value is 1 if the key is an extended key; otherwise, it is 0.
         /// 1     Specifies whether the event was injected from a process running at lower integrity level. The value is 1 if that is the case; otherwise, it is 0. Note that bit 4 is also set whenever bit 1 is set.
@@ -257,37 +257,37 @@ namespace Ks.Common.Win32
         /// 5     The context code. The value is 1 if the ALT key is pressed; otherwise, it is 0.
         /// 6     Reserved.
         /// 7     The transition state. The value is 0 if the key is pressed and 1 if it is being released.
-            public enum LowLevelKeyHookFlags : uint
-            {
+        public enum LowLevelKeyHookFlags : uint
+        {
 
-                /// LLKHF_EXTENDED = (KF_EXTENDED >> 8)
+            /// LLKHF_EXTENDED = (KF_EXTENDED >> 8)
             /// <summary>
             /// Test the extended-key flag.
             /// </summary>
-                Extended = (Windows.KeyFlags.Extended >> 8),
-                /// LLKHF_LOWER_IL_INJECTED = 0x00000002
+            Extended = (Windows.KeyFlags.Extended >> 8),
+            /// LLKHF_LOWER_IL_INJECTED = 0x00000002
             /// <summary>
             /// Test the event-injected (from a process running at lower integrity level) flag.
             /// </summary>
-                LowerILInjected = 0x2,
-                /// LLKHF_INJECTED = 0x00000010
+            LowerILInjected = 0x2,
+            /// LLKHF_INJECTED = 0x00000010
             /// <summary>
             /// Test the event-injected (from any process) flag.
             /// </summary>
-                Injected = 0x10,
-                /// LLKHF_ALTDOWN = (KF_ALTDOWN >> 8)
+            Injected = 0x10,
+            /// LLKHF_ALTDOWN = (KF_ALTDOWN >> 8)
             /// <summary>
             /// Test the context code.
             /// </summary>
-                AltDown = (Windows.KeyFlags.AltDown >> 8),
-                /// LLKHF_UP = (KF_UP >> 8)
+            AltDown = (Windows.KeyFlags.AltDown >> 8),
+            /// LLKHF_UP = (KF_UP >> 8)
             /// <summary>
             /// Test the transition-state flag.
             /// </summary>
-                Up = (Windows.KeyFlags.Up >> 8)
-            }
+            Up = (Windows.KeyFlags.Up >> 8)
+        }
 
-            /// typedef struct tagKBDLLHOOKSTRUCT {
+        /// typedef struct tagKBDLLHOOKSTRUCT {
         /// DWORD     vkCode;
         /// DWORD     scanCode;
         /// DWORD     flags;
@@ -297,11 +297,11 @@ namespace Ks.Common.Win32
         /// <summary>
         /// Contains information about a low-level keyboard input event.
         /// </summary>
-            public struct LowLevelKeyboardHookData
-            {
-            }
+        public struct LowLevelKeyboardHookData
+        {
+        }
 
-            /// typedef struct tagMSLLHOOKSTRUCT {
+        /// typedef struct tagMSLLHOOKSTRUCT {
         /// POINT     pt;
         /// DWORD     mouseData;
         /// DWORD     flags;
@@ -311,11 +311,11 @@ namespace Ks.Common.Win32
         /// <summary>
         /// Contains information about a low-level mouse input event.
         /// </summary>
-            public struct LowLevelMouseHookData
-            {
-            }
+        public struct LowLevelMouseHookData
+        {
+        }
 
-            /// typedef struct tagMOUSEHOOKSTRUCT {
+        /// typedef struct tagMOUSEHOOKSTRUCT {
         /// POINT     pt;
         /// HWND      hwnd;
         /// UINT      wHitTestCode;
@@ -324,8 +324,8 @@ namespace Ks.Common.Win32
         /// <summary>
         /// Contains information about a mouse event passed to a WH_MOUSE hook procedure, MouseProc.
         /// </summary>
-            public struct MouseHookData
-            {
-            }
+        public struct MouseHookData
+        {
         }
     }
+}

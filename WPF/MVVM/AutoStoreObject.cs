@@ -14,152 +14,152 @@ using System.Runtime.CompilerServices;
 
 namespace Ks.Common.MVVM
 {
-        public abstract class AutoStoreObject : INotifyPropertyChanged
+    public abstract class AutoStoreObject : INotifyPropertyChanged
+    {
+        protected AutoStoreObject()
         {
-            protected AutoStoreObject()
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual string GetStoreKey(string PropertyName)
+        {
+            return PropertyName;
+        }
+
+        public void Initialize(IDictionary<string, string> Dictionary)
+        {
+            Verify.True(this._StoreDictionary == null, "Object has already been initialized.");
+            this._StoreDictionary = Dictionary;
+
+            this.OnBeforeInitialize();
+
+            foreach (var T in this.GetType().GetBaseTypes())
             {
-            }
-
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            protected virtual string GetStoreKey(string PropertyName)
-            {
-                return PropertyName;
-            }
-
-            public void Initialize(IDictionary<string, string> Dictionary)
-            {
-                Verify.True(this._StoreDictionary == null, "Object has already been initialized.");
-                this._StoreDictionary = Dictionary;
-
-                this.OnBeforeInitialize();
-
-                foreach (var T in this.GetType().GetBaseTypes())
+                foreach (var KV in MetadataDic[T])
                 {
-                    foreach (var KV in MetadataDic[T])
+                    string V = null;
+                    if (Dictionary.TryGetValue(this.GetStoreKey(KV.Key), out V))
+                        KV.Value.SetCallback.Invoke(this, V);
+                }
+            }
+
+            this.OnInitialize();
+
+            this._IsInitialized = true;
+        }
+
+        protected virtual void OnInitialize()
+        {
+        }
+
+        protected virtual void OnBeforeInitialize()
+        {
+        }
+
+        protected bool SetProperty<T>(ref T Source, T Value, [CallerMemberName()] string PropertyName = null)
+        {
+            Verify.True(this.IsInitialized, "Object is not initialized.");
+
+            if (!object.Equals(Source, Value))
+            {
+                Source = Value;
+                this.NotifyPropertyChanged(PropertyName);
+
+                foreach (var t in this.GetType().GetBaseTypes())
+                {
+                    var M = default(PropertyMetadata);
+                    if (MetadataDic[t].TryGetValue(PropertyName, out M))
                     {
-                        string V = null;
-                        if (Dictionary.TryGetValue(this.GetStoreKey(KV.Key), out V))
-                            KV.Value.SetCallback.Invoke(this, V);
+                        var Str = M.ToStringCallback.Invoke(Source);
+                        StoreDictionary[this.GetStoreKey(PropertyName)] = Str;
+                        break;
                     }
                 }
 
-                this.OnInitialize();
-
-                this._IsInitialized = true;
+                return true;
             }
 
-            protected virtual void OnInitialize()
-            {
-            }
+            return false;
+        }
 
-            protected virtual void OnBeforeInitialize()
-            {
-            }
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs E)
+        {
+            PropertyChanged?.Invoke(this, E);
+        }
 
-            protected bool SetProperty<T>(ref T Source, T Value, [CallerMemberName()] string PropertyName = null)
-            {
-                Verify.True(this.IsInitialized, "Object is not initialized.");
+        protected void NotifyPropertyChanged([CallerMemberName()] string PropertyName = null)
+        {
+            this.OnPropertyChanged(new PropertyChangedEventArgs(PropertyName));
+        }
 
-                if (!object.Equals(Source, Value))
+        protected static object RegisterProperty(Type OwnerType, string Name, Action<AutoStoreObject, string> SetCallback = null, Func<object, string> ToStringCallBack = null)
+        {
+            foreach (var T in OwnerType.GetBaseTypes())
+                Verify.False(MetadataDic[T].ContainsKey(Name), "Name already eists.");
+
+            if (SetCallback == null)
+            {
+                SetCallback = (M, O) =>
                 {
-                    Source = Value;
-                    this.NotifyPropertyChanged(PropertyName);
-
-                    foreach (var t in this.GetType().GetBaseTypes())
-                    {
-                        var M = default(PropertyMetadata);
-                        if (MetadataDic[t].TryGetValue(PropertyName, out M))
-                        {
-                            var Str = M.ToStringCallback.Invoke(Source);
-                            StoreDictionary[this.GetStoreKey(PropertyName)] = Str;
-                            break;
-                        }
-                    }
-
-                    return true;
-                }
-
-                return false;
+                    M.GetType().GetProperty(Name).SetValue(M, O); // ToDo Invoke CType on O.
+                };
             }
+            if (ToStringCallBack == null)
+                ToStringCallBack = O => string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}", O);
+            MetadataDic[OwnerType].Add(Name, new PropertyMetadata(SetCallback, ToStringCallBack));
+            return null;
+        }
 
-            protected virtual void OnPropertyChanged(PropertyChangedEventArgs E)
+        private bool _IsInitialized;
+
+        public bool IsInitialized
+        {
+            get
             {
-                PropertyChanged?.Invoke(this, E);
+                return this._IsInitialized;
             }
+        }
 
-            protected void NotifyPropertyChanged([CallerMemberName()] string PropertyName = null)
+        private IDictionary<string, string> _StoreDictionary;
+
+        protected IDictionary<string, string> StoreDictionary
+        {
+            get
             {
-                this.OnPropertyChanged(new PropertyChangedEventArgs(PropertyName));
+                return this._StoreDictionary;
             }
+        }
 
-            protected static object RegisterProperty(Type OwnerType, string Name, Action<AutoStoreObject, string> SetCallback = null, Func<object, string> ToStringCallBack = null)
+        private static readonly CreateInstanceDictionary<Type, Dictionary<string, PropertyMetadata>> MetadataDic = CreateInstanceDictionary.Create<Type, Dictionary<string, PropertyMetadata>>();
+
+        private struct PropertyMetadata
+        {
+            public PropertyMetadata(Action<AutoStoreObject, string> SetCallback, Func<object, string> ToStringCallback)
             {
-                foreach (var T in OwnerType.GetBaseTypes())
-                    Verify.False(MetadataDic[T].ContainsKey(Name), "Name already eists.");
-
-                if (SetCallback == null)
-                {
-                    SetCallback = (M, O) =>
-                    {
-                        M.GetType().GetProperty(Name).SetValue(M, O); // ToDo Invoke CType on O.
-                    };
-                }
-                if (ToStringCallBack == null)
-                    ToStringCallBack = O => string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}", O);
-                MetadataDic[OwnerType].Add(Name, new PropertyMetadata(SetCallback, ToStringCallBack));
-                return null;
+                this._SetCallback = SetCallback;
+                this._ToStringCallback = ToStringCallback;
             }
 
-            private bool _IsInitialized;
+            private readonly Action<AutoStoreObject, string> _SetCallback;
 
-            public bool IsInitialized
+            public Action<AutoStoreObject, string> SetCallback
             {
                 get
                 {
-                    return this._IsInitialized;
+                    return this._SetCallback;
                 }
             }
 
-            private IDictionary<string, string> _StoreDictionary;
+            private readonly Func<object, string> _ToStringCallback;
 
-            protected IDictionary<string, string> StoreDictionary
+            public Func<object, string> ToStringCallback
             {
                 get
                 {
-                    return this._StoreDictionary;
-                }
-            }
-
-            private static readonly CreateInstanceDictionary<Type, Dictionary<string, PropertyMetadata>> MetadataDic = CreateInstanceDictionary.Create<Type, Dictionary<string, PropertyMetadata>>();
-
-            private struct PropertyMetadata
-            {
-                public PropertyMetadata(Action<AutoStoreObject, string> SetCallback, Func<object, string> ToStringCallback)
-                {
-                    this._SetCallback = SetCallback;
-                    this._ToStringCallback = ToStringCallback;
-                }
-
-                private readonly Action<AutoStoreObject, string> _SetCallback;
-
-                public Action<AutoStoreObject, string> SetCallback
-                {
-                    get
-                    {
-                        return this._SetCallback;
-                    }
-                }
-
-                private readonly Func<object, string> _ToStringCallback;
-
-                public Func<object, string> ToStringCallback
-                {
-                    get
-                    {
-                        return this._ToStringCallback;
-                    }
+                    return this._ToStringCallback;
                 }
             }
         }
     }
+}

@@ -12,99 +12,99 @@ using System.Xml.Linq;
 
 namespace Ks.Common.Controls
 {
-        public class ObjList : BaseList<Obj>, System.Windows.Markup.IAddChild
+    public class ObjList : BaseList<Obj>, System.Windows.Markup.IAddChild
+    {
+        public ObjList(TextBlock Parent)
         {
-            public ObjList(TextBlock Parent)
-            {
-                this._Parent = Parent;
-            }
+            this._Parent = Parent;
+        }
 
-            private void GotIn(Obj Obj)
-            {
-                Obj.ReportParent(this.Parent);
-                this.Parent.ReportObjGotIn(Obj);
-            }
+        private void GotIn(Obj Obj)
+        {
+            Obj.ReportParent(this.Parent);
+            this.Parent.ReportObjGotIn(Obj);
+        }
 
-            private void WentOut(Obj Obj)
-            {
-                this.Parent.ReportObjWentOut(Obj);
-            }
+        private void WentOut(Obj Obj)
+        {
+            this.Parent.ReportObjWentOut(Obj);
+        }
 
-            public override int Count
+        public override int Count
+        {
+            get
             {
-                get
-                {
-                    return this.List.Count;
-                }
+                return this.List.Count;
             }
+        }
 
-            public override Obj this[int index]
+        public override Obj this[int index]
+        {
+            get
             {
-                get
-                {
-                    return this.List[index];
-                }
-                set
-                {
-                    this.WentOut(this.List[index]);
-                    this.List[index] = value;
-                    this.GotIn(value);
-                    this.Parent.ReportObjChanged();
-                }
+                return this.List[index];
             }
-
-            public override void Clear()
-            {
-                foreach (var O in this.List)
-                    this.WentOut(O);
-                this.List.Clear();
-                this.Parent.ReportObjChanged();
-            }
-
-            public override void Insert(int index, Obj item)
-            {
-                this.List.Insert(index, item);
-                this.GotIn(item);
-                this.Parent.ReportObjChanged();
-            }
-
-            public override void RemoveAt(int index)
+            set
             {
                 this.WentOut(this.List[index]);
-                this.List.RemoveAt(index);
+                this.List[index] = value;
+                this.GotIn(value);
                 this.Parent.ReportObjChanged();
             }
-
-            protected override IEnumerator<Obj> _GetEnumerator()
-            {
-                return this.List.GetEnumerator();
-            }
-
-            public List<Obj>.Enumerator GetEnumerator()
-            {
-                return this.List.GetEnumerator();
-            }
-
-            public void AddChild(object value)
-            {
-                this.Add((Obj)value);
-            }
-
-            public void AddText(string text)
-            {
-                throw new NotSupportedException();
-            }
-
-            private readonly TextBlock _Parent;
-
-            public TextBlock Parent
-            {
-                get
-                {
-                    return this._Parent;
-                }
-            }
-
-            private readonly List<Obj> List = new List<Obj>();
         }
+
+        public override void Clear()
+        {
+            foreach (var O in this.List)
+                this.WentOut(O);
+            this.List.Clear();
+            this.Parent.ReportObjChanged();
+        }
+
+        public override void Insert(int index, Obj item)
+        {
+            this.List.Insert(index, item);
+            this.GotIn(item);
+            this.Parent.ReportObjChanged();
+        }
+
+        public override void RemoveAt(int index)
+        {
+            this.WentOut(this.List[index]);
+            this.List.RemoveAt(index);
+            this.Parent.ReportObjChanged();
+        }
+
+        protected override IEnumerator<Obj> _GetEnumerator()
+        {
+            return this.List.GetEnumerator();
+        }
+
+        public List<Obj>.Enumerator GetEnumerator()
+        {
+            return this.List.GetEnumerator();
+        }
+
+        public void AddChild(object value)
+        {
+            this.Add((Obj) value);
+        }
+
+        public void AddText(string text)
+        {
+            throw new NotSupportedException();
+        }
+
+        private readonly TextBlock _Parent;
+
+        public TextBlock Parent
+        {
+            get
+            {
+                return this._Parent;
+            }
+        }
+
+        private readonly List<Obj> List = new List<Obj>();
     }
+}

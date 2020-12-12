@@ -3,33 +3,33 @@ using System.Windows.Controls;
 
 namespace Ks.Common.Controls
 {
-        public class SimplePanel : Panel
+    public class SimplePanel : Panel
+    {
+        protected override Size MeasureOverride(Size AvailableSize)
         {
-            protected override Size MeasureOverride(Size AvailableSize)
+            var MaxWidth = 0.0;
+            var MaxHeight = 0.0;
+
+            foreach (UIElement C in this.Children)
             {
-                var MaxWidth = 0.0;
-                var MaxHeight = 0.0;
+                C.Measure(AvailableSize);
+                var Sz = C.DesiredSize;
 
-                foreach (UIElement C in this.Children)
-                {
-                    C.Measure(AvailableSize);
-                    var Sz = C.DesiredSize;
-
-                    if (MaxHeight < Sz.Height)
-                        MaxHeight = Sz.Height;
-                    if (MaxWidth < Sz.Width)
-                        MaxWidth = Sz.Width;
-                }
-
-                return new Size(MaxWidth, MaxHeight);
+                if (MaxHeight < Sz.Height)
+                    MaxHeight = Sz.Height;
+                if (MaxWidth < Sz.Width)
+                    MaxWidth = Sz.Width;
             }
 
-            protected override Size ArrangeOverride(Size FinalSize)
-            {
-                foreach (UIElement C in this.Children)
-                    C.Arrange(new Rect(FinalSize));
+            return new Size(MaxWidth, MaxHeight);
+        }
 
-                return FinalSize;
-            }
+        protected override Size ArrangeOverride(Size FinalSize)
+        {
+            foreach (UIElement C in this.Children)
+                C.Arrange(new Rect(FinalSize));
+
+            return FinalSize;
         }
     }
+}

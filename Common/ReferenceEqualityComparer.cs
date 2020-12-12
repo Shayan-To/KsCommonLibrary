@@ -2,26 +2,26 @@
 
 namespace Ks.Common
 {
-        public class ReferenceEqualityComparer<T> : EqualityComparer<T> where T : class
+    public class ReferenceEqualityComparer<T> : EqualityComparer<T> where T : class
+    {
+        public override bool Equals(T x, T y)
         {
-            public override bool Equals(T x, T y)
-            {
-                return x == y;
-            }
+            return x == y;
+        }
 
-            public override int GetHashCode(T obj)
-            {
-                return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj);
-            }
+        public override int GetHashCode(T obj)
+        {
+            return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj);
+        }
 
-            private static readonly ReferenceEqualityComparer<T> _Instance = new ReferenceEqualityComparer<T>();
+        private static readonly ReferenceEqualityComparer<T> _Instance = new ReferenceEqualityComparer<T>();
 
-            public static ReferenceEqualityComparer<T> Instance
+        public static ReferenceEqualityComparer<T> Instance
+        {
+            get
             {
-                get
-                {
-                    return _Instance;
-                }
+                return _Instance;
             }
         }
     }
+}

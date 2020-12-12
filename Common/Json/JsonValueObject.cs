@@ -1,31 +1,31 @@
 ﻿namespace Ks.Common
 {
-        public class JsonValueObject : JsonObject
+    public class JsonValueObject : JsonObject
+    {
+        public JsonValueObject(string Value, bool IsString)
         {
-            public JsonValueObject(string Value, bool IsString)
+            this._Value = Value;
+            this._IsString = IsString;
+        }
+
+        private readonly bool _IsString;
+
+        public bool IsString
+        {
+            get
             {
-                this._Value = Value;
-                this._IsString = IsString;
+                return this._IsString;
             }
+        }
 
-            private readonly bool _IsString;
+        private readonly string _Value;
 
-            public bool IsString
+        public string Value
+        {
+            get
             {
-                get
-                {
-                    return this._IsString;
-                }
-            }
-
-            private readonly string _Value;
-
-            public string Value
-            {
-                get
-                {
-                    return this._Value;
-                }
+                return this._Value;
             }
         }
     }
+}

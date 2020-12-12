@@ -1,6 +1,6 @@
 ﻿namespace Ks.Common
 {
-        public abstract class JsonDynamicBase
-        {
-        }
+    public abstract class JsonDynamicBase
+    {
     }
+}

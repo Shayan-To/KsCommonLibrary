@@ -3,40 +3,40 @@ using System.Windows.Controls;
 
 namespace Ks.Common.Controls
 {
-        [System.ComponentModel.DesignTimeVisible(false)]
-        public class Page : ContentControl
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public class Page : ContentControl
+    {
+        static Page()
         {
-            static Page()
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Page), new FrameworkPropertyMetadata(typeof(Page)));
+        }
+
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(Page), new PropertyMetadata(null));
+
+        public string Title
+        {
+            get
             {
-                DefaultStyleKeyProperty.OverrideMetadata(typeof(Page), new FrameworkPropertyMetadata(typeof(Page)));
+                return (string) this.GetValue(TitleProperty);
             }
-
-            public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(Page), new PropertyMetadata(null));
-
-            public string Title
+            set
             {
-                get
-                {
-                    return (string)this.GetValue(TitleProperty);
-                }
-                set
-                {
-                    this.SetValue(TitleProperty, value);
-                }
+                this.SetValue(TitleProperty, value);
             }
+        }
 
-            private MVVM.INavigationView _ParentView;
+        private MVVM.INavigationView _ParentView;
 
-            internal MVVM.INavigationView ParentView
+        internal MVVM.INavigationView ParentView
+        {
+            get
             {
-                get
-                {
-                    return this._ParentView;
-                }
-                set
-                {
-                    this._ParentView = value;
-                }
+                return this._ParentView;
+            }
+            set
+            {
+                this._ParentView = value;
             }
         }
     }
+}

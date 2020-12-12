@@ -6,85 +6,85 @@ using System.ComponentModel;
 
 namespace Ks.Common
 {
-        public class ChangeReporter
+    public class ChangeReporter
+    {
+        private List<object> A = new List<object>();
+
+        public void Add(object Obj)
         {
-            private List<object> A = new List<object>();
+            INotifyPropertyChanged PropObj;
+            INotifyCollectionChanged CollecObj;
+            IEnumerable Enumerable;
 
-            public void Add(object Obj)
+            if (Obj.GetType().Name == "NotifyingCollection`1")
+                A.Add(Obj);
+
+            PropObj = Obj as INotifyPropertyChanged;
+            if (PropObj != null)
+                PropObj.PropertyChanged += this.OnPropertyChanged;
+
+            CollecObj = Obj as INotifyCollectionChanged;
+            if (CollecObj != null)
+                CollecObj.CollectionChanged += this.OnCollectionChanged;
+
+            Enumerable = Obj as IEnumerable;
+            if (Enumerable != null)
             {
-                INotifyPropertyChanged PropObj;
-                INotifyCollectionChanged CollecObj;
-                IEnumerable Enumerable;
+                foreach (var O in Enumerable)
+                    this.Add(O);
+            }
+        }
 
-                if (Obj.GetType().Name == "NotifyingCollection`1")
-                    A.Add(Obj);
+        public void Remove(object Obj)
+        {
+            INotifyPropertyChanged PropObj;
+            INotifyCollectionChanged CollecObj;
+            IEnumerable Enumerable;
 
-                PropObj = Obj as INotifyPropertyChanged;
-                if (PropObj != null)
-                    PropObj.PropertyChanged += this.OnPropertyChanged;
+            PropObj = Obj as INotifyPropertyChanged;
+            if (PropObj != null)
+                PropObj.PropertyChanged -= this.OnPropertyChanged;
 
-                CollecObj = Obj as INotifyCollectionChanged;
-                if (CollecObj != null)
-                    CollecObj.CollectionChanged += this.OnCollectionChanged;
+            CollecObj = Obj as INotifyCollectionChanged;
+            if (CollecObj != null)
+                CollecObj.CollectionChanged -= this.OnCollectionChanged;
 
-                Enumerable = Obj as IEnumerable;
-                if (Enumerable != null)
+            Enumerable = Obj as IEnumerable;
+            if (Enumerable != null)
+            {
+                foreach (var O in Enumerable)
+                    this.Remove(O);
+            }
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.OnObjectChanged();
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action != NotifyCollectionChangedAction.Move)
+            {
+                if (e.OldItems != null)
                 {
-                    foreach (var O in Enumerable)
+                    foreach (var O in e.OldItems)
+                        this.Remove(O);
+                }
+                if (e.NewItems != null)
+                {
+                    foreach (var O in e.NewItems)
                         this.Add(O);
                 }
             }
+            this.OnObjectChanged();
+        }
 
-            public void Remove(object Obj)
-            {
-                INotifyPropertyChanged PropObj;
-                INotifyCollectionChanged CollecObj;
-                IEnumerable Enumerable;
+        public event EventHandler<EventArgs> ObjectChanged;
 
-                PropObj = Obj as INotifyPropertyChanged;
-                if (PropObj != null)
-                    PropObj.PropertyChanged -= this.OnPropertyChanged;
-
-                CollecObj = Obj as INotifyCollectionChanged;
-                if (CollecObj != null)
-                    CollecObj.CollectionChanged -= this.OnCollectionChanged;
-
-                Enumerable = Obj as IEnumerable;
-                if (Enumerable != null)
-                {
-                    foreach (var O in Enumerable)
-                        this.Remove(O);
-                }
-            }
-
-            private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-            {
-                this.OnObjectChanged();
-            }
-
-            private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-            {
-                if (e.Action != NotifyCollectionChangedAction.Move)
-                {
-                    if (e.OldItems != null)
-                    {
-                        foreach (var O in e.OldItems)
-                            this.Remove(O);
-                    }
-                    if (e.NewItems != null)
-                    {
-                        foreach (var O in e.NewItems)
-                            this.Add(O);
-                    }
-                }
-                this.OnObjectChanged();
-            }
-
-            public event EventHandler<EventArgs> ObjectChanged;
-
-            protected virtual void OnObjectChanged()
-            {
-                ObjectChanged?.Invoke(this, EventArgs.Empty);
-            }
+        protected virtual void OnObjectChanged()
+        {
+            ObjectChanged?.Invoke(this, EventArgs.Empty);
         }
     }
+}

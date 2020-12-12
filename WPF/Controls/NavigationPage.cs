@@ -3,24 +3,24 @@ using Ks.Common.MVVM;
 
 namespace Ks.Common.Controls
 {
-        [System.ComponentModel.DesignTimeVisible(false)]
-        public class NavigationPage : Page, INavigationView
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public class NavigationPage : Page, INavigationView
+    {
+        static NavigationPage()
         {
-            static NavigationPage()
-            {
-                DefaultStyleKeyProperty.OverrideMetadata(typeof(NavigationPage), new FrameworkPropertyMetadata(typeof(NavigationPage)));
-            }
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(NavigationPage), new FrameworkPropertyMetadata(typeof(NavigationPage)));
+        }
 
-            Page INavigationView.Content
+        Page INavigationView.Content
+        {
+            get
             {
-                get
-                {
-                    return (Page)this.Content;
-                }
-                set
-                {
-                    this.Content = value;
-                }
+                return (Page) this.Content;
+            }
+            set
+            {
+                this.Content = value;
             }
         }
     }
+}

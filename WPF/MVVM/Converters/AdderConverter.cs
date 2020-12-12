@@ -4,16 +4,16 @@ using System.Windows.Data;
 
 namespace Ks.Common.MVVM.Converters
 {
-        public class AdderConverter : IValueConverter
+    public class AdderConverter : IValueConverter
+    {
+        public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
-            {
-                return System.Convert.ToDouble(Value) + System.Convert.ToDouble(Parameter);
-            }
+            return System.Convert.ToDouble(Value) + System.Convert.ToDouble(Parameter);
+        }
 
-            public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
-            {
-                return System.Convert.ToDouble(Value) - System.Convert.ToDouble(Parameter);
-            }
+        public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
+        {
+            return System.Convert.ToDouble(Value) - System.Convert.ToDouble(Parameter);
         }
     }
+}

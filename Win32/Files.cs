@@ -3,13 +3,13 @@ using System.Runtime.InteropServices;
 
 namespace Ks.Common.Win32
 {
-        public static class Files
+    public static class Files
+    {
+
+        public static class Unsafe
         {
 
-            public static class Unsafe
-            {
-
-                /// BOOL WINAPI CreateHardLink(
+            /// BOOL WINAPI CreateHardLink(
             /// _In_       LPCTSTR               lpFileName,
             /// _In_       LPCTSTR               lpExistingFileName,
             /// _Reserved_ LPSECURITY_ATTRIBUTES lpSecurityAttributes
@@ -52,15 +52,15 @@ namespace Ks.Common.Win32
             /// Symbolic link behavior—If the path points to a symbolic link, the function creates a hard link to the target.
             /// In Windows 8 and Windows Server 2012, this function is supported by the following technologies.
             /// </remarks>
-                [DllImport("Kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-                public static extern bool CreateHardLinkW(string lpFileName, string lpExistingFileName, IntPtr lpSecurityAttributes);
-            }
+            [DllImport("Kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+            public static extern bool CreateHardLinkW(string lpFileName, string lpExistingFileName, IntPtr lpSecurityAttributes);
+        }
 
-            public static void CreateHardLink(string FileName, string ExistingFileName)
-            {
-                var R = Unsafe.CreateHardLinkW(FileName, ExistingFileName, IntPtr.Zero);
-                if (!R)
-                    Common.ThrowError();
-            }
+        public static void CreateHardLink(string FileName, string ExistingFileName)
+        {
+            var R = Unsafe.CreateHardLinkW(FileName, ExistingFileName, IntPtr.Zero);
+            if (!R)
+                Common.ThrowError();
         }
     }
+}

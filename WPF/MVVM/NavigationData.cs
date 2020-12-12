@@ -1,42 +1,42 @@
 ﻿namespace Ks.Common.MVVM
 {
-        public struct NavigationData
+    public struct NavigationData
+    {
+        public NavigationData(NavigationFrame Frame, bool AddToStack = true, bool ForceToStack = false)
         {
-            public NavigationData(NavigationFrame Frame, bool AddToStack = true, bool ForceToStack = false)
+            this._Frame = Frame;
+            this._AddToStack = AddToStack;
+            this._ForceToStack = ForceToStack;
+        }
+
+        private readonly NavigationFrame _Frame;
+
+        public NavigationFrame Frame
+        {
+            get
             {
-                this._Frame = Frame;
-                this._AddToStack = AddToStack;
-                this._ForceToStack = ForceToStack;
+                return this._Frame;
             }
+        }
 
-            private readonly NavigationFrame _Frame;
+        private readonly bool _AddToStack;
 
-            public NavigationFrame Frame
+        public bool AddToStack
+        {
+            get
             {
-                get
-                {
-                    return this._Frame;
-                }
+                return this._AddToStack;
             }
+        }
 
-            private readonly bool _AddToStack;
+        private readonly bool _ForceToStack;
 
-            public bool AddToStack
+        public bool ForceToStack
+        {
+            get
             {
-                get
-                {
-                    return this._AddToStack;
-                }
-            }
-
-            private readonly bool _ForceToStack;
-
-            public bool ForceToStack
-            {
-                get
-                {
-                    return this._ForceToStack;
-                }
+                return this._ForceToStack;
             }
         }
     }
+}

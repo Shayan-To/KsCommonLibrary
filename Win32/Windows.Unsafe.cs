@@ -3,12 +3,12 @@ using System.Runtime.InteropServices;
 
 namespace Ks.Common.Win32
 {
-        partial class Windows
+    partial class Windows
+    {
+        public static class Unsafe
         {
-            public static class Unsafe
-            {
 
-                /// BOOL WINAPI GetWindowPlacement(
+            /// BOOL WINAPI GetWindowPlacement(
             /// _In_    HWND            hWnd,
             /// _Inout_ WINDOWPLACEMENT *lpwndpl
             /// );
@@ -34,10 +34,10 @@ namespace Ks.Common.Win32
             /// The flags member of WINDOWPLACEMENT retrieved by this function is always zero. If the window identified by the hWnd parameter is maximized, the showCmd member is SW_SHOWMAXIMIZED. If the window is minimized, showCmd is SW_SHOWMINIMIZED. Otherwise, it is SW_SHOWNORMAL.
             /// The length member of WINDOWPLACEMENT must be set to sizeof(WINDOWPLACEMENT). If this member is not set correctly, the function returns FALSE. For additional remarks on the proper use of window placement coordinates, see WINDOWPLACEMENT.
             /// </remarks>
-                [DllImport("User32.dll", SetLastError = true)]
-                public static extern bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement lpwndpl);
+            [DllImport("User32.dll", SetLastError = true)]
+            public static extern bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement lpwndpl);
 
-                /// BOOL WINAPI EnumWindows(
+            /// BOOL WINAPI EnumWindows(
             /// _In_ WNDENUMPROC lpEnumFunc,
             /// _In_ LPARAM      lParam
             /// );
@@ -65,10 +65,10 @@ namespace Ks.Common.Win32
             /// This function is more reliable than calling the GetWindow function in a loop. An application that calls GetWindow to perform this task risks being caught in an infinite loop or referencing a handle to a window that has been destroyed.
             /// Note  For Windows 8 and later, EnumWindows enumerates only top-level windows of desktop apps.
             /// </remarks>
-                [DllImport("User32.dll", SetLastError = true)]
-                public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+            [DllImport("User32.dll", SetLastError = true)]
+            public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
 
-                /// BOOL WINAPI GetWindowRect(
+            /// BOOL WINAPI GetWindowRect(
             /// _In_  HWND   hWnd,
             /// _Out_ LPRECT lpRect
             /// );
@@ -93,10 +93,10 @@ namespace Ks.Common.Win32
             /// <remarks>
             /// In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.
             /// </remarks>
-                [DllImport("User32.dll", SetLastError = true)]
-                public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
+            [DllImport("User32.dll", SetLastError = true)]
+            public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
 
-                /// HWND WINAPI GetForegroundWindow(void);
+            /// HWND WINAPI GetForegroundWindow(void);
             /// <summary>
             /// Retrieves a handle to the foreground window (the window with which the user is currently working). The system assigns a slightly higher priority to the thread that creates the foreground window than it does to other threads.
             /// </summary>
@@ -104,10 +104,10 @@ namespace Ks.Common.Win32
             /// Type: HWND
             /// The return value is a handle to the foreground window. The foreground window can be NULL in certain circumstances, such as when a window is losing activation.
             /// </returns>
-                [DllImport("User32.dll", SetLastError = true)]
-                public static extern IntPtr GetForegroundWindow();
+            [DllImport("User32.dll", SetLastError = true)]
+            public static extern IntPtr GetForegroundWindow();
 
-                /// int WINAPI GetWindowTextLength(
+            /// int WINAPI GetWindowTextLength(
             /// _In_ HWND hWnd
             /// );
             /// <summary>
@@ -128,10 +128,10 @@ namespace Ks.Common.Win32
             /// Under certain conditions, the GetWindowTextLength function may return a value that is larger than the actual length of the text. This occurs with certain mixtures of ANSI and Unicode, and is due to the system allowing for the possible existence of double-byte character set (DBCS) characters within the text. The return value, however, will always be at least as large as the actual length of the text; you can thus always use it to guide buffer allocation. This behavior can occur when an application uses both ANSI functions and common dialogs, which use Unicode. It can also occur when an application uses the ANSI version of GetWindowTextLength with a window whose window procedure is Unicode, or the Unicode version of GetWindowTextLength with a window whose window procedure is ANSI. For more information on ANSI and ANSI functions, see Conventions for Function Prototypes.
             /// To obtain the exact length of the text, use the WM_GETTEXT, LB_GETTEXT, or CB_GETLBTEXT messages, or the GetWindowText function.
             /// </remarks>
-                [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-                public static extern int GetWindowTextLength(IntPtr hWnd);
+            [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            public static extern int GetWindowTextLength(IntPtr hWnd);
 
-                /// int WINAPI GetWindowText(
+            /// int WINAPI GetWindowText(
             /// _In_  HWND   hWnd,
             /// _Out_ LPTSTR lpString,
             /// _In_  int    nMaxCount
@@ -163,10 +163,10 @@ namespace Ks.Common.Win32
             /// If the target window is owned by the current process, GetWindowText causes a WM_GETTEXT message to be sent to the specified window or control. If the target window is owned by another process and has a caption, GetWindowText retrieves the window caption text. If the window does not have a caption, the return value is a null string. This behavior is by design. It allows applications to call GetWindowText without becoming unresponsive if the process that owns the target window is not responding. However, if the target window is not responding and it belongs to the calling application, GetWindowText will cause the calling application to become unresponsive.
             /// To retrieve the text of a control in another process, send a WM_GETTEXT message directly instead of calling GetWindowText.
             /// </remarks>
-                [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-                public static extern int GetWindowText(IntPtr hWnd, System.Text.StringBuilder lpString, int nMaxCount);
+            [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            public static extern int GetWindowText(IntPtr hWnd, System.Text.StringBuilder lpString, int nMaxCount);
 
-                /// <summary>
+            /// <summary>
             /// Retrieves a handle to a window whose class name and window name match the specified strings. The function searches child windows, beginning with the one following the specified child window. This function does not perform a case-sensitive search.
             /// </summary>
             /// HWND WINAPI FindWindowEx(
@@ -211,10 +211,10 @@ namespace Ks.Common.Win32
             /// FindWindowEx( NULL, NULL, MAKEINTATOM(0x8000), NULL );
             /// Note that 0x8000 is the atom for a menu class. When an application calls this function, the function checks whether a context menu is being displayed that the application created.
             /// </remarks>
-                [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-                public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+            [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
 
-                /// <summary>
+            /// <summary>
             /// Retrieves a handle to the top-level window whose class name and window name match the specified strings. This function does not search child windows. This function does not perform a case-sensitive search.
             /// To search child windows, beginning with a specified child window, use the FindWindowEx function.
             /// </summary>
@@ -242,10 +242,10 @@ namespace Ks.Common.Win32
             /// <remarks>
             /// If the lpWindowName parameter is not NULL, FindWindow calls the GetWindowText function to retrieve the window name for comparison. For a description of a potential problem that can arise, see the Remarks for GetWindowText.
             /// </remarks>
-                [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-                public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+            [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-                /// <summary>
+            /// <summary>
             /// Retrieves a handle to the window that contains the specified point.
             /// </summary>
             /// HWND WINAPI WindowFromPoint(
@@ -263,10 +263,10 @@ namespace Ks.Common.Win32
             /// <remarks>
             /// The WindowFromPoint function does not retrieve a handle to a hidden or disabled window, even if the point is within the window. An application should use the ChildWindowFromPoint function for a nonrestrictive search.
             /// </remarks>
-                [DllImport("User32.dll", SetLastError = true)]
-                public static extern IntPtr WindowFromPoint(Point p);
+            [DllImport("User32.dll", SetLastError = true)]
+            public static extern IntPtr WindowFromPoint(Point p);
 
-                /// <summary>
+            /// <summary>
             /// Retrieves the handle to the ancestor of the specified window.
             /// </summary>
             /// HWND WINAPI GetAncestor(
@@ -287,10 +287,10 @@ namespace Ks.Common.Win32
             /// Type: HWND
             /// The return value is the handle to the ancestor window.
             /// </returns>
-                [DllImport("User32.dll", SetLastError = true)]
-                public static extern IntPtr GetAncestor(IntPtr hwnd, GetAncestorFlags gaFlags);
+            [DllImport("User32.dll", SetLastError = true)]
+            public static extern IntPtr GetAncestor(IntPtr hwnd, GetAncestorFlags gaFlags);
 
-                /// <summary>
+            /// <summary>
             /// Retrieves a handle to a window that has the specified relationship (Z-Order or owner) to the specified window.
             /// </summary>
             /// HWND WINAPI GetWindow(
@@ -314,10 +314,10 @@ namespace Ks.Common.Win32
             /// <remarks>
             /// The EnumChildWindows function is more reliable than calling GetWindow in a loop. An application that calls GetWindow to perform this task risks being caught in an infinite loop or referencing a handle to a window that has been destroyed.
             /// </remarks>
-                [DllImport("User32.dll", SetLastError = true)]
-                public static extern IntPtr GetWindow(IntPtr hwnd, GetWindowCommand uCmd);
+            [DllImport("User32.dll", SetLastError = true)]
+            public static extern IntPtr GetWindow(IntPtr hwnd, GetWindowCommand uCmd);
 
-                /// <summary>
+            /// <summary>
             /// Retrieves a handle to the specified window's parent or owner.
             /// To retrieve a handle to a specified ancestor, use the GetAncestor function.
             /// </summary>
@@ -340,10 +340,10 @@ namespace Ks.Common.Win32
             /// <remarks>
             /// To obtain a window's owner window, instead of using GetParent, use GetWindow with the GW_OWNER flag. To obtain the parent window and not the owner, instead of using GetParent, use GetAncestor with the GA_PARENT flag.
             /// </remarks>
-                [DllImport("User32.dll", SetLastError = true)]
-                public static extern IntPtr GetParent(IntPtr hwnd);
+            [DllImport("User32.dll", SetLastError = true)]
+            public static extern IntPtr GetParent(IntPtr hwnd);
 
-                /// DWORD WINAPI GetWindowThreadProcessId(
+            /// DWORD WINAPI GetWindowThreadProcessId(
             /// _In_      HWND    hWnd,
             /// _Out_opt_ LPDWORD lpdwProcessId
             /// );
@@ -364,10 +364,10 @@ namespace Ks.Common.Win32
             /// Type: DWORD
             /// The return value is the identifier of the thread that created the window.
             /// </returns>
-                [DllImport("User32.dll", SetLastError = true)]
-                public static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint lpdwProcessId);
+            [DllImport("User32.dll", SetLastError = true)]
+            public static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint lpdwProcessId);
 
-                /// BOOL WINAPI SetWindowPos(
+            /// BOOL WINAPI SetWindowPos(
             /// _In_     HWND hWnd,
             /// _In_opt_ HWND hWndInsertAfter,
             /// _In_     int  X,
@@ -433,10 +433,10 @@ namespace Ks.Common.Win32
             /// If an application is not in the foreground, and should be in the foreground, it must call the SetForegroundWindow function.
             /// To use SetWindowPos to bring a window to the top, the process that owns the window must have SetForegroundWindow permission.
             /// </remarks>
-                [DllImport("User32.dll", SetLastError = true)]
-                public static extern bool SetWindowPos(IntPtr hwnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
+            [DllImport("User32.dll", SetLastError = true)]
+            public static extern bool SetWindowPos(IntPtr hwnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
 
-                /// BOOL CALLBACK EnumWindowsProc(
+            /// BOOL CALLBACK EnumWindowsProc(
             /// _In_ HWND   hwnd,
             /// _In_ LPARAM lParam
             /// );
@@ -457,149 +457,149 @@ namespace Ks.Common.Win32
             /// <remarks>
             /// An application must register this callback function by passing its address to EnumWindows or EnumDesktopWindows.
             /// </remarks>
-                public delegate bool EnumWindowsProc(IntPtr hwnd, IntPtr lParam);
+            public delegate bool EnumWindowsProc(IntPtr hwnd, IntPtr lParam);
 
-                public enum SetWindowPosInsertAfter
-                {
+            public enum SetWindowPosInsertAfter
+            {
 
-                    /// <summary>
+                /// <summary>
                 /// Places the window at the bottom of the Z order. If the hWnd parameter identifies a topmost window, the window loses its topmost status and is placed at the bottom of all other windows.
                 /// </summary>
-                    Bottom = 1,
-                    /// <summary>
+                Bottom = 1,
+                /// <summary>
                 /// Places the window above all non-topmost windows (that is, behind all topmost windows). This flag has no effect if the window is already a non-topmost window.
                 /// </summary>
-                    NoTopMost = -2,
-                    /// <summary>
+                NoTopMost = -2,
+                /// <summary>
                 /// Places the window at the top of the Z order.
                 /// </summary>
-                    Top = 0,
-                    /// <summary>
+                Top = 0,
+                /// <summary>
                 /// Places the window above all non-topmost windows. The window maintains its topmost position even when it is deactivated.
                 /// </summary>
-                    TopMost = -1
-                }
+                TopMost = -1
+            }
 
-                public enum SetWindowPosFlags : uint
-                {
+            public enum SetWindowPosFlags : uint
+            {
 
-                    /// <summary>
+                /// <summary>
                 /// If the calling thread and the thread that owns the window are attached to different input queues, the system posts the request to the thread that owns the window. This prevents the calling thread from blocking its execution while other threads process the request.
                 /// </summary>
-                    Async‏WindowPos = 0x4000,
-                    /// <summary>
+                Async‏WindowPos = 0x4000,
+                /// <summary>
                 /// Prevents generation of the WM_SYNCPAINT message.
                 /// </summary>
-                    DefereRase = 0x2000,
-                    /// <summary>
+                DefereRase = 0x2000,
+                /// <summary>
                 /// Draws a frame (defined in the window's class description) around the window.
                 /// </summary>
-                    DrawFrame = 0x20,
-                    /// <summary>
+                DrawFrame = 0x20,
+                /// <summary>
                 /// Applies new frame styles set using the SetWindowLong function. Sends a WM_NCCALCSIZE message to the window, even if the window's size is not being changed. If this flag is not specified, WM_NCCALCSIZE is sent only when the window's size is being changed.
                 /// </summary>
-                    FrameChanged = 0x20,
-                    /// <summary>
+                FrameChanged = 0x20,
+                /// <summary>
                 /// Hides the window.
                 /// </summary>
-                    HideWindow = 0x80,
-                    /// <summary>
+                HideWindow = 0x80,
+                /// <summary>
                 /// Does not activate the window. If this flag is not set, the window is activated and moved to the top of either the topmost or non-topmost group (depending on the setting of the hWndInsertAfter parameter).
                 /// </summary>
-                    NoActivate = 0x10,
-                    /// <summary>
+                NoActivate = 0x10,
+                /// <summary>
                 /// Discards the entire contents of the client area. If this flag is not specified, the valid contents of the client area are saved and copied back into the client area after the window is sized or repositioned.
                 /// </summary>
-                    NoCopyBits = 0x100,
-                    /// <summary>
+                NoCopyBits = 0x100,
+                /// <summary>
                 /// Retains the current position (ignores X and Y parameters).
                 /// </summary>
-                    NoMove = 0x2,
-                    /// <summary>
+                NoMove = 0x2,
+                /// <summary>
                 /// Does not change the owner window's position in the Z order.
                 /// </summary>
-                    NoOwnerZOrder = 0x200,
-                    /// <summary>
+                NoOwnerZOrder = 0x200,
+                /// <summary>
                 /// Does not redraw changes. If this flag is set, no repainting of any kind occurs. This applies to the client area, the nonclient area (including the title bar and scroll bars), and any part of the parent window uncovered as a result of the window being moved. When this flag is set, the application must explicitly invalidate or redraw any parts of the window and parent window that need redrawing.
                 /// </summary>
-                    NoRedraw = 0x8,
-                    /// <summary>
+                NoRedraw = 0x8,
+                /// <summary>
                 /// Same as the SWP_NOOWNERZORDER flag.
                 /// </summary>
-                    NoReposition = 0x200,
-                    /// <summary>
+                NoReposition = 0x200,
+                /// <summary>
                 /// Prevents the window from receiving the WM_WINDOWPOSCHANGING message.
                 /// </summary>
-                    NoSendChanging = 0x400,
-                    /// <summary>
+                NoSendChanging = 0x400,
+                /// <summary>
                 /// Retains the current size (ignores the cx and cy parameters).
                 /// </summary>
-                    NoSize = 0x1,
-                    /// <summary>
+                NoSize = 0x1,
+                /// <summary>
                 /// Retains the current Z order (ignores the hWndInsertAfter parameter).
                 /// </summary>
-                    NoZOrder = 0x4,
-                    /// <summary>
+                NoZOrder = 0x4,
+                /// <summary>
                 /// Displays the window.
                 /// </summary>
-                    ShowWindow = 0x40
-                }
+                ShowWindow = 0x40
+            }
 
-                public enum GetWindowCommand : uint
-                {
+            public enum GetWindowCommand : uint
+            {
 
-                    /// <summary>
+                /// <summary>
                 /// The retrieved handle identifies the window of the same type that is highest in the Z order.
                 /// If the specified window is a topmost window, the handle identifies a topmost window. If the specified window is a top-level window, the handle identifies a top-level window. If the specified window is a child window, the handle identifies a sibling window.
                 /// </summary>
-                    HwndFirst = 0,
-                    /// <summary>
+                HwndFirst = 0,
+                /// <summary>
                 /// The retrieved handle identifies the window of the same type that is lowest in the Z order.
                 /// If the specified window is a topmost window, the handle identifies a topmost window. If the specified window is a top-level window, the handle identifies a top-level window. If the specified window is a child window, the handle identifies a sibling window.
                 /// </summary>
-                    HwndLast = 1,
-                    /// <summary>
+                HwndLast = 1,
+                /// <summary>
                 /// The retrieved handle identifies the window below the specified window in the Z order.
                 /// If the specified window is a topmost window, the handle identifies a topmost window. If the specified window is a top-level window, the handle identifies a top-level window. If the specified window is a child window, the handle identifies a sibling window.
                 /// </summary>
-                    HwndNext = 2,
-                    /// <summary>
+                HwndNext = 2,
+                /// <summary>
                 /// The retrieved handle identifies the window above the specified window in the Z order.
                 /// If the specified window is a topmost window, the handle identifies a topmost window. If the specified window is a top-level window, the handle identifies a top-level window. If the specified window is a child window, the handle identifies a sibling window.
                 /// </summary>
-                    HwndPrev = 3,
-                    /// <summary>
+                HwndPrev = 3,
+                /// <summary>
                 /// The retrieved handle identifies the specified window's owner window, if any. For more information, see Owned Windows.
                 /// </summary>
-                    Owner = 4,
-                    /// <summary>
+                Owner = 4,
+                /// <summary>
                 /// The retrieved handle identifies the child window at the top of the Z order, if the specified window is a parent window; otherwise, the retrieved handle is NULL. The function examines only child windows of the specified window. It does not examine descendant windows.
                 /// </summary>
-                    Child = 5,
-                    /// <summary>
+                Child = 5,
+                /// <summary>
                 /// The retrieved handle identifies the enabled popup window owned by the specified window (the search uses the first such window found using GW_HWNDNEXT); otherwise, if there are no enabled popup windows, the retrieved handle is that of the specified window.
                 /// </summary>
-                    EnabledPopup = 6
-                }
+                EnabledPopup = 6
+            }
 
-                public enum GetAncestorFlags : uint
-                {
+            public enum GetAncestorFlags : uint
+            {
 
-                    /// <summary>
+                /// <summary>
                 /// Retrieves the parent window. This does not include the owner, as it does with the GetParent function.
                 /// </summary>
-                    Parent = 1,
-                    /// <summary>
+                Parent = 1,
+                /// <summary>
                 /// Retrieves the root window by walking the chain of parent windows.
                 /// </summary>
-                    Root = 2,
-                    /// <summary>
+                Root = 2,
+                /// <summary>
                 /// Retrieves the owned root window by walking the chain of parent and owner windows returned by GetParent.
                 /// </summary>
-                    RootOwner = 3
-                }
+                RootOwner = 3
+            }
 
-                /// typedef struct tagWINDOWPLACEMENT {
+            /// typedef struct tagWINDOWPLACEMENT {
             /// UINT  length;
             /// UINT  flags;
             /// UINT  showCmd;
@@ -615,124 +615,124 @@ namespace Ks.Common.Win32
             /// Workspace coordinates differ from screen coordinates in that they take the locations and sizes of application toolbars (including the taskbar) into account. Workspace coordinate (0,0) is the upper-left corner of the workspace area, the area of the screen not being used by application toolbars.
             /// The coordinates used in a WINDOWPLACEMENT structure should be used only by the GetWindowPlacement and SetWindowPlacement functions. Passing workspace coordinates to functions which expect screen coordinates (such as SetWindowPos) will result in the window appearing in the wrong location. For example, if the taskbar is at the top of the screen, saving window coordinates using GetWindowPlacement and restoring them using SetWindowPos causes the window to appear to "creep" up the screen.
             /// </remarks>
-                public struct WindowPlacement
+            public struct WindowPlacement
+            {
+                public static readonly uint ActualLength = (uint) Marshal.SizeOf<WindowPlacement>();
+
+                public void Init()
                 {
-                    public static readonly uint ActualLength = (uint)Marshal.SizeOf<WindowPlacement>();
+                    this.Length = ActualLength;
+                }
 
-                    public void Init()
-                    {
-                        this.Length = ActualLength;
-                    }
+                public WindowPlacement InitNew()
+                {
+                    this.Length = ActualLength;
+                    return this;
+                }
 
-                    public WindowPlacement InitNew()
-                    {
-                        this.Length = ActualLength;
-                        return this;
-                    }
-
-                    /// <summary>
+                /// <summary>
                 /// Type: UINT
                 /// The length of the structure, in bytes. Before calling the GetWindowPlacement or SetWindowPlacement functions, set this member to sizeof(WINDOWPLACEMENT).
                 /// GetWindowPlacement and SetWindowPlacement fail if this member is not set correctly.
                 /// </summary>
-                    public uint Length;
-                    /// <summary>
+                public uint Length;
+                /// <summary>
                 /// Type: UINT
                 /// The flags that control the position of the minimized window and the method by which the window is restored. This member can be one or more of the following values.
                 /// </summary>
-                    public WindowPlacementFlags Flags;
-                    /// <summary>
+                public WindowPlacementFlags Flags;
+                /// <summary>
                 /// Type: UINT
                 /// The current show state of the window. This member can be one of the following values.
                 /// </summary>
-                    public WindowShowState ShowCmd;
-                    /// <summary>
+                public WindowShowState ShowCmd;
+                /// <summary>
                 /// Type: POINT
                 /// The coordinates of the window's upper-left corner when the window is minimized.
                 /// </summary>
-                    public Point PtMinPosition;
-                    /// <summary>
+                public Point PtMinPosition;
+                /// <summary>
                 /// Type: POINT
                 /// The coordinates of the window's upper-left corner when the window is maximized.
                 /// </summary>
-                    public Point PtMaxPosition;
-                    /// <summary>
+                public Point PtMaxPosition;
+                /// <summary>
                 /// Type: RECT
                 /// The window's coordinates when the window is in the restored position.
                 /// </summary>
-                    public Rect RcNormalPosition;
-                }
+                public Rect RcNormalPosition;
+            }
 
-                public enum WindowShowState : uint
-                {
+            public enum WindowShowState : uint
+            {
 
-                    /// <summary>
+                /// <summary>
                 /// Hides the window and activates another window.
                 /// </summary>
-                    Hide = 0,
-                    /// <summary>
+                Hide = 0,
+                /// <summary>
                 /// Maximizes the specified window.
                 /// </summary>
-                    Maximize = 3,
-                    /// <summary>
+                Maximize = 3,
+                /// <summary>
                 /// Minimizes the specified window and activates the next top-level window in the z-order.
                 /// </summary>
-                    Minimize = 6,
-                    /// <summary>
+                Minimize = 6,
+                /// <summary>
                 /// Activates and displays the window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when restoring a minimized window.
                 /// </summary>
-                    Restore = 9,
-                    /// <summary>
+                Restore = 9,
+                /// <summary>
                 /// Activates the window and displays it in its current size and position.
                 /// </summary>
-                    Show = 5,
-                    /// <summary>
+                Show = 5,
+                /// <summary>
                 /// Activates the window and displays it as a maximized window.
                 /// </summary>
-                    ShowMaximized = 3,
-                    /// <summary>
+                ShowMaximized = 3,
+                /// <summary>
                 /// Activates the window and displays it as a minimized window.
                 /// </summary>
-                    ShowMinimized = 2,
-                    /// <summary>
+                ShowMinimized = 2,
+                /// <summary>
                 /// Displays the window as a minimized window.
                 /// This value is similar to SW_SHOWMINIMIZED, except the window is not activated.
                 /// </summary>
-                    ShowMinNoActive = 7,
-                    /// <summary>
+                ShowMinNoActive = 7,
+                /// <summary>
                 /// Displays the window in its current size and position.
                 /// This value is similar to SW_SHOW, except the window is not activated.
                 /// </summary>
-                    ShowNA = 8,
-                    /// <summary>
+                ShowNA = 8,
+                /// <summary>
                 /// Displays a window in its most recent size and position.
                 /// This value is similar to SW_SHOWNORMAL, except the window is not activated.
                 /// </summary>
-                    ShowNoActivate = 4,
-                    /// <summary>
+                ShowNoActivate = 4,
+                /// <summary>
                 /// Activates and displays a window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when displaying the window for the first time.
                 /// </summary>
-                    Shownormal = 1
-                }
+                Shownormal = 1
+            }
 
-                public enum WindowPlacementFlags : uint
-                {
+            public enum WindowPlacementFlags : uint
+            {
 
-                    /// <summary>
+                /// <summary>
                 /// If the calling thread and the thread that owns the window are attached to different input queues, the system posts the request to the thread that owns the window. This prevents the calling thread from blocking its execution while other threads process the request.
                 /// </summary>
-                    CWindowPlacement = 0x4,
-                    /// <summary>
+                CWindowPlacement = 0x4,
+                /// <summary>
                 /// The restored window will be maximized, regardless of whether it was maximized before it was minimized. This setting is only valid the next time the window is restored. It does not change the default restoration behavior.
                 /// This flag is only valid when the SW_SHOWMINIMIZED value is specified for the showCmd member.
                 /// </summary>
-                    RestoreToMaximized = 0x2,
-                    /// <summary>
+                RestoreToMaximized = 0x2,
+                /// <summary>
                 /// The coordinates of the minimized window may be specified.
                 /// This flag must be specified if the coordinates are set in the ptMinPosition member.
                 /// </summary>
-                    SetMinPosition = 0x1
-                }
+                SetMinPosition = 0x1
             }
         }
     }
+}

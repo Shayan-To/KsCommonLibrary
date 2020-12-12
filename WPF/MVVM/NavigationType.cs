@@ -1,8 +1,8 @@
 ﻿namespace Ks.Common.MVVM
 {
-        public enum NavigationType
-        {
-            NewNavigation,
-            BackNavigation
-        }
+    public enum NavigationType
+    {
+        NewNavigation,
+        BackNavigation
     }
+}

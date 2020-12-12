@@ -1,7 +1,7 @@
 ﻿namespace Ks.Common.MVVM
 {
-        internal interface INavigationView
-        {
-            Controls.Page Content { get; set; }
-        }
+    internal interface INavigationView
+    {
+        Controls.Page Content { get; set; }
     }
+}

@@ -2,22 +2,22 @@
 
 namespace Ks.Common
 {
-        public static class DefaultCacher<T> where T : new()
+    public static class DefaultCacher<T> where T : new()
+    {
+
+        public static void SetValue(T Value)
         {
+            _Value.Value = Value;
+        }
 
-            public static void SetValue(T Value)
+        private static readonly System.Threading.ThreadLocal<T> _Value = new System.Threading.ThreadLocal<T>(() => new T());
+
+        public static T Value
+        {
+            get
             {
-                _Value.Value = Value;
-            }
-
-            private static readonly System.Threading.ThreadLocal<T> _Value = new System.Threading.ThreadLocal<T>(() => new T());
-
-            public static T Value
-            {
-                get
-                {
-                    return _Value.Value;
-                }
+                return _Value.Value;
             }
         }
     }
+}

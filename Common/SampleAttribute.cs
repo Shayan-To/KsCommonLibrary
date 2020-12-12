@@ -2,8 +2,8 @@
 
 namespace Ks.Common
 {
-        [AttributeUsage(AttributeTargets.All)]
-        public class SampleAttribute : Attribute
-        {
-        }
+    [AttributeUsage(AttributeTargets.All)]
+    public class SampleAttribute : Attribute
+    {
     }
+}

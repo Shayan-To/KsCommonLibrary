@@ -2,11 +2,11 @@
 
 namespace Ks.Common
 {
-        public sealed class Void
+    public sealed class Void
+    {
+        private Void()
         {
-            private Void()
-            {
-                throw new NotSupportedException();
-            }
+            throw new NotSupportedException();
         }
     }
+}
