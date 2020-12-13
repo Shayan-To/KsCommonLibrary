@@ -130,8 +130,8 @@ namespace Ks
                 Common.VerifyError();
             }
 
-            private const int GetAncestorConstant = 100;
-            private const int GetWindowConstant = 200;
+            private const uint GetAncestorConstant = 100;
+            private const uint GetWindowConstant = 200;
 
             public enum AncestorKind : uint
             {
@@ -144,17 +144,17 @@ namespace Ks
                 /// <summary>
             /// Retrieve the parent window. This does not include the owner.
             /// </summary>
-                Parent = Conversions.ToUInteger(GetAncestorConstant + 1),
+                Parent = GetAncestorConstant + 1,
 
                 /// <summary>
             /// Retrieve the root window by walking the chain of parent windows.
             /// </summary>
-                Root = Conversions.ToUInteger(GetAncestorConstant + 2),
+                Root = GetAncestorConstant + 2,
 
                 /// <summary>
             /// Retrieve the owned root window by walking the chain of parent/owner windows.
             /// </summary>
-                RootOwner = Conversions.ToUInteger(GetAncestorConstant + 3),
+                RootOwner = GetAncestorConstant + 3,
 
                 /// <summary>
             /// Retrieve the window of the same type that is highest in the Z order.
@@ -162,7 +162,7 @@ namespace Ks
             /// If the specified window is a top-level window, the handle identifies a top-level window.
             /// If the specified window is a child window, the handle identifies a sibling window.
             /// </summary>
-                HwndFirst = Conversions.ToUInteger(GetWindowConstant + 0),
+                HwndFirst = GetWindowConstant + 0,
 
                 /// <summary>
             /// Retrieve the window of the same type that is lowest in the Z order.
@@ -170,7 +170,7 @@ namespace Ks
             /// If the specified window is a top-level window, the handle identifies a top-level window.
             /// If the specified window is a child window, the handle identifies a sibling window.
             /// </summary>
-                HwndLast = Conversions.ToUInteger(GetWindowConstant + 1),
+                HwndLast = GetWindowConstant + 1,
 
                 /// <summary>
             /// Retrieve the window below the specified window in the Z order.
@@ -178,7 +178,7 @@ namespace Ks
             /// If the specified window is a top-level window, the handle identifies a top-level window.
             /// If the specified window is a child window, the handle identifies a sibling window.
             /// </summary>
-                HwndNext = Conversions.ToUInteger(GetWindowConstant + 2),
+                HwndNext = GetWindowConstant + 2,
 
                 /// <summary>
             /// Retrieve the window above the specified window in the Z order.
@@ -186,25 +186,25 @@ namespace Ks
             /// If the specified window is a top-level window, the handle identifies a top-level window.
             /// If the specified window is a child window, the handle identifies a sibling window.
             /// </summary>
-                HwndPrev = Conversions.ToUInteger(GetWindowConstant + 3),
+                HwndPrev = GetWindowConstant + 3,
 
                 /// <summary>
             /// Retrieve the specified window's owner window, if any. For more information, see Owned Windows.
             /// </summary>
-                Owner = Conversions.ToUInteger(GetWindowConstant + 4),
+                Owner = GetWindowConstant + 4,
 
                 /// <summary>
             /// Retrieve the child window at the top of the Z order, if the specified window is a parent window;
             /// otherwise, the retrieved handle is NULL.
             /// The function examines only child windows of the specified window. It does not examine descendant windows.
             /// </summary>
-                Child = Conversions.ToUInteger(GetWindowConstant + 5),
+                Child = GetWindowConstant + 5,
 
                 /// <summary>
             /// Retrieve the enabled popup window owned by the specified window (the search uses the first such window found using GW_HWNDNEXT);
             /// otherwise, if there are no enabled popup windows, the retrieved handle is that of the specified window.
             /// </summary>
-                EnabledPopup = Conversions.ToUInteger(GetWindowConstant + 6)
+                EnabledPopup = GetWindowConstant + 6
             }
 
             /// <summary>

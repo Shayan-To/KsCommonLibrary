@@ -64,7 +64,7 @@ namespace Ks
                 public static (ulong Low, ulong High) MultLongTo128U(ulong A, ulong B)
                 {
                     const int N = 32;
-                    const ulong NMask = System.Convert.ToUInt64(((decimal)(1UL << N) - (decimal)1));
+                    const ulong NMask = (1UL << N) - 1;
 
                     // A long has enough space to hold (int * int + 2 * int).
                     // Proof:
