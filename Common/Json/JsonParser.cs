@@ -217,7 +217,7 @@ namespace Ks
                     this.Index += 1;
             }
 
-            private static readonly Dictionary<char, char> EscapeDic = (() => new Dictionary<char, char>()
+            private static readonly Dictionary<char, char> EscapeDic = new Dictionary<char, char>()
             {
                 {
                     '"',
@@ -251,7 +251,7 @@ namespace Ks
                     't',
                     (char)0x9
                 }
-            }).Invoke();
+            };
             private static readonly char[] Operators = "{}[],:".ToCharArray();
 
             private readonly System.Text.StringBuilder StringBuilder = new System.Text.StringBuilder();

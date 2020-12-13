@@ -179,7 +179,7 @@ namespace Ks
                 this.CurrentIndent = 0;
             }
 
-            private static readonly Dictionary<char, char> EscapeDic = (() => new Dictionary<char, char>()
+            private static readonly Dictionary<char, char> EscapeDic = new Dictionary<char, char>()
             {
                 {
                     '"',
@@ -213,7 +213,7 @@ namespace Ks
                     (char)0x9,
                     't'
                 }
-            }).Invoke();
+            };
 
             private readonly System.IO.TextWriter Out;
             private readonly bool LeaveOpen;

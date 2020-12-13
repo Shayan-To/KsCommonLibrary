@@ -228,7 +228,7 @@ namespace Ks
                 this.HasValueBefore = false;
             }
 
-            private static readonly Dictionary<char, string> EscapeDic = (() => new Dictionary<char, string>()
+            private static readonly Dictionary<char, string> EscapeDic = new Dictionary<char, string>()
             {
                 {
                     '"',
@@ -250,7 +250,7 @@ namespace Ks
                     '>',
                     "&gt;"
                 }
-            }).Invoke();
+            };
 
             private readonly System.IO.TextWriter Out;
             private readonly bool LeaveOpen;

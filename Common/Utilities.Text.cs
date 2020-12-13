@@ -20,7 +20,7 @@ namespace Ks
                     throw new NotSupportedException();
                 }
 
-                private static readonly Dictionary<char, char> EscapeDic = (() => new Dictionary<char, char>()
+                private static readonly Dictionary<char, char> EscapeDic = new Dictionary<char, char>()
                 {
                     {
                         '0',
@@ -70,7 +70,7 @@ namespace Ks
                         'v',
                         (char)0xB
                     }
-                }).Invoke();
+                };
 
                 public static bool IsBinaryDigit(char C)
                 {
