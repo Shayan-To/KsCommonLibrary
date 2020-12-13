@@ -37,7 +37,7 @@ namespace Ks
                     },
                     {
                         '\\',
-                        (char)0x5
+                        (char)0x5C
                     },
                     {
                         'a',
@@ -49,7 +49,7 @@ namespace Ks
                     },
                     {
                         'f',
-                        (char)&H
+                        (char)0xC
                     },
                     {
                         'n',

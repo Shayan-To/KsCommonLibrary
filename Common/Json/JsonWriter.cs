@@ -198,7 +198,7 @@ namespace Ks
                     'b'
                 },
                 {
-                    (char)&H,
+                    (char)0xC,
                     'f'
                 },
                 {

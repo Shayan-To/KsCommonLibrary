@@ -233,7 +233,7 @@ namespace Ks
                 },
                 {
                     'f',
-                    (char)&H
+                    (char)0xC
                 },
                 {
                     'n',
