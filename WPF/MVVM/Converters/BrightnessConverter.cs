@@ -56,12 +56,12 @@ namespace Ks
                     N = 0;
                 if (N > 255)
                     N = 255;
-                return System.Convert.ToByte(N);
+                return (byte)N;
             }
 
             public Color Convert(Color C, double Parameter = 0.0)
             {
-                var P = System.Convert.ToInt32((Parameter * 255 * this.Coeff));
+                var P = System.Convert.ToInt32(Parameter * 255 * this.Coeff);
                 return Color.FromArgb(C.A, GetByte(C.R + P), GetByte(C.G + P), GetByte(C.B + P));
             }
 

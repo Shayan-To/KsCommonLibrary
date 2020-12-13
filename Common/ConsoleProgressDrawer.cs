@@ -33,7 +33,7 @@ namespace Ks
                 {
                     var Width = Console.WindowWidth - 1;
                     var ProgWidth = Math.Min(Width - TextBefore.Length - TextAfter.Length - 2, 100);
-                    var ProgFull = System.Convert.ToInt32(((double)ProgWidth / this.Total * this.Amount));
+                    var ProgFull = Convert.ToInt32((double)ProgWidth / this.Total * this.Amount);
                     var ProgEmp = ProgWidth - ProgFull;
 
                     Console.Write(new string('#', ProgFull));

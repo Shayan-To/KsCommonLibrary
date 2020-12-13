@@ -17,7 +17,7 @@ namespace Ks
                     C = B.Color;
                 else
                     C = (Color)Value;
-                var P = System.Convert.ToByte(255);
+                var P = (byte)255;
                 if (Parameter != null)
                     P = System.Convert.ToByte(Parameter);
                 C = Color.FromArgb(P, C.R, C.G, C.B);
@@ -34,7 +34,7 @@ namespace Ks
                     C = B.Color;
                 else
                     C = (Color)Value;
-                var P = System.Convert.ToByte(255);
+                var P = (byte)255;
                 if (Parameter != null)
                     P = System.Convert.ToByte(Parameter);
                 C = Color.FromArgb(P, C.R, C.G, C.B);

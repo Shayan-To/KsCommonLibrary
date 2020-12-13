@@ -396,7 +396,7 @@ namespace Ks
                 public static string ConvertToBaseU(ulong N, char[] Digits)
                 {
                     var Res = new List<char>();
-                    var Base = System.Convert.ToUInt32(Digits.Length);
+                    var Base = (uint)Digits.Length;
 
                     while (N != 0)
                     {
@@ -414,7 +414,7 @@ namespace Ks
                     var I = 0;
 
                     var Res = 0UL;
-                    var Base = System.Convert.ToUInt32(Digits.Length);
+                    var Base = (uint)Digits.Length;
                     var loopTo = N.Length - 1;
                     for (I = I; I <= loopTo; I++)
                     {
@@ -525,7 +525,7 @@ namespace Ks
                             C = C & ((1 << Size) - 1);
                             T = (T << Size) | C;
 
-                            Res[Index] = System.Convert.ToByte(T);
+                            Res[Index] = (byte)T;
 
                             T = 0;
                             Offset = 0;

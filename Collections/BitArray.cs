@@ -51,7 +51,7 @@ namespace Ks
                 var loopTo = this._Bytes.Length - 1;
                 for (var I = 0; I <= loopTo; I++)
                     this._Bytes[I] = (byte)~this._Bytes[I];
-                this._Bytes[this._Bytes.Length - 1] = System.Convert.ToByte((this._Bytes[this._Bytes.Length - 1] & ((1 << this.LastByteBitCount()) - 1)));
+                this._Bytes[this._Bytes.Length - 1] = (byte)(this._Bytes[this._Bytes.Length - 1] & ((1 << this.LastByteBitCount()) - 1));
             }
 
             protected override IEnumerator<bool> _GetEnumerator()
@@ -85,7 +85,7 @@ namespace Ks
                 int B = (int)this._Bytes[Index >> 3];
                 var I = Index & 7;
                 B = B | (1 << I);
-                this._Bytes[Index >> 3] = System.Convert.ToByte(B);
+                this._Bytes[Index >> 3] = (byte)B;
             }
 
             public void SetZero(int Index)
@@ -95,7 +95,7 @@ namespace Ks
                 int B = (int)this._Bytes[Index >> 3];
                 var I = Index & 7;
                 B = B & ~(1 << I);
-                this._Bytes[Index >> 3] = System.Convert.ToByte(B);
+                this._Bytes[Index >> 3] = (byte)B;
             }
 
             public override bool this[int index]
@@ -115,7 +115,7 @@ namespace Ks
                     int B = (int)this._Bytes[index >> 3];
                     var I = index & 7;
                     B = (B & ~(1 << I)) | ((value ? 1 : 0) << I);
-                    this._Bytes[index >> 3] = System.Convert.ToByte(B);
+                    this._Bytes[index >> 3] = (byte)B;
                 }
             }
 
@@ -128,7 +128,7 @@ namespace Ks
                 (self, Index, value) =>
                 {
                     if (Index == (self._Bytes.Length - 1))
-                        value = System.Convert.ToByte((value & ((1 << self.LastByteBitCount()) - 1)));
+                        value = (byte)(value & ((1 << self.LastByteBitCount()) - 1));
                     self._Bytes[Index] = value;
                 }
             );

@@ -30,7 +30,7 @@ namespace Ks
 
                     if (Ch < 128)
                     {
-                        BytesArray[BytesIndex] = System.Convert.ToByte(Ch);
+                        BytesArray[BytesIndex] = (byte)Ch;
                         BytesIndex += 1;
                         continue;
                     }
@@ -39,7 +39,7 @@ namespace Ks
 
                     do
                     {
-                        T[I] = System.Convert.ToByte(((2 << 6) | (Ch & ((1 << 6) - 1))));
+                        T[I] = (byte)((2 << 6) | (Ch & ((1 << 6) - 1)));
                         Ch >>= 6;
                         I += 1;
                     }
@@ -47,7 +47,7 @@ namespace Ks
 
                     // We are having 6 - I bits remaining.
                     // So we have to make 7 - I zeros at the end of the byte.
-                    T[I] = System.Convert.ToByte(((255 ^ ((1 << (7 - I)) - 1)) | Ch));
+                    T[I] = (byte)((255 ^ ((1 << (7 - I)) - 1)) | Ch);
                     I += 1;
 
                     if ((BytesIndex + I) >= BytesLength)

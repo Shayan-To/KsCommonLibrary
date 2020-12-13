@@ -90,7 +90,7 @@ namespace Ks
             {
                 this.GetRandomBytes(this.Tmp, 0, 1);
                 this.Tmp[1] = 0;
-                return System.Convert.ToSByte(BitConverter.ToUInt16(this.Tmp, 0));
+                return (sbyte)BitConverter.ToUInt16(this.Tmp, 0);
             }
 
             public byte[] GetRandomBytes(int Count)

@@ -56,7 +56,7 @@ namespace Ks.Tests
                 public void MultLongTo128USmallCheck(uint A, uint B)
                 {
                     var T = Utilities.Math.MultLongTo128U(A, B);
-                    Assert.Equal(System.Convert.ToUInt64(A) * B, T.Low);
+                    Assert.Equal((ulong)A * B, T.Low);
                 }
 
                 [Property()]

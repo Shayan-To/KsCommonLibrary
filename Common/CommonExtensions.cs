@@ -1261,7 +1261,7 @@ namespace Ks
                     if (Length == -1)
                         N = Stream.Read(Buffer, 0, Buffer.Length);
                     else
-                        N = Stream.Read(Buffer, 0, System.Convert.ToInt32(Math.Min(Length, Buffer.Length)));
+                        N = Stream.Read(Buffer, 0, (int)Math.Min(Length, Buffer.Length));
                     if (N == 0)
                         break;
                     Self.Write(Buffer, 0, N);

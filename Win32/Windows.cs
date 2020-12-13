@@ -97,7 +97,7 @@ namespace Ks
 
             public static Process GetWindowProcess(IntPtr hwnd)
             {
-                return Process.GetProcessById(System.Convert.ToInt32(GetWindowThreadProcessId(hwnd).ProcessId));
+                return Process.GetProcessById((int)GetWindowThreadProcessId(hwnd).ProcessId);
             }
 
             public static IntPtr WindowFromPoint(Point p)

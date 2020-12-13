@@ -149,17 +149,17 @@ namespace Ks
             private Point CreatePoint(double X, double Y, Orientation Orientation)
             {
                 if (Orientation == Orientation.X)
-                    return new Point(System.Convert.ToInt32(X), System.Convert.ToInt32(Y));
+                    return new Point(Convert.ToInt32(X), Convert.ToInt32(Y));
                 else
-                    return new Point(System.Convert.ToInt32(Y), System.Convert.ToInt32(X));
+                    return new Point(Convert.ToInt32(Y), Convert.ToInt32(X));
             }
 
             private Size CreateSize(double Width, double Height, Orientation Orientation)
             {
                 if (Orientation == Orientation.X)
-                    return new Size(System.Convert.ToInt32(Width), System.Convert.ToInt32(Height));
+                    return new Size(Convert.ToInt32(Width), Convert.ToInt32(Height));
                 else
-                    return new Size(System.Convert.ToInt32(Height), System.Convert.ToInt32(Width));
+                    return new Size(Convert.ToInt32(Height), Convert.ToInt32(Width));
             }
 
             private double ConvertValue(double Value, Orientation Orientation)

@@ -623,7 +623,7 @@ namespace Ks
             /// </remarks>
                 public struct WindowPlacement
                 {
-                    public static readonly uint ActualLength = System.Convert.ToUInt32(Marshal.SizeOf<WindowPlacement>());
+                    public static readonly uint ActualLength = (uint)Marshal.SizeOf<WindowPlacement>();
 
                     public void Init()
                     {
