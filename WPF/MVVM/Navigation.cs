@@ -1,0 +1,150 @@
+﻿using System;
+using System.Windows.Input;
+
+namespace Ks
+{
+    namespace Common.MVVM
+    {
+        public class Navigation : System.Windows.Markup.MarkupExtension, ICommand
+        {
+            public Navigation()
+            {
+            }
+
+            public Navigation(Type ViewType)
+            {
+                this.ViewType = ViewType;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public void Execute(object parameter)
+            {
+                var KsApplication = this.GetKsApplication();
+                KsApplication.NavigateTo(this.GetParent(), KsApplication.GetViewModel(this.ViewType), this.AddToStack, this.ForceToStack);
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            private NavigationViewModel GetParent()
+            {
+                var T = this.Parent;
+                if (T != null)
+                    return T;
+                var T2 = this.ParentType;
+                if (T2 != null)
+                    return (NavigationViewModel)this.GetKsApplication().GetViewModel(T2);
+                return this.GetKsApplication().DefaultNavigationView;
+            }
+
+            private KsApplication GetKsApplication()
+            {
+                return this.KsApplication ?? KsApplication.Current;
+            }
+
+            public override object ProvideValue(IServiceProvider serviceProvider)
+            {
+                return this;
+            }
+
+            private bool _AddToStack = true;
+
+            public bool AddToStack
+            {
+                get
+                {
+                    return this._AddToStack;
+                }
+                set
+                {
+                    this._AddToStack = value;
+                }
+            }
+
+            private bool _ForceToStack = false;
+
+            public bool ForceToStack
+            {
+                get
+                {
+                    return this._ForceToStack;
+                }
+                set
+                {
+                    this._ForceToStack = value;
+                }
+            }
+
+            private Type _ViewType;
+
+            public Type ViewType
+            {
+                get
+                {
+                    return this._ViewType;
+                }
+                set
+                {
+                    if (value == null || !typeof(ViewModel).IsAssignableFrom(value))
+                        value = null;
+
+                    this._ViewType = value;
+                }
+            }
+
+            private Type _ParentType;
+
+            public Type ParentType
+            {
+                get
+                {
+                    return this._ParentType;
+                }
+                set
+                {
+                    if (this.Parent != null)
+                        value = null;
+
+                    if (value == null || !typeof(NavigationViewModel).IsAssignableFrom(value))
+                        value = null;
+
+                    this._ParentType = value;
+                }
+            }
+
+            private NavigationViewModel _Parent;
+
+            public NavigationViewModel Parent
+            {
+                get
+                {
+                    return this._Parent;
+                }
+                set
+                {
+                    if (this.ParentType != null)
+                        value = null;
+
+                    this._Parent = value;
+                }
+            }
+
+            private KsApplication _KsApplication;
+
+            public KsApplication KsApplication
+            {
+                get
+                {
+                    return this._KsApplication;
+                }
+                set
+                {
+                    this._KsApplication = value;
+                }
+            }
+        }
+    }
+}
