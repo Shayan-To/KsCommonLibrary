@@ -2,7 +2,7 @@ using System.Drawing;
 
 using Ks.Common;
 
-namespace Ks.ConsoleTests
+namespace Ks.Tests
 {
     public static class OnScreenDrawerTest
     {

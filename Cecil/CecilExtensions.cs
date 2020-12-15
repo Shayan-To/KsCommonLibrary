@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 
-namespace Ks.Common
+namespace Ks.Cecil
 {
     public static class CecilExtensions
     {

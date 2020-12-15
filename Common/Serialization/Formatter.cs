@@ -6,10 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Xml.Linq;
-
-using Mono;
 
 namespace Ks.Common
 {

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>Ks.Tests</RootNamespace>
     <LangVersion>Preview</LangVersion>
     <Nullable>Enable</Nullable>
@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tests\KsCommonLibrary.Tests.csproj" />
+    <ProjectReference Include="..\UI\WPF\KsCommonLibrary.WPF.csproj" />
+    <ProjectReference Include="..\UI\WinForms\KsCommonLibrary.WinForms.csproj" />
   </ItemGroup>
 
 </Project>

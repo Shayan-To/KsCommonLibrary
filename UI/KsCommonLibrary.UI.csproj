@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Ks.Common</RootNamespace>
+    <LangVersion>Preview</LangVersion>
+    <Nullable>Enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Avalonia\**" />
+    <Compile Remove="WinForms\**" />
+    <Compile Remove="WPF\**" />
+    <EmbeddedResource Remove="Avalonia\**" />
+    <EmbeddedResource Remove="WinForms\**" />
+    <EmbeddedResource Remove="WPF\**" />
+    <None Remove="Avalonia\**" />
+    <None Remove="WinForms\**" />
+    <None Remove="WPF\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="ReactiveUI" Version="12.1.5" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Heavy\KsCommonLibrary.Heavy.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -231,11 +231,6 @@ namespace Ks.Common
         {
         }
 
-        public override System.Runtime.Remoting.ObjRef CreateObjRef(Type requestedType)
-        {
-            return null;
-        }
-
         protected override void Dispose(bool disposing)
         {
         }

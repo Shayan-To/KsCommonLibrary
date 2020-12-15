@@ -340,11 +340,6 @@ namespace Ks.Common
             }
         }
 
-        public override System.Runtime.Remoting.ObjRef CreateObjRef(Type requestedType)
-        {
-            throw new NotSupportedException();
-        }
-
         protected override void Dispose(bool disposing)
         {
             foreach (var B in this.Bases)

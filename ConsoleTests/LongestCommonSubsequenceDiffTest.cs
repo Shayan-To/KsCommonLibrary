@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 using Ks.Common;
 
-namespace Ks.ConsoleTests
+namespace Ks.Tests
 {
     public static class LongestCommonSubsequenceTest
     {
         [InteractiveRunnable(true)]
         public static void Start()
         {
-            var Path1 = Console.ReadLine();
-            var Path2 = Console.ReadLine();
+            var Path1 = Console.ReadLine() ?? throw new EndOfStreamException();
+            var Path2 = Console.ReadLine() ?? throw new EndOfStreamException();
 
             var File1 = System.IO.File.ReadAllLines(Path1, System.Text.Encoding.UTF8);
             var File2 = System.IO.File.ReadAllLines(Path2, System.Text.Encoding.UTF8);
@@ -58,9 +59,9 @@ namespace Ks.ConsoleTests
 
         public class StringComparer : EqualityComparer<string>
         {
-            public override bool Equals(string x, string y)
+            public override bool Equals(string? x, string? y)
             {
-                return x.Trim() == y.Trim(); // x.GetHashCode() = y.GetHashCode()
+                return x?.Trim() == y?.Trim(); // x.GetHashCode() = y.GetHashCode()
             }
 
             public override int GetHashCode(string obj)

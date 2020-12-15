@@ -11,8 +11,6 @@ using System.Xml.Linq;
 
 using Ks.Common.MVVM;
 
-using Mono;
-
 namespace Ks.Common.Controls
 {
 

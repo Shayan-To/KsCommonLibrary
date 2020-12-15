@@ -4,7 +4,7 @@ namespace Ks.Common.MVVM
 {
     public class BindableBase : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected bool SetProperty<T>(ref T Source, T Value, [System.Runtime.CompilerServices.CallerMemberName()] string PropertyName = null)
         {

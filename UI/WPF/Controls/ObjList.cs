@@ -9,8 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
 
-using Mono;
-
 namespace Ks.Common.Controls
 {
     public class ObjList : BaseList<Obj>, System.Windows.Markup.IAddChild

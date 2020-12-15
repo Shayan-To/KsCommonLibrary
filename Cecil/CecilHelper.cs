@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace Ks.Common
+namespace Ks.Cecil
 {
     public class CecilHelper
     {

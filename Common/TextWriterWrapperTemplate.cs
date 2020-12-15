@@ -225,11 +225,6 @@ namespace Ks.Common
             this.Base.Close();
         }
 
-        public override System.Runtime.Remoting.ObjRef CreateObjRef(Type requestedType)
-        {
-            return this.Base.CreateObjRef(requestedType);
-        }
-
         protected override void Dispose(bool disposing)
         {
             this.Base.Dispose();

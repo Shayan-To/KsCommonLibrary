@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Text;
 
-using Media = System.Windows.Media;
 using Reflect = System.Reflection;
 using SIO = System.IO;
 
@@ -12,11 +11,6 @@ namespace Ks.Common
     {
         public static class Debug
         {
-
-            public static void ShowMessageBox(string text, string caption = "")
-            {
-                System.Windows.Forms.MessageBox.Show(text, caption);
-            }
 
             public static string CompactStackTrace(int Count)
             {
