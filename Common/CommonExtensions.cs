@@ -1862,6 +1862,46 @@ namespace Ks.Common
             key = kv.Key;
             value = kv.Value;
         }
+
+        public static void Deconstruct<T>(this T[] arr, out T e0)
+        {
+            Verify.True(arr.Length == 1);
+            e0 = arr[0];
+        }
+
+        public static void Deconstruct<T>(this T[] arr, out T e0, out T e1)
+        {
+            Verify.True(arr.Length == 2);
+            e0 = arr[0];
+            e1 = arr[1];
+        }
+
+        public static void Deconstruct<T>(this T[] arr, out T e0, out T e1, out T e2)
+        {
+            Verify.True(arr.Length == 3);
+            e0 = arr[0];
+            e1 = arr[1];
+            e2 = arr[2];
+        }
+
+        public static void Deconstruct<T>(this T[] arr, out T e0, out T e1, out T e2, out T e3)
+        {
+            Verify.True(arr.Length == 4);
+            e0 = arr[0];
+            e1 = arr[1];
+            e2 = arr[2];
+            e3 = arr[3];
+        }
+
+        public static void Deconstruct<T>(this T[] arr, out T e0, out T e1, out T e2, out T e3, out T e4)
+        {
+            Verify.True(arr.Length == 5);
+            e0 = arr[0];
+            e1 = arr[1];
+            e2 = arr[2];
+            e3 = arr[3];
+            e4 = arr[4];
+        }
     }
 
     public delegate int Comparison<in T1, in T2>(T1 x, T2 y);
