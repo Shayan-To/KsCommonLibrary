@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Ks.Analyzers</RootNamespace>
+    <LangVersion>Preview</LangVersion>
+    <Nullable>Enable</Nullable>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <NoWarn>$(NoWarn);NU5128;NU5104</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" />
+    <!--<PackageReference Include="System.IO.Abstractions" Version="12.2.19" GeneratePathProperty="true" PrivateAssets="all" />-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Heavy\KsCommonLibrary.Heavy.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!--<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />-->
+    <None Include="$(OutputPath)\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+  </PropertyGroup>
+
+  <Target Name="GetDependencyTargetPaths">
+    <ItemGroup>
+      <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\$(OutputPath)\KsCommonLibrary.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\$(OutputPath)\KsCommonLibrary.Heavy.dll" IncludeRuntimeDependency="false" />
+      <!--<TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_IO_Abstractions)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />-->
+    </ItemGroup>
+  </Target>
+
+</Project>
