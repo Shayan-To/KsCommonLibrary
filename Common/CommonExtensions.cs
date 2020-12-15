@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
 using Ks.Common.Geometry;
@@ -1684,6 +1685,25 @@ namespace Ks.Common
             }
         }
 
+        public static System.Reflection.MemberInfo GetAccessedMemberInfo(this LambdaExpression self)
+        {
+            var parameter = self.Parameters.Single();
+
+            var exp = self.Body;
+            if (exp.NodeType == ExpressionType.Convert || exp.NodeType == ExpressionType.ConvertChecked)
+            {
+                exp = ((UnaryExpression) exp).Operand;
+            }
+
+            if (exp.NodeType == ExpressionType.MemberAccess || exp.NodeType == ExpressionType.Index)
+            {
+                var access = (MemberExpression) exp;
+                Verify.True(access.Expression == parameter, "Expression must consist of a single member access.");
+                return access.Member;
+            }
+
+            throw new NotSupportedException();
+        }
         #endregion
 
         #region IO Group
