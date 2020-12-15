@@ -1856,6 +1856,12 @@ namespace Ks.Common
         {
             return !B1 | B2;
         }
+
+        public static void Deconstruct<TKey, TValue>(this KeyValuePair<TKey, TValue> kv, out TKey key, out TValue value)
+        {
+            key = kv.Key;
+            value = kv.Value;
+        }
     }
 
     public delegate int Comparison<in T1, in T2>(T1 x, T2 y);
