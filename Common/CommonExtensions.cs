@@ -361,6 +361,14 @@ namespace Ks.Common
             }
         }
 
+        public static IEnumerable<T> ToEnumerable<T>(this IEnumerator<T> self)
+        {
+            while (self.MoveNext())
+            {
+                yield return self.Current;
+            }
+        }
+
         public static IEnumerable<T> TakeLast2<T>(this IEnumerable<T> self, int count)
         {
             if (count <= 0)
