@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+
 using Ks.Common;
 
 namespace Ks.ConsoleTests

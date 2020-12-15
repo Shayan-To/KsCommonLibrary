@@ -1,93 +1,78 @@
-﻿using System.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
+    public class Timer
     {
-        public class Timer
+        public Timer(Action Callback, TimeSpan Interval)
         {
-            public Timer(Action Callback, TimeSpan Interval)
+            this.Callback = Callback;
+            this.Interval = Interval;
+        }
+
+        public Timer(Action Callback, int IntervalMillis) : this(Callback, TimeSpan.FromMilliseconds(IntervalMillis))
+        {
+        }
+
+        public async void Start()
+        {
+            Verify.False(this.IsRunning, "Cannot start an already started timer.");
+            this._IsRunning = true;
+
+            if (this.RunAtStart)
             {
-                this.Callback = Callback;
-                this.Interval = Interval;
+                this.Callback.Invoke();
             }
 
-            public Timer(Action Callback, int IntervalMillis) : this(Callback, TimeSpan.FromMilliseconds(IntervalMillis))
+            while (true)
             {
-            }
-
-            public async void Start()
-            {
-                Verify.False(this.IsRunning, "Cannot start an already started timer.");
-                this._IsRunning = true;
-
-                if (this.RunAtStart)
-                    this.Callback.Invoke();
-
-                while (true)
+                await Task.Delay(this.Interval);
+                if (!this.IsRunning)
                 {
-                    await Task.Delay(this.Interval);
-                    if (!this.IsRunning)
-                        break;
-                    this.Callback.Invoke();
+                    break;
                 }
+
+                this.Callback.Invoke();
             }
+        }
 
-            public void Stop()
+        public void Stop()
+        {
+            this._IsRunning = false;
+        }
+
+        private TimeSpan _Interval;
+
+        public TimeSpan Interval
+        {
+            get => this._Interval;
+            set => this._Interval = value;
+        }
+
+        private bool _IsRunning;
+
+        public bool IsRunning
+        {
+            get => this._IsRunning;
+            set
             {
-                this._IsRunning = false;
-            }
-
-            private TimeSpan _Interval;
-
-            public TimeSpan Interval
-            {
-                get
+                if (value != this._IsRunning)
                 {
-                    return this._Interval;
-                }
-                set
-                {
-                    this._Interval = value;
-                }
-            }
-
-            private bool _IsRunning;
-
-            public bool IsRunning
-            {
-                get
-                {
-                    return this._IsRunning;
-                }
-                set
-                {
-                    if (value != this._IsRunning)
+                    if (value)
                     {
-                        if (value)
-                            this.Start();
-                        else
-                            this.Stop();
+                        this.Start();
+                    }
+                    else
+                    {
+                        this.Stop();
                     }
                 }
             }
-
-            private bool _RunAtStart;
-
-            public bool RunAtStart
-            {
-                get
-                {
-                    return this._RunAtStart;
-                }
-                set
-                {
-                    this._RunAtStart = value;
-                }
-            }
-
-            private readonly Action Callback;
         }
+
+        public bool RunAtStart { get; set; }
+
+        private readonly Action Callback;
     }
 }

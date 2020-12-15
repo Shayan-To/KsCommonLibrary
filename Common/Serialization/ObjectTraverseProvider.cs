@@ -1,40 +1,29 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
+    public abstract class ObjectTraverseProvider
     {
-        public abstract class ObjectTraverseProvider
+        protected abstract IEnumerable<Void> GetSetPropertiesOverride(PropertyTraverseHandler Handler);
+    }
+
+
+    public class PropertyTraverseHandler
+    {
+    }
+
+    public struct PropertyTraverseCurrent
+    {
+        public PropertyTraverseCurrent(PropertyTraverseHandler Handler)
         {
-            protected abstract IEnumerable<Void> GetSetPropertiesOverride(PropertyTraverseHandler Handler);
+            this.Handler = Handler;
         }
 
+        public PropertyTraverseHandler Handler { get; }
+    }
 
-        public class PropertyTraverseHandler
-        {
-        }
-
-        public struct PropertyTraverseCurrent
-        {
-            public PropertyTraverseCurrent(PropertyTraverseHandler Handler)
-            {
-                this._Handler = Handler;
-            }
-
-            private readonly PropertyTraverseHandler _Handler;
-
-            public PropertyTraverseHandler Handler
-            {
-                get
-                {
-                    return this._Handler;
-                }
-            }
-        }
-
-        public interface PropertyTraverseProcessor
-        {
-            void Process<T>(PropertyTraverseHandler Prop);
-        }
+    public interface PropertyTraverseProcessor
+    {
+        void Process<T>(PropertyTraverseHandler Prop);
     }
 }

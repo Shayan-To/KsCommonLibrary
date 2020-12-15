@@ -1,76 +1,94 @@
-﻿using Mono;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+
+using Mono;
+
 using Media = System.Windows.Media;
 using Reflect = System.Reflection;
 using SIO = System.IO;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
+    partial class Utilities
     {
-        partial class Utilities
+        public static class Reflection
         {
-            public static class Reflection
-            {
 
-                public static IEnumerable<Reflect.Assembly> GetAllAccessibleAssemblies()
+            public static IEnumerable<Reflect.Assembly> GetAllAccessibleAssemblies()
+            {
+                return Reflect.Assembly.GetEntryAssembly().GetRecursiveReferencedAssemblies();
+            }
+
+            public static IEnumerable<Reflect.MethodInfo> GetAllMethods(IEnumerable<Reflect.Assembly> Assemblies = null)
+            {
+                if (Assemblies == null)
                 {
-                    return Reflect.Assembly.GetEntryAssembly().GetRecursiveReferencedAssemblies();
+                    Assemblies = GetAllAccessibleAssemblies();
                 }
 
-                public static IEnumerable<Reflect.MethodInfo> GetAllMethods(IEnumerable<Reflect.Assembly> Assemblies = null)
+                foreach (var Ass in Assemblies)
                 {
-                    if (Assemblies == null)
-                        Assemblies = GetAllAccessibleAssemblies();
-                    foreach (var Ass in Assemblies)
+                    foreach (var Type in Ass.GetTypes())
                     {
-                        foreach (var Type in Ass.GetTypes())
+                        foreach (var Method in Type.GetMethods(Reflect.BindingFlags.Static | Reflect.BindingFlags.Instance | Reflect.BindingFlags.Public | Reflect.BindingFlags.NonPublic))
                         {
-                            foreach (var Method in Type.GetMethods(Reflect.BindingFlags.Static | Reflect.BindingFlags.Instance | Reflect.BindingFlags.Public | Reflect.BindingFlags.NonPublic))
-                                yield return Method;
+                            yield return Method;
                         }
                     }
                 }
+            }
 
-                public static IEnumerable<Type> GetAllTypes(IEnumerable<Reflect.Assembly> Assemblies = null)
+            public static IEnumerable<Type> GetAllTypes(IEnumerable<Reflect.Assembly> Assemblies = null)
+            {
+                if (Assemblies == null)
                 {
-                    if (Assemblies == null)
-                        Assemblies = GetAllAccessibleAssemblies();
-                    foreach (var Ass in Assemblies)
-                    {
-                        foreach (var Type in Ass.GetTypes())
-                            yield return Type;
-                    }
+                    Assemblies = GetAllAccessibleAssemblies();
                 }
 
-                public static IEnumerable<Type> GetAllTypesDerivedFrom(Type Base, IEnumerable<Reflect.Assembly> Assemblies = null)
+                foreach (var Ass in Assemblies)
                 {
-                    if (Assemblies == null)
-                        Assemblies = GetAllAccessibleAssemblies();
-                    foreach (var Type in GetAllTypes(Assemblies))
+                    foreach (var Type in Ass.GetTypes())
                     {
-                        if (Base.IsAssignableFrom(Type))
-                            yield return Type;
+                        yield return Type;
                     }
                 }
+            }
 
-                [Sample()]
-                public static void GetAllTypesDerivedFrom(Mono.Cecil.TypeDefinition Base, Reflect.Assembly Assembly = null)
+            public static IEnumerable<Type> GetAllTypesDerivedFrom(Type Base, IEnumerable<Reflect.Assembly> Assemblies = null)
+            {
+                if (Assemblies == null)
                 {
-                    var Helper = CecilHelper.Instance;
+                    Assemblies = GetAllAccessibleAssemblies();
+                }
 
-                    if (Assembly == null)
-                        Assembly = Reflect.Assembly.GetEntryAssembly();
-
-                    foreach (var A in Helper.GetReferencedAssemblies(Helper.Convert(Assembly)))
+                foreach (var Type in GetAllTypes(Assemblies))
+                {
+                    if (Base.IsAssignableFrom(Type))
                     {
-                        foreach (var M in A.Modules)
+                        yield return Type;
+                    }
+                }
+            }
+
+            [Sample()]
+            public static void GetAllTypesDerivedFrom(Mono.Cecil.TypeDefinition Base, Reflect.Assembly Assembly = null)
+            {
+                var Helper = CecilHelper.Instance;
+
+                if (Assembly == null)
+                {
+                    Assembly = Reflect.Assembly.GetEntryAssembly();
+                }
+
+                foreach (var A in Helper.GetReferencedAssemblies(Helper.Convert(Assembly)))
+                {
+                    foreach (var M in A.Modules)
+                    {
+                        foreach (var T in M.Types)
                         {
-                            foreach (var T in M.Types)
+                            if (Helper.IsBaseTypeOf(Base, T))
                             {
-                                if (Helper.IsBaseTypeOf(Base, T))
-                                    Console.WriteLine(T);
+                                Console.WriteLine(T);
                             }
                         }
                     }

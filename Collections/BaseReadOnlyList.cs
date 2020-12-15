@@ -1,184 +1,141 @@
-﻿using System.Collections.Generic;
-using System.Collections;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
+    public abstract class BaseReadOnlyList<T> : IReadOnlyList<T>, IList<T>, IList
     {
-        public abstract class BaseReadOnlyList<T> : IReadOnlyList<T>, IList<T>, IList
+        public abstract int Count { get; }
+
+        public abstract T this[int Index] { get; }
+
+        // ToDo Make this protected _GetEnumerable
+        public abstract IEnumerator<T> GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            public abstract int Count { get; }
+            return this.GetEnumerator();
+        }
 
-            public abstract T this[int Index] { get; }
-
-            // ToDo Make this protected _GetEnumerable
-            public abstract IEnumerator<T> GetEnumerator();
-
-            IEnumerator IEnumerable.GetEnumerator()
+        public virtual int IndexOf(T item)
+        {
+            for (var I = 0; I < this.Count; I++)
             {
-                return this.GetEnumerator();
-            }
-
-            public virtual int IndexOf(T item)
-            {
-                for (var I = 0; I < this.Count; I++)
+                if (object.Equals(item, this[I]))
                 {
-                    if (object.Equals(item, this[I]))
-                        return I;
-                }
-                return -1;
-            }
-
-            public virtual void CopyTo(T[] array, int arrayIndex)
-            {
-                this.CopyTo((Array)array, arrayIndex);
-            }
-
-            protected virtual void CopyTo(Array array, int index)
-            {
-                Verify.TrueArg(array.Rank == 1, nameof(array), "Array's rank must be 1.");
-                Verify.TrueArg((index + this.Count) <= array.Length, nameof(array), "Array does not have enough length to copy the collection.");
-                for (var I = 0; I < this.Count; I++)
-                {
-                    array.SetValue(this[I], index);
-                    index += 1;
+                    return I;
                 }
             }
+            return -1;
+        }
 
-            void ICollection.CopyTo(Array array, int index)
-            {
-                this.CopyTo(array, index);
-            }
+        public virtual void CopyTo(T[] array, int arrayIndex)
+        {
+            this.CopyTo((Array) array, arrayIndex);
+        }
 
-            T IList<T>.this[int index]
+        protected virtual void CopyTo(Array array, int index)
+        {
+            Verify.TrueArg(array.Rank == 1, nameof(array), "Array's rank must be 1.");
+            Verify.TrueArg((index + this.Count) <= array.Length, nameof(array), "Array does not have enough length to copy the collection.");
+            for (var I = 0; I < this.Count; I++)
             {
-                get
-                {
-                    return this[index];
-                }
-                set
-                {
-                    throw new NotSupportedException();
-                }
+                array.SetValue(this[I], index);
+                index += 1;
             }
+        }
 
-            object IList.this[int index]
-            {
-                get
-                {
-                    return this[index];
-                }
-                set
-                {
-                    throw new NotSupportedException();
-                }
-            }
+        void ICollection.CopyTo(Array array, int index)
+        {
+            this.CopyTo(array, index);
+        }
 
-            bool IList.IsReadOnly
-            {
-                get
-                {
-                    return true;
-                }
-            }
+        T IList<T>.this[int index]
+        {
+            get => this[index];
+            set => throw new NotSupportedException();
+        }
 
-            bool ICollection<T>.IsReadOnly
-            {
-                get
-                {
-                    return true;
-                }
-            }
+        object IList.this[int index]
+        {
+            get => this[index];
+            set => throw new NotSupportedException();
+        }
 
-            bool IList.IsFixedSize
-            {
-                get
-                {
-                    return false;
-                }
-            }
+        bool IList.IsReadOnly => true;
 
-            object ICollection.SyncRoot
-            {
-                get
-                {
-                    throw new NotSupportedException();
-                }
-            }
+        bool ICollection<T>.IsReadOnly => true;
 
-            bool ICollection.IsSynchronized
-            {
-                get
-                {
-                    return true;
-                }
-            }
+        bool IList.IsFixedSize => false;
 
-            void IList<T>.Insert(int index, T item)
-            {
-                throw new NotSupportedException();
-            }
+        object ICollection.SyncRoot => throw new NotSupportedException();
 
-            void IList.RemoveAt(int index)
-            {
-                throw new NotSupportedException();
-            }
+        bool ICollection.IsSynchronized => true;
 
-            void IList<T>.RemoveAt(int index)
-            {
-                throw new NotSupportedException();
-            }
+        void IList<T>.Insert(int index, T item)
+        {
+            throw new NotSupportedException();
+        }
 
-            void ICollection<T>.Add(T item)
-            {
-                throw new NotSupportedException();
-            }
+        void IList.RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
 
-            void IList.Clear()
-            {
-                throw new NotSupportedException();
-            }
+        void IList<T>.RemoveAt(int index)
+        {
+            throw new NotSupportedException();
+        }
 
-            void ICollection<T>.Clear()
-            {
-                throw new NotSupportedException();
-            }
+        void ICollection<T>.Add(T item)
+        {
+            throw new NotSupportedException();
+        }
 
-            public bool Contains(T item)
-            {
-                return this.IndexOf(item) != -1;
-            }
+        void IList.Clear()
+        {
+            throw new NotSupportedException();
+        }
 
-            bool ICollection<T>.Remove(T item)
-            {
-                throw new NotSupportedException();
-            }
+        void ICollection<T>.Clear()
+        {
+            throw new NotSupportedException();
+        }
 
-            int IList.Add(object value)
-            {
-                throw new NotSupportedException();
-            }
+        public bool Contains(T item)
+        {
+            return this.IndexOf(item) != -1;
+        }
 
-            bool IList.Contains(object value)
-            {
-                return this.Contains((T)value);
-            }
+        bool ICollection<T>.Remove(T item)
+        {
+            throw new NotSupportedException();
+        }
 
-            int IList.IndexOf(object value)
-            {
-                return this.IndexOf((T)value);
-            }
+        int IList.Add(object value)
+        {
+            throw new NotSupportedException();
+        }
 
-            void IList.Insert(int index, object value)
-            {
-                throw new NotSupportedException();
-            }
+        bool IList.Contains(object value)
+        {
+            return this.Contains((T) value);
+        }
 
-            void IList.Remove(object value)
-            {
-                throw new NotSupportedException();
-            }
+        int IList.IndexOf(object value)
+        {
+            return this.IndexOf((T) value);
+        }
+
+        void IList.Insert(int index, object value)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IList.Remove(object value)
+        {
+            throw new NotSupportedException();
         }
     }
 }

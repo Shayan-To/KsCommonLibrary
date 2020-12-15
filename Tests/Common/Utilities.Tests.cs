@@ -1,13 +1,12 @@
-﻿using Xunit;
-using Assert = Xunit.Assert;
 using FsCheck.Xunit;
 
-namespace Ks.Tests
+using Xunit;
+
+using Assert = Xunit.Assert;
+
+namespace Ks.Tests.Common
 {
-    namespace Common
+    public partial class Utilities_Tests
     {
-        public partial class Utilities_Tests
-        {
-        }
     }
 }

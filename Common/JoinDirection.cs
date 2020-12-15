@@ -1,13 +1,10 @@
-﻿namespace Ks
+namespace Ks.Common
 {
-    namespace Common
+    public enum JoinDirection
     {
-        public enum JoinDirection
-        {
-            None = 0,
-            Left = 1,
-            Right = 2,
-            Both = 3
-        }
+        None = 0,
+        Left = 1,
+        Right = 2,
+        Both = 3
     }
 }

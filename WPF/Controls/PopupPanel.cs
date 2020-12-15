@@ -1,49 +1,55 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 
-namespace Ks
+namespace Ks.Common.Controls
 {
-    namespace Common.Controls
+    public class PopupPanel : Panel
     {
-        public class PopupPanel : Panel
+        protected override Size MeasureOverride(Size AvailableSize)
         {
-            protected override Size MeasureOverride(Size AvailableSize)
+            var MaxWidth = 0.0;
+            var MaxHeight = 0.0;
+
+            foreach (UIElement C in this.Children)
             {
-                var MaxWidth = 0.0;
-                var MaxHeight = 0.0;
+                C.Measure(AvailableSize);
+                var Sz = C.DesiredSize;
 
-                foreach (UIElement C in this.Children)
+                if (MaxHeight < Sz.Height)
                 {
-                    C.Measure(AvailableSize);
-                    var Sz = C.DesiredSize;
-
-                    if (MaxHeight < Sz.Height)
-                        MaxHeight = Sz.Height;
-                    if (MaxWidth < Sz.Width)
-                        MaxWidth = Sz.Width;
+                    MaxHeight = Sz.Height;
                 }
 
-                return new Size(MaxWidth, MaxHeight);
+                if (MaxWidth < Sz.Width)
+                {
+                    MaxWidth = Sz.Width;
+                }
             }
 
-            protected override Size ArrangeOverride(Size FinalSize)
+            return new Size(MaxWidth, MaxHeight);
+        }
+
+        protected override Size ArrangeOverride(Size FinalSize)
+        {
+            foreach (UIElement C in this.Children)
             {
-                foreach (UIElement C in this.Children)
+                var Popup = C as Popup;
+                var Rect = default(Rect?);
+
+                if (Popup != null)
                 {
-                    var Popup = C as Popup;
-                    var Rect = default(Rect?);
-
-                    if (Popup != null)
-                        Rect = Popup.ArrangeCallBack?.Invoke(this, FinalSize, Popup.DesiredSize);
-
-                    if (!Rect.HasValue)
-                        Rect = new Rect(FinalSize);
-
-                    C.Arrange(Rect.Value);
+                    Rect = Popup.ArrangeCallBack?.Invoke(this, FinalSize, Popup.DesiredSize);
                 }
 
-                return FinalSize;
+                if (!Rect.HasValue)
+                {
+                    Rect = new Rect(FinalSize);
+                }
+
+                C.Arrange(Rect.Value);
             }
+
+            return FinalSize;
         }
     }
 }

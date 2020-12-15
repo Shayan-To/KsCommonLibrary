@@ -1,49 +1,38 @@
-﻿using System;
+using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
+    public struct Lazy<TRes>
     {
-        public struct Lazy<TRes>
+        public Lazy(Func<TRes> Func)
         {
-            public Lazy(Func<TRes> Func)
-            {
-                this._Func = Func;
-                this._Value = default;
-                this.ValueCalculated = default;
-            }
+            this.Func = Func;
+            this._Value = default;
+            this.ValueCalculated = default;
+        }
 
-            public void Reset()
-            {
-                // Console.WriteLine("Resetting...")
-                this.ValueCalculated = false;
-            }
+        public void Reset()
+        {
+            // Console.WriteLine("Resetting...")
+            this.ValueCalculated = false;
+        }
 
-            private readonly Func<TRes> _Func;
+        public Func<TRes> Func { get; }
 
-            public Func<TRes> Func
+        private TRes _Value;
+        private bool ValueCalculated;
+
+        public TRes Value
+        {
+            get
             {
-                get
+                if (!this.ValueCalculated)
                 {
-                    return this._Func;
+                    this._Value = this.Func.Invoke();
+                    this.ValueCalculated = true;
                 }
-            }
 
-            private TRes _Value;
-            private bool ValueCalculated;
-
-            public TRes Value
-            {
-                get
-                {
-                    if (!this.ValueCalculated)
-                    {
-                        this._Value = this._Func.Invoke();
-                        this.ValueCalculated = true;
-                    }
-
-                    return this._Value;
-                }
+                return this._Value;
             }
         }
     }

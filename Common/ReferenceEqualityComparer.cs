@@ -1,30 +1,19 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
+    public class ReferenceEqualityComparer<T> : EqualityComparer<T> where T : class
     {
-        public class ReferenceEqualityComparer<T> : EqualityComparer<T> where T : class
+        public override bool Equals(T x, T y)
         {
-            public override bool Equals(T x, T y)
-            {
-                return x == y;
-            }
-
-            public override int GetHashCode(T obj)
-            {
-                return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj);
-            }
-
-            private static readonly ReferenceEqualityComparer<T> _Instance = new ReferenceEqualityComparer<T>();
-
-            public static ReferenceEqualityComparer<T> Instance
-            {
-                get
-                {
-                    return _Instance;
-                }
-            }
+            return x == y;
         }
+
+        public override int GetHashCode(T obj)
+        {
+            return System.Runtime.CompilerServices.RuntimeHelpers.GetHashCode(obj);
+        }
+
+        public static ReferenceEqualityComparer<T> Instance { get; } = new ReferenceEqualityComparer<T>();
     }
 }

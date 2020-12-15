@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Ks.Common
 {
@@ -34,10 +34,7 @@ namespace Ks.Common
             this.Getter = getter;
         }
 
-        public TProp this[TIn i]
-        {
-            get => this.Getter.Invoke(this.Self, i);
-        }
+        public TProp this[TIn i] => this.Getter.Invoke(this.Self, i);
 
         private readonly T Self;
         public readonly Func<T, TIn, TProp> Getter;

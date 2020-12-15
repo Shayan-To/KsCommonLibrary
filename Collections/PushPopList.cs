@@ -1,41 +1,38 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
+    public interface IPushPop<T>
     {
-        public interface IPushPop<T>
+        void Push(T Item);
+        T Pop();
+        T Peek();
+        bool CanPop();
+    }
+
+    public class PushPopList<T> : List<T>, IPushPop<T>
+    {
+        public void Push(T Item)
         {
-            void Push(T Item);
-            T Pop();
-            T Peek();
-            bool CanPop();
+            this.Add(Item);
         }
 
-        public class PushPopList<T> : List<T>, IPushPop<T>
+        public T Pop()
         {
-            public void Push(T Item)
-            {
-                this.Add(Item);
-            }
+            var I = this.Count - 1;
+            var R = this[I];
+            this.RemoveAt(I);
+            return R;
+        }
 
-            public T Pop()
-            {
-                var I = this.Count - 1;
-                var R = this[I];
-                this.RemoveAt(I);
-                return R;
-            }
+        public T Peek()
+        {
+            return this[this.Count - 1];
+        }
 
-            public T Peek()
-            {
-                return this[this.Count - 1];
-            }
-
-            public bool CanPop()
-            {
-                return this.Count != 0;
-            }
+        public bool CanPop()
+        {
+            return this.Count != 0;
         }
     }
 }

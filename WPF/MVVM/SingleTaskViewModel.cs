@@ -1,65 +1,69 @@
-﻿using System.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
+    public abstract class SingleTaskViewModel : ViewModel
     {
-        public abstract class SingleTaskViewModel : ViewModel
+        public SingleTaskViewModel(KsApplication KsApplication) : base(KsApplication)
         {
-            public SingleTaskViewModel(KsApplication KsApplication) : base(KsApplication)
-            {
-            }
+        }
 
-            public SingleTaskViewModel() : base()
-            {
-            }
+        public SingleTaskViewModel() : base()
+        {
+        }
 
-            protected internal override void OnNavigatedTo(NavigationEventArgs E)
+        protected internal override void OnNavigatedTo(NavigationEventArgs E)
+        {
+            if (E.NavigationType == NavigationType.NewNavigation)
             {
-                if (E.NavigationType == NavigationType.NewNavigation)
-                    this.IsWorkDone = false;
+                this.IsWorkDone = false;
             }
+        }
 
-            protected internal override void OnNavigatedFrom(NavigationEventArgs E)
+        protected internal override void OnNavigatedFrom(NavigationEventArgs E)
+        {
+            if (E.NavigationType == NavigationType.NewNavigation)
             {
-                if (E.NavigationType == NavigationType.NewNavigation)
-                    this.IsWorkDone = true;
+                this.IsWorkDone = true;
             }
+        }
 
-            public Task WhenWorkDone()
+        public Task WhenWorkDone()
+        {
+            if (this.WhenWorkDoneTaskSource == null)
             {
-                if (this.WhenWorkDoneTaskSource == null)
+                this.WhenWorkDoneTaskSource = new TaskCompletionSource<Void>();
+                if (this.IsWorkDone)
                 {
-                    this.WhenWorkDoneTaskSource = new TaskCompletionSource<Void>();
-                    if (this.IsWorkDone)
-                        this.WhenWorkDoneTaskSource.SetResult(null);
+                    this.WhenWorkDoneTaskSource.SetResult(null);
                 }
-
-                return this.WhenWorkDoneTaskSource.Task;
             }
 
-            private bool _IsWorkDone;
+            return this.WhenWorkDoneTaskSource.Task;
+        }
 
-            public bool IsWorkDone
+        private bool _IsWorkDone;
+
+        public bool IsWorkDone
+        {
+            get => this._IsWorkDone;
+            protected set
             {
-                get
+                if (this.SetProperty(ref this._IsWorkDone, value))
                 {
-                    return this._IsWorkDone;
-                }
-                protected set
-                {
-                    if (this.SetProperty(ref this._IsWorkDone, value))
+                    if (value)
                     {
-                        if (value)
-                            this.WhenWorkDoneTaskSource?.SetResult(null);
-                        else
-                            this.WhenWorkDoneTaskSource = null;
+                        this.WhenWorkDoneTaskSource?.SetResult(null);
+                    }
+                    else
+                    {
+                        this.WhenWorkDoneTaskSource = null;
                     }
                 }
             }
-
-            private TaskCompletionSource<Void> WhenWorkDoneTaskSource;
         }
+
+        private TaskCompletionSource<Void> WhenWorkDoneTaskSource;
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
+using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
+    [AttributeUsage(AttributeTargets.All)]
+    public class SampleAttribute : Attribute
     {
-        [AttributeUsage(AttributeTargets.All)]
-        public class SampleAttribute : Attribute
-        {
-        }
     }
 }

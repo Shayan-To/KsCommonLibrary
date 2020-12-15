@@ -1,20 +1,18 @@
-﻿using System.Windows;
+using System.Windows;
+
 using Ks.Common.Controls;
 
-namespace Ks
+namespace Ks.Common.MVVM
 {
-    namespace Common.MVVM
+    [ViewModelMetadata(typeof(Controls.Window), IsSingleInstance = true)]
+    public class WindowViewModel : NavigationViewModel
     {
-        [ViewModelMetadata(typeof(Controls.Window), IsSingleInstance = true)]
-        public class WindowViewModel : NavigationViewModel
+        public WindowViewModel(KsApplication KsApplication) : base(KsApplication)
         {
-            public WindowViewModel(KsApplication KsApplication) : base(KsApplication)
-            {
-            }
+        }
 
-            public WindowViewModel() : base()
-            {
-            }
+        public WindowViewModel() : base()
+        {
         }
     }
 }

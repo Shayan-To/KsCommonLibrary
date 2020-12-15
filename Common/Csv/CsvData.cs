@@ -1,139 +1,135 @@
-﻿namespace Ks
+namespace Ks.Common
 {
-    namespace Common
+    public class CsvData
     {
-        public class CsvData
+        public CsvData(int EntriesCapacity)
         {
-            public CsvData(int EntriesCapacity)
+            this.Columns = new CsvColumnList(this);
+            this.Entries = new CsvEntryList(this, EntriesCapacity);
+        }
+
+        public CsvData()
+        {
+            this.Columns = new CsvColumnList(this);
+            this.Entries = new CsvEntryList(this);
+        }
+
+        public static CsvData Parse(string Str, bool HasHeaders = true, char Delimiter = ',', bool NormalizeLineEndings = true)
+        {
+            var Res = new CsvData();
+            CsvParser.Instance.ParseCsv(Res, Str, HasHeaders, Delimiter, NormalizeLineEndings);
+            return Res;
+        }
+
+        public void ParseIn(string Str, bool HasHeaders = true, char Delimiter = ',', bool NormalizeLineEndings = true)
+        {
+            CsvParser.Instance.ParseCsv(this, Str, HasHeaders, Delimiter, NormalizeLineEndings);
+        }
+
+        public override string ToString()
+        {
+            return this.ToString(true);
+        }
+
+        private static void WriteField(string Field, bool UseQuotes, System.Text.StringBuilder Out)
+        {
+            if (Field.StartsWith("\"") | Field.Contains("\r") | Field.Contains("\n"))
             {
-                this._Columns = new CsvColumnList(this);
-                this._Entries = new CsvEntryList(this, EntriesCapacity);
+                UseQuotes = true;
             }
 
-            public CsvData()
+            if (!UseQuotes)
             {
-                this._Columns = new CsvColumnList(this);
-                this._Entries = new CsvEntryList(this);
+                Out.Append(Field);
             }
 
-            public static CsvData Parse(string Str, bool HasHeaders = true, char Delimiter = ',', bool NormalizeLineEndings = true)
+            Out.Append('"');
+
+            foreach (var C in Field)
             {
-                var Res = new CsvData();
-                CsvParser.Instance.ParseCsv(Res, Str, HasHeaders, Delimiter, NormalizeLineEndings);
-                return Res;
-            }
-
-            public void ParseIn(string Str, bool HasHeaders = true, char Delimiter = ',', bool NormalizeLineEndings = true)
-            {
-                CsvParser.Instance.ParseCsv(this, Str, HasHeaders, Delimiter, NormalizeLineEndings);
-            }
-
-            public override string ToString()
-            {
-                return this.ToString(true);
-            }
-
-            private static void WriteField(string Field, bool UseQuotes, System.Text.StringBuilder Out)
-            {
-                if (Field.StartsWith("\"") | Field.Contains("\r") | Field.Contains("\n"))
-                    UseQuotes = true;
-
-                if (!UseQuotes)
-                    Out.Append(Field);
-
-                Out.Append('"');
-
-                foreach (var C in Field)
+                if (C == '"')
                 {
-                    if (C == '"')
-                        Out.Append("\"\"");
+                    Out.Append("\"\"");
+                }
+                else
+                {
+                    Out.Append(C);
+                }
+            }
+
+            Out.Append('"');
+        }
+
+        public string ToString(bool UseQuotes = true, char Delimiter = ',')
+        {
+            var Res = new System.Text.StringBuilder();
+
+            if (this.HasHeaders)
+            {
+                var Bl = true;
+                foreach (var C in this.Columns)
+                {
+                    if (Bl)
+                    {
+                        Bl = false;
+                    }
                     else
-                        Out.Append(C);
-                }
-
-                Out.Append('"');
-            }
-
-            public string ToString(bool UseQuotes = true, char Delimiter = ',')
-            {
-                var Res = new System.Text.StringBuilder();
-
-                if (this.HasHeaders)
-                {
-                    var Bl = true;
-                    foreach (var C in this.Columns)
                     {
-                        if (Bl)
-                            Bl = false;
-                        else
-                            Res.Append(Delimiter);
-                        WriteField(C.HeaderName, UseQuotes, Res);
+                        Res.Append(Delimiter);
                     }
-                    Res.AppendLine();
+
+                    WriteField(C.HeaderName, UseQuotes, Res);
                 }
+                Res.AppendLine();
+            }
 
-                var ColsCount = this.Columns.Count;
+            var ColsCount = this.Columns.Count;
 
-                foreach (var E in this.Entries)
+            foreach (var E in this.Entries)
+            {
+                var Bl = true;
+                for (var I = 0; I < ColsCount; I++)
                 {
-                    var Bl = true;
-                    for (var I = 0; I < ColsCount; I++)
+                    if (Bl)
                     {
-                        if (Bl)
-                            Bl = false;
-                        else
-                            Res.Append(Delimiter);
-                        WriteField(E[I], UseQuotes, Res);
+                        Bl = false;
                     }
-                    Res.AppendLine();
-                }
-
-                return Res.ToString();
-            }
-
-            public void Clear()
-            {
-                this.Entries.Clear();
-                this.Columns.Clear();
-            }
-
-            private bool _HasHeaders = true;
-
-            public bool HasHeaders
-            {
-                get
-                {
-                    return this._HasHeaders;
-                }
-                set
-                {
-                    if (this._HasHeaders != value)
+                    else
                     {
-                        this._HasHeaders = value;
-                        this.Columns.ReportHasHeadersChanged(value);
+                        Res.Append(Delimiter);
                     }
+
+                    WriteField(E[I], UseQuotes, Res);
                 }
+                Res.AppendLine();
             }
 
-            private readonly CsvColumnList _Columns;
+            return Res.ToString();
+        }
 
-            public CsvColumnList Columns
+        public void Clear()
+        {
+            this.Entries.Clear();
+            this.Columns.Clear();
+        }
+
+        private bool _HasHeaders = true;
+
+        public bool HasHeaders
+        {
+            get => this._HasHeaders;
+            set
             {
-                get
+                if (this._HasHeaders != value)
                 {
-                    return this._Columns;
-                }
-            }
-
-            private readonly CsvEntryList _Entries;
-
-            public CsvEntryList Entries
-            {
-                get
-                {
-                    return this._Entries;
+                    this._HasHeaders = value;
+                    this.Columns.ReportHasHeadersChanged(value);
                 }
             }
         }
+
+        public CsvColumnList Columns { get; }
+
+        public CsvEntryList Entries { get; }
     }
 }

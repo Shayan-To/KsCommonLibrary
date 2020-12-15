@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+
 using Ks.Common;
 
 namespace Ks.ConsoleTests
@@ -34,12 +35,19 @@ namespace Ks.ConsoleTests
                     Console.WriteLine();
                 }
                 if (I == File1.Length)
+                {
                     break;
+                }
                 // They can be non-equal, as the comparer trims.
                 if (File1[I] == File2[J])
+                {
                     ConsoleUtilities.WriteColored(File2[J], ConsoleColor.Black, ConsoleColor.White);
+                }
                 else
+                {
                     ConsoleUtilities.WriteColored(File2[J], ConsoleColor.Blue, ConsoleColor.White);
+                }
+
                 Console.WriteLine();
                 I += 1;
                 J += 1;

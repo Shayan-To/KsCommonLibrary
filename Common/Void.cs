@@ -1,15 +1,12 @@
-﻿using System;
+using System;
 
-namespace Ks
+namespace Ks.Common
 {
-    namespace Common
+    public sealed class Void
     {
-        public sealed class Void
+        private Void()
         {
-            private Void()
-            {
-                throw new NotSupportedException();
-            }
+            throw new NotSupportedException();
         }
     }
 }

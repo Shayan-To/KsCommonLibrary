@@ -1,47 +1,64 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Ks
+namespace Ks.Common.MVVM.Converters
 {
-    namespace Common.MVVM.Converters
+    public class AlphaConverter : IValueConverter
     {
-        public class AlphaConverter : IValueConverter
+        public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
+            Color C;
+            if (Value is SolidColorBrush B)
             {
-                var B = Value as SolidColorBrush;
-                Color C;
-                if (B != null)
-                    C = B.Color;
-                else
-                    C = (Color)Value;
-                var P = (byte)255;
-                if (Parameter != null)
-                    P = System.Convert.ToByte(Parameter);
-                C = Color.FromArgb(P, C.R, C.G, C.B);
-                if (TargetType == typeof(Color))
-                    return C;
-                return new SolidColorBrush(C);
+                C = B.Color;
+            }
+            else
+            {
+                C = (Color) Value;
             }
 
-            public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
+            var P = (byte) 255;
+            if (Parameter != null)
             {
-                var B = Value as SolidColorBrush;
-                Color C;
-                if (B != null)
-                    C = B.Color;
-                else
-                    C = (Color)Value;
-                var P = (byte)255;
-                if (Parameter != null)
-                    P = System.Convert.ToByte(Parameter);
-                C = Color.FromArgb(P, C.R, C.G, C.B);
-                if (TargetType == typeof(Color))
-                    return C;
-                return new SolidColorBrush(C);
+                P = System.Convert.ToByte(Parameter);
             }
+
+            C = Color.FromArgb(P, C.R, C.G, C.B);
+            if (TargetType == typeof(Color))
+            {
+                return C;
+            }
+
+            return new SolidColorBrush(C);
+        }
+
+        public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
+        {
+            Color C;
+            if (Value is SolidColorBrush B)
+            {
+                C = B.Color;
+            }
+            else
+            {
+                C = (Color) Value;
+            }
+
+            var P = (byte) 255;
+            if (Parameter != null)
+            {
+                P = System.Convert.ToByte(Parameter);
+            }
+
+            C = Color.FromArgb(P, C.R, C.G, C.B);
+            if (TargetType == typeof(Color))
+            {
+                return C;
+            }
+
+            return new SolidColorBrush(C);
         }
     }
 }
