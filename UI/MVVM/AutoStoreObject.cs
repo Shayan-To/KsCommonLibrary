@@ -18,7 +18,7 @@ namespace Ks.Common.MVVM
         {
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual string GetStoreKey(string PropertyName)
         {
@@ -91,7 +91,7 @@ namespace Ks.Common.MVVM
             this.OnPropertyChanged(new PropertyChangedEventArgs(PropertyName));
         }
 
-        protected static object RegisterProperty(Type OwnerType, string Name, Action<AutoStoreObject, string> SetCallback = null, Func<object, string> ToStringCallBack = null)
+        protected static object? RegisterProperty(Type OwnerType, string Name, Action<AutoStoreObject, string>? SetCallback = null, Func<object?, string>? ToStringCallBack = null)
         {
             foreach (var T in OwnerType.GetBaseTypes())
             {
@@ -102,7 +102,8 @@ namespace Ks.Common.MVVM
             {
                 SetCallback = (M, O) =>
                 {
-                    M.GetType().GetProperty(Name).SetValue(M, O); // ToDo Invoke CType on O.
+                    // Let it throw if property does not exist.
+                    M.GetType().GetProperty(Name)!.SetValue(M, O); // ToDo Invoke CType on O.
                 };
             }
             if (ToStringCallBack == null)
@@ -116,13 +117,18 @@ namespace Ks.Common.MVVM
 
         public bool IsInitialized { get; private set; }
 
-        protected IDictionary<string, string> StoreDictionary { get; private set; }
+        private IDictionary<string, string>? _StoreDictionary;
+        protected IDictionary<string, string> StoreDictionary
+        {
+            get => this._StoreDictionary ?? throw Verify.Fail("Object is not initialized.");
+            private set => this._StoreDictionary = value;
+        }
 
         private static readonly CreateInstanceDictionary<Type, Dictionary<string, PropertyMetadata>> MetadataDic = CreateInstanceDictionary.Create<Type, Dictionary<string, PropertyMetadata>>();
 
         private struct PropertyMetadata
         {
-            public PropertyMetadata(Action<AutoStoreObject, string> SetCallback, Func<object, string> ToStringCallback)
+            public PropertyMetadata(Action<AutoStoreObject, string> SetCallback, Func<object?, string> ToStringCallback)
             {
                 this.SetCallback = SetCallback;
                 this.ToStringCallback = ToStringCallback;
@@ -130,7 +136,7 @@ namespace Ks.Common.MVVM
 
             public Action<AutoStoreObject, string> SetCallback { get; }
 
-            public Func<object, string> ToStringCallback { get; }
+            public Func<object?, string> ToStringCallback { get; }
         }
     }
 }

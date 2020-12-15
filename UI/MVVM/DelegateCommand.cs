@@ -30,7 +30,7 @@ namespace Ks.Common.MVVM
         }
 
 #pragma warning disable CS0067 // The event is never used
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged;
 #pragma warning restore CS0067 // The event is never used
 
         public void Execute(object parameter)
@@ -44,6 +44,6 @@ namespace Ks.Common.MVVM
         }
 
         private readonly Action<object> _ExecuteFunc;
-        private readonly Func<object, bool> _CanExecuteFunc;
+        private readonly Func<object, bool>? _CanExecuteFunc;
     }
 }
