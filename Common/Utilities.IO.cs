@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -11,20 +12,6 @@ namespace Ks.Common
     {
         public static class IO
         {
-
-            public static bool EnsureExists(string Path)
-            {
-                if (!SIO.Directory.Exists(Path))
-                {
-                    SIO.Directory.CreateDirectory(Path);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
             public static string DownloadURL(string URL)
             {
                 var Request = System.Net.WebRequest.Create(URL);
@@ -42,30 +29,6 @@ namespace Ks.Common
                 using var WStream = Response.GetResponseStream();
                 using var FStream = SIO.File.Open(Path, SIO.FileMode.CreateNew, SIO.FileAccess.Write, SIO.FileShare.Read);
                 FStream.Write(WStream);
-            }
-
-            /// <summary>
-            /// Replaces invalid file name characters with '_'.
-            /// </summary>
-            /// <param name="Name"></param>
-            /// <returns></returns>
-            public static string CorrectFileName(string Name)
-            {
-                var Res = new StringBuilder(Name.Length);
-                var Invalids = SIO.Path.GetInvalidFileNameChars();
-                foreach (var Ch in Name)
-                {
-                    if (Invalids.Contains(Ch))
-                    {
-                        Res.Append('_');
-                    }
-                    else
-                    {
-                        Res.Append(Ch);
-                    }
-                }
-
-                return Res.ToString().Trim();
             }
 
             public static int ReadAll(ReadCall Reader, byte[] Buffer, int Offset, int Length)
