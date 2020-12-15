@@ -361,6 +361,19 @@ namespace Ks.Common
             }
         }
 
+        public static IEnumerable<TResult> SelectSome<T, TResult>(this IEnumerable<T> self, Func<T, (TResult Result, bool Continue)> selector)
+        {
+            foreach (var i in self)
+            {
+                var t = selector.Invoke(i);
+                yield return t.Result;
+                if (!t.Continue)
+                {
+                    break;
+                }
+            }
+        }
+
         public static IEnumerable<T> ToEnumerable<T>(this IEnumerator<T> self)
         {
             while (self.MoveNext())
