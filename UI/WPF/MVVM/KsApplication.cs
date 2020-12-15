@@ -11,8 +11,6 @@ using System.Xml.Linq;
 
 using Ks.Common.Controls;
 
-using Mono;
-
 namespace Ks.Common.MVVM
 {
     public abstract class KsApplication : BindableBase

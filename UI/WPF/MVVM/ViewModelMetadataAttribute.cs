@@ -11,8 +11,6 @@ using System.Xml.Linq;
 
 using Ks.Common.Controls;
 
-using Mono;
-
 using Page = Ks.Common.Controls.Page;
 using Window = Ks.Common.Controls.Window;
 
