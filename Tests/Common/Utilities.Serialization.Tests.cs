@@ -2,7 +2,6 @@
 using Xunit;
 using System.Data;
 using System.Diagnostics;
-using Microsoft.VisualBasic;
 using Assert = Xunit.Assert;
 using System.Linq;
 using System.Collections.Generic;
@@ -11,7 +10,6 @@ using System;
 using System.Xml.Linq;
 using Ks.Common;
 using FsCheck.Xunit;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks.Tests
 {
@@ -24,8 +22,7 @@ namespace Ks.Tests
                 [Property()]
                 public void ListToString_ListFromString_Consistency(string[] List)
                 {
-                    var loopTo = List.Length - 1;
-                    for (var I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < List.Length; I++)
                     {
                         if (List[I] == null)
                             List[I] = "";
@@ -41,7 +38,7 @@ namespace Ks.Tests
                     Assert.Equal(new string[] { }, Utilities.Serialization.ListFromString("{}"));
                     Assert.Equal(new string[] { "" }, Utilities.Serialization.ListFromString("{,}"));
                     Assert.Equal(new string[] { "AA", "BB" }, Utilities.Serialization.ListFromString("{AA,BB,}"));
-                    Assert.Equal(new string[] { "{,}", ("{" + Conversions.ToString(ControlChars.Cr) + "}" + Conversions.ToString(ControlChars.Lf)) }, Utilities.Serialization.ListFromString(@"{\{\,\},\{\r\}\n,}"));
+                    Assert.Equal(new string[] { "{,}", "{\r}\n" }, Utilities.Serialization.ListFromString(@"{\{\,\},\{\r\}\n,}"));
                 }
 
                 [Fact()]
@@ -50,14 +47,13 @@ namespace Ks.Tests
                     Assert.Equal("{}", Utilities.Serialization.ListToString(new string[] { }));
                     Assert.Equal("{,}", Utilities.Serialization.ListToString(new[] { "" }));
                     Assert.Equal("{AA,BB,}", Utilities.Serialization.ListToString(new[] { "AA", "BB" }));
-                    Assert.Equal(@"{\{\,\},\{\r\}\n,}", Utilities.Serialization.ListToString(new[] { "{,}", ("{" + Conversions.ToString(ControlChars.Cr) + "}" + Conversions.ToString(ControlChars.Lf)) }));
+                    Assert.Equal(@"{\{\,\},\{\r\}\n,}", Utilities.Serialization.ListToString(new[] { "{,}", "{\r}\n" }));
                 }
 
                 [Property()]
                 public void ListToStringMultiline_ListFromStringMultiline_Consistency(string[] List)
                 {
-                    var loopTo = List.Length - 1;
-                    for (var I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < List.Length; I++)
                     {
                         if (List[I] == null)
                             List[I] = "";

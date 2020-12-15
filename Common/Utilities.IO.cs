@@ -11,12 +11,8 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class IO
+            public static class IO
             {
-                private IO()
-                {
-                    throw new NotSupportedException();
-                }
 
                 public static bool EnsureExists(string Path)
                 {
@@ -84,8 +80,7 @@ namespace Ks
                         if (T == 0)
                             return Length - N;
                         N -= T;
-                    }
-                    while (N != 0);
+                    } while (N != 0);
 
                     return Length;
                 }

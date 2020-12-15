@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using Microsoft.VisualBasic.CompilerServices;
+﻿using System;
 
 namespace Ks
 {
@@ -34,7 +32,7 @@ namespace Ks
                 Res.HasHeaders = HasHeaders;
                 if (HasHeaders)
                 {
-                    do
+                    while (true)
                     {
                         var T = this.ReadToken();
                         var D = T;
@@ -62,7 +60,6 @@ namespace Ks
 
                         throw new ArgumentException("Invalid CSV.");
                     }
-                    while (true);
                 }
 
                 CsvEntry Entry = null;
@@ -70,7 +67,7 @@ namespace Ks
                 var I = 0;
                 var NewEntry = true;
 
-                do
+                while (true)
                 {
                     if (NewEntry)
                     {
@@ -114,7 +111,6 @@ namespace Ks
 
                     throw new ArgumentException("Invalid CSV.");
                 }
-                while (true);
 
                 if (IsLastEntryEmpty)
                     Res.Entries.Remove(Res.Entries.Count - 1);
@@ -122,7 +118,7 @@ namespace Ks
 
             private bool ReadToken(string T)
             {
-                if (Operators.CompareString(this.PeekToken(), T, TextCompare: false) == 0)
+                if (this.PeekToken() == T)
                 {
                     this.ReadToken();
                     return true;
@@ -150,13 +146,13 @@ namespace Ks
                 if (this.IsFinished())
                     return null;
 
-                if (this.ReadChar(ControlChars.Cr))
+                if (this.ReadChar('\r'))
                 {
-                    this.ReadChar(ControlChars.Lf);
+                    this.ReadChar('\n');
                     return NewLine;
                 }
 
-                if (this.ReadChar(ControlChars.Lf))
+                if (this.ReadChar('\n'))
                     return NewLine;
 
                 if (this.ReadChar(this.DelimiterChar))
@@ -166,7 +162,7 @@ namespace Ks
 
                 if (this.ReadChar('"'))
                 {
-                    do
+                    while (true)
                     {
                         if (this.IsFinished())
                             throw new ArgumentException("Invalid CSV.");
@@ -178,14 +174,14 @@ namespace Ks
                             continue;
                         }
 
-                        if (this.NormalizeLineEndings && this.ReadChar(ControlChars.Cr))
+                        if (this.NormalizeLineEndings && this.ReadChar('\r'))
                         {
-                            this.ReadChar(ControlChars.Lf);
+                            this.ReadChar('\n');
                             Res.Append(NewLine);
                             continue;
                         }
 
-                        if (this.NormalizeLineEndings && this.ReadChar(ControlChars.Lf))
+                        if (this.NormalizeLineEndings && this.ReadChar('\n'))
                         {
                             Res.Append(NewLine);
                             continue;
@@ -193,17 +189,15 @@ namespace Ks
 
                         Res.Append(this.ReadChar());
                     }
-                    while (true);
                 }
                 else
-                    do
+                    while (true)
                     {
                         var T = this.PeekChar();
-                        if (!T.HasValue | (T == this.DelimiterChar) | (T == ControlChars.Cr) | (T == ControlChars.Lf))
+                        if (!T.HasValue | (T == this.DelimiterChar) | (T == '\r') | (T == '\n'))
                             break;
                         Res.Append(this.ReadChar());
                     }
-                    while (true);
 
                 return Res.ToString();
             }
@@ -221,7 +215,7 @@ namespace Ks
             private char? ReadChar()
             {
                 if (this.IsFinished())
-                    return default(char?);
+                    return default;
                 var R = this.Str[Index];
                 Index += 1;
                 return R;
@@ -230,7 +224,7 @@ namespace Ks
             private char? PeekChar()
             {
                 if (this.IsFinished())
-                    return default(char?);
+                    return default;
                 return this.Str[Index];
             }
 
@@ -249,7 +243,7 @@ namespace Ks
                 }
             }
 
-            private static string NewLine = ControlChars.CrLf;
+            private static string NewLine = "\r\n";
 
             private string Delimiter;
             private char DelimiterChar;

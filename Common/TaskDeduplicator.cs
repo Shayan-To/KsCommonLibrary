@@ -25,8 +25,7 @@ namespace Ks
                 {
                     this.IsTaskPending = false;
                     await this.Task.Invoke();
-                }
-                while (this.IsTaskPending);
+                } while (this.IsTaskPending);
                 this.IsTaskGoingOn = false;
 
                 this.TaskDoneTaskSource?.SetResult(null);

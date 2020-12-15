@@ -12,7 +12,7 @@ namespace Ks
                 if ((int)this.Version == 255)
                     this.Version = 0;
                 else
-                    this.Version = System.Convert.ToByte(((int)this.Version + 1));
+                    this.Version = (byte)((int)this.Version + 1);
             }
 
             internal void ReportKeyEmpty(MultiDictionaryList<TKey, TValue> List)

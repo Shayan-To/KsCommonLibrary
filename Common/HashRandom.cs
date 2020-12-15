@@ -9,7 +9,7 @@ namespace Ks
         {
             private static byte[] GetRandomSeed(System.Security.Cryptography.HashAlgorithm Hasher)
             {
-                var Seed = new byte[Hasher.OutputBlockSize - 1 + 1];
+                var Seed = new byte[Hasher.OutputBlockSize];
                 DefaultCacher<Random>.Value.NextBytes(Seed);
                 return Seed;
             }
@@ -24,7 +24,7 @@ namespace Ks
 
             public HashRandom(System.Security.Cryptography.HashAlgorithm Hasher, byte[] Seed)
             {
-                this.Buffer = new byte[Hasher.OutputBlockSize - 1 + 1];
+                this.Buffer = new byte[Hasher.OutputBlockSize];
                 Hasher.ComputeHash(Seed, this.Buffer);
                 this.Hasher = Hasher;
                 this.Index = 0;
@@ -90,12 +90,12 @@ namespace Ks
             {
                 this.GetRandomBytes(this.Tmp, 0, 1);
                 this.Tmp[1] = 0;
-                return System.Convert.ToSByte(BitConverter.ToUInt16(this.Tmp, 0));
+                return (sbyte)BitConverter.ToUInt16(this.Tmp, 0);
             }
 
             public byte[] GetRandomBytes(int Count)
             {
-                var Res = new byte[Count - 1 + 1];
+                var Res = new byte[Count];
                 this.GetRandomBytes(Res, 0, Count);
                 return Res;
             }

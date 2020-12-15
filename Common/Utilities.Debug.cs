@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System;
 using System.Text;
-using Microsoft.VisualBasic.CompilerServices;
 using Media = System.Windows.Media;
 using Reflect = System.Reflection;
 using SIO = System.IO;
@@ -12,12 +11,8 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class Debug
+            public static class Debug
             {
-                private Debug()
-                {
-                    throw new NotSupportedException();
-                }
 
                 public static void ShowMessageBox(string text, string caption = "")
                 {
@@ -33,8 +28,7 @@ namespace Ks
                         Count = F.Length - 1;
 
                     var R = new StringBuilder();
-                    var loopTo = Count;
-                    for (int I = 1; I <= loopTo; I++)
+                    for (var I = 0; I < Count; I++)
                     {
                         if (I > 1)
                             R.Append('>');
@@ -79,8 +73,7 @@ namespace Ks
                     else
                     {
                         var Bl = true;
-                        var loopTo = Args.Length - 1;
-                        for (int I = 0; I <= loopTo; I++)
+                        for (var I = 0; I < Args.Length; I++)
                         {
                             if (Bl)
                                 Bl = false;
@@ -90,7 +83,7 @@ namespace Ks
                         }
                     }
 
-                    R.AppendLine(Conversions.ToString(')'));
+                    R.Append(')').AppendLine();
 
                     Console.Write(R.ToString());
                 }
@@ -133,7 +126,7 @@ namespace Ks
                         }
                     }
 
-                    R.AppendLine(Conversions.ToString(')'));
+                    R.Append(')').AppendLine();
 
                     return R.ToString();
                 }

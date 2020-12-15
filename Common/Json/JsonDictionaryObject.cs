@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using System;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -15,9 +14,8 @@ namespace Ks
             {
                 this.List = Items.ToArray();
                 Array.Sort(this.List, CompareKeyHash);
-                var loopTo = this.List.Length - 2;
-                for (var I = 0; I <= loopTo; I++)
-                    Verify.False(Operators.CompareString(this.List[I].Key, this.List[I + 1].Key, TextCompare: false) == 0, "Cannot have two items with the same key.");
+                for (var I = 0; I < this.List.Length - 1; I++)
+                    Verify.False(this.List[I].Key == this.List[I + 1].Key, "Cannot have two items with the same key.");
             }
 
             public int Count
@@ -75,10 +73,9 @@ namespace Ks
             public bool TryGetValue(string Key, out JsonObject Value)
             {
                 var T = this.List.BinarySearch(new KeyValuePair<string, JsonObject>(Key, null), CompareKeyHash);
-                var loopTo = (T.StartIndex + T.Length) - 1;
-                for (var I = T.StartIndex; I <= loopTo; I++)
+                for (var I = T.StartIndex; I < T.StartIndex + T.Length; I++)
                 {
-                    if (Operators.CompareString(this.List[I].Key, Key, TextCompare: false) == 0)
+                    if (this.List[I].Key == Key)
                     {
                         Value = this.List[I].Value;
                         return true;

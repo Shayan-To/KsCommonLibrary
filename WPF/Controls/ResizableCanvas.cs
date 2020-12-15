@@ -21,7 +21,7 @@ namespace Ks
                     if (!RB.Item2.HasValue)
                     {
                         Console.WriteLine("Error. " + Utilities.Debug.CompactStackTrace(5));
-                        return default(Rect?);
+                        return default;
                     }
                     ViewingRectangle = RB.Item1;
                 }
@@ -112,7 +112,7 @@ namespace Ks
 
             // ToDo Support Padding and MaxViewingRectangle.
 
-            public static readonly DependencyProperty ViewingRectangleProperty = DependencyProperty.Register("ViewingRectangle", typeof(Rect), typeof(ResizableCanvas), new PropertyMetadata(new Rect((double)0, (double)0, (double)1, (double)1), ViewingRectangle_Changed));
+            public static readonly DependencyProperty ViewingRectangleProperty = DependencyProperty.Register("ViewingRectangle", typeof(Rect), typeof(ResizableCanvas), new PropertyMetadata(new Rect(0, 0, 1, 1), ViewingRectangle_Changed));
 
             private static void ViewingRectangle_Changed(DependencyObject D, DependencyPropertyChangedEventArgs E)
             {

@@ -28,21 +28,18 @@ namespace Ks
             {
                 switch (msg)
                 {
-                    case 0x0084 // NCHitTest
-                   :
-                        {
-                            return this.NCHitTest(wParam, lParam, ref handled);
-                        }
+                    case 0x0084: // NCHitTest
+                        return this.NCHitTest(wParam, lParam, ref handled);
                 }
 
-                return default(IntPtr);
+                return default;
             }
 
             private IntPtr NCHitTest(IntPtr wParam, IntPtr lParam, ref bool Handled)
             {
                 var MousePosition = System.Windows.Input.Mouse.GetPosition(this);
                 var InputElement = this.InputHitTest(MousePosition);
-                return default(IntPtr);
+                return default;
             }
         }
     }

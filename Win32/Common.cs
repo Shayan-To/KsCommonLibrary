@@ -6,12 +6,8 @@ namespace Ks
 {
     namespace Common.Win32
     {
-        public abstract class Common
+        public static class Common
         {
-            private Common()
-            {
-                throw new NotSupportedException();
-            }
 
             // Windows Data Types: https://msdn.microsoft.com/en-us/library/windows/desktop/aa383751(v=vs.85).aspx
 

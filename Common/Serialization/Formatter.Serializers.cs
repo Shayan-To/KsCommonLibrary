@@ -59,7 +59,7 @@ namespace Ks
 
                 this.Serializers.Add(Serializer<Type>.Create(nameof(Type), F =>
                 {
-                    string FullName = default(string);
+                    var FullName = default(string);
                     FullName = F.Get<string>(nameof(FullName));
                     return Type.GetType(FullName); // ToDo This method wants the assembly-qualified name. See how it's done using the full name.
                 }, null, (F, O) =>
@@ -69,7 +69,7 @@ namespace Ks
 
                 this.Serializers.Add(Serializer<Serializer>.Create(nameof(Serializer), F =>
                 {
-                    string Id = default(string);
+                    var Id = default(string);
                     Id = F.Get<string>(nameof(Id));
                     return F.Formatter.Serializers[Id];
                 }, null, (F, O) =>
@@ -79,7 +79,7 @@ namespace Ks
 
                 this.Serializers.Add(Serializer<object>.Create(nameof(Object), F =>
                 {
-                    bool IsObject = default(bool);
+                    var IsObject = default(bool);
                     IsObject = F.Get<bool>(nameof(IsObject));
                     if (IsObject)
                         return new object();

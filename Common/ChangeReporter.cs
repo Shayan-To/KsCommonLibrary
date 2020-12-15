@@ -32,7 +32,7 @@ namespace Ks
                 Enumerable = Obj as IEnumerable;
                 if (Enumerable != null)
                 {
-                    foreach (object O in Enumerable)
+                    foreach (var O in Enumerable)
                         this.Add(O);
                 }
             }
@@ -54,7 +54,7 @@ namespace Ks
                 Enumerable = Obj as IEnumerable;
                 if (Enumerable != null)
                 {
-                    foreach (object O in Enumerable)
+                    foreach (var O in Enumerable)
                         this.Remove(O);
                 }
             }
@@ -66,16 +66,16 @@ namespace Ks
 
             private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
             {
-                if ((int)e.Action != (int)NotifyCollectionChangedAction.Move)
+                if (e.Action != NotifyCollectionChangedAction.Move)
                 {
                     if (e.OldItems != null)
                     {
-                        foreach (object O in e.OldItems)
+                        foreach (var O in e.OldItems)
                             this.Remove(O);
                     }
                     if (e.NewItems != null)
                     {
-                        foreach (object O in e.NewItems)
+                        foreach (var O in e.NewItems)
                             this.Add(O);
                     }
                 }

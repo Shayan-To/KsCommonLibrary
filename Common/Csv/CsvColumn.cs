@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-
-namespace Ks
+﻿namespace Ks
 {
     namespace Common
     {
@@ -34,7 +32,7 @@ namespace Ks
                     Verify.True(this.Parent.HasHeaders, "The CSV does not have headers.");
                     if (value == null)
                         value = "";
-                    if (Operators.CompareString(this._HeaderName, value, TextCompare: false) != 0)
+                    if (this._HeaderName != value)
                     {
                         var OldValue = this._HeaderName;
                         this._HeaderName = value;

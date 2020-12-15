@@ -208,10 +208,10 @@ namespace Ks
                 if (Collection != null)
                     return Collection.Count;
 
-                return default(int?);
+                return default;
             }
 
-            public static IEnumerable<T> PadBegin<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default(T))
+            public static IEnumerable<T> PadBegin<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default)
             {
                 var Cnt = Self.Count();
                 if (Cnt >= Count)
@@ -221,14 +221,13 @@ namespace Ks
 
             private static IEnumerable<T> PadBeginImpl<T>(this IEnumerable<T> Self, int SelfCount, int Count, T PaddingElement)
             {
-                var loopTo = Count - 1;
-                for (SelfCount = SelfCount; SelfCount <= loopTo; SelfCount++)
+                for (; SelfCount < Count; SelfCount++)
                     yield return PaddingElement;
                 foreach (var I in Self)
                     yield return I;
             }
 
-            public static IEnumerable<T> PadEnd<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default(T))
+            public static IEnumerable<T> PadEnd<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default)
             {
                 var Cnt = Self.FastCount();
                 if (Cnt.HasValue)
@@ -239,7 +238,7 @@ namespace Ks
                 return Self.PadEndImpl(Count, PaddingElement);
             }
 
-            private static IEnumerable<T> PadEndImpl<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default(T))
+            private static IEnumerable<T> PadEndImpl<T>(this IEnumerable<T> Self, int Count, T PaddingElement = default)
             {
                 var Cnt = 0;
                 foreach (var I in Self)
@@ -248,15 +247,15 @@ namespace Ks
                     Cnt += 1;
                 }
 
-                var loopTo = Count - 1;
-                for (Cnt = Cnt; Cnt <= loopTo; Cnt++)
+                for (; Cnt < Count; Cnt++)
                     yield return PaddingElement;
             }
 
             public static void Reverse<T>(this IList<T> Self)
             {
-                /* TODO ERROR: Skipped WarningDirectiveTrivia */
+#pragma warning disable CS0612
                 Self.Reverse(0);
+#pragma warning restore CS0612
             }
 
             [Obsolete()]
@@ -266,8 +265,7 @@ namespace Ks
                     Count = Self.Count;
 
                 var Complement = (Count + (2 * Index)) - 1;
-                var loopTo = (Index + Count) - 1;
-                for (var I = Index; I <= loopTo; I++)
+                for (var I = Index; I < Index + Count; I++)
                 {
                     var C = Self[I];
                     Self[I] = Self[Complement - I];
@@ -286,7 +284,7 @@ namespace Ks
                 using (var Enum2 = Other.GetEnumerator()
 )
                 {
-                    do
+                    while (true)
                     {
                         if (!Enum1.MoveNext())
                             return !Enum2.MoveNext();
@@ -295,7 +293,6 @@ namespace Ks
                         if (!Comparison.Invoke(Enum1.Current, Enum2.Current))
                             return false;
                     }
-                    while (true);
                 }
             }
 
@@ -329,8 +326,7 @@ namespace Ks
 
             public static int IndexOf<T>(this IList<T> Self, Func<T, int, bool> Predicate, int StartIndex = 0)
             {
-                var loopTo = Self.Count - 1;
-                for (var I = StartIndex; I <= loopTo; I++)
+                for (var I = StartIndex; I < Self.Count; I++)
                 {
                     if (Predicate.Invoke(Self[I], I))
                         return I;
@@ -338,9 +334,10 @@ namespace Ks
                 return -1;
             }
 
+            // ToDo: Set the fallback value to StartIndex before the loop.
             public static int LastIndexOf<T>(this IList<T> Self, Func<T, int, bool> Predicate, int StartIndex = -1)
             {
-                for (var I = (StartIndex != -1) ? StartIndex : (Self.Count - 1); I >= 0; I += -1)
+                for (var I = (StartIndex != -1) ? StartIndex : (Self.Count - 1); I >= 0; I--)
                 {
                     if (Predicate.Invoke(Self[I], I))
                         return I;
@@ -351,11 +348,9 @@ namespace Ks
             public static void Move<T>(this IList<T> Self, int OldIndex, int NewIndex)
             {
                 var Item = Self[OldIndex];
-                var loopTo = NewIndex - 1;
-                for (var I = OldIndex; I <= loopTo; I++)
+                for (var I = OldIndex; I < NewIndex; I++)
                     Self[I] = Self[I + 1];
-                var loopTo1 = NewIndex + 1;
-                for (var I = OldIndex; I >= loopTo1; I += -1)
+                for (var I = OldIndex; I > NewIndex; I--)
                     Self[I] = Self[I - 1];
                 Self[NewIndex] = Item;
             }
@@ -369,11 +364,9 @@ namespace Ks
 
                 Verify.TrueArg(Length > 0, nameof(Length), "Length must be a non-negative number.");
                 Verify.True((StartIndex + Length) <= Self.Count, "The given range must be inside the list.");
-                var loopTo = Self.Count - Length - 1;
-                for (var I = StartIndex; I <= loopTo; I++)
+                for (var I = StartIndex; I < Self.Count - Length; I++)
                     Self[I] = Self[I + Length];
-                var loopTo1 = Self.Count - Length;
-                for (var I = Self.Count - 1; I >= loopTo1; I += -1)
+                for (var I = Self.Count - 1; I >= Self.Count - Length; I--)
                     Self.RemoveAt(I);
             }
 
@@ -389,8 +382,7 @@ namespace Ks
 
                 var Count = 0;
                 var I = StartIndex;
-                var loopTo = (StartIndex + Length) - 1;
-                for (var J = StartIndex; J <= loopTo; J++)
+                for (var J = StartIndex; J < StartIndex + Length; J++)
                 {
                     if (!Predicate.Invoke(Self[J]))
                     {
@@ -410,7 +402,7 @@ namespace Ks
             {
                 if (Length != Array.Length)
                 {
-                    var R = new byte[Length - 1 + 1];
+                    var R = new byte[Length];
                     System.Array.Copy(Array, 0, R, 0, Math.Min(Length, Array.Length));
                     Array = R;
                 }
@@ -422,7 +414,7 @@ namespace Ks
             {
                 if ((Length != Array.Length) | (Offset != 0))
                 {
-                    var R = new byte[Length - 1 + 1];
+                    var R = new byte[Length];
                     System.Array.Copy(Array, Offset, R, 0, Math.Min(Length, Array.Length - Offset));
                     Array = R;
                 }
@@ -432,7 +424,7 @@ namespace Ks
 
             public static T[] Subarray<T>(this T[] Self, int Start, int Count)
             {
-                var Res = new T[Count - 1 + 1];
+                var Res = new T[Count];
                 Array.Copy(Self, Start, Res, 0, Count);
                 return Res;
             }
@@ -539,7 +531,7 @@ namespace Ks
             public static IEnumerable<T> DistinctNeighbours<T>(this IEnumerable<T> Self, IEqualityComparer<T> Comparer)
             {
                 var Bl = true;
-                T P = default(T);
+                var P = default(T);
 
                 foreach (var I in Self)
                 {
@@ -578,7 +570,7 @@ namespace Ks
 
             public static T[] RandomElements<T>(this IEnumerable<T> Self, int Count)
             {
-                var Res = new T[Count - 1 + 1];
+                var Res = new T[Count];
                 var Cnt = 0;
 
                 var Rand = DefaultCacher<Random>.Value;
@@ -613,8 +605,7 @@ namespace Ks
             public static void RandomizeOrder<T>(this IList<T> Self)
             {
                 var Rand = DefaultCacher<Random>.Value;
-                var loopTo = Self.Count - 1;
-                for (var I = 1; I <= loopTo; I++)
+                for (var I = 1; I < Self.Count; I++)
                 {
                     var J = Rand.Next(I + 1);
                     Self.Move(I, J);
@@ -651,7 +642,7 @@ namespace Ks
 
             public static void AddRange<T>(this IList<T> Self, IEnumerable<T> Items)
             {
-                foreach (T I in Items)
+                foreach (var I in Items)
                     Self.Add(I);
             }
 
@@ -739,8 +730,8 @@ namespace Ks
 
             public static T MaxOrDefault<T>(this IEnumerable<T> Self, Func<T, int, double?> Selector)
             {
-                double? M = default(double?);
-                T R = default(T);
+                var M = default(double?);
+                var R = default(T);
                 var Ind = 0;
                 foreach (var I in Self)
                 {
@@ -757,8 +748,8 @@ namespace Ks
 
             public static T MinOrDefault<T>(this IEnumerable<T> Self, Func<T, int, double?> Selector)
             {
-                double? M = default(double?);
-                T R = default(T);
+                var M = default(double?);
+                var R = default(T);
                 var Ind = 0;
                 foreach (var I in Self)
                 {
@@ -775,8 +766,8 @@ namespace Ks
 
             public static T MaxOrDefault<T>(this IEnumerable<T> Self, Func<T, int, long?> Selector)
             {
-                long? M = default(long?);
-                T R = default(T);
+                var M = default(long?);
+                var R = default(T);
                 var Ind = 0;
                 foreach (var I in Self)
                 {
@@ -793,8 +784,8 @@ namespace Ks
 
             public static T MinOrDefault<T>(this IEnumerable<T> Self, Func<T, int, long?> Selector)
             {
-                long? M = default(long?);
-                T R = default(T);
+                var M = default(long?);
+                var R = default(T);
                 var Ind = 0;
                 foreach (var I in Self)
                 {
@@ -813,7 +804,7 @@ namespace Ks
             {
                 if (Self.CanPop())
                     return Self.Peek();
-                return default(T);
+                return default;
             }
 
             public static EnumerableCacher<T> AsCachedList<T>(this IEnumerable<T> Self)
@@ -838,9 +829,9 @@ namespace Ks
 
             public static Size ToSizeSafe(this Vector Self)
             {
-                if (Self.X < (double)0)
+                if (Self.X < 0)
                     Self.X = 0;
-                if (Self.Y < (double)0)
+                if (Self.Y < 0)
                     Self.Y = 0;
                 return new Size(Self.X, Self.Y);
             }
@@ -856,22 +847,22 @@ namespace Ks
 
                 if (Self.IsEmpty)
                     return (Rect.Empty, Bl);
-                if ((Size.Width == (double)0) & (Size.Height == (double)0))
-                    return (new Rect(Self.Location + (Self.Size.ToVector() / (double)2), new Size()), Bl);
-                if (Size.Width == (double)0)
+                if ((Size.Width == 0) & (Size.Height == 0))
+                    return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
+                if (Size.Width == 0)
                 {
-                    if (Self.Height == (double)0)
-                        return (new Rect(Self.Location + (Self.Size.ToVector() / (double)2), new Size()), Bl);
+                    if (Self.Height == 0)
+                        return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
                     Bl = false;
                 }
-                if (Size.Height == (double)0)
+                if (Size.Height == 0)
                 {
-                    if (Self.Width == (double)0)
-                        return (new Rect(Self.Location + (Self.Size.ToVector() / (double)2), new Size()), Bl);
+                    if (Self.Width == 0)
+                        return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
                     Bl = true;
                 }
-                if ((Self.Width == (double)0) | (Self.Height == (double)0))
-                    return (new Rect(Self.Location + (Self.Size.ToVector() / (double)2), new Size()), Bl);
+                if ((Self.Width == 0) | (Self.Height == 0))
+                    return (new Rect(Self.Location + (Self.Size.ToVector() / 2), new Size()), Bl);
 
                 if (!Bl.HasValue)
                 {
@@ -884,13 +875,13 @@ namespace Ks
                 if (Bl.Value)
                 {
                     var Sz = new Size(Self.Width, (Self.Width / Size.Width) * Size.Height);
-                    Loc += new Vector((double)0, (Self.Height - Sz.Height) / (double)2);
+                    Loc += new Vector(0, (Self.Height - Sz.Height) / 2);
                     return (new Rect(Loc, Sz), Bl);
                 }
                 else
                 {
                     var Sz = new Size((Self.Height / Size.Height) * Size.Width, Self.Height);
-                    Loc += new Vector((Self.Width - Sz.Width) / (double)2, (double)0);
+                    Loc += new Vector((Self.Width - Sz.Width) / 2, 0);
                     return (new Rect(Loc, Sz), Bl);
                 }
             }
@@ -903,19 +894,19 @@ namespace Ks
                     return (Rect.Empty, Bl);
                 if (Self.Size == new Size())
                     return (new Rect(Self.Location, new Size()), Bl);
-                if (Self.Width == (double)0)
+                if (Self.Width == 0)
                 {
-                    if (Size.Height == (double)0)
+                    if (Size.Height == 0)
                         return (Rect.Empty, Bl);
                     Bl = false;
                 }
-                if (Self.Height == (double)0)
+                if (Self.Height == 0)
                 {
-                    if (Size.Width == (double)0)
+                    if (Size.Width == 0)
                         return (Rect.Empty, Bl);
                     Bl = true;
                 }
-                if ((Size.Width == (double)0) | (Size.Height == (double)0))
+                if ((Size.Width == 0) | (Size.Height == 0))
                     return (Rect.Empty, Bl);
 
                 if (!Bl.HasValue)
@@ -929,13 +920,13 @@ namespace Ks
                 if (Bl.Value)
                 {
                     var Sz = new Size(Self.Width, (Self.Width / Size.Width) * Size.Height);
-                    Loc += new Vector((double)0, (Self.Height - Sz.Height) / (double)2);
+                    Loc += new Vector(0, (Self.Height - Sz.Height) / 2);
                     return (new Rect(Loc, Sz), Bl);
                 }
                 else
                 {
                     var Sz = new Size((Self.Height / Size.Height) * Size.Width, Self.Height);
-                    Loc += new Vector((Self.Width - Sz.Width) / (double)2, (double)0);
+                    Loc += new Vector((Self.Width - Sz.Width) / 2, 0);
                     return (new Rect(Loc, Sz), Bl);
                 }
             }
@@ -976,12 +967,12 @@ namespace Ks
 
             public static Point GetCenter(this Rect Self)
             {
-                return Self.Location + (Self.Size.ToVector() / (double)2);
+                return Self.Location + (Self.Size.ToVector() / 2);
             }
 
             public static void MoveCenter(this Rect Self, Point Center)
             {
-                Self.Location = Center - (Self.Size.ToVector() / (double)2);
+                Self.Location = Center - (Self.Size.ToVector() / 2);
             }
 
             /// <summary>
@@ -993,8 +984,7 @@ namespace Ks
                 {
                     yield return Self;
                     Self = Self.BaseType;
-                }
-                while (Self != null);
+                } while (Self != null);
             }
 
             public static IEnumerable<System.Reflection.Assembly> GetRecursiveReferencedAssemblies(this System.Reflection.Assembly Assembly)
@@ -1161,7 +1151,7 @@ namespace Ks
                 {
                     if (Usage.AllowMultiple)
                         throw new ArgumentException("The attribute should not allow multiple.");
-                    if ((int)(Usage.ValidOn & (AttributeTargets.Class | AttributeTargets.Delegate | AttributeTargets.Enum | AttributeTargets.GenericParameter | AttributeTargets.Interface | AttributeTargets.Module | AttributeTargets.Struct)) == 0)
+                    if ((Usage.ValidOn & (AttributeTargets.Class | AttributeTargets.Delegate | AttributeTargets.Enum | AttributeTargets.GenericParameter | AttributeTargets.Interface | AttributeTargets.Module | AttributeTargets.Struct)) == 0)
                         throw new ArgumentException("The attribute is not valid on types.");
                 }
 
@@ -1182,7 +1172,7 @@ namespace Ks
                 {
                     if (Usage.AllowMultiple)
                         throw new ArgumentException("The attribute should not allow multiple.");
-                    if ((int)(Usage.ValidOn & AttributeTargets.Method) != (int)AttributeTargets.Method)
+                    if ((Usage.ValidOn & AttributeTargets.Method) != AttributeTargets.Method)
                         throw new ArgumentException("The attribute is not valid on methods.");
                 }
 
@@ -1213,13 +1203,13 @@ namespace Ks
 
                 var TotalN = 0;
                 var N = 0;
-                byte[] Buf = default(byte[]);
+                var Buf = default(byte[]);
 
-                do
+                while (true)
                 {
-                    Buf = new byte[BufLength - 1 + 1];
+                    Buf = new byte[BufLength];
                     N = 0;
-                    do
+                    while (true)
                     {
                         var T = Self.Read(Buf, N, Buf.Length - N);
                         if (T == 0)
@@ -1228,14 +1218,12 @@ namespace Ks
                         N += T;
                         ProgressCallback?.Invoke(TotalN);
                     }
-                    while (true);
                     if (N != BufLength)
                         break;
                     Arrs.Add(Buf);
                 }
-                while (true);
 
-                var Res = new byte[TotalN - 1 + 1];
+                var Res = new byte[TotalN];
                 var Offset = 0;
                 foreach (var A in Arrs)
                 {
@@ -1251,30 +1239,29 @@ namespace Ks
             {
                 var Buffer = new byte[65536];
 
-                if (Start != (long)-1)
+                if (Start != -1)
                     Stream.Seek(Start, System.IO.SeekOrigin.Begin);
 
                 var TotalN = 0;
-                do
+                while (true)
                 {
                     var N = 0;
-                    if (Length == (long)-1)
+                    if (Length == -1)
                         N = Stream.Read(Buffer, 0, Buffer.Length);
                     else
-                        N = Stream.Read(Buffer, 0, System.Convert.ToInt32(Math.Min(Length, (long)Buffer.Length)));
+                        N = Stream.Read(Buffer, 0, (int)Math.Min(Length, Buffer.Length));
                     if (N == 0)
                         break;
                     Self.Write(Buffer, 0, N);
                     TotalN += N;
                     ProgressCallback?.Invoke(TotalN);
-                    if (Length != (long)-1)
+                    if (Length != -1)
                     {
                         Length -= N;
-                        if (Length == (long)0)
+                        if (Length == 0)
                             break;
                     }
                 }
-                while (true);
 
                 return TotalN;
             }
@@ -1282,7 +1269,7 @@ namespace Ks
             public static string GetRegexMatch(this System.IO.TextReader Self, Regex Regex)
             {
                 var Text = new System.Text.StringBuilder();
-                char[] Buffer = new char[256];
+                var Buffer = new char[256];
 
                 while (!Regex.IsMatch(Text.ToString()))
                 {
@@ -1325,7 +1312,7 @@ namespace Ks
             public static T NothingIfEmpty<T>(this T Self) where T : ICollection
             {
                 if (Self.Count == 0)
-                    return default(T);
+                    return default;
                 return Self;
             }
 

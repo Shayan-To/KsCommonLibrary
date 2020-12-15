@@ -19,41 +19,31 @@ namespace Ks
                 switch (E.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
-                        {
-                            foreach (T I in E.NewItems)
-                                this.OnElementGotIn(new ElementEventArgs<T>(I));
-                            break;
-                        }
+                        foreach (T I in E.NewItems)
+                            this.OnElementGotIn(new ElementEventArgs<T>(I));
+                        break;
 
                     case NotifyCollectionChangedAction.Remove:
-                        {
-                            foreach (T I in E.OldItems)
-                                this.OnElementGotOut(new ElementEventArgs<T>(I));
-                            break;
-                        }
+                        foreach (T I in E.OldItems)
+                            this.OnElementGotOut(new ElementEventArgs<T>(I));
+                        break;
 
                     case NotifyCollectionChangedAction.Move:
-                        {
-                            break;
-                        }
+                        break;
 
                     case NotifyCollectionChangedAction.Replace:
-                        {
-                            foreach (T I in E.OldItems)
-                                this.OnElementGotOut(new ElementEventArgs<T>(I));
-                            foreach (T I in E.NewItems)
-                                this.OnElementGotIn(new ElementEventArgs<T>(I));
-                            break;
-                        }
+                        foreach (T I in E.OldItems)
+                            this.OnElementGotOut(new ElementEventArgs<T>(I));
+                        foreach (T I in E.NewItems)
+                            this.OnElementGotIn(new ElementEventArgs<T>(I));
+                        break;
 
                     case NotifyCollectionChangedAction.Reset:
-                        {
-                            foreach (T I in this.Clone)
-                                this.OnElementGotOut(new ElementEventArgs<T>(I));
-                            foreach (T I in this.Collection)
-                                this.OnElementGotIn(new ElementEventArgs<T>(I));
-                            break;
-                        }
+                        foreach (T I in this.Clone)
+                            this.OnElementGotOut(new ElementEventArgs<T>(I));
+                        foreach (T I in this.Collection)
+                            this.OnElementGotIn(new ElementEventArgs<T>(I));
+                        break;
                 }
 
                 this.OnCollectionChanged();
@@ -61,49 +51,35 @@ namespace Ks
                 switch (E.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
-                        {
-                            var loopTo = E.NewItems.Count - 1;
-                            for (int I = 0; I <= loopTo; I++)
-                                this.Clone.Insert(E.NewStartingIndex + I, E.NewItems[I]);
-                            break;
-                        }
-
+                        for (var I = 0; I < E.NewItems.Count; I++)
+                            this.Clone.Insert(E.NewStartingIndex + I, E.NewItems[I]);
+                        break;
                     case NotifyCollectionChangedAction.Remove:
-                        {
-                            for (int I = E.OldItems.Count - 1; I >= 0; I += -1)
-                                this.Clone.RemoveAt(E.OldStartingIndex + I);
-                            break;
-                        }
+                        for (var I = E.OldItems.Count - 1; I >= 0; I--)
+                            this.Clone.RemoveAt(E.OldStartingIndex + I);
+                        break;
 
                     case NotifyCollectionChangedAction.Move:
+                        if (E.NewStartingIndex < E.OldStartingIndex)
                         {
-                            if (E.NewStartingIndex < E.OldStartingIndex)
-                            {
-                                var loopTo1 = E.NewItems.Count - 1;
-                                for (int I = 0; I <= loopTo1; I++)
-                                    this.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I);
-                            }
-                            else
-                                for (int I = E.NewItems.Count - 1; I >= 0; I += -1)
-                                    this.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I);
-                            break;
+                            for (var I = 0; I < E.NewItems.Count; I++)
+                                this.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I);
                         }
+                        else
+                            for (var I = E.NewItems.Count - 1; I >= 0; I--)
+                                this.Clone.Move(E.OldStartingIndex + I, E.NewStartingIndex + I);
+                        break;
 
                     case NotifyCollectionChangedAction.Replace:
-                        {
-                            var loopTo2 = E.NewItems.Count - 1;
-                            for (int I = 0; I <= loopTo2; I++)
-                                this.Clone[E.NewStartingIndex + I] = E.NewItems[I];
-                            break;
-                        }
+                        for (var I = 0; I < E.NewItems.Count; I++)
+                            this.Clone[E.NewStartingIndex + I] = E.NewItems[I];
+                        break;
 
                     case NotifyCollectionChangedAction.Reset:
-                        {
-                            this.Clone.Clear();
-                            if (this.Collection != null)
-                                this.Clone.AddRange(this.Collection);
-                            break;
-                        }
+                        this.Clone.Clear();
+                        if (this.Collection != null)
+                            this.Clone.AddRange(this.Collection);
+                        break;
                 }
             }
 

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Mono;
 using System.Data;
 using System.Diagnostics;
-using Microsoft.VisualBasic;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
@@ -47,7 +46,7 @@ namespace Ks
                 if (!IsGeneric & Obj.HasValue)
                     Type = Obj.Value.GetType();
 
-                for (int I = this.Serializers.Count - 1; I >= 0; I += -1)
+                for (var I = this.Serializers.Count - 1; I >= 0; I--)
                 {
                     var S = this.Serializers[I];
 
@@ -172,14 +171,14 @@ namespace Ks
                         this.GetCache.Add(Id, null);
                     }
 
-                    Serializer S = default(Serializer);
+                    var S = default(Serializer);
                     if (IsGeneric)
-                        S = this.GetSerializer<T>(default(CNullable<T>), true);
+                        S = this.GetSerializer<T>(default, true);
                     else
                         S = this.Get<Serializer>(nameof(Serializer));
 
                     var ST = S as Serializer<T>;
-                    T R = default(T);
+                    var R = default(T);
 
                     if (IsGeneric & ST != null)
                     {
@@ -237,12 +236,12 @@ namespace Ks
 
             protected internal T Get<T>(string Name)
             {
-                return this.GetImpl<T>(Name, default(CNullable<T>), true);
+                return this.GetImpl<T>(Name, default, true);
             }
 
             protected internal object Get(string Name)
             {
-                return this.GetImpl<object>(Name, default(CNullable<object>), false);
+                return this.GetImpl<object>(Name, default, false);
             }
 
             protected internal void Get<T>(string Name, T Obj)

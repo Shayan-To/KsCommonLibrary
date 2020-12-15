@@ -17,13 +17,13 @@ namespace Ks
 
             protected internal override void OnNavigatedTo(NavigationEventArgs E)
             {
-                if ((int)E.NavigationType == (int)NavigationType.NewNavigation)
+                if (E.NavigationType == NavigationType.NewNavigation)
                     this.IsWorkDone = false;
             }
 
             protected internal override void OnNavigatedFrom(NavigationEventArgs E)
             {
-                if ((int)E.NavigationType == (int)NavigationType.NewNavigation)
+                if (E.NavigationType == NavigationType.NewNavigation)
                     this.IsWorkDone = true;
             }
 

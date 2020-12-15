@@ -1,8 +1,6 @@
-﻿using Microsoft.VisualBasic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.Text;
-using Microsoft.VisualBasic.CompilerServices;
 using Media = System.Windows.Media;
 using Reflect = System.Reflection;
 using SIO = System.IO;
@@ -13,63 +11,23 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class Text
+            public static class Text
             {
-                private Text()
-                {
-                    throw new NotSupportedException();
-                }
 
                 private static readonly Dictionary<char, char> EscapeDic = new Dictionary<char, char>()
                 {
-                    {
-                        '0',
-                        (char)0x0
-                    },
-                    {
-                        '"',
-                        (char)0x27
-                    },
-                    {
-                        '\'',
-                        (char)0x22
-                    },
-                    {
-                        '?',
-                        (char)0x3F
-                    },
-                    {
-                        '\\',
-                        (char)0x5C
-                    },
-                    {
-                        'a',
-                        (char)0x7
-                    },
-                    {
-                        'b',
-                        (char)0x8
-                    },
-                    {
-                        'f',
-                        (char)0xC
-                    },
-                    {
-                        'n',
-                        (char)0xA
-                    },
-                    {
-                        'r',
-                        (char)0xD
-                    },
-                    {
-                        't',
-                        (char)0x9
-                    },
-                    {
-                        'v',
-                        (char)0xB
-                    }
+                    {'0', (char)0x00},
+                    {'"', (char)0x27},
+                    {'\'', (char)0x22},
+                    {'?', (char)0x3F},
+                    {'\\', (char)0x5C},
+                    {'a', (char)0x07},
+                    {'b', (char)0x08},
+                    {'f', (char)0x0C},
+                    {'n', (char)0x0A},
+                    {'r', (char)0x0D},
+                    {'t', (char)0x09},
+                    {'v', (char)0x0B}
                 };
 
                 public static bool IsBinaryDigit(char C)
@@ -101,7 +59,7 @@ namespace Ks
 
                     T2 = Input[0];
 
-                    if (Conversions.ToString(T2) != @"\")
+                    if (T2 != '\\')
                     {
                         if (DoesThrow && Input.Length != 1)
                             throw new ArgumentException("Invalid escaped character.");
@@ -206,11 +164,10 @@ namespace Ks
 
                 public static string CEscape(string Input, bool DoesThrow = true)
                 {
-                    char T1 = default(char), T2 = default(char);
+                    char T1 = default, T2 = default;
 
                     var Res = new StringBuilder();
-                    var loopTo = Input.Length - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < Input.Length; I++)
                     {
                         T2 = Input[I];
 
@@ -368,29 +325,18 @@ namespace Ks
                     {
                         switch (Ch)
                         {
-                            case ControlChars.Cr:
-                                {
-                                    Res.Append(@"\r");
-                                    break;
-                                }
-
-                            case ControlChars.Lf:
-                                {
-                                    Res.Append(@"\n");
-                                    break;
-                                }
-
+                            case '\r':
+                                Res.Append(@"\r");
+                                break;
+                            case '\n':
+                                Res.Append(@"\n");
+                                break;
                             case '\\':
-                                {
-                                    Res.Append(@"\\");
-                                    break;
-                                }
-
+                                Res.Append(@"\\");
+                                break;
                             default:
-                                {
-                                    Res.Append(Ch);
-                                    break;
-                                }
+                                Res.Append(Ch);
+                                break;
                         }
                     }
 
@@ -400,8 +346,7 @@ namespace Ks
                 public static string UnescapeNewLine(string Str)
                 {
                     var Res = new StringBuilder();
-                    var loopTo = Str.Length - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -415,27 +360,16 @@ namespace Ks
                             switch (Ch)
                             {
                                 case 'r':
-                                    {
-                                        Res.Append(ControlChars.Cr);
-                                        break;
-                                    }
-
+                                    Res.Append('\r');
+                                    break;
                                 case 'n':
-                                    {
-                                        Res.Append(ControlChars.Lf);
-                                        break;
-                                    }
-
+                                    Res.Append('\n');
+                                    break;
                                 case '\\':
-                                    {
-                                        Res.Append(@"\");
-                                        break;
-                                    }
-
+                                    Res.Append(@"\");
+                                    break;
                                 default:
-                                    {
-                                        throw new Exception("Invalid escape character.");
-                                    }
+                                    throw new Exception("Invalid escape character.");
                             }
                         }
 
@@ -455,15 +389,15 @@ namespace Ks
 
                 public static string FirstCapitalized(string Str)
                 {
-                    return Conversions.ToString(char.ToUpper(Str[0])) + Str.Substring(1).ToLower();
+                    return char.ToUpper(Str[0]).ToString() + Str.Substring(1).ToLower();
                 }
 
                 public static string EnumerableToString<T>(IEnumerable<T> Enumerable)
                 {
-                    var Res = new StringBuilder(Conversions.ToString('{'));
+                    var Res = new StringBuilder("{");
                     var Bl = true;
 
-                    foreach (T I in Enumerable)
+                    foreach (var I in Enumerable)
                     {
                         if (Bl)
                             Bl = false;
@@ -485,28 +419,17 @@ namespace Ks
                     switch (Alignment)
                     {
                         case TextAlignment.Left:
-                            {
-                                Res = Str.PadRight(Length, Ch);
-                                break;
-                            }
-
+                            Res = Str.PadRight(Length, Ch);
+                            break;
                         case TextAlignment.Center:
-                            {
-                                Res = Str.PadRight(Length - (N / 2), Ch).PadLeft(Length, Ch);
-                                break;
-                            }
-
+                            Res = Str.PadRight(Length - (N / 2), Ch).PadLeft(Length, Ch);
+                            break;
                         case TextAlignment.Right:
-                            {
-                                Res = Str.PadLeft(Length, Ch);
-                                break;
-                            }
-
+                            Res = Str.PadLeft(Length, Ch);
+                            break;
                         default:
-                            {
-                                Verify.FailArg(nameof(Alignment), "Invalid Alignment.");
-                                break;
-                            }
+                            Verify.FailArg(nameof(Alignment), "Invalid Alignment.");
+                            break;
                     }
 
                     return Res;

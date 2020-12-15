@@ -20,12 +20,11 @@ namespace Ks
 
             public override IEnumerable<T> GetT(FormatterGetProxy Formatter)
             {
-                int Count = default(int);
+                var Count = default(int);
                 Count = Formatter.Get<int>(nameof(Count));
 
                 var R = new List<T>(Count);
-                var loopTo = Count - 1;
-                for (int I = 0; I <= loopTo; I++)
+                for (var I = 0; I < Count; I++)
                     R.Add(Formatter.Get<T>(null));
 
                 return R;

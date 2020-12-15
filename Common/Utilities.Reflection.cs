@@ -11,12 +11,8 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class Reflection
+            public static class Reflection
             {
-                private Reflection()
-                {
-                    throw new NotSupportedException();
-                }
 
                 public static IEnumerable<Reflect.Assembly> GetAllAccessibleAssemblies()
                 {
@@ -29,9 +25,9 @@ namespace Ks
                         Assemblies = GetAllAccessibleAssemblies();
                     foreach (var Ass in Assemblies)
                     {
-                        foreach (Type Type in Ass.GetTypes())
+                        foreach (var Type in Ass.GetTypes())
                         {
-                            foreach (Reflect.MethodInfo Method in Type.GetMethods(Reflect.BindingFlags.Static | Reflect.BindingFlags.Instance | Reflect.BindingFlags.Public | Reflect.BindingFlags.NonPublic))
+                            foreach (var Method in Type.GetMethods(Reflect.BindingFlags.Static | Reflect.BindingFlags.Instance | Reflect.BindingFlags.Public | Reflect.BindingFlags.NonPublic))
                                 yield return Method;
                         }
                     }
@@ -43,7 +39,7 @@ namespace Ks
                         Assemblies = GetAllAccessibleAssemblies();
                     foreach (var Ass in Assemblies)
                     {
-                        foreach (Type Type in Ass.GetTypes())
+                        foreach (var Type in Ass.GetTypes())
                             yield return Type;
                     }
                 }
@@ -52,7 +48,7 @@ namespace Ks
                 {
                     if (Assemblies == null)
                         Assemblies = GetAllAccessibleAssemblies();
-                    foreach (Type Type in GetAllTypes(Assemblies))
+                    foreach (var Type in GetAllTypes(Assemblies))
                     {
                         if (Base.IsAssignableFrom(Type))
                             yield return Type;

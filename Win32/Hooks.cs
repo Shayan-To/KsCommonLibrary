@@ -68,12 +68,8 @@ namespace Ks
     /// WH_MOUSE_LL
     /// This behavior is similar to what happens when there is an architecture mismatch between the hook DLL and the target application process, for example, when the hook DLL is 32-bit and the application process 64-bit.
     /// </remarks>
-        public abstract partial class Hooks
+        public static partial class Hooks
         {
-            private Hooks()
-            {
-                throw new NotSupportedException();
-            }
 
             /// LRESULT CALLBACK LowLevelKeyboardProc(
         /// _In_ int    nCode,
@@ -270,7 +266,7 @@ namespace Ks
             /// <summary>
             /// Test the extended-key flag.
             /// </summary>
-                Extended = ((int)Windows.KeyFlags.Extended >> 8),
+                Extended = (Windows.KeyFlags.Extended >> 8),
                 /// LLKHF_LOWER_IL_INJECTED = 0x00000002
             /// <summary>
             /// Test the event-injected (from a process running at lower integrity level) flag.
@@ -285,12 +281,12 @@ namespace Ks
             /// <summary>
             /// Test the context code.
             /// </summary>
-                AltDown = ((int)Windows.KeyFlags.AltDown >> 8),
+                AltDown = (Windows.KeyFlags.AltDown >> 8),
                 /// LLKHF_UP = (KF_UP >> 8)
             /// <summary>
             /// Test the transition-state flag.
             /// </summary>
-                Up = ((int)Windows.KeyFlags.Up >> 8)
+                Up = (Windows.KeyFlags.Up >> 8)
             }
 
             /// typedef struct tagKBDLLHOOKSTRUCT {

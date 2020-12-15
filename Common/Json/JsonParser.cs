@@ -1,9 +1,7 @@
 ﻿//#define RelaxedStrings
 
-using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -16,7 +14,7 @@ namespace Ks
                 this.Input = Input.ToCharArray();
                 this.Index = 0;
                 var Res = this.Parse();
-                Verify.True((int)this.ReadToken().Type == (int)TokenType.None, "Invalid JSON format. Expected end of data.");
+                Verify.True(this.ReadToken().Type == TokenType.None, "Invalid JSON format. Expected end of data.");
                 this.StringBuilder.Clear();
                 return Res;
             }
@@ -25,12 +23,12 @@ namespace Ks
             {
                 var Token = this.ReadToken();
 
-                Verify.False((int)Token.Type == (int)TokenType.None, "Invalid JSON format. Unexpected end of data.");
+                Verify.False(Token.Type == TokenType.None, "Invalid JSON format. Unexpected end of data.");
 
-                if ((int)(Token.Type & TokenType.Value) == (int)TokenType.Value)
-                    return new JsonValueObject(Token.Value, (int)Token.Type == (int)TokenType.QuotedValue);
+                if ((Token.Type & TokenType.Value) == TokenType.Value)
+                    return new JsonValueObject(Token.Value, Token.Type == TokenType.QuotedValue);
 
-                Assert.True((int)Token.Type == (int)TokenType.Operator);
+                Assert.True(Token.Type == TokenType.Operator);
 
                 Verify.True((Token.Value == "{") | (Token.Value == "["), "Invalid JSON format. Unexpected token.");
 
@@ -40,30 +38,29 @@ namespace Ks
 
                     Token = this.PeekToken();
 
-                    if (((int)Token.Type == (int)TokenType.Operator) & (Token.Value == "}"))
+                    if ((Token.Type == TokenType.Operator) & (Token.Value == "}"))
                     {
                         this.ReadToken();
                         return new JsonDictionaryObject(List);
                     }
 
-                    do
+                    while (true)
                     {
                         Token = this.ReadToken();
 #if RelaxedStrings
                         Verify.True((Token.Type & TokenType.Value) == TokenType.Value, "Invalid JSON format. Key must be a value.");
 #else
-                        Verify.True((int)Token.Type == (int)TokenType.QuotedValue, "Invalid JSON format. Key must be a string.");
+                        Verify.True(Token.Type == TokenType.QuotedValue, "Invalid JSON format. Key must be a string.");
 #endif
                         var Key = Token.Value;
                         Token = this.ReadToken();
-                        Verify.True(((int)Token.Type == (int)TokenType.Operator) & (Token.Value == ":"), "Invalid JSON format. Expected ':'.");
+                        Verify.True((Token.Type == TokenType.Operator) & (Token.Value == ":"), "Invalid JSON format. Expected ':'.");
                         List.Add(new KeyValuePair<string, JsonObject>(Key, this.Parse()));
                         Token = this.ReadToken();
-                        Verify.True(((int)Token.Type == (int)TokenType.Operator) & ((Token.Value == ",") | (Token.Value == "}")), "Invalid JSON format. Expected ',' or '}'.");
+                        Verify.True((Token.Type == TokenType.Operator) & ((Token.Value == ",") | (Token.Value == "}")), "Invalid JSON format. Expected ',' or '}'.");
                         if (Token.Value == "}")
                             break;
                     }
-                    while (true);
 
                     return new JsonDictionaryObject(List);
                 }
@@ -73,21 +70,20 @@ namespace Ks
 
                     Token = this.PeekToken();
 
-                    if (((int)Token.Type == (int)TokenType.Operator) & (Token.Value == "]"))
+                    if ((Token.Type == TokenType.Operator) & (Token.Value == "]"))
                     {
                         this.ReadToken();
                         return new JsonListObject(List);
                     }
 
-                    do
+                    while (true)
                     {
                         List.Add(this.Parse());
                         Token = this.ReadToken();
-                        Verify.True(((int)Token.Type == (int)TokenType.Operator) & ((Token.Value == ",") | (Token.Value == "]")), "Invalid JSON format. Expected ',' or ']'.");
+                        Verify.True((Token.Type == TokenType.Operator) & ((Token.Value == ",") | (Token.Value == "]")), "Invalid JSON format. Expected ',' or ']'.");
                         if (Token.Value == "]")
                             break;
                     }
-                    while (true);
 
                     return new JsonListObject(List);
                 }
@@ -105,21 +101,21 @@ namespace Ks
                 if (this._PeekedToken.HasValue)
                 {
                     var R = this._PeekedToken.Value;
-                    this._PeekedToken = default(Token?);
+                    this._PeekedToken = default;
                     return R;
                 }
 
                 this.SkipWhiteSpace();
 
                 if (this.Index == this.Input.Length)
-                    return default(Token);
+                    return default;
 
-                char Ch = this.Input[this.Index];
+                var Ch = this.Input[this.Index];
 
                 if (Array.IndexOf(Operators, Ch) != -1)
                 {
                     this.Index += 1;
-                    return new Token(Conversions.ToString(this.Input[this.Index - 1]), TokenType.Operator);
+                    return new Token(this.Input[this.Index - 1].ToString(), TokenType.Operator);
                 }
 
                 if (Ch == '"')
@@ -135,8 +131,7 @@ namespace Ks
                 Assert.True(this.Input[this.Index] == '"');
 
                 var PrevStart = this.Index + 1;
-                var loopTo = this.Input.Length - 1;
-                for (var I = this.Index + 1; I <= loopTo; I++)
+                for (var I = this.Index + 1; I < this.Input.Length; I++)
                 {
                     if (this.Input[I] == '"')
                     {
@@ -159,7 +154,7 @@ namespace Ks
                         }
                         else
                         {
-                            char Ch = default(char);
+                            var Ch = default(char);
                             Verify.True(EscapeDic.TryGetValue(this.Input[I], out Ch), "Invalid JSON format. Invalid escape sequence.");
                             Res.Append(Ch);
                         }
@@ -178,17 +173,17 @@ namespace Ks
                 Verify.True((I + 3) < this.Input.Length, "Invalid JSON format. Unexpected end of data.");
 
                 var R = 0;
-                var loopTo = I + 3;
-                for (I = I; I <= loopTo; I++)
+                var end = I + 4;
+                for (; I < end; I++)
                 {
                     var Ch = this.Input[I];
                     R *= 16;
                     if (('0' <= Ch) & (Ch <= '9'))
-                        R += Strings.AscW(Ch) - Strings.AscW('0');
+                        R += Ch - '0';
                     else if (('a' <= Ch) & (Ch <= 'f'))
-                        R += (Strings.AscW(Ch) - Strings.AscW('a')) + 10;
+                        R += Ch - 'a' + 10;
                     else if (('A' <= Ch) & (Ch <= 'F'))
-                        R += (Strings.AscW(Ch) - Strings.AscW('A')) + 10;
+                        R += Ch - 'A' + 10;
                     else
                         Verify.Fail("Invalid JSON format. Invalid escape sequence.");
                 }
@@ -199,8 +194,7 @@ namespace Ks
             private string ReadNonQuotedValue()
             {
                 var StartIndex = this.Index;
-                var loopTo = this.Input.Length - 1;
-                for (this.Index = this.Index; this.Index <= loopTo; this.Index++)
+                for (; this.Index < this.Input.Length; this.Index++)
                 {
                     if (char.IsWhiteSpace(this.Input[this.Index]))
                         break;
@@ -219,38 +213,14 @@ namespace Ks
 
             private static readonly Dictionary<char, char> EscapeDic = new Dictionary<char, char>()
             {
-                {
-                    '"',
-                    '"'
-                },
-                {
-                    '/',
-                    '/'
-                },
-                {
-                    '\\',
-                    '\\'
-                },
-                {
-                    'b',
-                    (char)0x8
-                },
-                {
-                    'f',
-                    (char)0xC
-                },
-                {
-                    'n',
-                    (char)0xA
-                },
-                {
-                    'r',
-                    (char)0xD
-                },
-                {
-                    't',
-                    (char)0x9
-                }
+                {'"', '"'},
+                {'/', '/'},
+                {'\\', '\\'},
+                {'b', (char)0x08},
+                {'f', (char)0x0C},
+                {'n', (char)0x0A},
+                {'r', (char)0x0D},
+                {'t', (char)0x09}
             };
             private static readonly char[] Operators = "{}[],:".ToCharArray();
 

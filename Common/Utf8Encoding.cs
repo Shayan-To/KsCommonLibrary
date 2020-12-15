@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-
-namespace Ks
+﻿namespace Ks
 {
     namespace Common
     {
@@ -16,21 +14,20 @@ namespace Ks
                 var T = new byte[6];
                 if (BeginningOfFile)
                     CharsIndex -= 1;
-                var loopTo = CharsLenght - 1;
-                for (CharsIndex = CharsIndex; CharsIndex <= loopTo; CharsIndex++)
+                for (; CharsIndex < CharsLenght; CharsIndex++)
                 {
                     if (BytesIndex == BytesLength)
                         break;
 
-                    int Ch = default(int);
+                    var Ch = default(int);
                     if (BeginningOfFile & (CharsIndex == (CharsInitialIndex - 1)))
                         Ch = 0xFEFF;
                     else
-                        Ch = Strings.AscW(CharsArray[CharsIndex]);
+                        Ch = CharsArray[CharsIndex];
 
                     if (Ch < 128)
                     {
-                        BytesArray[BytesIndex] = System.Convert.ToByte(Ch);
+                        BytesArray[BytesIndex] = (byte)Ch;
                         BytesIndex += 1;
                         continue;
                     }
@@ -39,21 +36,20 @@ namespace Ks
 
                     do
                     {
-                        T[I] = System.Convert.ToByte(((2 << 6) | (Ch & ((1 << 6) - 1))));
+                        T[I] = (byte)((2 << 6) | (Ch & ((1 << 6) - 1)));
                         Ch >>= 6;
                         I += 1;
-                    }
-                    while (Ch >= (1 << (6 - I)));
+                    } while (Ch >= (1 << (6 - I)));
 
                     // We are having 6 - I bits remaining.
                     // So we have to make 7 - I zeros at the end of the byte.
-                    T[I] = System.Convert.ToByte(((255 ^ ((1 << (7 - I)) - 1)) | Ch));
+                    T[I] = (byte)((255 ^ ((1 << (7 - I)) - 1)) | Ch);
                     I += 1;
 
                     if ((BytesIndex + I) >= BytesLength)
                         break;
 
-                    for (I = I - 1; I >= 0; I += -1)
+                    for (I -= 1; I >= 0; I--)
                     {
                         BytesArray[BytesIndex] = T[I];
                         BytesIndex += 1;
@@ -77,26 +73,25 @@ namespace Ks
 
                 try
                 {
-                var loopTo = BytesLength - 1;
-                for (BytesIndex = BytesIndex; BytesIndex <= loopTo; BytesIndex++)
+                for (; BytesIndex < BytesLength; BytesIndex++)
                 {
                     if (CharsIndex == CharsLength)
                         break;
 
                     var B = BytesArray[BytesIndex];
 
-                    if ((int)(B >> 7) == 0)
+                    if ((B >> 7) == 0)
                     {
-                        CharsArray[CharsIndex] = (char)(int)B;
+                        CharsArray[CharsIndex] = (char)B;
                         CharsIndex += 1;
                         continue;
                     }
 
-                    if (((int)(B >> 6) & 1) == 0)
+                    if (((B >> 6) & 1) == 0)
                         return false;
 
                     var I = 5;
-                    while (((int)(B >> I) & 1) != 0)
+                    while (((B >> I) & 1) != 0)
                     {
                         I -= 1;
                         if (I == 0)
@@ -108,15 +103,14 @@ namespace Ks
                     if ((BytesIndex + I) >= BytesLength)
                         break;
 
-                    int Ch = (int)(B << (I + 1)) >> (I + 1);
-                    var loopTo1 = I - 1;
-                    for (int J = 1; J <= loopTo1; J++)
+                    var Ch = (B << (I + 1)) >> (I + 1);
+                    for (var J = 1; J < I; J++)
                     {
                         BytesIndex += 1;
                         B = BytesArray[BytesIndex];
-                        if ((int)(B >> 6) != 2)
+                        if ((B >> 6) != 2)
                             return false;
-                        Ch = (Ch << 6) | (int)((B << 2) >> 2);
+                        Ch = (Ch << 6) | ((B << 2) >> 2);
                     }
 
                     // Exclude Byte Order Mark (BOM).

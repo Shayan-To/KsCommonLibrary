@@ -41,7 +41,7 @@ namespace Ks
                 /// <param name="Func">N must exist that N >= 0, and Func(I) = True if and only if I >= N.</param>
             /// <param name="End">Func(End) must equal True.</param>
             /// <returns>Index of first true.</returns>
-                public static int BinarySearch(Func<int, bool> Func, bool Foreward, int Start, int? End = default(int?))
+                public static int BinarySearch(Func<int, bool> Func, bool Foreward, int Start, int? End = default)
                 {
                     if (Foreward)
                     {
@@ -77,10 +77,10 @@ namespace Ks
             /// <returns>Some X that Func(X) = True and |X - N| &lt; MaxError (N is from doc of Func).</returns>
                 public static double BinarySearch(Func<double, bool> Func, double MaxError, double MaxX = double.NaN)
                 {
-                    Verify.True(MaxError > (double)0);
+                    Verify.True(MaxError > 0);
                     if (double.IsNaN(MaxX))
                     {
-                        MaxX = (double)8 * MaxError;
+                        MaxX = 8 * MaxError;
                         while (!Func.Invoke(MaxX))
                             MaxX *= 2;
                     }
@@ -132,16 +132,16 @@ namespace Ks
                     var N = List2.Count;
 
                     // The tuple is (Length, Mode). See below.
-                    var Dyn = new (int, int)[M - 1 + 1, N - 1 + 1];
+                    var Dyn = new (int, int)[M, N];
 
                     // Mode:
                     // 1 -> Did equal?
                     // 2 -> First index has +1?
                     // 4 -> Second index has +1?
 
-                    for (var I = M - 1; I >= 0; I += -1)
+                    for (var I = M - 1; I >= 0; I--)
                     {
-                        for (var J = N - 1; J >= 0; J += -1)
+                        for (var J = N - 1; J >= 0; J--)
                         {
                             var Length = ValueFunction.Invoke(List1[I], List2[J]);
                             var Mode = 1;
@@ -177,11 +177,10 @@ namespace Ks
                     }
 
                     var Res = new List<(int, int)>();
-                    do
                     {
                         var I = 0;
                         var J = 0;
-                        (int, int) Cur = default((int, int));
+                        var Cur = default((int, int));
                         do
                         {
                             Cur = Dyn[I, J];
@@ -192,11 +191,8 @@ namespace Ks
                             if ((Cur.Item2 & 4) == 4)
                                 J += 1;
                             Assert.True(((Cur.Item2 & (2 + 4)) == (2 + 4)).Implies((Cur.Item2 & 1) == 1));
-                        }
-                        while ((Cur.Item2 & (2 + 4)) != 0);
-                        break;
+                        } while ((Cur.Item2 & (2 + 4)) != 0);
                     }
-                    while (true);
 
                     return Res.AsReadOnly();
                 }
@@ -221,11 +217,9 @@ namespace Ks
                     // ToDo Output the operations as well.
 
                     var Dyn = new int[L1.Count + 1, L2.Count + 1];
-                    var loopTo = L1.Count;
-                    for (var I = 0; I <= loopTo; I++)
+                    for (var I = 0; I <= L1.Count; I++)
                     {
-                        var loopTo1 = L2.Count;
-                        for (var J = 0; J <= loopTo1; J++)
+                        for (var J = 0; J <= L2.Count; J++)
                         {
                             var Cost = int.MaxValue;
 

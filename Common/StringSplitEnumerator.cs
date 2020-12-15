@@ -39,7 +39,7 @@ namespace Ks
             {
                 this.Index = 0;
                 this.GiveRest = false;
-                if ((int)this._Options == (int)StringSplitOptions.RemoveEmptyEntries)
+                if (this._Options == StringSplitOptions.RemoveEmptyEntries)
                     this.SkipDelimiter();
             }
 
@@ -50,7 +50,7 @@ namespace Ks
 
             private void SkipDelimiter()
             {
-                if ((int)this._Options == (int)StringSplitOptions.RemoveEmptyEntries)
+                if (this._Options == StringSplitOptions.RemoveEmptyEntries)
                 {
                     while (this.Index != this._String.Length && Array.BinarySearch(this._Chars, this._String[this.Index]) != -1)
                         this.Index += 1;

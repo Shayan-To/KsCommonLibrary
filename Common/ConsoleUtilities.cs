@@ -1,18 +1,12 @@
-﻿using Microsoft.VisualBasic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
     namespace Common
     {
-        public class ConsoleUtilities
+        public static class ConsoleUtilities
         {
-            private ConsoleUtilities()
-            {
-                throw new NotSupportedException();
-            }
 
             public const ConsoleColor DefaultBackColor = ConsoleColor.White;
             public const ConsoleColor DefaultForeColor = ConsoleColor.Black;
@@ -45,12 +39,12 @@ namespace Ks
             {
                 WriteColored(Prompt, ConsoleColor.Green);
 
-                ConsoleKey K = default(ConsoleKey);
+                var K = default(ConsoleKey);
                 do
                     K = Console.ReadKey(true).Key;
-                while (!(((int)K == (int)ConsoleKey.Y) | ((int)K == (int)ConsoleKey.N)));
+                while (!((K == ConsoleKey.Y) | (K == ConsoleKey.N)));
 
-                var Res = (int)K == (int)ConsoleKey.Y;
+                var Res = K == ConsoleKey.Y;
 
                 WriteColored(Res ? " Y" : " N");
                 Console.WriteLine();
@@ -71,14 +65,13 @@ namespace Ks
                     WriteColored($"StackTrace: {Ex.StackTrace}");
                     Console.WriteLine();
                     Ex = Ex.InnerException;
-                }
-                while (Ex != null);
+                } while (Ex != null);
             }
 
             public static void WriteTypes(IEnumerable<Type> Types)
             {
                 foreach (var T in Types)
-                    Console.WriteLine(T.FullName + Conversions.ToString(ControlChars.Tab) + T.Attributes.ToString());
+                    Console.WriteLine(T.FullName + "\t" + T.Attributes.ToString());
             }
 
             public static void Pause()

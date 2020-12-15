@@ -1,10 +1,12 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-
-namespace Ks
+﻿namespace Ks
 {
     namespace Common
     {
+#pragma warning disable CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
+#pragma warning disable CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
         public struct Ratio
+#pragma warning restore CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
+#pragma warning restore CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
         {
             private Ratio(int Numerator, int Denumenator, Void NoSimplify)
             {
@@ -212,7 +214,7 @@ namespace Ks
 
             public static explicit operator double(Ratio Value)
             {
-                return (double)Value.Numerator / (double)Value.Denumenator;
+                return (double)Value.Numerator / Value.Denumenator;
             }
 
             public static implicit operator Ratio(int Value)
@@ -227,7 +229,7 @@ namespace Ks
 
             public override string ToString()
             {
-                return Conversions.ToString(this.Numerator) + ((this.Denumenator != 1) ? ("/" + Conversions.ToString(this.Denumenator)) : "");
+                return this.Numerator.ToString() + ((this.Denumenator != 1) ? ("/" + this.Denumenator.ToString()) : "");
             }
 
             private readonly int _Numerator;

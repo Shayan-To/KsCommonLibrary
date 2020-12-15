@@ -25,21 +25,21 @@ namespace Ks
 
                 // ToDo Correct the double equality checks. (It should somehow just check the significant digits, and not the order of magnitude...)
 
-                if (this.Coefficients.Left != (double)0)
+                if (this.Coefficients.Left != 0)
                     V = Th.Left / this.Coefficients.Left;
-                if (this.Coefficients.Top != (double)0)
+                if (this.Coefficients.Top != 0)
                 {
                     if (V.HasValue & (V.Value != (Th.Top / this.Coefficients.Top)))
                         return 0;
                     V = Th.Top / this.Coefficients.Top;
                 }
-                if (this.Coefficients.Right != (double)0)
+                if (this.Coefficients.Right != 0)
                 {
                     if (V.HasValue & (V.Value != (Th.Right / this.Coefficients.Right)))
                         return 0;
                     V = Th.Right / this.Coefficients.Right;
                 }
-                if (this.Coefficients.Bottom != (double)0)
+                if (this.Coefficients.Bottom != 0)
                 {
                     if (V.HasValue & (V.Value != (Th.Bottom / this.Coefficients.Bottom)))
                         return 0;

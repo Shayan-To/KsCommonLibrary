@@ -7,7 +7,7 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class Collections
+            public static class Collections
             {
                 public static IEnumerable<T> Concat<T>(IEnumerable<IEnumerable<T>> Collections)
                 {
@@ -26,8 +26,8 @@ namespace Ks
                 public static IEnumerable<int> Range(int Start, int Length, int Step = 1)
                 {
                     Verify.TrueArg(Step != 0, "Step");
-                    var loopTo = (Start + Length) - ((Length < 0) ? -1 : 1);
-                    for (Start = Start; Start <= loopTo; Start += Step)
+                    var End = Start + Length;
+                    for (; Start != End; Start += Step)
                         yield return Start;
                 }
 
@@ -38,16 +38,14 @@ namespace Ks
 
                 public static IEnumerable<T> Repeat<T>(T I1, int Count)
                 {
-                    var loopTo = Count;
-                    for (int I = 1; I <= loopTo; I++)
+                    for (var I = 0; I < Count; I++)
                         yield return I1;
                 }
 
                 public static IEnumerable<Void> InfiniteEnumerable()
                 {
-                    do
-                        yield return null;
-                    while (true);
+                    while (true)
+                        yield return default;
                 }
 
                 public static JoinElement<T, T, TKey>[] Join<T, TKey>(IEnumerable<T> Items1, IEnumerable<T> Items2, Func<T, TKey> KeySelector, JoinDirection JoinType)
@@ -76,20 +74,20 @@ namespace Ks
                     foreach (var I1 in Items1)
                     {
                         var Key = KeySelector1.Invoke(I1);
-                        T2 I2 = default(T2);
+                        var I2 = default(T2);
                         if (Dic.TryGetValue(Key, out I2))
                         {
                             Res.Add(new JoinElement<T1, T2, TKey>(Key, JoinDirection.Both, I1, I2));
                             Dic.Remove(Key);
                         }
-                        else if ((int)(JoinType & JoinDirection.Left) == (int)JoinDirection.Left)
-                            Res.Add(new JoinElement<T1, T2, TKey>(Key, JoinDirection.Left, I1, default(T2)));
+                        else if ((JoinType & JoinDirection.Left) == JoinDirection.Left)
+                            Res.Add(new JoinElement<T1, T2, TKey>(Key, JoinDirection.Left, I1, default));
                     }
 
-                    if ((int)(JoinType & JoinDirection.Right) == (int)JoinDirection.Right)
+                    if ((JoinType & JoinDirection.Right) == JoinDirection.Right)
                     {
                         foreach (var KI2 in Dic)
-                            Res.Add(new JoinElement<T1, T2, TKey>(KI2.Key, JoinDirection.Left, default(T1), KI2.Value));
+                            Res.Add(new JoinElement<T1, T2, TKey>(KI2.Key, JoinDirection.Left, default, KI2.Value));
                     }
 
                     return Res.ToArray();

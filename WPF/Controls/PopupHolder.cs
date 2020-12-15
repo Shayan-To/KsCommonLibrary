@@ -18,12 +18,12 @@ namespace Ks
 
             protected override Size MeasureOverride(Size availableSize)
             {
-                return default(Size);
+                return default;
             }
 
             protected override Size ArrangeOverride(Size finalSize)
             {
-                return default(Size);
+                return default;
             }
 
             protected virtual Rect? ArrangePopup(PopupPanel Panel, Size PanelSize, Size PopupSize)
@@ -31,7 +31,7 @@ namespace Ks
                 var Target = this.GetTarget();
 
                 if (Target == null)
-                    return default(Rect?);
+                    return default;
 
                 var Transform = Target.TransformToVisual(Panel);
                 var TargetSize = new Size(Target.ActualWidth, Target.ActualHeight);

@@ -13,9 +13,8 @@ namespace Ks
             {
                 Console.TreatControlCAsInput = true;
                 this.OnLoad();
-                do
+                while (true)
                     this.OnKeyPressed(Console.ReadKey(true));
-                while (true);
             }
 
             protected virtual void OnLoad()
@@ -31,7 +30,7 @@ namespace Ks
         {
             protected sealed override void OnKeyPressed(ConsoleKeyInfo KeyInfo)
             {
-                if ((int)KeyInfo.Modifiers != 0)
+                if (KeyInfo.Modifiers != 0)
                 {
                     this.OnCombinationalKeyPressed(KeyInfo);
                     return;
@@ -39,25 +38,17 @@ namespace Ks
                 switch (KeyInfo.Key)
                 {
                     case ConsoleKey.Tab:
-                        {
-                            this.OnTabKeyPressed();
-                            break;
-                        }
-
+                        this.OnTabKeyPressed();
+                        break;
                     case ConsoleKey.Enter:
-                        {
-                            this.OnEnterKeyPressed();
-                            break;
-                        }
-
+                        this.OnEnterKeyPressed();
+                        break;
                     default:
-                        {
-                            if (KeyInfo.KeyChar != default(char))
-                                this.OnCharacterKeyPressed(KeyInfo);
-                            else
-                                this.OnOtherKeyPressed(KeyInfo);
-                            break;
-                        }
+                        if (KeyInfo.KeyChar != default(char))
+                            this.OnCharacterKeyPressed(KeyInfo);
+                        else
+                            this.OnOtherKeyPressed(KeyInfo);
+                        break;
                 }
             }
 

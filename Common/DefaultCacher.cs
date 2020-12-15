@@ -4,12 +4,8 @@ namespace Ks
 {
     namespace Common
     {
-        public abstract class DefaultCacher<T> where T : new()
+        public static class DefaultCacher<T> where T : new()
         {
-            private DefaultCacher()
-            {
-                throw new NotSupportedException();
-            }
 
             public static void SetValue(T Value)
             {

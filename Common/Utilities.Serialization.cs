@@ -1,8 +1,6 @@
-﻿using Microsoft.VisualBasic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.Text;
-using Microsoft.VisualBasic.CompilerServices;
 using Media = System.Windows.Media;
 using Reflect = System.Reflection;
 using SIO = System.IO;
@@ -13,12 +11,8 @@ namespace Ks
     {
         partial class Utilities
         {
-            public class Serialization
+            public static class Serialization
             {
-                private Serialization()
-                {
-                    throw new NotSupportedException();
-                }
 
                 public static System.Windows.Media.Color HexToColor(string Hex)
                 {
@@ -41,22 +35,15 @@ namespace Ks
                 {
                     switch (Ch)
                     {
-                        case ControlChars.Cr:
-                            {
-                                return @"\r";
-                            }
-
-                        case ControlChars.Lf:
-                            {
-                                return @"\n";
-                            }
-
+                        case '\r':
+                            return @"\r";
+                        case '\n':
+                            return @"\n";
                         default:
-                            {
-                                if (EscapeChars.Contains(Conversions.ToString(Ch)))
-                                    return Conversions.ToString('\\') + Conversions.ToString(Ch);
-                                return Ch.ToString();
-                            }
+                            var s = Ch.ToString();
+                            if (EscapeChars.Contains(s))
+                                return "\\" + s;
+                            return s;
                     }
                 }
 
@@ -65,21 +52,13 @@ namespace Ks
                     switch (Ch)
                     {
                         case 'r':
-                            {
-                                return ControlChars.Cr;
-                            }
-
+                            return '\r';
                         case 'n':
-                            {
-                                return ControlChars.Lf;
-                            }
-
+                            return '\n';
                         default:
-                            {
-                                if (EscapeChars.Contains(Conversions.ToString(Ch)))
-                                    return Ch;
-                                throw new Exception("Invalid escape character.");
-                            }
+                            if (EscapeChars.Contains(Ch.ToString()))
+                                return Ch;
+                            throw new Exception("Invalid escape character.");
                     }
                 }
 
@@ -87,7 +66,7 @@ namespace Ks
                 {
                     var Res = new StringBuilder("{");
 
-                    foreach (string Str in List)
+                    foreach (var Str in List)
                     {
                         foreach (var Ch in Str)
                             Res.Append(EscapeChar(Ch, @",\{}"));
@@ -105,8 +84,7 @@ namespace Ks
                 {
                     var Res = new List<string>();
                     var R = new StringBuilder();
-                    var loopTo = Str.Length - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -153,7 +131,7 @@ namespace Ks
                 {
                     var Res = new StringBuilder();
 
-                    foreach (string Str in List)
+                    foreach (var Str in List)
                     {
                         foreach (var Ch in Str)
                             Res.Append(EscapeChar(Ch, @"\"));
@@ -168,8 +146,7 @@ namespace Ks
                 {
                     var Res = new List<string>();
                     var R = new StringBuilder();
-                    var loopTo = Str.Length - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -183,9 +160,9 @@ namespace Ks
                             continue;
                         }
 
-                        if ((Ch == ControlChars.Cr) | (Ch == ControlChars.Lf))
+                        if ((Ch == '\r') | (Ch == '\n'))
                         {
-                            if (((Ch == ControlChars.Cr) & ((I + 1) < Str.Length)) && Str[I + 1] == ControlChars.Lf)
+                            if (((Ch == '\r') & ((I + 1) < Str.Length)) && Str[I + 1] == '\n')
                                 I += 1;
 
                             Res.Add(R.ToString());
@@ -234,8 +211,7 @@ namespace Ks
                     var Res = new OrderedDictionary<string, string>();
                     var R = new StringBuilder();
                     string Key = null;
-                    var loopTo = Str.Length - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -311,8 +287,7 @@ namespace Ks
                     var Res = new OrderedDictionary<string, string>();
                     var R = new StringBuilder();
                     string Key = null;
-                    var loopTo = Str.Length - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < Str.Length; I++)
                     {
                         var Ch = Str[I];
 
@@ -333,9 +308,9 @@ namespace Ks
                             continue;
                         }
 
-                        if ((Ch == ControlChars.Cr) | (Ch == ControlChars.Lf))
+                        if ((Ch == '\r') | (Ch == '\n'))
                         {
-                            if (((Ch == ControlChars.Cr) & ((I + 1) < Str.Length)) && Str[I + 1] == ControlChars.Lf)
+                            if (((Ch == '\r') & ((I + 1) < Str.Length)) && Str[I + 1] == '\n')
                                 I += 1;
 
                             Verify.False(Key == null, "Invalid dictionary string.");

@@ -100,7 +100,7 @@ namespace Ks
 
             protected bool ICollection_Remove(KeyValuePair<TKey, TValue> item)
             {
-                TValue V = default(TValue);
+                var V = default(TValue);
                 if (!this.TryGetValue(item.Key, out V))
                     return false;
                 if (!object.Equals(V, item.Value))
@@ -125,7 +125,7 @@ namespace Ks
 
             protected bool ICollection_Contains(KeyValuePair<TKey, TValue> item)
             {
-                TValue V = default(TValue);
+                var V = default(TValue);
                 if (!this.TryGetValue(item.Key, out V))
                     return false;
                 return object.Equals(V, item.Value);

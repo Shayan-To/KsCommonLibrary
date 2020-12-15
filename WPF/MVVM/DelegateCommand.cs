@@ -31,7 +31,9 @@ namespace Ks
                 this._CanExecuteFunc = CanExecuteFunc;
             }
 
+#pragma warning disable CS0067 // The event is never used
             public event EventHandler CanExecuteChanged;
+#pragma warning restore CS0067 // The event is never used
 
             public void Execute(object parameter)
             {

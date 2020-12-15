@@ -35,8 +35,7 @@ namespace Ks
             {
                 if (End == -1)
                     End = this.Count;
-                var loopTo = End - 1;
-                for (Start = Start; Start <= loopTo; Start++)
+                for (; Start < End; Start++)
                     this.List[Start].Index = Start;
             }
 

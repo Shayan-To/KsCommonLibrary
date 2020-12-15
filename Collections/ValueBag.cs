@@ -3,7 +3,6 @@ using System.Collections;
 using System;
 using System.ComponentModel;
 using Ks.Common.MVVM;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -218,7 +217,7 @@ namespace Ks
 
             public string ToString(string format, IFormatProvider formatProvider)
             {
-                var R = new System.Text.StringBuilder(Conversions.ToString('{'));
+                var R = new System.Text.StringBuilder("{");
                 var Bl = true;
                 foreach (var KV in this)
                 {
@@ -311,7 +310,7 @@ namespace Ks
             public override PropertyDescriptorCollection GetProperties()
             {
                 var BaseProps = base.GetProperties();
-                var R = new PropertyDescriptor[(BaseProps.Count + this.Bag?.Count ?? 0) - 1 + 1];
+                var R = new PropertyDescriptor[BaseProps.Count + this.Bag?.Count ?? 0];
                 var I = 0;
                 foreach (PropertyDescriptor P in BaseProps)
                 {

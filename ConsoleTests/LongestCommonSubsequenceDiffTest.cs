@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System;
 using Ks.Common;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks.ConsoleTests
 {
-    public class LongestCommonSubsequenceTest
+    public static class LongestCommonSubsequenceTest
     {
         [InteractiveRunnable(true)]
         public static void Start()
@@ -23,15 +22,13 @@ namespace Ks.ConsoleTests
             var J = 0;
             foreach (var L in LCS.Append((Index1: File1.Length, Index2: File2.Length)))
             {
-                var loopTo = L.Index1 - 1;
-                for (I = I; I <= loopTo; I++)
+                for (; I < L.Index1; I++)
                 {
                     ConsoleUtilities.WriteColored(File1[I], ConsoleColor.Red, ConsoleColor.White);
                     Console.WriteLine();
                 }
 
-                var loopTo1 = L.Index2 - 1;
-                for (J = J; J <= loopTo1; J++)
+                for (; J < L.Index2; J++)
                 {
                     ConsoleUtilities.WriteColored(File2[J], ConsoleColor.Green, ConsoleColor.Black);
                     Console.WriteLine();
@@ -39,7 +36,7 @@ namespace Ks.ConsoleTests
                 if (I == File1.Length)
                     break;
                 // They can be non-equal, as the comparer trims.
-                if (Operators.CompareString(File1[I], File2[J], TextCompare: false) == 0)
+                if (File1[I] == File2[J])
                     ConsoleUtilities.WriteColored(File2[J], ConsoleColor.Black, ConsoleColor.White);
                 else
                     ConsoleUtilities.WriteColored(File2[J], ConsoleColor.Blue, ConsoleColor.White);
@@ -55,7 +52,7 @@ namespace Ks.ConsoleTests
         {
             public override bool Equals(string x, string y)
             {
-                return Operators.CompareString(x.Trim(), y.Trim(), TextCompare: false) == 0; // x.GetHashCode() = y.GetHashCode()
+                return x.Trim() == y.Trim(); // x.GetHashCode() = y.GetHashCode()
             }
 
             public override int GetHashCode(string obj)

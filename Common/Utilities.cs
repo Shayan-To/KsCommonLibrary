@@ -7,12 +7,8 @@ namespace Ks
 {
     namespace Common
     {
-        public sealed partial class Utilities
+        public static partial class Utilities
         {
-            private Utilities()
-            {
-                throw new NotSupportedException();
-            }
 
             public static int CombineHashCodes(int H1, int H2)
             {
@@ -54,13 +50,8 @@ namespace Ks
 
             public static object EmptyObject = new object();
 
-            public sealed class Typed<T>
+            public static class Typed<T>
             {
-                private Typed()
-                {
-                    throw new NotSupportedException();
-                }
-
                 public static readonly Func<T, T> IdentityFunc = X => X;
                 public static readonly T[] EmptyArray = new T[0] { };
             }

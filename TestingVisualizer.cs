@@ -42,8 +42,8 @@ namespace Ks
                     this.Graphics = Graphics.FromHwnd(this.Form.Handle);
                 }
 
-                this.FIntervals[(int)Orientation.X] = new Interval((double)FormMargin, (double)FormWidth);
-                this.FIntervals[(int)Orientation.Y] = new Interval((double)FormMargin + FormHeight, (double)-FormHeight);
+                this.FIntervals[(int)Orientation.X] = new Interval(FormMargin, FormWidth);
+                this.FIntervals[(int)Orientation.Y] = new Interval(FormMargin + FormHeight, -FormHeight);
                 this.Intervals[(int)Orientation.X] = new Interval(XStart, XLength);
                 this.Intervals[(int)Orientation.Y] = new Interval(YStart, YLength);
 
@@ -69,15 +69,14 @@ namespace Ks
 
             public void DrawFunction(Color Color, IReadOnlyList<double> Ys, double XStart, double XStep)
             {
-                this.DrawFunction(Color, Ys.SelectAsList((Y, I) => (XStart + ((double)I * XStep), Y)));
+                this.DrawFunction(Color, Ys.SelectAsList((Y, I) => (XStart + (I * XStep), Y)));
             }
 
             public void DrawFunction(Color Color, IReadOnlyList<(double X, double Y)> Points)
             {
                 var FIX = this.Intervals[(int)Orientation.X];
                 var FPoints = new Point[Points.Count - 1 + 1];
-                var loopTo = FPoints.Length - 1;
-                for (int I = 0; I <= loopTo; I++)
+                for (var I = 0; I < FPoints.Length; I++)
                 {
                     var T = Points[I];
                     var P = ConvertPoint(T.X, T.Y, Orientation.X);
@@ -95,10 +94,9 @@ namespace Ks
                 var FIX = this.Intervals[(int)Orientation.X];
                 var N = 1000;
                 var Points = new Point[N + 1];
-                var loopTo = N;
-                for (int I = 0; I <= loopTo; I++)
+                for (var I = 0; I <= N; I++)
                 {
-                    var X = FIX.Start + ((FIX.Length / (double)N) * (double)I);
+                    var X = FIX.Start + ((FIX.Length / N) * I);
                     var P = ConvertPoint(X, Func.Invoke(X), Orientation.X);
                     Points[I] = P;
                 }
@@ -120,9 +118,9 @@ namespace Ks
 
                 var A = Math.Atan(Value);
                 var X = FIX.Start;
-                var Y = FIY.Start + (FIY.Length / (double)2);
-                var X2 = X + ((double)100 * Math.Cos(A));
-                var Y2 = Y + ((double)100 * Math.Sin(A));
+                var Y = FIY.Start + (FIY.Length / 2);
+                var X2 = X + (100 * Math.Cos(A));
+                var Y2 = Y + (100 * Math.Sin(A));
 
                 using (var Pen = new Pen(ConvertColor(Color)))
                 {
@@ -148,18 +146,18 @@ namespace Ks
 
             private Point CreatePoint(double X, double Y, Orientation Orientation)
             {
-                if ((int)Orientation == (int)Orientation.X)
-                    return new Point(System.Convert.ToInt32(X), System.Convert.ToInt32(Y));
+                if (Orientation == Orientation.X)
+                    return new Point(Convert.ToInt32(X), Convert.ToInt32(Y));
                 else
-                    return new Point(System.Convert.ToInt32(Y), System.Convert.ToInt32(X));
+                    return new Point(Convert.ToInt32(Y), Convert.ToInt32(X));
             }
 
             private Size CreateSize(double Width, double Height, Orientation Orientation)
             {
-                if ((int)Orientation == (int)Orientation.X)
-                    return new Size(System.Convert.ToInt32(Width), System.Convert.ToInt32(Height));
+                if (Orientation == Orientation.X)
+                    return new Size(Convert.ToInt32(Width), Convert.ToInt32(Height));
                 else
-                    return new Size(System.Convert.ToInt32(Height), System.Convert.ToInt32(Width));
+                    return new Size(Convert.ToInt32(Height), Convert.ToInt32(Width));
             }
 
             private double ConvertValue(double Value, Orientation Orientation)
@@ -184,62 +182,30 @@ namespace Ks
                 switch (Color)
                 {
                     case Color.Transparent:
-                        {
-                            return DColor.Transparent;
-                        }
-
+                        return DColor.Transparent;
                     case Color.Black:
-                        {
-                            return DColor.Black;
-                        }
-
+                        return DColor.Black;
                     case Color.White:
-                        {
-                            return DColor.White;
-                        }
-
+                        return DColor.White;
                     case Color.Red:
-                        {
-                            return DColor.Red;
-                        }
-
+                        return DColor.Red;
                     case Color.Green:
-                        {
-                            return DColor.Green;
-                        }
-
+                        return DColor.Green;
                     case Color.Blue:
-                        {
-                            return DColor.Blue;
-                        }
-
+                        return DColor.Blue;
                     case Color.Cyan:
-                        {
-                            return DColor.Cyan;
-                        }
-
+                        return DColor.Cyan;
                     case Color.Magenta:
-                        {
-                            return DColor.Magenta;
-                        }
-
+                        return DColor.Magenta;
                     case Color.Yellow:
-                        {
-                            return DColor.Yellow;
-                        }
-
+                        return DColor.Yellow;
                     case Color.Gray:
-                        {
-                            return DColor.Gray;
-                        }
-
+                        return DColor.Gray;
                     case Color.Orange:
-                        {
-                            return DColor.Orange;
-                        }
+                        return DColor.Orange;
                 }
                 Verify.Fail();
-                return default(DColor);
+                return default;
             }
 
             private int _FormWidth;

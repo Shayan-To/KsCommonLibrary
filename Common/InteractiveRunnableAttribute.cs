@@ -45,14 +45,13 @@ namespace Ks
                         .Select(MA => MA.Method);
                 var ChoiceReader = new ConsoleListChoiceReader<MethodInfo>(List, FullNameSelector);
 
-                do
+                while (true)
                 {
                     var M = ChoiceReader.ReadChoice();
                     if (M == null)
                         break;
                     M.Invoke(null, Utilities.Typed<object>.EmptyArray);
                 }
-                while (true);
 
                 Console.WriteLine();
                 ConsoleUtilities.WriteColored("Done.", ConsoleColor.Green);

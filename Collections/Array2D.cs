@@ -6,7 +6,7 @@
         {
             public Array2D(int Width, int Height)
             {
-                this.Array = new T[Width - 1 + 1, Height - 1 + 1];
+                this.Array = new T[Width, Height];
             }
 
             public T this[int I, int J]

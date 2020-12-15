@@ -3,14 +3,12 @@ using System.Threading.Tasks;
 using Mono;
 using System.Data;
 using System.Diagnostics;
-using Microsoft.VisualBasic;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Controls;
 using System;
 using System.Xml.Linq;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -20,7 +18,7 @@ namespace Ks
         {
             public KsLanguage(System.IO.Stream Stream)
             {
-                this.TaskDelayer = new TaskDelayer(this.DoStore, TimeSpan.FromSeconds((double)10));
+                this.TaskDelayer = new TaskDelayer(this.DoStore, TimeSpan.FromSeconds(10));
 
                 this.Stream = Stream;
 
@@ -46,37 +44,23 @@ namespace Ks
 
                     switch (Key)
                     {
-                        case var @case when @case == nameof(this.Id).ToLower():
-                            {
-                                this._Id = Value;
-                                break;
-                            }
-
-                        case var case1 when case1 == nameof(this.Name).ToLower():
-                            {
-                                this._Name = Value;
-                                break;
-                            }
-
-                        case var case2 when case2 == nameof(this.NativeName).ToLower():
-                            {
-                                this._NativeName = Value;
-                                break;
-                            }
-
-                        case var case3 when case3 == nameof(this.Direction).ToLower():
-                            {
-                                Value = Value.ToLower();
-                                Verify.True((Operators.CompareString(Value, nameof(FlowDirection.LeftToRight).ToLower(), TextCompare: false) == 0) | (Operators.CompareString(Value, nameof(FlowDirection.RightToLeft).ToLower(), TextCompare: false) == 0) | (Value == "rtl") | (Value == "ltr"));
-                                this._Direction = ((Value == "ltr") | (Operators.CompareString(Value, nameof(FlowDirection.LeftToRight).ToLower(), TextCompare: false) == 0)) ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
-                                break;
-                            }
-
+                        case var k when k == nameof(this.Id).ToLower():
+                            this._Id = Value;
+                            break;
+                        case var k when k == nameof(this.Name).ToLower():
+                            this._Name = Value;
+                            break;
+                        case var k when k == nameof(this.NativeName).ToLower():
+                            this._NativeName = Value;
+                            break;
+                        case var k when k == nameof(this.Direction).ToLower():
+                            Value = Value.ToLower();
+                            Verify.True((Value == nameof(FlowDirection.LeftToRight).ToLower()) | (Value == nameof(FlowDirection.RightToLeft).ToLower()) | (Value == "rtl") | (Value == "ltr"));
+                            this._Direction = ((Value == "ltr") | (Value == nameof(FlowDirection.LeftToRight).ToLower())) ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+                            break;
                         default:
-                            {
-                                Verify.Fail("Invalid language property.");
-                                break;
-                            }
+                            Verify.Fail("Invalid language property.");
+                            break;
                     }
 
                     I += 1;
@@ -174,7 +158,7 @@ namespace Ks
 
                     E = this.Csv.Entries[3];
                     E[0] = nameof(this.Direction);
-                    E[1] = ((int)this.Direction == (int)FlowDirection.LeftToRight) ? nameof(FlowDirection.LeftToRight) : nameof(FlowDirection.RightToLeft);
+                    E[1] = (this.Direction == FlowDirection.LeftToRight) ? nameof(FlowDirection.LeftToRight) : nameof(FlowDirection.RightToLeft);
 
                     Str = this.Csv.ToString();
                 }
@@ -182,7 +166,7 @@ namespace Ks
                 var Bytes = System.Text.Encoding.UTF8.GetBytes(Str);
                 this.Stream.Position = 0;
                 this.Stream.Write(Bytes, 0, Bytes.Length);
-                this.Stream.SetLength((long)Bytes.Length);
+                this.Stream.SetLength(Bytes.Length);
                 this.Stream.Flush();
             }
 

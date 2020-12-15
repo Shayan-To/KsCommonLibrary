@@ -14,7 +14,7 @@ namespace Ks
         public class NotifyCollectionChangedEventArgs<T> : NotifyCollectionChangedEventArgs
         {
 
-            /* TODO ERROR: Skipped WarningDirectiveTrivia */
+#pragma warning disable CS0618 // Type or member is obsolete
             [Obsolete("Use the Create methods instead.")]
             public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action) : base(action)
             {
@@ -32,7 +32,7 @@ namespace Ks
             [Obsolete("Use the Create methods instead.")]
             public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, T changedItem) : base(action, changedItem)
             {
-                if ((int)action == (int)NotifyCollectionChangedAction.Reset)
+                if (action == NotifyCollectionChangedAction.Reset)
                     InitializeAdd(action, null, -1);
                 else
                     InitializeAddOrRemove(action, new T[] { changedItem }, -1);
@@ -54,7 +54,7 @@ namespace Ks
             [Obsolete("Use the Create methods instead.")]
             public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, T changedItem, int index) : base(action, changedItem, index)
             {
-                if ((int)action == (int)NotifyCollectionChangedAction.Reset)
+                if (action == NotifyCollectionChangedAction.Reset)
                     InitializeAdd(action, null, -1);
                 else
                     InitializeAddOrRemove(action, new T[] { changedItem }, index);
@@ -76,7 +76,7 @@ namespace Ks
             [Obsolete("Use the Create methods instead.")]
             public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, IList<T> changedItems) : base(action, (IList)changedItems)
             {
-                if ((int)action == (int)NotifyCollectionChangedAction.Reset)
+                if (action == NotifyCollectionChangedAction.Reset)
                     InitializeAdd(action, null, -1);
                 else
                     InitializeAddOrRemove(action, changedItems, -1);
@@ -98,7 +98,7 @@ namespace Ks
             [Obsolete("Use the Create methods instead.")]
             public NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction action, IList<T> changedItems, int startingIndex) : base(action, (IList)changedItems, startingIndex)
             {
-                if ((int)action == (int)NotifyCollectionChangedAction.Reset)
+                if (action == NotifyCollectionChangedAction.Reset)
                     InitializeAdd(action, null, -1);
                 else
                     InitializeAddOrRemove(action, changedItems, startingIndex);
@@ -209,35 +209,22 @@ namespace Ks
             {
                 return new NotifyCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Move, changedItems, index, oldIndex);
             }
-            /* TODO ERROR: Skipped WarningDirectiveTrivia */
+#pragma warning restore CS0618 // Type or member is obsolete
+
             public static NotifyCollectionChangedEventArgs<T> FromNotifyCollectionChangedEventArgs(NotifyCollectionChangedEventArgs E)
             {
                 switch (E.Action)
                 {
                     case NotifyCollectionChangedAction.Move:
-                        {
-                            return CreateMove(E.NewItems.Cast<T>().ToArray(), E.NewStartingIndex, E.OldStartingIndex);
-                        }
-
+                        return CreateMove(E.NewItems.Cast<T>().ToArray(), E.NewStartingIndex, E.OldStartingIndex);
                     case NotifyCollectionChangedAction.Replace:
-                        {
-                            return CreateReplace(E.NewItems.Cast<T>().ToArray(), E.OldItems.Cast<T>().ToArray(), E.NewStartingIndex);
-                        }
-
+                        return CreateReplace(E.NewItems.Cast<T>().ToArray(), E.OldItems.Cast<T>().ToArray(), E.NewStartingIndex);
                     case NotifyCollectionChangedAction.Reset:
-                        {
-                            return CreateReset();
-                        }
-
+                        return CreateReset();
                     case NotifyCollectionChangedAction.Add:
-                        {
-                            return CreateAdd(E.NewItems.Cast<T>().ToArray(), E.NewStartingIndex);
-                        }
-
+                        return CreateAdd(E.NewItems.Cast<T>().ToArray(), E.NewStartingIndex);
                     case NotifyCollectionChangedAction.Remove:
-                        {
-                            return CreateRemove(E.OldItems.Cast<T>().ToArray(), E.OldStartingIndex);
-                        }
+                        return CreateRemove(E.OldItems.Cast<T>().ToArray(), E.OldStartingIndex);
                 }
 
                 Assert.Fail();
@@ -249,29 +236,15 @@ namespace Ks
                 switch (E.Action)
                 {
                     case NotifyCollectionChangedAction.Move:
-                        {
-                            return CreateMove(E.NewItems.Cast<T>().ToArray());
-                        }
-
+                        return CreateMove(E.NewItems.Cast<T>().ToArray());
                     case NotifyCollectionChangedAction.Replace:
-                        {
-                            return CreateReplace(E.NewItems.Cast<T>().ToArray(), E.OldItems.Cast<T>().ToArray());
-                        }
-
+                        return CreateReplace(E.NewItems.Cast<T>().ToArray(), E.OldItems.Cast<T>().ToArray());
                     case NotifyCollectionChangedAction.Reset:
-                        {
-                            return CreateReset();
-                        }
-
+                        return CreateReset();
                     case NotifyCollectionChangedAction.Add:
-                        {
-                            return CreateAdd(E.NewItems.Cast<T>().ToArray());
-                        }
-
+                        return CreateAdd(E.NewItems.Cast<T>().ToArray());
                     case NotifyCollectionChangedAction.Remove:
-                        {
-                            return CreateRemove(E.OldItems.Cast<T>().ToArray());
-                        }
+                        return CreateRemove(E.OldItems.Cast<T>().ToArray());
                 }
 
                 Assert.Fail();
@@ -280,9 +253,9 @@ namespace Ks
 
             private void InitializeAddOrRemove(NotifyCollectionChangedAction action, IList<T> changedItems, int startingIndex)
             {
-                if ((int)action == (int)NotifyCollectionChangedAction.Add)
+                if (action == NotifyCollectionChangedAction.Add)
                     InitializeAdd(action, changedItems, startingIndex);
-                else if ((int)action == (int)NotifyCollectionChangedAction.Remove)
+                else if (action == NotifyCollectionChangedAction.Remove)
                     InitializeRemove(action, changedItems, startingIndex);
             }
 
@@ -306,7 +279,7 @@ namespace Ks
             {
                 get
                 {
-                    if (((int)this.Action == (int)NotifyCollectionChangedAction.Add) | ((int)this.Action == (int)NotifyCollectionChangedAction.Replace))
+                    if ((this.Action == NotifyCollectionChangedAction.Add) | (this.Action == NotifyCollectionChangedAction.Replace))
                         return this.NewItems;
                     return Utilities.Typed<T>.EmptyArray;
                 }
@@ -316,7 +289,7 @@ namespace Ks
             {
                 get
                 {
-                    if (((int)this.Action == (int)NotifyCollectionChangedAction.Remove) | ((int)this.Action == (int)NotifyCollectionChangedAction.Replace))
+                    if ((this.Action == NotifyCollectionChangedAction.Remove) | (this.Action == NotifyCollectionChangedAction.Replace))
                         return this.OldItems;
                     return Utilities.Typed<T>.EmptyArray;
                 }

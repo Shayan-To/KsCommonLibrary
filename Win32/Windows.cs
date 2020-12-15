@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Collections.Generic;
 using System;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -9,17 +8,9 @@ namespace Ks
     {
         public abstract partial class Windows
         {
-            private Windows()
-            {
-                throw new NotSupportedException();
-            }
 
-            public abstract class Helpers
+            public static class Helpers
             {
-                private Helpers()
-                {
-                    throw new NotSupportedException();
-                }
 
                 public static bool SetWindowPos(IntPtr hwnd, Unsafe.SetWindowPosInsertAfter hWndInsertAfter, int X, int Y, int cx, int cy, Unsafe.SetWindowPosFlags uFlags)
                 {
@@ -54,7 +45,7 @@ namespace Ks
 
             public static Rect GetWindowRect(IntPtr hWnd)
             {
-                Rect R = default(Rect);
+                var R = default(Rect);
                 Unsafe.GetWindowRect(hWnd, out R);
                 Common.VerifyError();
                 return R;
@@ -89,7 +80,7 @@ namespace Ks
 
             public static (uint ProcessId, uint ThreadId) GetWindowThreadProcessId(IntPtr hwnd)
             {
-                uint ProcessId = Conversions.ToUInteger(0);
+                var ProcessId = 0u;
                 var ThreadId = Unsafe.GetWindowThreadProcessId(hwnd, out ProcessId);
                 Common.VerifyError();
                 return (ProcessId, ThreadId);
@@ -97,7 +88,7 @@ namespace Ks
 
             public static Process GetWindowProcess(IntPtr hwnd)
             {
-                return Process.GetProcessById(System.Convert.ToInt32(GetWindowThreadProcessId(hwnd).ProcessId));
+                return Process.GetProcessById((int)GetWindowThreadProcessId(hwnd).ProcessId);
             }
 
             public static IntPtr WindowFromPoint(Point p)
@@ -111,12 +102,12 @@ namespace Ks
             {
                 IntPtr R = default;
 
-                if ((uint)Kind == (uint)AncestorKind.ParentOrOwner)
+                if (Kind == AncestorKind.ParentOrOwner)
                     R = Unsafe.GetParent(hwnd);
-                else if (((long)GetAncestorConstant <= (long)Kind) & ((long)Kind < (long)GetWindowConstant))
-                    R = Unsafe.GetAncestor(hwnd, (Unsafe.GetAncestorFlags)((long)Kind - (long)GetAncestorConstant));
-                else if ((long)GetWindowConstant <= (long)Kind)
-                    R = Unsafe.GetWindow(hwnd, (Unsafe.GetWindowCommand)((long)Kind - (long)GetWindowConstant));
+                else if ((GetAncestorConstant <= (uint)Kind) & ((uint)Kind < GetWindowConstant))
+                    R = Unsafe.GetAncestor(hwnd, (Unsafe.GetAncestorFlags)((uint)Kind - GetAncestorConstant));
+                else if (GetWindowConstant <= (long)Kind)
+                    R = Unsafe.GetWindow(hwnd, (Unsafe.GetWindowCommand)((uint)Kind - GetWindowConstant));
                 else
                     Verify.FailArg(nameof(Kind), "Invalid kind.");
 

@@ -4,11 +4,8 @@ namespace Ks
 {
     namespace Common
     {
-        public sealed class AccentColors
+        public static class AccentColors
         {
-            private AccentColors()
-            {
-            }
 
             public static readonly System.Windows.Media.Color Lime = Utilities.Serialization.HexToColor("#A4C400");
             public static readonly System.Windows.Media.Color Green = Utilities.Serialization.HexToColor("#60A917");

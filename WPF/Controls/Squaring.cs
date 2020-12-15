@@ -45,9 +45,9 @@ namespace Ks
 
                 Rect Rect;
                 if (arrangeBounds.Height < arrangeBounds.Width)
-                    Rect = new Rect((arrangeBounds.Width - arrangeBounds.Height) / (double)2, (double)0, arrangeBounds.Height, arrangeBounds.Height);
+                    Rect = new Rect((arrangeBounds.Width - arrangeBounds.Height) / 2, 0, arrangeBounds.Height, arrangeBounds.Height);
                 else
-                    Rect = new Rect((double)0, (arrangeBounds.Height - arrangeBounds.Width) / (double)2, arrangeBounds.Width, arrangeBounds.Width);
+                    Rect = new Rect(0, (arrangeBounds.Height - arrangeBounds.Width) / 2, arrangeBounds.Width, arrangeBounds.Width);
 
                 Content.Arrange(Rect);
 

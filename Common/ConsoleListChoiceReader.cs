@@ -22,12 +22,12 @@ namespace Ks
             {
                 var Choices = new List<T>();
 
-                do
+                while (true)
                 {
                     Choices.Clear();
-                    for (var I = 0; I <= PageLength - 1; I++)
+                    for (var I = 0; I < PageLength; I++)
                     {
-                        T Tmp = default(T);
+                        var Tmp = default(T);
                         if (!this.List.TryGetValue(this.ChoiceOffset + I, out Tmp))
                             break;
                         Choices.Add(Tmp);
@@ -38,8 +38,7 @@ namespace Ks
                     var NextPagePossible = this.List.TryGetValue(this.ChoiceOffset + PageLength, out argValue);
                     Console.WriteLine();
                     Console.WriteLine();
-                    var loopTo = Choices.Count - 1;
-                    for (var I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < Choices.Count; I++)
                     {
                         ConsoleUtilities.WriteColored($"{I + 1,4} : {this.Selector.Invoke(Choices[I])}", ConsoleColor.Cyan);
                         Console.WriteLine();
@@ -56,10 +55,10 @@ namespace Ks
                     Console.WriteLine();
                     Console.WriteLine();
                     ConsoleUtilities.WriteColored("Select your choice:", ConsoleColor.Green);
-                    do
+                    while (true)
                     {
                         var Key = Console.ReadKey(true).Key;
-                        if (((int)Key == (int)ConsoleKey.LeftArrow) & PrevPagePossible)
+                        if ((Key == ConsoleKey.LeftArrow) & PrevPagePossible)
                         {
                             ConsoleUtilities.WriteColored(" <-");
                             Console.WriteLine();
@@ -67,7 +66,7 @@ namespace Ks
                             break;
                         }
 
-                        if (((int)Key == (int)ConsoleKey.RightArrow) & NextPagePossible)
+                        if ((Key == ConsoleKey.RightArrow) & NextPagePossible)
                         {
                             ConsoleUtilities.WriteColored(" ->");
                             Console.WriteLine();
@@ -75,18 +74,18 @@ namespace Ks
                             break;
                         }
 
-                        if ((int)Key == (int)ConsoleKey.Q)
+                        if (Key == ConsoleKey.Q)
                         {
                             ConsoleUtilities.WriteColored(" Q");
                             Console.WriteLine();
-                            return default(T);
+                            return default;
                         }
 
                         var N = 0;
-                        if (((int)ConsoleKey.D1 <= (int)Key) & ((int)Key <= (int)ConsoleKey.D9))
-                            N = (int)Key - (int)ConsoleKey.D0;
-                        if (((int)ConsoleKey.NumPad1 <= (int)Key) & ((int)Key <= (int)ConsoleKey.NumPad9))
-                            N = (int)Key - (int)ConsoleKey.NumPad0;
+                        if ((ConsoleKey.D1 <= Key) & (Key <= ConsoleKey.D9))
+                            N = Key - ConsoleKey.D0;
+                        if ((ConsoleKey.NumPad1 <= Key) & (Key <= ConsoleKey.NumPad9))
+                            N = Key - ConsoleKey.NumPad0;
                         if ((1 <= N) & (N <= Choices.Count))
                         {
                             ConsoleUtilities.WriteColored($" {N.ToStringInv()}");
@@ -94,9 +93,7 @@ namespace Ks
                             return Choices[N - 1];
                         }
                     }
-                    while (true);
                 }
-                while (true);
             }
 
             const int PageLength = 9;

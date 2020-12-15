@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Ks.ConsoleTests
 {
-    public class OnScreenDrawerTest
+    public static class OnScreenDrawerTest
     {
         [InteractiveRunnable(true)]
         public static void Start()

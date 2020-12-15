@@ -17,14 +17,14 @@ namespace Ks
 
             public void Heapify(IList<T> List, int Count, int Index)
             {
-                do
+                while (true)
                 {
                     var MinIndex = LeftChild(Index);
                     if (MinIndex >= Count)
                         break;
                     var Min = List[MinIndex];
                     var I = RightChild(Index);
-                    T T = default(T);
+                    var T = default(T);
                     if (I < Count)
                     {
                         T = List[I];
@@ -45,18 +45,17 @@ namespace Ks
                     else
                         break;
                 }
-                while (true);
             }
 
             public void MakeHeap(IList<T> List, int Count)
             {
-                for (int I = Parent(Count - 1); I >= 0; I += -1)
+                for (var I = Parent(Count - 1); I >= 0; I--)
                     this.Heapify(List, Count, I);
             }
 
             public void BubbleUp(IList<T> List, int Count, int Index)
             {
-                do
+                while (true)
                 {
                     if (Index == 0)
                         break;
@@ -72,7 +71,6 @@ namespace Ks
                     else
                         break;
                 }
-                while (true);
             }
 
             public static int Parent(int Index)

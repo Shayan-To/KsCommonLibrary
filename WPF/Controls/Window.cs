@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Mono;
 using System.Data;
 using System.Diagnostics;
-using Microsoft.VisualBasic;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
@@ -110,10 +109,10 @@ namespace Ks
             internal void UpdateDims()
             {
                 var DimmedSeen = false;
-                foreach (int I in this.ShelterLayers.Keys.Reverse())
+                foreach (var I in this.ShelterLayers.Keys.Reverse())
                 {
                     var Layer = this.ShelterLayers[I];
-                    for (int J = Layer.Count - 1; J >= 0; J += -1)
+                    for (var J = Layer.Count - 1; J >= 0; J--)
                     {
                         var Popup = Layer[J];
                         if (Popup.HasShelter)

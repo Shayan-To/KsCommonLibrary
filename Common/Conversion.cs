@@ -4,12 +4,8 @@ namespace Ks
 {
     namespace Common
     {
-        public sealed class ParseInv
+        public static class ParseInv
         {
-            private ParseInv()
-            {
-                throw new NotSupportedException();
-            }
 
             public static int Integer(string Str)
             {

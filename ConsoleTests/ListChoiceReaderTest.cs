@@ -4,7 +4,7 @@ using Ks.Common;
 
 namespace Ks.ConsoleTests
 {
-    public class ListChoiceReaderTest
+    public static class ListChoiceReaderTest
     {
         [InteractiveRunnable(true)]
         public static void Start()
@@ -13,14 +13,13 @@ namespace Ks.ConsoleTests
             var L = Utilities.Collections.Range(45).Select(I => (int?)Rand.Next());
             var ChoiceReader = new ConsoleListChoiceReader<int?>(L);
 
-            do
+            while (true)
             {
                 var I = ChoiceReader.ReadChoice();
                 if (!I.HasValue)
                     break;
                 Console.WriteLine($"{I} was chosen!!");
             }
-            while (true);
         }
     }
 }

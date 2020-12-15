@@ -2,7 +2,6 @@
 
 using System;
 using System.Diagnostics;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace Ks
 {
@@ -12,7 +11,7 @@ namespace Ks
         {
 
             /// <param name="Task">The task that should be invoked. This call will be taken place on some background thread.</param>
-            public TaskDelayer(Action Task, TimeSpan MinDelay, TimeSpan MaxDelay = default(TimeSpan), TimeSpan InactivityTime = default(TimeSpan))
+            public TaskDelayer(Action Task, TimeSpan MinDelay, TimeSpan MaxDelay = default, TimeSpan InactivityTime = default)
             {
                 this.StopWatch.Start();
 
@@ -21,7 +20,7 @@ namespace Ks
                 this._MaxDelay = (MaxDelay == TimeSpan.Zero) ? TimeSpan.MaxValue : MaxDelay;
                 this._InactivityTime = InactivityTime;
 
-                this.TaskThread = new System.Threading.Thread(this.TaskThreadProcedure) { IsBackground = true, Name = nameof(TaskDelayer) + " thread - " + Conversions.ToString(this.GetHashCode()) };
+                this.TaskThread = new System.Threading.Thread(this.TaskThreadProcedure) { IsBackground = true, Name = nameof(TaskDelayer) + " thread - " + this.GetHashCode().ToString() };
                 this.TaskThread.Start();
             }
 
@@ -42,7 +41,7 @@ namespace Ks
 #if WriteDebugInfo
                             Console.WriteLine("{0}: Task was pending.", nameof(RunTask));
 #endif
-                            if ((int)RunningMode == (int)TaskDelayerRunningMode.Instant)
+                            if (RunningMode == TaskDelayerRunningMode.Instant)
                             {
                                 this.IsInstantSet = true;
                                 this.DelayWaitHandle.Set();
@@ -78,7 +77,7 @@ if (this.LastActivityTime > Now)
                 this.FirstActivityTime = Now;
                 this.LastActivityTime = this.FirstActivityTime;
 
-                if ((int)RunningMode == (int)TaskDelayerRunningMode.Instant)
+                if (RunningMode == TaskDelayerRunningMode.Instant)
                 {
                     this.IsInstantSet = true;
                     // We set the wait handle before waiting on it. The wait will then immediately return.
@@ -99,7 +98,7 @@ if (this.LastActivityTime > Now)
                 Console.WriteLine("{0}: Started.", nameof(TaskThreadProcedure));
 #endif
                 // ToDo Prove that we need two wait handles. (Have done it once.)
-                do
+                while (true)
                 {
 #if WriteDebugInfo
                     Console.WriteLine("{0}: {1}, getting into wait.", nameof(TaskThreadProcedure), nameof(this.TaskWaitHandle));
@@ -117,7 +116,7 @@ if (this.LastActivityTime > Now)
                         break;
                     }
 
-                    do
+                    while (true)
                     {
                         var WaitTime = TimeSpan.Zero;
                         var ShouldRunTask = false;
@@ -130,7 +129,7 @@ if (this.LastActivityTime > Now)
                         {
                             ShouldRunTask = this.IsInstantSet;
                             var Now = this.StopWatch.Elapsed;
-                            do
+
                             {
                                 if (ShouldRunTask)
                                 {
@@ -176,9 +175,8 @@ if (this.LastActivityTime > Now)
 #if WriteDebugInfo
                                 Console.WriteLine("{0}: Wait -> Regular wait.", nameof(TaskThreadProcedure));
 #endif
-                                break;
                             }
-                            while (true);
+
                             if (ShouldRunTask)
                             {
                                 // ToDo Isn't DelayWaitHandle always reset at this point?
@@ -207,9 +205,7 @@ if (this.LastActivityTime > Now)
 #endif
                         }
                     }
-                    while (true);
                 }
-                while (true);
             }
 
             protected virtual void Dispose(bool Disposing)
@@ -310,7 +306,7 @@ if (this.LastActivityTime > Now)
             private TimeSpan FirstActivityTime;
             private TimeSpan LastActivityTime;
 
-            private static readonly TimeSpan TimeEpsilon = TimeSpan.FromMilliseconds((double)30);
+            private static readonly TimeSpan TimeEpsilon = TimeSpan.FromMilliseconds(30);
 
             private readonly Stopwatch StopWatch = new Stopwatch();
             private readonly object WaitLockObject = new object();

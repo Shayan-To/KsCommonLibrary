@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.CompilerServices;
-
-namespace Ks
+﻿namespace Ks
 {
     namespace Common
     {
@@ -38,7 +35,7 @@ namespace Ks
 
             private static void WriteField(string Field, bool UseQuotes, System.Text.StringBuilder Out)
             {
-                if (Field.StartsWith("\"") | Field.Contains(Conversions.ToString(ControlChars.Cr)) | Field.Contains(Conversions.ToString(ControlChars.Lf)))
+                if (Field.StartsWith("\"") | Field.Contains("\r") | Field.Contains("\n"))
                     UseQuotes = true;
 
                 if (!UseQuotes)
@@ -80,8 +77,7 @@ namespace Ks
                 foreach (var E in this.Entries)
                 {
                     var Bl = true;
-                    var loopTo = ColsCount - 1;
-                    for (int I = 0; I <= loopTo; I++)
+                    for (var I = 0; I < ColsCount; I++)
                     {
                         if (Bl)
                             Bl = false;

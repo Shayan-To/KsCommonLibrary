@@ -208,8 +208,7 @@ namespace Ks
             {
                 var Key = new Key<TK>(this, KeySelector);
                 var Index = CreateInstanceDictionary.Create<object, List<T>>();
-                var loopTo = this.List.Count - 1;
-                for (var I = 0; I <= loopTo; I++)
+                for (var I = 0; I < this.List.Count; I++)
                 {
                     var Elem = this.List[I];
                     var K = KeySelector.Invoke(Elem);
@@ -227,7 +226,11 @@ namespace Ks
             private readonly List<T> List = new List<T>();
             private readonly Dictionary<Key, CreateInstanceDictionary<object, List<T>>> Indexes = new Dictionary<Key, CreateInstanceDictionary<object, List<T>>>();
 
+#pragma warning disable CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
+#pragma warning disable CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
             public abstract class Key
+#pragma warning restore CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
+#pragma warning restore CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
             {
                 public Key(ListWithKeys<T> List, Func<T, object> KeySelector)
                 {
@@ -281,7 +284,11 @@ namespace Ks
                 protected readonly ListWithKeys<T> List;
             }
 
+#pragma warning disable CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
+#pragma warning disable CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
             public class Key<TK> : Key
+#pragma warning restore CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
+#pragma warning restore CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
             {
                 public Key(ListWithKeys<T> List, Func<T, TK> KeySelector) : base(List, V => KeySelector.Invoke(V))
                 {

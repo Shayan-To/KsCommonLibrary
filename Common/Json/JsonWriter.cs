@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 
 namespace Ks
@@ -23,8 +22,7 @@ namespace Ks
             {
                 var PrevStart = 0;
                 var I = 0;
-                var loopTo = S.Length - 1;
-                for (I = 0; I <= loopTo; I++)
+                for (; I < S.Length; I++)
                 {
                     var Ch = S[I];
                     var ECh = Ch;
@@ -39,7 +37,7 @@ namespace Ks
                     {
                         this.Out.Write(S.Substring(PrevStart, I - PrevStart));
                         this.Out.Write(@"\u");
-                        this.Out.Write(Convert.ToString(Strings.AscW(Ch), 16).PadLeft(4, '0'));
+                        this.Out.Write(Convert.ToString(Ch, 16).PadLeft(4, '0'));
                         PrevStart = I + 1;
                     }
                 }
@@ -49,8 +47,7 @@ namespace Ks
             private void WriteNewLine()
             {
                 this.Out.WriteLine();
-                var loopTo = this.CurrentIndent - 1;
-                for (var I = 0; I <= loopTo; I++)
+                for (var I = 0; I < this.CurrentIndent; I++)
                     this.Out.Write(this.IndentString);
             }
 
@@ -67,15 +64,15 @@ namespace Ks
 
                 if ((this.MultiLine & !this.HasKeyBefore) | NewLineRequired)
                 {
-                    if ((int)this.State != (int)WriterState.Begin)
+                    if (this.State != WriterState.Begin)
                         this.WriteNewLine();
                 }
             }
 
             public void WriteValue(string Value, bool Quoted)
             {
-                Verify.False((int)this.State == (int)WriterState.End, "Cannot write after write is finished.");
-                Verify.True(((int)this.State == (int)WriterState.Dictionary).Implies(this.HasKeyBefore), $"Cannot write a value in place of a key in a dictionary. Use {nameof(this.WriteKey)} instead.");
+                Verify.False(this.State == WriterState.End, "Cannot write after write is finished.");
+                Verify.True((this.State == WriterState.Dictionary).Implies(this.HasKeyBefore), $"Cannot write a value in place of a key in a dictionary. Use {nameof(this.WriteKey)} instead.");
 
                 this.WriteSeparator();
 
@@ -88,7 +85,7 @@ namespace Ks
                 else
                     this.Out.Write(Value);
 
-                if ((int)this.State == (int)WriterState.Begin)
+                if (this.State == WriterState.Begin)
                     this.State = WriterState.End;
                 this.HasKeyBefore = false;
                 this.HasValueBefore = true;
@@ -96,8 +93,8 @@ namespace Ks
 
             public void WriteKey(string Name)
             {
-                Verify.False((int)this.State == (int)WriterState.End, "Cannot write after write is finished.");
-                Verify.True((int)this.State == (int)WriterState.Dictionary, "Cannot write a key outside a dictionary.");
+                Verify.False(this.State == WriterState.End, "Cannot write after write is finished.");
+                Verify.True(this.State == WriterState.Dictionary, "Cannot write a key outside a dictionary.");
                 Verify.False(this.HasKeyBefore, "Cannot write a key immediately after another.");
 
                 this.WriteSeparator();
@@ -112,10 +109,10 @@ namespace Ks
 
             public Opening OpenList(bool MultiLine = false)
             {
-                Verify.False((int)this.State == (int)WriterState.End, "Cannot write after write is finished.");
-                Verify.True(((int)this.State == (int)WriterState.Dictionary).Implies(this.HasKeyBefore), $"Cannot write a value in place of a key in a dictionary. Use {nameof(this.WriteKey)} instead.");
+                Verify.False(this.State == WriterState.End, "Cannot write after write is finished.");
+                Verify.True((this.State == WriterState.Dictionary).Implies(this.HasKeyBefore), $"Cannot write a value in place of a key in a dictionary. Use {nameof(this.WriteKey)} instead.");
 
-                var R = new Opening(this, ']', ((int)this.State == (int)WriterState.Begin) ? WriterState.End : this.State, this.MultiLine);
+                var R = new Opening(this, ']', (this.State == WriterState.Begin) ? WriterState.End : this.State, this.MultiLine);
 
                 this.WriteSeparator(this.OpeningBraceOnNewLine & MultiLine);
                 this.Out.Write('[');
@@ -133,10 +130,10 @@ namespace Ks
 
             public Opening OpenDictionary(bool MultiLine = false)
             {
-                Verify.False((int)this.State == (int)WriterState.End, "Cannot write after write is finished.");
-                Verify.True(((int)this.State == (int)WriterState.Dictionary).Implies(this.HasKeyBefore), $"Cannot write a value in place of a key in a dictionary. Use {nameof(this.WriteKey)} instead.");
+                Verify.False(this.State == WriterState.End, "Cannot write after write is finished.");
+                Verify.True((this.State == WriterState.Dictionary).Implies(this.HasKeyBefore), $"Cannot write a value in place of a key in a dictionary. Use {nameof(this.WriteKey)} instead.");
 
-                var R = new Opening(this, '}', ((int)this.State == (int)WriterState.Begin) ? WriterState.End : this.State, this.MultiLine);
+                var R = new Opening(this, '}', (this.State == WriterState.Begin) ? WriterState.End : this.State, this.MultiLine);
 
                 this.WriteSeparator(this.OpeningBraceOnNewLine & MultiLine);
                 this.Out.Write('{');
@@ -155,7 +152,7 @@ namespace Ks
             private void CloseOpening(char ClosingChar, WriterState PreviousState, bool PreviousMultiline)
             {
                 Verify.False(this.HasKeyBefore, "Cannot close while a key is pending its value.");
-                Verify.False((int)this.State == (int)WriterState.End, "Cannot write after write is finished.");
+                Verify.False(this.State == WriterState.End, "Cannot write after write is finished.");
 
                 if (this.MultiLine)
                 {
@@ -181,38 +178,14 @@ namespace Ks
 
             private static readonly Dictionary<char, char> EscapeDic = new Dictionary<char, char>()
             {
-                {
-                    '"',
-                    '"'
-                },
-                {
-                    '/',
-                    '/'
-                },
-                {
-                    '\\',
-                    '\\'
-                },
-                {
-                    (char)0x8,
-                    'b'
-                },
-                {
-                    (char)0xC,
-                    'f'
-                },
-                {
-                    (char)0xA,
-                    'n'
-                },
-                {
-                    (char)0xD,
-                    'r'
-                },
-                {
-                    (char)0x9,
-                    't'
-                }
+                {'"', '"'},
+                {'/', '/'},
+                {'\\', '\\'},
+                {(char)0x08, 'b'},
+                {(char)0x0C, 'f'},
+                {(char)0x0A, 'n'},
+                {(char)0x0D, 'r'},
+                {(char)0x09, 't'}
             };
 
             private readonly System.IO.TextWriter Out;

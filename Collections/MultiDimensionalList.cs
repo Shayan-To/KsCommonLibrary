@@ -14,7 +14,7 @@ namespace Ks
                 var Length = 1;
                 foreach (var L in Lengths)
                     Length *= L;
-                this.Arr = new T[Length - 1 + 1];
+                this.Arr = new T[Length];
             }
 
             public IEnumerator<T> GetEnumerator()
@@ -31,8 +31,7 @@ namespace Ks
             {
                 Verify.True(Indexes.Length == this._Lengths.Length);
                 var Index = 0;
-                var loopTo = Indexes.Length - 1;
-                for (int I = 0; I <= loopTo; I++)
+                for (var I = 0; I < Indexes.Length; I++)
                 {
                     Verify.True((0 <= Indexes[I]) & (Indexes[I] < this._Lengths[I]));
                     Index *= this._Lengths[I];
