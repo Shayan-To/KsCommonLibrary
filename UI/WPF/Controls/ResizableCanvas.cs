@@ -5,45 +5,47 @@ using System.Windows.Media;
 
 using Ks.Common;
 
+using KsG = Ks.Common.Geometry;
+
 namespace Ks.Common.Controls
 {
     public class ResizableCanvas : Panel
     {
-        private Rect? GetViewingArea(Size Size)
+        private KsG.Rect? GetViewingArea(KsG.Size Size)
         {
             var ViewingRectangle = this.ViewingRectangle;
             // ViewingRectangle.Intersect(ShapeRectangle)
 
             if (this.KeepAspectRatio)
             {
-                var RB = ViewingRectangle.GetSmallestBoundOf(this.GetClientArea(Size).Size);
+                var RB = ViewingRectangle.Ks().GetSmallestBoundOf(this.GetClientArea(Size).Size);
                 if (!RB.Item2.HasValue)
                 {
                     Console.WriteLine("Error. " + Utilities.Debug.CompactStackTrace(5));
                     return default;
                 }
-                ViewingRectangle = RB.Item1;
+                ViewingRectangle = RB.Item1.WPF();
             }
 
-            return ViewingRectangle;
+            return ViewingRectangle.Ks();
         }
 
-        private Rect GetClientArea(Size Size)
+        private KsG.Rect GetClientArea(KsG.Size Size)
         {
             var Padding = this.Padding;
-            var Padding1 = new Point(Padding.Left, Padding.Top);
-            var Padding2 = new Point(Padding.Right, Padding.Bottom);
+            var Padding1 = new KsG.Point(Padding.Left, Padding.Top);
+            var Padding2 = new KsG.Point(Padding.Right, Padding.Bottom);
 
-            return new Rect(Padding1, (-Padding2.ToVector() + Size.ToVector()).ToPoint());
+            return new KsG.Rect(Padding1, (-Padding2.ToVector() + Size.ToVector()).ToPoint());
         }
 
         protected override Size MeasureOverride(Size AvailableSize)
         {
-            var InfSize = new Size(double.PositiveInfinity, double.PositiveInfinity);
+            var InfSize = new KsG.Size(double.PositiveInfinity, double.PositiveInfinity);
 
-            var Client = this.GetClientArea(AvailableSize);
+            var Client = this.GetClientArea(AvailableSize.Ks());
 
-            var ViewingRectangleQ = this.GetViewingArea(AvailableSize);
+            var ViewingRectangleQ = this.GetViewingArea(AvailableSize.Ks());
             if (!ViewingRectangleQ.HasValue)
             {
                 return AvailableSize;
@@ -51,18 +53,18 @@ namespace Ks.Common.Controls
 
             var ViewingRectangle = ViewingRectangleQ.Value;
 
-            var Sz0 = new Point();
+            var Sz0 = new KsG.Point();
 
             Sz0 = ViewingRectangle.ToLocal01(Sz0);
             Sz0 = Client.FromLocal01(Sz0);
 
             foreach (UIElement C in this.Children)
             {
-                var Sz = new Vector(GetW(C), GetH(C));
+                var Sz = new KsG.Vector(GetW(C), GetH(C));
 
-                if (Sz == new Vector())
+                if (Sz == new KsG.Vector())
                 {
-                    C.Measure(InfSize);
+                    C.Measure(InfSize.WPF());
                 }
                 else
                 {
@@ -74,10 +76,10 @@ namespace Ks.Common.Controls
                     var Size = (Szz - Sz0).ToSize();
                     if (double.IsNaN(Size.Width) | double.IsNaN(Size.Height))
                     {
-                        Size = new Size();
+                        Size = new KsG.Size();
                     }
 
-                    C.Measure(Size);
+                    C.Measure(Size.WPF());
                 }
             }
 
@@ -86,9 +88,9 @@ namespace Ks.Common.Controls
 
         protected override Size ArrangeOverride(Size FinalSize)
         {
-            var Client = this.GetClientArea(FinalSize);
+            var Client = this.GetClientArea(FinalSize.Ks());
 
-            var ViewingRectangleQ = this.GetViewingArea(FinalSize);
+            var ViewingRectangleQ = this.GetViewingArea(FinalSize.Ks());
             if (!ViewingRectangleQ.HasValue)
             {
                 return FinalSize;
@@ -98,23 +100,23 @@ namespace Ks.Common.Controls
 
             foreach (UIElement C in this.Children)
             {
-                var Pt = new Point(GetX(C), GetY(C));
-                var Sz = new Vector(GetW(C), GetH(C));
+                var Pt = new KsG.Point(GetX(C), GetY(C));
+                var Sz = new KsG.Vector(GetW(C), GetH(C));
 
                 var Pt1 = Pt;
                 Pt1 = ViewingRectangle.ToLocal01(Pt1);
                 Pt1 = Client.FromLocal01(Pt1);
 
-                if (Sz == new Vector())
+                if (Sz == new KsG.Vector())
                 {
-                    C.Arrange(new Rect(Pt1, C.DesiredSize));
+                    C.Arrange(new Rect(Pt1.WPF(), C.DesiredSize));
                 }
                 else
                 {
                     var Pt2 = Pt + Sz;
                     Pt2 = ViewingRectangle.ToLocal01(Pt2);
                     Pt2 = Client.FromLocal01(Pt2);
-                    C.Arrange(new Rect(Pt1, Pt2));
+                    C.Arrange(new KsG.Rect(Pt1, Pt2).WPF());
                 }
             }
 
