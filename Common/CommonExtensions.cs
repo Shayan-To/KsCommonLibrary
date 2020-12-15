@@ -775,7 +775,7 @@ namespace Ks.Common
                     Res[Cnt - 1] = I;
                     if (Cnt == Count)
                     {
-                        Res.RandomizeOrder();
+                        Res.RandomizeSelfOrder();
                     }
                 }
                 else if (Rand.Next(Cnt) < Count)
@@ -813,7 +813,7 @@ namespace Ks.Common
             }
         }
 
-        public static void RandomizeOrder<T>(this IList<T> Self, Random Random = null)
+        public static void RandomizeSelfOrder<T>(this IList<T> Self, Random Random = null)
         {
             if (Random == null)
             {
