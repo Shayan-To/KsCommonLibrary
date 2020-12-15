@@ -361,6 +361,44 @@ namespace Ks.Common
             }
         }
 
+        public static IEnumerable<(TKey Key, EnumerableCacher<T> Items)> SplitByKeyChange<T, TKey>(this IEnumerable<T> self, Func<T, TKey> keySelector)
+        {
+            return self.SplitByKeyChange(keySelector, EqualityComparer<TKey>.Default);
+        }
+
+        public static IEnumerable<(TKey Key, EnumerableCacher<T> Items)> SplitByKeyChange<T, TKey>(this IEnumerable<T> self, Func<T, TKey> keySelector, IEqualityComparer<TKey> comparer)
+        {
+            self = self.GetEnumerator().ToEnumerable();
+            var prevElement = self.First();
+            var key = keySelector.Invoke(prevElement);
+            var done = false;
+
+            IEnumerable<T> GetSplit()
+            {
+                foreach (var i in self)
+                {
+                    yield return prevElement;
+                    prevElement = i;
+
+                    var oldKey = key;
+                    key = keySelector.Invoke(i);
+
+                    if (!comparer.Equals(key, oldKey))
+                    {
+                        yield break;
+                    }
+                }
+                done = true;
+            }
+
+            while (!done)
+            {
+                var split = GetSplit().AsCachedList();
+                yield return (key, split);
+                split.DrainEnumerable();
+            }
+        }
+
         public static IEnumerable<(T Beginning, IEnumerable<T> Items, T Ending)> SplitByElement<T>(this IEnumerable<T> self, Func<T, bool> pred)
         {
             return self.SplitByElement(pred, s => s);
