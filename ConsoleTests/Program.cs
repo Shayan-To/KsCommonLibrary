@@ -4,7 +4,7 @@ using Ks.Common;
 
 namespace Ks.Tests
 {
-    public static class Application
+    public static class Program
     {
         public static void Main()
         {
