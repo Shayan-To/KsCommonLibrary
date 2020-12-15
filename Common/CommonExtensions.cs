@@ -361,6 +361,34 @@ namespace Ks.Common
             }
         }
 
+        public static IEnumerable<(T Beginning, IEnumerable<T> Items, T Ending)> SplitByElement<T>(this IEnumerable<T> self, Func<T, bool> pred)
+        {
+            return self.SplitByElement(pred, s => s);
+        }
+
+        public static IEnumerable<(TSplit Beginning, IEnumerable<T> Items, TSplit Ending)> SplitByElement<T, TSplit>(this IEnumerable<T> self, Func<T, bool> pred, Func<T, TSplit> splitterSelector)
+        {
+            var list = self.AsCachedList();
+
+            var prev = 0;
+            var beginning = splitterSelector.Invoke(default);
+
+            var i = 0;
+            foreach (var l in list)
+            {
+                if (pred.Invoke(l))
+                {
+                    var split = splitterSelector.Invoke(l);
+                    yield return (beginning, list.Skip(prev).Take(i - prev), split);
+                    prev = i + 1;
+                    beginning = split;
+                }
+                i += 1;
+            }
+
+            yield return (beginning, list.Skip(prev).Take(i - prev), splitterSelector.Invoke(default));
+        }
+
         public static IEnumerable<TResult> SelectSome<T, TResult>(this IEnumerable<T> self, Func<T, (TResult Result, bool Continue)> selector)
         {
             foreach (var i in self)
