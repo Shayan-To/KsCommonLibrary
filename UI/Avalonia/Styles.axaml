@@ -1,0 +1,11 @@
+<Styles xmlns="https://github.com/avaloniaui">
+
+  <StyleInclude Source="/Controls/Icon.axaml" />
+  <StyleInclude Source="/Controls/ToggleButton.axaml" />
+
+  <StyleInclude Source="/Styles/ScrollViewer.Horizontal.axaml" />
+  <StyleInclude Source="/Styles/IconButton.axaml" />
+
+  <StyleInclude Source="/Styles/Common.axaml" />
+
+</Styles>

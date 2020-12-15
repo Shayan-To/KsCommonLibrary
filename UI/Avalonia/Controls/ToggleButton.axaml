@@ -1,0 +1,51 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ks="KsCommonLibrary">
+
+  <Design.PreviewWith>
+    <ks:ToggleButton>Button</ks:ToggleButton>
+  </Design.PreviewWith>
+  
+  <Style Selector="ks|ToggleButton">
+    <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}"/>
+    <Setter Property="BorderThickness" Value="{DynamicResource ThemeBorderThickness}"/>
+    <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}"/>
+    <Setter Property="Padding" Value="4"/>
+    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ContentPresenter Name="PART_ContentPresenter"
+                          Background="{TemplateBinding Background}"
+                          BorderBrush="{TemplateBinding BorderBrush}"
+                          BorderThickness="{TemplateBinding BorderThickness}"
+                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                          Content="{TemplateBinding Content}"
+                          Padding="{TemplateBinding Padding}"
+                          TextBlock.Foreground="{TemplateBinding Foreground}"
+                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+
+  <Style Selector="ks|ToggleButton:checked /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderMidBrush}"/>
+    <Setter Property="TextBlock.Foreground" Value="White" />
+  </Style>
+
+  <Style Selector="ks|ToggleButton:pointerover /template/ ContentPresenter">
+    <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderMidBrush}"/>
+  </Style>
+
+  <Style Selector="ks|ToggleButton:pressed  /template/ ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}"/>
+    <Setter Property="TextBlock.Foreground" Value="White" />
+  </Style>
+
+  <Style Selector="ks|ToggleButton:disabled">
+    <Setter Property="Opacity" Value="{DynamicResource ThemeDisabledOpacity}"/>
+  </Style>
+</Styles>

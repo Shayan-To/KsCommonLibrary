@@ -1,0 +1,29 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ks="KsCommonLibrary">
+
+  <Style Selector="Button:pressed /template/ ContentPresenter, ToggleButton:pressed /template/ ContentPresenter, ToggleButton:checked /template/ ContentPresenter">
+    <Setter Property="TextBlock.Foreground"
+            Value="White" />
+  </Style>
+
+  <Style Selector="CheckBox">
+    <Setter Property="Background"
+            Value="White" />
+  </Style>
+
+  <Style Selector="ComboBox.ArrowLess /template/ ToggleButton">
+    <Setter Property="IsVisible"
+            Value="False" />
+  </Style>
+
+  <Style Selector=".ExpandAll TreeViewItem, TreeViewItem.ExpandAll">
+    <Setter Property="IsExpanded"
+            Value="True" />
+  </Style>
+
+  <Style Selector=".ExpandAll.NoCollapse TreeViewItem /template/ ToggleButton, TreeViewItem.ExpandAll.NoCollapse /template/ ToggleButton">
+    <Setter Property="IsEnabled"
+            Value="False" />
+  </Style>
+</Styles>

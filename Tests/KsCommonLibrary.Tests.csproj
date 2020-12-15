@@ -34,6 +34,7 @@
     <ProjectReference Include="..\KsCommonLibrary.csproj" />
     <ProjectReference Include="..\Heavy\KsCommonLibrary.Heavy.csproj" />
     <ProjectReference Include="..\UI\KsCommonLibrary.UI.csproj" />
+    <ProjectReference Include="..\UI\Avalonia\KsCommonLibrary.Avalonia.csproj" />
   </ItemGroup>
 
 </Project>
