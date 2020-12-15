@@ -1872,6 +1872,20 @@ namespace Ks.Common
             return Self;
         }
 
+        public static string GetCSharpString(this AccessModifier accessModifier)
+        {
+            return accessModifier switch
+            {
+                AccessModifier.Public => "public",
+                AccessModifier.Private => "private",
+                AccessModifier.Protected => "protected",
+                AccessModifier.Internal => "internal",
+                AccessModifier.ProtectedInternal => "protected internal",
+                AccessModifier.PrivateProtected => "private protected",
+                _ => throw new NotSupportedException(),
+            };
+        }
+
         public static bool Implies(this bool B1, bool B2)
         {
             return !B1 | B2;
