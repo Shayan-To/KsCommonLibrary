@@ -12,11 +12,6 @@ namespace Ks.Common
         public static class Debug
         {
 
-            public static void ShowMessageBox(string text, string caption = "")
-            {
-                System.Windows.Forms.MessageBox.Show(text, caption);
-            }
-
             public static string CompactStackTrace(int Count)
             {
                 var ST = new StackTrace(true);
