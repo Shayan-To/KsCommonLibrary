@@ -3,7 +3,7 @@ using System.Linq;
 
 using Ks.Common;
 
-namespace Ks.ConsoleTests
+namespace Ks.Tests
 {
     public static class ListChoiceReaderTest
     {

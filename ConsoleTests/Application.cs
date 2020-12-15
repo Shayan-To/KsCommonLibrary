@@ -2,7 +2,7 @@ using System;
 
 using Ks.Common;
 
-namespace Ks.ConsoleTests
+namespace Ks.Tests
 {
     public static class Application
     {
