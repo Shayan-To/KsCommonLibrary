@@ -102,13 +102,13 @@ namespace Ks.Common.Win32
             {
                 R = Unsafe.GetParent(hwnd);
             }
-            else if ((GetAncestorConstant <= (uint) Kind) & ((uint) Kind < GetWindowConstant))
+            else if ((GetAncestorConstant <= Kind) & (Kind < GetWindowConstant))
             {
-                R = Unsafe.GetAncestor(hwnd, (Unsafe.GetAncestorFlags) ((uint) Kind - GetAncestorConstant));
+                R = Unsafe.GetAncestor(hwnd, (Unsafe.GetAncestorFlags) (Kind - GetAncestorConstant));
             }
-            else if (GetWindowConstant <= (long) Kind)
+            else if (GetWindowConstant <= Kind)
             {
-                R = Unsafe.GetWindow(hwnd, (Unsafe.GetWindowCommand) ((uint) Kind - GetWindowConstant));
+                R = Unsafe.GetWindow(hwnd, (Unsafe.GetWindowCommand) (Kind - GetWindowConstant));
             }
             else
             {
@@ -125,9 +125,8 @@ namespace Ks.Common.Win32
             Common.VerifyError();
         }
 
-        // ToDo Change types to AncestorKind:
-        private const uint GetAncestorConstant = 100;
-        private const uint GetWindowConstant = 200;
+        private const AncestorKind GetAncestorConstant = (AncestorKind) 100;
+        private const AncestorKind GetWindowConstant = (AncestorKind) 200;
 
         public enum AncestorKind : uint
         {
