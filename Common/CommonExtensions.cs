@@ -813,12 +813,16 @@ namespace Ks.Common
             }
         }
 
-        public static void RandomizeOrder<T>(this IList<T> Self)
+        public static void RandomizeOrder<T>(this IList<T> Self, Random Random = null)
         {
-            var Rand = DefaultCacher<Random>.Value;
+            if (Random == null)
+            {
+                Random = DefaultCacher<Random>.Value;
+            }
+
             for (var I = 1; I < Self.Count; I++)
             {
-                var J = Rand.Next(I + 1);
+                var J = Random.Next(I + 1);
                 Self.Swap(I, J);
             }
         }
