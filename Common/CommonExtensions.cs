@@ -452,6 +452,11 @@ namespace Ks.Common
             }
         }
 
+        public static int IndexOf<T>(this IList<T> Self, Func<T, bool> Predicate, int StartIndex = 0)
+        {
+            return Self.IndexOf((i, _) => Predicate.Invoke(i), StartIndex);
+        }
+
         public static int IndexOf<T>(this IList<T> Self, Func<T, int, bool> Predicate, int StartIndex = 0)
         {
             for (var I = StartIndex; I < Self.Count; I++)
@@ -462,6 +467,11 @@ namespace Ks.Common
                 }
             }
             return -1;
+        }
+
+        public static int LastIndexOf<T>(this IList<T> Self, Func<T, bool> Predicate, int StartIndex = -1)
+        {
+            return Self.LastIndexOf((i, _) => Predicate.Invoke(i), StartIndex);
         }
 
         // ToDo: Set the fallback value to StartIndex before the loop.
