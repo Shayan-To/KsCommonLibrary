@@ -34,13 +34,13 @@ namespace Ks.Common.Controls
 
         public DelegateCommand DecrementCommand { get; }
 
-        public static readonly DependencyProperty StepProperty = DependencyProperty.Register("Step", typeof(double), typeof(NumericUpDown), new PropertyMetadata(1.0, Step_Changed, Step_Coerce));
+        public static readonly DependencyProperty StepProperty = DependencyProperty.Register("Step", typeof(decimal), typeof(NumericUpDown), new PropertyMetadata(1.0, Step_Changed, Step_Coerce));
 
         private static object Step_Coerce(DependencyObject D, object BaseValue)
         {
             // var Self = (NumericUpDown) D;
 
-            // var Value = (double) BaseValue;
+            // var Value = (decimal) BaseValue;
 
             return BaseValue;
         }
@@ -49,23 +49,23 @@ namespace Ks.Common.Controls
         {
             // var Self = (NumericUpDown) D;
 
-            // var OldValue = (double) E.OldValue;
-            // var NewValue = (double) E.NewValue;
+            // var OldValue = (decimal) E.OldValue;
+            // var NewValue = (decimal) E.NewValue;
         }
 
-        public double Step
+        public decimal Step
         {
-            get => (double) this.GetValue(StepProperty);
+            get => (decimal) this.GetValue(StepProperty);
             set => this.SetValue(StepProperty, value);
         }
 
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(NumericUpDown), new PropertyMetadata(0.0, Value_Changed, Value_Coerce));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(decimal), typeof(NumericUpDown), new PropertyMetadata(0.0, Value_Changed, Value_Coerce));
 
         private static object Value_Coerce(DependencyObject D, object BaseValue)
         {
             // var Self = (NumericUpDown) D;
 
-            // var Value = (double) BaseValue;
+            // var Value = (decimal) BaseValue;
 
             return BaseValue;
         }
@@ -74,20 +74,14 @@ namespace Ks.Common.Controls
         {
             // var Self = (NumericUpDown) D;
 
-            // var OldValue = (double) E.OldValue;
-            // var NewValue = (double) E.NewValue;
+            // var OldValue = (decimal) E.OldValue;
+            // var NewValue = (decimal) E.NewValue;
         }
 
-        public double Value
+        public decimal Value
         {
-            get => (double) this.GetValue(ValueProperty);
+            get => (decimal) this.GetValue(ValueProperty);
             set => this.SetValue(ValueProperty, value);
         }
-
-#pragma warning disable IDE0044 // Add readonly modifier
-#pragma warning disable IDE0051, CS0169 // Remove unused private members
-        private bool IsDirty; // ToDo
-#pragma warning restore IDE0051, CS0169 // Remove unused private members
-#pragma warning restore IDE0044 // Add readonly modifier
     }
 }
