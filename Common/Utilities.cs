@@ -89,16 +89,6 @@ namespace Ks.Common
             }
         }
 
-        public static (double R, double G, double B) HslToRgb(double H, double S, double L)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static (double R, double G, double B) HsbToRgb(double H, double S, double B)
-        {
-            throw new NotImplementedException();
-        }
-
         public static void DoNothing()
         {
         }
