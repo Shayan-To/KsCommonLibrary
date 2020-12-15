@@ -117,6 +117,36 @@ namespace Ks.Common
             return S.RegexReplace(@"\r\n|\r|\n", Environment.NewLine);
         }
 
+        public static string TruncateEnd(this string s, int length, string ellipsis = "...")
+        {
+            if (s.Length <= length)
+            {
+                return s;
+            }
+            length -= ellipsis.Length;
+            return s.Substring(0, length) + ellipsis;
+        }
+
+        public static string TruncateStart(this string s, int length, string ellipsis = "...")
+        {
+            if (s.Length <= length)
+            {
+                return s;
+            }
+            length -= ellipsis.Length;
+            return ellipsis + s.Substring(s.Length - length, length);
+        }
+
+        public static string TruncateMid(this string s, int length, string ellipsis = "...")
+        {
+            if (s.Length <= length)
+            {
+                return s;
+            }
+            length -= ellipsis.Length;
+            var halfLength = length / 2;
+            return s.Substring(0, length - halfLength) + ellipsis + s.Substring(s.Length - halfLength, halfLength);
+        }
         #endregion
 
         #region Math Group
