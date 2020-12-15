@@ -1221,6 +1221,29 @@ namespace Ks.Common
             return new EnumerableCacher<T>(Self);
         }
 
+        public static IEnumerable<T> CatchExceptions<T>(this IEnumerable<T> self)
+        {
+            var e = self.GetEnumerator();
+            while (true)
+            {
+                CNullable<T> c = default;
+                try
+                {
+                    if (!e.MoveNext())
+                    {
+                        break;
+                    }
+                    c = e.Current;
+                }
+                catch
+                { }
+
+                if (c.HasValue)
+                {
+                    yield return c.Value;
+                }
+            }
+        }
         #endregion
 
         #region Geometry Group
