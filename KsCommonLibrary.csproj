@@ -12,17 +12,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Analyzers\**" />
+    <Compile Remove="Cecil\**" />
     <Compile Remove="ConsoleTests\**" />
+    <Compile Remove="Heavy\**" />
     <Compile Remove="packages\**" />
     <Compile Remove="Tests\**" />
+    <Compile Remove="UI\**" />
+    <Compile Remove="WindowsTests\**" />
     <Compile Remove="Windows\**" />
+    <EmbeddedResource Remove="Analyzers\**" />
+    <EmbeddedResource Remove="Cecil\**" />
     <EmbeddedResource Remove="ConsoleTests\**" />
+    <EmbeddedResource Remove="Heavy\**" />
     <EmbeddedResource Remove="packages\**" />
     <EmbeddedResource Remove="Tests\**" />
+    <EmbeddedResource Remove="UI\**" />
+    <EmbeddedResource Remove="WindowsTests\**" />
     <EmbeddedResource Remove="Windows\**" />
+    <None Remove="Analyzers\**" />
+    <None Remove="Cecil\**" />
     <None Remove="ConsoleTests\**" />
+    <None Remove="Heavy\**" />
     <None Remove="packages\**" />
     <None Remove="Tests\**" />
+    <None Remove="UI\**" />
+    <None Remove="WindowsTests\**" />
     <None Remove="Windows\**" />
   </ItemGroup>
 

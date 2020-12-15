@@ -32,6 +32,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KsCommonLibrary.csproj" />
+    <ProjectReference Include="..\Heavy\KsCommonLibrary.Heavy.csproj" />
+    <ProjectReference Include="..\UI\KsCommonLibrary.UI.csproj" />
   </ItemGroup>
 
 </Project>
