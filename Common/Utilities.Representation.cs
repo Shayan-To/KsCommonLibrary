@@ -52,7 +52,15 @@ namespace Ks.Common
 
             public static string GetFriendlyTimeSpan(TimeSpan Time, TimeSpan MaxError)
             {
-                var Units = new[] { ("ms", TimeSpan.FromMilliseconds(1)), ("s", TimeSpan.FromSeconds(1)), ("min", TimeSpan.FromMinutes(1)), ("h", TimeSpan.FromHours(1)), ("d", TimeSpan.FromDays(1)) };
+                var Units = new (string Name, TimeSpan UnitValue)[]
+                {
+                    ("ms", TimeSpan.FromMilliseconds(1)),
+                    ("s", TimeSpan.FromSeconds(1)),
+                    ("min", TimeSpan.FromMinutes(1)),
+                    ("h", TimeSpan.FromHours(1)),
+                    ("d", TimeSpan.FromDays(1)),
+                };
+
                 // We want to be able to show values using a max error value, so we have to remove the unnecessary units.
                 // So we will keep the units that are greater than or equal to MaxError.
                 // But these are not enough, as they may not show the value with needed precision if no unit is equal to MaxError.
@@ -60,7 +68,7 @@ namespace Ks.Common
 
                 // We want the units that are greater than or equal to Error.
                 // And if the last unit is less that Error, we have no choice but to use it alone. So Func is true for the last unit.
-                var Start = Algorithm.BinarySearchIn(X => Units[X].Item2 >= MaxError, 0, Units.Length - 1);
+                var Start = Algorithm.BinarySearchIn(X => Units[X].UnitValue >= MaxError, 0, Units.Length - 1);
                 // The Units with false should not be used.
                 // And from the remaining ones, we will use at most Count of them.
                 var Count = 2;
@@ -73,7 +81,7 @@ namespace Ks.Common
                 for (; I > Start; I--)
                 {
                     var Unit = Units[I];
-                    var UnitTicks = Unit.Item2.Ticks;
+                    var UnitTicks = Unit.UnitValue.Ticks;
                     var Value = Math.FloorDiv(Ticks, UnitTicks);
                     Ticks -= Value * UnitTicks;
 
@@ -89,14 +97,14 @@ namespace Ks.Common
                             Res.Append(" ");
                         }
 
-                        Res.Append(Value).Append(Unit.Item1.ToLowerInvariant());
+                        Res.Append(Value).Append(Unit.Name.ToLowerInvariant());
                         Count -= 1;
                     }
                 }
 
                 {
                     var Unit = Units[I];
-                    var UnitTicks = Unit.Item2.Ticks;
+                    var UnitTicks = Unit.UnitValue.Ticks;
 
                     // Just like the units, we have to check whether (0.01 U) is a good unit or not. (Division will move us upwards in the list.)
                     // We will find units less than or equal to MaxError (the bad ones + equals), and choose the first of them (plus the good ones of course).
@@ -129,7 +137,7 @@ namespace Ks.Common
                             Res.Append(" ");
                         }
 
-                        Res.Append(Value / Prec).Append(Unit.Item1.ToLowerInvariant());
+                        Res.Append(Value / Prec).Append(Unit.Name.ToLowerInvariant());
                     }
                 }
 
@@ -153,30 +161,30 @@ namespace Ks.Common
                 if (Compact)
                 {
                     Builder.Clear()
-.Append(Now.Year.ToStringInv().PadLeft(4, '0'))
-.Append(Now.Month.ToStringInv().PadLeft(2, '0'))
-.Append(Now.Day.ToStringInv().PadLeft(2, '0'))
-.Append(Now.Hour.ToStringInv().PadLeft(2, '0'))
-.Append(Now.Minute.ToStringInv().PadLeft(2, '0'))
-.Append(Now.Second.ToStringInv().PadLeft(2, '0'))
-.Append(Now.Millisecond.ToStringInv().PadLeft(3, '0'));
+                        .Append(Now.Year.ToStringInv().PadLeft(4, '0'))
+                        .Append(Now.Month.ToStringInv().PadLeft(2, '0'))
+                        .Append(Now.Day.ToStringInv().PadLeft(2, '0'))
+                        .Append(Now.Hour.ToStringInv().PadLeft(2, '0'))
+                        .Append(Now.Minute.ToStringInv().PadLeft(2, '0'))
+                        .Append(Now.Second.ToStringInv().PadLeft(2, '0'))
+                        .Append(Now.Millisecond.ToStringInv().PadLeft(3, '0'));
                 }
                 else
                 {
                     Builder.Clear()
-                  .Append(Now.Year.ToStringInv().PadLeft(4, '0'))
-                  .Append('-')
-                  .Append(Now.Month.ToStringInv().PadLeft(2, '0'))
-                  .Append('-')
-                  .Append(Now.Day.ToStringInv().PadLeft(2, '0'))
-                  .Append(' ')
-                  .Append(Now.Hour.ToStringInv().PadLeft(2, '0'))
-                  .Append(':')
-                  .Append(Now.Minute.ToStringInv().PadLeft(2, '0'))
-                  .Append(':')
-                  .Append(Now.Second.ToStringInv().PadLeft(2, '0'))
-                  .Append('.')
-                  .Append(Now.Millisecond.ToStringInv().PadLeft(3, '0'));
+                        .Append(Now.Year.ToStringInv().PadLeft(4, '0'))
+                        .Append('-')
+                        .Append(Now.Month.ToStringInv().PadLeft(2, '0'))
+                        .Append('-')
+                        .Append(Now.Day.ToStringInv().PadLeft(2, '0'))
+                        .Append(' ')
+                        .Append(Now.Hour.ToStringInv().PadLeft(2, '0'))
+                        .Append(':')
+                        .Append(Now.Minute.ToStringInv().PadLeft(2, '0'))
+                        .Append(':')
+                        .Append(Now.Second.ToStringInv().PadLeft(2, '0'))
+                        .Append('.')
+                        .Append(Now.Millisecond.ToStringInv().PadLeft(3, '0'));
                 }
 
                 var Stamp = Builder.ToString();
