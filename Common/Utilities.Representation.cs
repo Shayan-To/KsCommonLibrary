@@ -222,6 +222,39 @@ namespace Ks.Common
 
                 return Hour;
             }
+
+            public static (int Year, int Week, int Day) GetYearWeekDay(DateTime d, DayOfWeek firstDayOfWeek)
+            {
+                var year = d.Year;
+                var day = d.DayOfYear - 1;
+                var dow = d.DayOfWeek - firstDayOfWeek;
+                dow = (dow + 7) % 7;
+
+                if (day < dow)
+                {
+                    year -= 1;
+                    day += DateTime.IsLeapYear(year) ? 366 : 365;
+                }
+
+                var dowOf0 = dow - day;
+                dowOf0 = ((dowOf0 % 7) + 14) % 7;
+                var week = (day + dowOf0) / 7;
+                return (year, week, dow);
+            }
+
+            public static (int Year, int Month, int Week, int Day) GetYearMonthWeekDay(DateTime d, DayOfWeek firstDayOfWeek)
+            {
+                var dow = d.DayOfWeek - firstDayOfWeek;
+                dow = (dow + 7) % 7;
+
+                d += TimeSpan.FromDays(-dow + 3);
+
+                var year = d.Year;
+                var month = d.Month;
+                var week = (d.Day - 1) / 7;
+
+                return (year, month, week, dow);
+            }
         }
     }
 }
