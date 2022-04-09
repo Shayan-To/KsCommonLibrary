@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
+using System.Threading.Tasks;
 
-using Reflect = System.Reflection;
 using SIO = System.IO;
 
 namespace Ks.Common
@@ -12,21 +9,18 @@ namespace Ks.Common
     {
         public static class IO
         {
-            public static string DownloadURL(string URL)
-            {
-                var Request = System.Net.WebRequest.Create(URL);
-                using var Response = Request.GetResponse();
-                using var Reader = new SIO.StreamReader(Response.GetResponseStream());
-                var Res = Reader.ReadToEnd();
+            public static readonly HttpClient _HttpClient = new();
 
+            public static async Task<string> DownloadURLAsync(string URL)
+            {
+                using var Reader = new SIO.StreamReader(await _HttpClient.GetStreamAsync(URL));
+                var Res = Reader.ReadToEnd();
                 return Res;
             }
 
-            public static void DownloadURLToFile(string URL, string Path)
+            public static async Task DownloadURLToFileAsync(string URL, string Path)
             {
-                var Request = System.Net.WebRequest.Create(URL);
-                using var Response = Request.GetResponse();
-                using var WStream = Response.GetResponseStream();
+                using var WStream = await _HttpClient.GetStreamAsync(URL);
                 using var FStream = SIO.File.Open(Path, SIO.FileMode.CreateNew, SIO.FileAccess.Write, SIO.FileShare.Read);
                 FStream.Write(WStream);
             }

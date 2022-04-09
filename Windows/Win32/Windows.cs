@@ -139,17 +139,17 @@ namespace Ks.Common.Win32
             /// <summary>
             /// Retrieve the parent window. This does not include the owner.
             /// </summary>
-            Parent = GetAncestorConstant + 1,
+            Parent = GetAncestorConstant + Unsafe.GetAncestorFlags.Parent,
 
             /// <summary>
             /// Retrieve the root window by walking the chain of parent windows.
             /// </summary>
-            Root = GetAncestorConstant + 2,
+            Root = GetAncestorConstant + Unsafe.GetAncestorFlags.Root,
 
             /// <summary>
             /// Retrieve the owned root window by walking the chain of parent/owner windows.
             /// </summary>
-            RootOwner = GetAncestorConstant + 3,
+            RootOwner = GetAncestorConstant + Unsafe.GetAncestorFlags.RootOwner,
 
             /// <summary>
             /// Retrieve the window of the same type that is highest in the Z order.
@@ -157,7 +157,7 @@ namespace Ks.Common.Win32
             /// If the specified window is a top-level window, the handle identifies a top-level window.
             /// If the specified window is a child window, the handle identifies a sibling window.
             /// </summary>
-            HwndFirst = GetWindowConstant + 0,
+            HwndFirst = GetWindowConstant + Unsafe.GetWindowCommand.HwndFirst,
 
             /// <summary>
             /// Retrieve the window of the same type that is lowest in the Z order.
@@ -165,7 +165,7 @@ namespace Ks.Common.Win32
             /// If the specified window is a top-level window, the handle identifies a top-level window.
             /// If the specified window is a child window, the handle identifies a sibling window.
             /// </summary>
-            HwndLast = GetWindowConstant + 1,
+            HwndLast = GetWindowConstant + Unsafe.GetWindowCommand.HwndLast,
 
             /// <summary>
             /// Retrieve the window below the specified window in the Z order.
@@ -173,7 +173,7 @@ namespace Ks.Common.Win32
             /// If the specified window is a top-level window, the handle identifies a top-level window.
             /// If the specified window is a child window, the handle identifies a sibling window.
             /// </summary>
-            HwndNext = GetWindowConstant + 2,
+            HwndNext = GetWindowConstant + Unsafe.GetWindowCommand.HwndNext,
 
             /// <summary>
             /// Retrieve the window above the specified window in the Z order.
@@ -181,25 +181,25 @@ namespace Ks.Common.Win32
             /// If the specified window is a top-level window, the handle identifies a top-level window.
             /// If the specified window is a child window, the handle identifies a sibling window.
             /// </summary>
-            HwndPrev = GetWindowConstant + 3,
+            HwndPrev = GetWindowConstant + Unsafe.GetWindowCommand.HwndPrev,
 
             /// <summary>
             /// Retrieve the specified window's owner window, if any. For more information, see Owned Windows.
             /// </summary>
-            Owner = GetWindowConstant + 4,
+            Owner = GetWindowConstant + Unsafe.GetWindowCommand.Owner,
 
             /// <summary>
             /// Retrieve the child window at the top of the Z order, if the specified window is a parent window;
             /// otherwise, the retrieved handle is NULL.
             /// The function examines only child windows of the specified window. It does not examine descendant windows.
             /// </summary>
-            Child = GetWindowConstant + 5,
+            Child = GetWindowConstant + Unsafe.GetWindowCommand.Child,
 
             /// <summary>
             /// Retrieve the enabled popup window owned by the specified window (the search uses the first such window found using GW_HWNDNEXT);
             /// otherwise, if there are no enabled popup windows, the retrieved handle is that of the specified window.
             /// </summary>
-            EnabledPopup = GetWindowConstant + 6
+            EnabledPopup = GetWindowConstant + Unsafe.GetWindowCommand.EnabledPopup
         }
 
         /// <summary>

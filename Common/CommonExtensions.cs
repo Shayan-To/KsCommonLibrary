@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
@@ -125,7 +124,7 @@ namespace Ks.Common
                 return s;
             }
             length -= ellipsis.Length;
-            return s.Substring(0, length) + ellipsis;
+            return s[..length] + ellipsis;
         }
 
         public static string TruncateStart(this string s, int length, string ellipsis = "...")
@@ -146,7 +145,7 @@ namespace Ks.Common
             }
             length -= ellipsis.Length;
             var halfLength = length / 2;
-            return s.Substring(0, length - halfLength) + ellipsis + s.Substring(s.Length - halfLength, halfLength);
+            return s[..(length - halfLength)] + ellipsis + s.Substring(s.Length - halfLength, halfLength);
         }
         #endregion
 
@@ -1062,7 +1061,7 @@ namespace Ks.Common
                 Res.Append(I);
             }
 
-            return Res.Append("}").ToString();
+            return Res.Append('}').ToString();
         }
 
         public static ReadOnlyListWrapper<T> AsReadOnly<T>(this IList<T> Self)
@@ -1463,6 +1462,11 @@ namespace Ks.Common
                 yield return Self;
                 Self = Self.BaseType;
             } while (Self != null);
+        }
+
+        public static Type GetGenericTypeDef(this Type self)
+        {
+            return self.IsGenericType ? self.GetGenericTypeDefinition() : self;
         }
 
         public static IEnumerable<System.Reflection.Assembly> GetRecursiveReferencedAssemblies(this System.Reflection.Assembly Assembly)

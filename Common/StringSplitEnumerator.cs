@@ -29,7 +29,7 @@ namespace Ks.Common
 
             var Start = this.Index;
             this.SkipText();
-            this.Current = this.String.Substring(Start, this.Index - Start);
+            this.Current = this.String[Start..this.Index];
             this.SkipDelimiter();
 
             return true;

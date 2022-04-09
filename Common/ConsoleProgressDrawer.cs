@@ -120,7 +120,7 @@ namespace Ks.Common
                 var Tmp = Per.ToString("F2").PadLeft(5);
                 if (Tmp.Length > 5)
                 {
-                    Tmp = Tmp.Substring(0, 5);
+                    Tmp = Tmp[..5];
                 }
 
                 T.Append(Tmp).Append("%");

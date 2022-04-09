@@ -1,12 +1,14 @@
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Ks.Common
 {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
     public class Verify
     {
         [DebuggerHidden()]
-        public static void NonNullArg<T>(T O, string Name = null, string Message = null) where T : class
+        public static void NonNullArg<T>([NotNull] T O, string Name = null, string Message = null) where T : class
         {
             if (O == null)
             {
@@ -26,7 +28,7 @@ namespace Ks.Common
         }
 
         [DebuggerHidden()]
-        public static void TrueArg(bool T, string Name = null, string Message = null)
+        public static void TrueArg([DoesNotReturnIf(false)] bool T, string Name = null, string Message = null)
         {
             if (!T)
             {
@@ -62,7 +64,7 @@ namespace Ks.Common
         }
 
         [DebuggerHidden()]
-        public static void FalseArg(bool T, string Name = null, string Message = null)
+        public static void FalseArg([DoesNotReturnIf(true)] bool T, string Name = null, string Message = null)
         {
             if (T)
             {
@@ -78,7 +80,7 @@ namespace Ks.Common
         }
 
         [DebuggerHidden()]
-        public static void NonNull<T>(T O, string Name = null) where T : class
+        public static void NonNull<T>([NotNull] T O, string Name = null) where T : class
         {
             if (O == null)
             {
@@ -94,7 +96,7 @@ namespace Ks.Common
         }
 
         [DebuggerHidden()]
-        public static void True(bool T, string Message = null)
+        public static void True([DoesNotReturnIf(false)] bool T, string Message = null)
         {
             if (!T)
             {
@@ -103,7 +105,7 @@ namespace Ks.Common
         }
 
         [DebuggerHidden()]
-        public static void False(bool T, string Message = null)
+        public static void False([DoesNotReturnIf(true)] bool T, string Message = null)
         {
             if (T)
             {
@@ -112,12 +114,14 @@ namespace Ks.Common
         }
 
         [DebuggerHidden()]
+        [DoesNotReturn]
         public static InvalidOperationException Fail(string Message = null)
         {
             throw new InvalidOperationException(Message);
         }
 
         [DebuggerHidden()]
+        [DoesNotReturn]
         public static ArgumentException FailArg(string Name = null, string Message = null)
         {
             if (Name == null & Message == null)

@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Loader;
 
 using Reflect = System.Reflection;
-using SIO = System.IO;
 
 namespace Ks.Common
 {
@@ -13,7 +14,7 @@ namespace Ks.Common
 
             public static IEnumerable<Reflect.Assembly> GetAllAccessibleAssemblies()
             {
-                return Reflect.Assembly.GetEntryAssembly().GetRecursiveReferencedAssemblies();
+                return Enumerable.Concat(Reflect.Assembly.GetEntryAssembly().GetRecursiveReferencedAssemblies(), AssemblyLoadContext.All.SelectMany(alc => alc.Assemblies)).Distinct();
             }
 
             public static IEnumerable<Reflect.MethodInfo> GetAllMethods(IEnumerable<Reflect.Assembly> Assemblies = null)
@@ -58,9 +59,11 @@ namespace Ks.Common
                     Assemblies = GetAllAccessibleAssemblies();
                 }
 
+                Base = Base.GetGenericTypeDef();
+
                 foreach (var Type in GetAllTypes(Assemblies))
                 {
-                    if (Base.IsAssignableFrom(Type))
+                    if (Type.GetBaseTypes().Concat(Type.GetInterfaces()).Select(t => t.GetGenericTypeDef()).Contains(Base))
                     {
                         yield return Type;
                     }

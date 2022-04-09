@@ -1,7 +1,6 @@
 //#define RelaxedStrings
 
 using System;
-using System.Data;
 using System.Linq;
 
 namespace Ks.Common

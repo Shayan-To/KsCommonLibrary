@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Reflect = System.Reflection;
-using SIO = System.IO;
-
 namespace Ks.Common
 {
     partial class Utilities
@@ -17,7 +14,7 @@ namespace Ks.Common
             {
                 if (Hex.StartsWith("#"))
                 {
-                    Hex = Hex.Substring(1);
+                    Hex = Hex[1..];
                 }
 
                 if (Hex.Length is 3 or 4)

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -359,11 +358,6 @@ namespace Ks.Common
         public override Task FlushAsync()
         {
             return Task.WhenAll(this.Bases.Select(B => B.FlushAsync()));
-        }
-
-        public override object InitializeLifetimeService()
-        {
-            throw new NotSupportedException();
         }
 
         public override string ToString()

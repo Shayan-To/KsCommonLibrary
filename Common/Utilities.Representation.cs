@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Reflect = System.Reflection;
-using SIO = System.IO;
-
 namespace Ks.Common
 {
     partial class Utilities

@@ -240,11 +240,6 @@ namespace Ks.Common
             return this.Base.FlushAsync();
         }
 
-        public override object InitializeLifetimeService()
-        {
-            return this.Base.InitializeLifetimeService();
-        }
-
         public override string ToString()
         {
             return string.Concat(nameof(TextWriterWrapper), "{", this.Base.ToString(), "}");

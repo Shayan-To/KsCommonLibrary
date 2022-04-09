@@ -1,5 +1,3 @@
-using System;
-
 namespace Ks.Common
 {
     public static class ParseInv

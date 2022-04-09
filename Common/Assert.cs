@@ -1,11 +1,12 @@
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Ks.Common
 {
     public class Assert
     {
         [DebuggerHidden()]
-        public static void NonNull<T>(T O, string Name = null) where T : class
+        public static void NonNull<T>([NotNull] T O, string Name = null) where T : class
         {
             if (O == null)
             {
@@ -21,7 +22,7 @@ namespace Ks.Common
         }
 
         [DebuggerHidden()]
-        public static void True(bool T, string Message = null)
+        public static void True([DoesNotReturnIf(false)] bool T, string Message = null)
         {
             if (!T)
             {
@@ -30,7 +31,7 @@ namespace Ks.Common
         }
 
         [DebuggerHidden()]
-        public static void False(bool T, string Message = null)
+        public static void False([DoesNotReturnIf(true)] bool T, string Message = null)
         {
             if (T)
             {
@@ -39,6 +40,7 @@ namespace Ks.Common
         }
 
         [DebuggerHidden()]
+        [DoesNotReturn]
         public static AssertionException Fail(string Message = null)
         {
             throw new AssertionException(Message);

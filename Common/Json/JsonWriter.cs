@@ -25,20 +25,20 @@ namespace Ks.Common
                 var Ch = S[I];
                 if (EscapeDic.TryGetValue(Ch, out var ECh))
                 {
-                    this.Out.Write(S.Substring(PrevStart, I - PrevStart));
+                    this.Out.Write(S[PrevStart..I]);
                     this.Out.Write('\\');
                     this.Out.Write(ECh);
                     PrevStart = I + 1;
                 }
                 else if (char.IsControl(Ch))
                 {
-                    this.Out.Write(S.Substring(PrevStart, I - PrevStart));
+                    this.Out.Write(S[PrevStart..I]);
                     this.Out.Write(@"\u");
                     this.Out.Write(Utilities.Math.ConvertToBase(Ch, 16).PadLeft(4, '0'));
                     PrevStart = I + 1;
                 }
             }
-            this.Out.Write(S.Substring(PrevStart, I - PrevStart));
+            this.Out.Write(S[PrevStart..I]);
         }
 
         private void WriteNewLine()

@@ -27,7 +27,7 @@ namespace Ks.Common
 
         public T Peek()
         {
-            return this[this.Count - 1];
+            return this[^1];
         }
 
         public bool CanPop()

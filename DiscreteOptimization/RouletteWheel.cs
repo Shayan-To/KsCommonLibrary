@@ -8,7 +8,7 @@ namespace Ks.Common
     {
         public int GenerateIndex()
         {
-            var max = this._Weights[this._Weights.Length - 1];
+            var max = this._Weights[^1];
             var rnd = this.Random.NextDouble() * max;
             var (index, _) = this._Weights.BinarySearch(rnd);
             return index;

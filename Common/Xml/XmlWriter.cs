@@ -38,20 +38,20 @@ namespace Ks.Common
                 var Ch = S[I];
                 if (EscapeDic.TryGetValue(Ch, out var Esc))
                 {
-                    this.Out.Write(S.Substring(PrevStart, I - PrevStart));
+                    this.Out.Write(S[PrevStart..I]);
                     this.Out.Write(Esc);
                     PrevStart = I + 1;
                 }
                 else if (char.IsControl(Ch) | (char.IsWhiteSpace(Ch) & (Ch != ' ')))
                 {
-                    this.Out.Write(S.Substring(PrevStart, I - PrevStart));
+                    this.Out.Write(S[PrevStart..I]);
                     this.Out.Write("&#x");
                     this.Out.Write(Utilities.Math.ConvertToBase(Ch, 16));
                     this.Out.Write(";");
                     PrevStart = I + 1;
                 }
             }
-            this.Out.Write(S.Substring(PrevStart, I - PrevStart));
+            this.Out.Write(S[PrevStart..I]);
         }
 
         private void WriteNewLine(bool IsAttribute, bool AfterAttributes = false)

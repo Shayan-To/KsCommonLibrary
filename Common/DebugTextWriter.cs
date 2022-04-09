@@ -245,11 +245,6 @@ namespace Ks.Common
             return Task.FromResult<Void>(null);
         }
 
-        public override object InitializeLifetimeService()
-        {
-            return null;
-        }
-
         public override string ToString()
         {
             return nameof(DebugTextWriter);

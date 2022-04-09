@@ -39,7 +39,7 @@ namespace Ks.Common
                     {
                         shouldContinue = this.Step();
                     }
-                    catch (System.Exception ex)
+                    catch (Exception ex)
                     {
                         this.Exception = ex;
                         this.State = AlgorithmState.Broken;

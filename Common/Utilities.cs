@@ -3,9 +3,6 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Reflect = System.Reflection;
-using SIO = System.IO;
-
 namespace Ks.Common
 {
     public static partial class Utilities
@@ -54,7 +51,7 @@ namespace Ks.Common
             var random = DefaultCacher<RandomNumberGenerator>.Value;
             var buffer = new byte[(length * 6 / 8) + 1];
             random.GetBytes(buffer);
-            return Convert.ToBase64String(buffer).Substring(0, length).Replace('+', '-').Replace('/', '_');
+            return Convert.ToBase64String(buffer)[..length].Replace('+', '-').Replace('/', '_');
         }
 
         public static async Task Delay(int milliseconds, CancellationToken cancellationToken = default)
@@ -93,7 +90,11 @@ namespace Ks.Common
         {
         }
 
-        public static object EmptyObject = new object();
+        public static void DoNothing<T>(T t)
+        {
+        }
+
+        public static readonly object EmptyObject = new();
 
         public static class Typed<T>
         {

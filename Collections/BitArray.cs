@@ -55,7 +55,7 @@ namespace Ks.Common
                 this._Bytes[I] = (byte) ~this._Bytes[I];
             }
 
-            this._Bytes[this._Bytes.Length - 1] = (byte) (this._Bytes[this._Bytes.Length - 1] & ((1 << this.LastByteBitCount()) - 1));
+            this._Bytes[^1] = (byte) (this._Bytes[^1] & ((1 << this.LastByteBitCount()) - 1));
         }
 
         protected override IEnumerator<bool> _GetEnumerator()
@@ -76,7 +76,7 @@ namespace Ks.Common
 
             if (true)
             {
-                var B = this._Bytes[this._Bytes.Length - 1];
+                var B = this._Bytes[^1];
                 var bits = this.LastByteBitCount();
                 for (var J = 0; J < bits; J++)
                 {

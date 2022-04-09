@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Reflect = System.Reflection;
-using SIO = System.IO;
-
 namespace Ks.Common
 {
     partial class Utilities
@@ -445,7 +442,7 @@ namespace Ks.Common
 
             public static string FirstCapitalized(string Str)
             {
-                return char.ToUpper(Str[0]).ToString() + Str.Substring(1).ToLower();
+                return char.ToUpper(Str[0]).ToString() + Str[1..].ToLower();
             }
 
             public static string EnumerableToString<T>(IEnumerable<T> Enumerable)
