@@ -7,6 +7,60 @@ namespace Ks.Common
     {
         public static class Collections
         {
+            public static IEnumerable<T> GatherRecursiveDistinct<T>(IEnumerable<T> bases, Func<T, IEnumerable<T>> getChildren)
+            {
+                var set = new HashSet<T>();
+
+                foreach (var i in process(default, true))
+                {
+                    yield return i;
+                }
+
+                IEnumerable<T> process(T item, bool isRoot = false)
+                {
+                    if (!isRoot && !set.Add(item))
+                    {
+                        yield break;
+                    }
+
+                    if (!isRoot)
+                    {
+                        yield return item;
+                    }
+
+                    foreach (var child in isRoot ? bases : getChildren(item))
+                    {
+                        foreach (var i in process(child))
+                        {
+                            yield return i;
+                        }
+                    }
+                }
+            }
+
+            public static IEnumerable<T> GatherRecursiveAll<T>(IEnumerable<T> items, Func<T, IEnumerable<T>> getChildren)
+            {
+                foreach (var item in items)
+                {
+                    foreach (var i in GatherRecursiveAll(item, getChildren))
+                    {
+                        yield return i;
+                    }
+                }
+            }
+
+            public static IEnumerable<T> GatherRecursiveAll<T>(T item, Func<T, IEnumerable<T>> getChildren)
+            {
+                yield return item;
+                foreach (var child in getChildren(item))
+                {
+                    foreach (var i in GatherRecursiveAll(child, getChildren))
+                    {
+                        yield return i;
+                    }
+                }
+            }
+
             public static IEnumerable<T> Concat<T>(IEnumerable<IEnumerable<T>> Collections)
             {
                 foreach (var L in Collections)

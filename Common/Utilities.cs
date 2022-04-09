@@ -95,11 +95,13 @@ namespace Ks.Common
         }
 
         public static readonly object EmptyObject = new();
+        public static readonly bool True = true;
+        public static readonly bool False = false;
 
         public static class Typed<T>
         {
             public static readonly Func<T, T> IdentityFunc = X => X;
-            public static readonly T[] EmptyArray = new T[0] { };
+            public static readonly T[] EmptyArray = Array.Empty<T>();
         }
     }
 }

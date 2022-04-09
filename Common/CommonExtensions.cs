@@ -1587,18 +1587,6 @@ namespace Ks.Common
             return self.GetCustomAttributes(typeof(T), inherit).Cast<T>();
         }
 
-        public static TAttribute GetCustomAttribute<TAttribute>(this System.Reflection.MemberInfo Self, bool Inherit) where TAttribute : Attribute
-        {
-            var AttributeType = typeof(TAttribute);
-            var Usage = AttributeType.GetCustomAttributes<AttributeUsageAttribute>(true).SingleOrDefault();
-            if (Usage != null && Usage.AllowMultiple)
-            {
-                throw new ArgumentException("The attribute should not allow multiple.");
-            }
-
-            return Self.GetCustomAttributes<TAttribute>(Inherit).SingleOrDefault();
-        }
-
         public static Attribute GetCustomAttribute(this System.Reflection.MemberInfo Self, Type AttributeType, bool Inherit)
         {
             var Usage = AttributeType.GetCustomAttributes<AttributeUsageAttribute>(true).SingleOrDefault();
